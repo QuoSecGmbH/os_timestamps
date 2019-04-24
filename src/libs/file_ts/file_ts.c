@@ -3,11 +3,6 @@
 
 #include "file_ts.h"
 
-int main (){
-//   print_path_timestamps_s("/home/ath/fortime/tests/test");
-  print_path_timestamps_ns("/home/ath/fortime/tests/test");
-}
-
 void print_path_timestamps_s(char *path) {
     struct stat* attr = get_path_timestamps(path);
     
@@ -20,7 +15,6 @@ void print_path_timestamps_s(char *path) {
     printf("A: %s", ctime(&(attr->st_atime)));
     printf("C: %s", ctime(&(attr->st_ctime)));
 }
-
 
 void print_path_timestamps_ns(char *path) {
     struct stat* attr = get_path_timestamps(path);

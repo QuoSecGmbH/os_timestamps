@@ -4,20 +4,20 @@
 #include "current_time.h"
 
 
-int main (){
-  print_current_time_seconds();
-  print_current_time_ns();
-  check_clock_res();
-}
+// int main (){
+//   print_current_time_seconds();
+//   print_current_time_ns();
+//   check_clock_res();
+// }
 
-void print_current_time_seconds(){
-  time_t* rawtime = current_time_seconds();
+void print_current_time_s(){
+  time_t* rawtime = current_time_s();
   struct tm * timeinfo;
   timeinfo = localtime(rawtime);
   printf("%s", asctime(timeinfo) );
 }
 
-time_t* current_time_seconds(){
+time_t* current_time_s(){
   time_t* rawtime = (time_t*) calloc(sizeof(time_t), 1);
   time(rawtime);
   return rawtime;
@@ -44,28 +44,34 @@ struct timespec* current_time_ns(){
   return ts;
 }
 
-void check_clock_res(){
+int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file){
   struct timespec ts;
   int res = clock_getres(CLOCK_REALTIME, &ts);
   if (res != 0){
-    printf("ERROR: check_clock_res - clock_getres failed\n");
-    return;
+    log_error(output_file, error_file, "check_clock_res - clock_getres failed\n");
+    return 1;
   }
   
   time_t s = ts.tv_sec;
   long ns = ts.tv_nsec;
   
+  int result = 0;
   if (s != 0){
-    printf("WARNING: Clock resolution is greater than 1s.");
+//     printf();
+    log_warning(output_file, error_file, "Clock resolution is greater than 1s.");
+    result = 2;
   }
   else if (ns > 20000000){
-    printf("WARNING: Clock resolution is greater than 20 000 000ns/");
+    log_warning(output_file, error_file, "Clock resolution is greater than 20 000 000ns.");
+    result = 2;
   }
   else if (s != 0 && ns != 0){
-    printf("WARNING: Clock resolution has both s and ns values.");
+    log_warning(output_file, error_file, "Clock resolution has both s and ns values.");
+    result = 2;
   }
   
   printf ("INFO: Clock resolution is: %ld s - %ld ns\n", s, ns);
+  return result;
 }
 
 #endif
