@@ -11,5 +11,6 @@
 
 void group_check_general_clock(FILE* csv_file, FILE* output_file, FILE* err_file);
 void group_check_general_update(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
+void group_check_general_new_file(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
 
 #endif

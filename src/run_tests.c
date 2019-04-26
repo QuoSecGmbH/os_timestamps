@@ -30,8 +30,14 @@ int main (){
     }
     log_info(output_file, error_file, "Directory for tests is: %s", dir_path);
     
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = 0;
+    ts_ns->tv_nsec = 10000000; // smaller i / 10**i makes a difference with nanosleep + file write + *stat*
+    
     log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Ref", "Function");
     group_check_general_clock(csv_file, output_file, error_file);
+    group_check_general_new_file(csv_file, output_file, error_file, dir_path);
+    nanosleep(ts_ns, NULL);
     group_check_general_update(csv_file, output_file, error_file, dir_path);
 
     log_close_csv(csv_file);
@@ -41,16 +47,25 @@ void group_check_general_clock(FILE* csv_file, FILE* output_file, FILE* error_fi
     int result;
     
     result = check_general_clock_res(csv_file, output_file, error_file);
-    log_csv_add_result(csv_file, output_file, error_file, result, "Clock resolution shall be at max 0.02s", "Yes", POSIX_c181, "GENERAL.CLOCK.RES", "check_clock_res");
+    log_csv_add_result(csv_file, output_file, error_file, result, "Clock resolution shall be at max 0.02s", "Yes", POSIX_c181, "GENERAL.CLOCK.RES", "check_general_clock_res");
+    result = check_general_clock_increments(csv_file, output_file, error_file);
+    log_csv_add_result(csv_file, output_file, error_file, result, "Clock is incremental (increasing)", "No", "", "GENERAL.CLOCK.INCREMENTS", "check_general_clock_increments");
 }
 
 void group_check_general_update(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     int result;
     
+    result = check_general_update_write_close(csv_file, output_file, error_file, dir_path);
+    log_csv_add_result(csv_file, output_file, error_file, result, "fwrite shall update MC", "Yes", POSIX_c181, "GENERAL.UPDATE.WRITE_CLOSE", "check_general_update_write_close");
+}
+
+void group_check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    int result;
+    
     result = check_general_new_file(csv_file, output_file, error_file, dir_path);
     log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC updated", "Yes", POSIX_c181, "GENERAL.NEW_FILE", "check_general_new_file");
     result = check_general_new_file_mac_eq(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC set to same time", "No", "", "GENERAL.NEW_FILE.MAC_eq", "check_general_new_file_mac_eq");
+    log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC set to same value", "No", "", "GENERAL.NEW_FILE.MAC_eq", "check_general_new_file_mac_eq");
 }
 
 

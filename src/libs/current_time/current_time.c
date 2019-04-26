@@ -37,10 +37,7 @@ void print_current_time_ns(){
 struct timespec* current_time_ns(){
   struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   clock_gettime(CLOCK_REALTIME, ts);
-  time_t s = ts->tv_sec;
-  long ns = ts->tv_nsec;
   
-  printf ("%ld-%9ld\n", s, ns);
   return ts;
 }
 
@@ -57,7 +54,6 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file)
   
   int result = 0;
   if (s != 0){
-//     printf();
     log_warning(output_file, error_file, "Clock resolution is greater than 1s.");
     result = 2;
   }
@@ -72,6 +68,29 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file)
   
   printf ("INFO: Clock resolution is: %ld s - %ld ns\n", s, ns);
   return result;
+}
+
+
+int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* error_file){
+    int i = 0;
+    struct timespec* ts = NULL;
+    struct timespec* last_ts = NULL;
+    
+    int result = 0;
+    for (i=0; i<100; i++){
+        ts = current_time_ns();
+        log_debug(output_file, error_file, "%ld - %ld", ts->tv_sec, ts->tv_nsec);
+        
+        if (i != 0){
+            if (misc_timespec_leq(last_ts, ts) != 0){
+                result = 2;
+                break;
+            }
+        }
+        last_ts = ts;
+    }
+    
+    return result;
 }
 
 #endif

@@ -73,4 +73,47 @@ int check_general_new_file_mac_eq(FILE* csv_file, FILE* output_file, FILE* error
     return result;
 }
 
+
+int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    
+    struct timespec* ts_before = current_time_ns();
+//     sleep(10);
+    
+    FILE* fd = fopen(path, "wb");
+    if (fd == NULL) {
+        log_warning(output_file, error_file, "check_general_update_write_close - error opening/creating file");
+        return 1;
+    }
+    fwrite("Hallo", 5, 1, fd);
+    
+    fclose(fd);
+    
+    struct timespec* ts_after = current_time_ns();
+    struct stat* file_stat = get_path_timestamps(path);
+    
+    int result = 0;
+    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) != 0){
+        log_warning(output_file, error_file, "check_general_update_write_close - M not updated");
+        result = 2;
+    }
+    if (misc_timespec_leq(ts_before, &(file_stat->st_atim)) == 0){
+        log_warning(output_file, error_file, "check_general_update_write_close - A updated");
+//         result = 2;
+    }
+    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
+        log_warning(output_file, error_file, "check_general_update_write_close - C not updated");
+        result = 2;
+    }
+    
+    if (result != 0){
+        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
+        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
+        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
+        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
+    }
+    
+    return result;
+}
+
 #endif

@@ -65,6 +65,17 @@ void log_info(FILE* output_file, FILE* error_file, const char* format, ...){
     va_end(argptr);
 }
 
+void log_debug(FILE* output_file, FILE* error_file, const char* format, ...){
+    if (0) {
+        va_list argptr;
+        va_start(argptr, format);
+        fprintf(output_file, "DEBUG: ");
+        vfprintf(output_file, format, argptr);
+        fprintf(output_file, "\n");
+        va_end(argptr);
+    }
+}
+
 void log_warning(FILE* output_file, FILE* error_file, const char* format, ...){
     va_list argptr;
     va_start(argptr, format);
