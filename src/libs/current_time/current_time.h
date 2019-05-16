@@ -23,4 +23,5 @@ int check_general_clock_res(FILE* csv_file, FILE* outpuy_file, FILE* error_file)
 int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* error_file);
 void print_current_time_ns();
 struct timespec* current_time_ns();
+struct timespec* current_time_ns_coarse();
 #endif

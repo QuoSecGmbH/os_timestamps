@@ -34,8 +34,19 @@ void print_current_time_ns(){
   printf("%s - ns: %9ld\n", buf, ts->tv_nsec);
 }
 
+struct timespec* current_time_ns_coarse(){
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  
+  // For inode purposes, the kernel uses CLOCK_REALTIME_COARSE with function ktime_get_coarse_real_ts64 (previously current_kernel_time)
+  // This is less precise than CLOCK_REALTIME but saves time
+  clock_gettime(CLOCK_REALTIME_COARSE, ts);
+  
+  return ts;
+}
+
 struct timespec* current_time_ns(){
   struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  
   clock_gettime(CLOCK_REALTIME, ts);
   
   return ts;

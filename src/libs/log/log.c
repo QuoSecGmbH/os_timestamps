@@ -44,7 +44,7 @@ void log_csv_add_result(FILE* csv_file, FILE* output_file, FILE* error_file, int
     }
     
     log_csv_add_line(csv_file, 6, res_str, desc, specified, spec, ref, func);
-    log_result(output_file, error_file, "%s - %s - %s - %s", res_str, desc, ref, func);
+    log_result(output_file, error_file, "%s - %s(%s) - %s - %s - %s", res_str, specified, spec, desc, ref, func);
 }
 
 void log_result(FILE* output_file, FILE* error_file, const char* format, ...){
