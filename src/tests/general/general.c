@@ -10,7 +10,7 @@ int check_general_new_file_realtime(FILE* csv_file, FILE* output_file, FILE* err
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_new_file - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     
@@ -31,7 +31,7 @@ int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_new_file - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     
@@ -52,7 +52,7 @@ int check_general_new_file_mac_eq(FILE* csv_file, FILE* output_file, FILE* error
 
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_new_file - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     
@@ -78,7 +78,7 @@ int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* er
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_update_write_close - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     fwrite("Hallo", 5, 1, fd);
@@ -100,7 +100,7 @@ int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* err
     
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_update_read_close - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     
@@ -124,7 +124,7 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_update_write_stat - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     fwrite("Hallo", 5, 1, fd);
@@ -149,7 +149,7 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
-        log_warning(output_file, error_file, "check_general_update_read_stat - error opening/creating file");
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     
@@ -158,7 +158,6 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     fstat((uintptr_t)fd, attr);
-    
     
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);

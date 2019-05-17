@@ -3,8 +3,13 @@
 
 #include "prototype_file_ts.h"
 
-int main (){
-  print_path_timestamps_ns("../../tests/test");
+int main (int argc, char **argv){
+  if (argc >= 2){
+    print_path_timestamps_ns(argv[1]);
+  }
+  else {
+    printf("ERROR: need one argument (path)\n");
+  }
 }
 
 
