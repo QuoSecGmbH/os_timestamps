@@ -1,7 +1,9 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include "time.h"
 #include "stdio.h"
+#include <sys/stat.h>
 #include <stdarg.h> 
 #include <string.h>
 
@@ -14,5 +16,6 @@ void log_info(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_debug(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_warning(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_error(FILE* output_file, FILE* error_file, const char* format, ...);
+void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
 
 #endif

@@ -77,7 +77,7 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file)
     result = 2;
   }
   
-  printf ("INFO: Clock resolution is: %ld s - %ld ns\n", s, ns);
+  printf ("INFO: Clock resolution is: %ld s - %ld ns (CLOCK_REALTIME)\n", s, ns);
   return result;
 }
 

@@ -47,7 +47,7 @@ void group_check_general_clock(FILE* csv_file, FILE* output_file, FILE* error_fi
     int result;
     
     result = check_general_clock_res(csv_file, output_file, error_file);
-    log_csv_add_result(csv_file, output_file, error_file, result, "Clock resolution shall be at max 0.02s", "Yes", POSIX_c181, "GENERAL.CLOCK.RES", "check_general_clock_res");
+    log_csv_add_result(csv_file, output_file, error_file, result, "Clock resolution shall be at max 0.02s (CLOCK_REALTIME)", "Yes", POSIX_c181, "GENERAL.CLOCK.RES", "check_general_clock_res");
     result = check_general_clock_increments(csv_file, output_file, error_file);
     log_csv_add_result(csv_file, output_file, error_file, result, "Clock is incremental (increasing)", "No", "", "GENERAL.CLOCK.INCREMENTS", "check_general_clock_increments");
 }

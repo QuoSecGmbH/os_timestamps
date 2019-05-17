@@ -5,6 +5,7 @@
 #include "current_time.h"
 #include "file_ts.h"
 #include "misc.h"
+#include <stdint.h>
 
 int check_general_new_file_realtime(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);

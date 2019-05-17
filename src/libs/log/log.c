@@ -93,5 +93,17 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     fprintf(error_file, "\n");
     va_end(argptr);
 }
+
+void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat){
+    if (result != 0){
+        log_info(output_file, error_file, "%s:", func_name);
+        if (ts_before != NULL && ts_after != NULL){
+            log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
+        }
+        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
+        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
+        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
+    }
+}
                   
 #endif

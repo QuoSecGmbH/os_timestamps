@@ -13,7 +13,7 @@ endif()
 # Options
 # Compiler------------------------------------------------------------------
 # Less warnings in C in order to avoid warnings about flex/bison code
-set(CMAKE_C_FLAGS " -std=gnu11 -pedantic -D__STDC_FORMAT_MACROS -DHAVE_STRUCT_TIMESPEC=1 -D_POSIX_C_SOURCE=200809L -D_hypot=hypot -Wall -Wextra -pedantic -Wno-unused-parameter")
+set(CMAKE_C_FLAGS " -std=gnu11 -pedantic -D__STDC_FORMAT_MACROS -DHAVE_STRUCT_TIMESPEC=1 -D_POSIX_C_SOURCE=200809L -D_hypot=hypot -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-result")
 
 include_directories(
   ./

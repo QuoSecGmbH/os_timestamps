@@ -19,27 +19,8 @@ int check_general_new_file_realtime(FILE* csv_file, FILE* output_file, FILE* err
     struct timespec* ts_after = current_time_ns();
     struct stat* file_stat = get_path_timestamps(path);
     
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - M not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - A not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - C not updated");
-        result = 2;
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -59,27 +40,8 @@ int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, 
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);
     
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - M not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - A not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_new_file - C not updated");
-        result = 2;
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -104,12 +66,7 @@ int check_general_new_file_mac_eq(FILE* csv_file, FILE* output_file, FILE* error
         result = 2;
     }
     
-    if (result != 0){
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, NULL, NULL, file_stat);
     return result;
 }
 
@@ -130,27 +87,9 @@ int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* er
     
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);
-    
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_write_close - M not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_write_close - A updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_write_close - C not updated");
-        result = 2;
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+      
+    int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -173,25 +112,8 @@ int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* err
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);
     
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_read_close - M updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_read_close - A not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_read_close - C updated");
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -207,34 +129,16 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
     }
     fwrite("Hallo", 5, 1, fd);
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
-    fstat(fd, attr);
+    fstat((uintptr_t)fd, attr);
     
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);
     
     
     fclose(fd);
-    
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_write_stat - M not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_write_stat - A updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_write_stat - C not updated");
-        result = 2;
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+      
+    int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -253,7 +157,7 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     fread(buf, 5, 1, fd);
     
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
-    fstat(fd, attr);
+    fstat((uintptr_t)fd, attr);
     
     
     struct timespec* ts_after = current_time_ns_coarse();
@@ -261,25 +165,8 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     
     fclose(fd);
     
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_read_stat - M updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_read_stat - A not updated");
-        result = 2;
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_read_stat - C updated");
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
@@ -296,25 +183,8 @@ int check_general_update_chmod(FILE* csv_file, FILE* output_file, FILE* error_fi
     struct timespec* ts_after = current_time_ns_coarse();
     struct stat* file_stat = get_path_timestamps(path);
     
-    int result = 0;
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_mtim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_chmod - M updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_atim), ts_after) == 0){
-        log_warning(output_file, error_file, "check_general_update_chmod - A updated");
-    }
-    if (misc_timespec_leq_leq(ts_before, &(file_stat->st_ctim), ts_after) != 0){
-        log_warning(output_file, error_file, "check_general_update_chmod - C not updated");
-        result = 2;
-    }
-    
-    if (result != 0){
-        log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
-        log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
-        log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
-        log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
-    }
-    
+    int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
