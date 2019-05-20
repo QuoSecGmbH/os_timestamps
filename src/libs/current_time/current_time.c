@@ -35,40 +35,56 @@ void print_current_time_custom(int type){
   char* buf = asctime(timeinfo);
   int n = strlen(buf);
   buf[n-1] = 0;
-  printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
+  printf("%s - s: %lld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
 }
 
 #ifdef __linux__
 struct timespec* current_time_ns_linux_coarse(){
-  // For inode purposes, the linux kernel uses CLOCK_REALTIME_COARSE with function ktime_get_coarse_real_ts64 (previously current_kernel_time)
-  // This is less precise than CLOCK_REALTIME
+  // Linux kernel sets inode timestamps to clock CLOCK_REALTIME_COARSE
   return current_time_custom(CLOCK_REALTIME_COARSE);
 }
 #endif
 
 #ifdef __FreeBSD__
 struct timespec* current_time_ns_freebsd_coarse(){
+// FreeBSD kernel sets inode timestamps to vfs_timestamp()
 // There does not seem to be a way to call vfs_timestamp() from userland
-// ts->tv_nsec does:
+// vfs_timestamp does:
 //   1 - call microtime
 //   2 - call TIMEVAL_TO_TIMESPEC
 // Approximation is made by:
 //   1 - calling kern_clock_gettime(CLOCK_REALTIME_PRECISE) that calls nanotime
 //   2 - Floor to microsecond
 
+  // 1:
   struct timespec* ts = current_time_custom(CLOCK_REALTIME_PRECISE);
-  
+
+  // 2:
   int rest = ts->tv_nsec % 1000;
   ts->tv_nsec = ts->tv_nsec - rest;
+
   return ts;
 }
 #endif
 
 #ifdef __OpenBSD__
 struct timespec* current_time_ns_openbsd_coarse(){
-  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
-  getnanotime(ts);
-  return ts;
+// OpenBSD kernel sets inode timestamp to getnanotime()
+// There does not seem to be a way to call getnanotime() from userland
+// There does not seem to be any way to access coarse times (get*) from userland
+// Workaround is to write a file then read its M
+
+  FILE* fd = fopen("tmp_timemarker", "wb");
+  if (fd == NULL) {
+      printf("ERROR: current_time_ns_openbsd_coarse - can't open tmp_timemarker");
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      return ts;
+  }
+  fwrite("!", 1, 1, fd);
+  fclose(fd);
+
+  struct stat* file_stat = get_path_timestamps("tmp_timemarker");
+  return &(file_stat->st_mtim);
 }
 #endif
 
@@ -121,7 +137,7 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file)
     result = 2;
   }
   
-  printf ("INFO: Clock resolution is: %ld s - %ld ns (CLOCK_REALTIME)\n", s, ns);
+  printf ("INFO: Clock resolution is: %lld s - %ld ns (CLOCK_REALTIME)\n", s, ns);
   return result;
 }
 

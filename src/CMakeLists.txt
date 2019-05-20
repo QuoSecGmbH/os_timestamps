@@ -40,7 +40,7 @@ add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
 add_library(lib_general tests/general/general.h tests/general/general.c)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
-target_link_libraries(prototype_current_time lib_current_time lib_log lib_misc)
+target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
 target_link_libraries(run_tests lib_general lib_file_ts lib_current_time lib_log lib_misc)
