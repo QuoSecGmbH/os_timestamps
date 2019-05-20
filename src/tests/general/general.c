@@ -27,7 +27,7 @@ int check_general_new_file_realtime(FILE* csv_file, FILE* output_file, FILE* err
 int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -37,7 +37,7 @@ int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, 
     
     fclose(fd);
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -74,7 +74,7 @@ int check_general_new_file_mac_eq(FILE* csv_file, FILE* output_file, FILE* error
 int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -85,7 +85,7 @@ int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* er
     
     fclose(fd);
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -96,7 +96,7 @@ int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* er
 int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
@@ -109,7 +109,7 @@ int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* err
     
     fclose(fd);
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -120,7 +120,7 @@ int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* err
 int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -131,7 +131,7 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     fstat((uintptr_t)fd, attr);
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
     
@@ -145,7 +145,7 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
 int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
@@ -159,7 +159,7 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     fstat((uintptr_t)fd, attr);
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
     fclose(fd);
@@ -172,14 +172,14 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
 int check_general_update_chmod(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat(dir_path, "general.new_file");
     
-    struct timespec* ts_before = current_time_ns_coarse();
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char mode[] = "0777";
     int i;
     i = strtol(mode, 0, 8);
     chmod(path,i) ;
     
-    struct timespec* ts_after = current_time_ns_coarse();
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

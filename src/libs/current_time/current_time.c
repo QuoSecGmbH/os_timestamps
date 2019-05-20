@@ -38,10 +38,50 @@ void print_current_time_custom(int type){
   printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
 }
 
-struct timespec* current_time_ns_coarse(){
-  // For inode purposes, the kernel uses CLOCK_REALTIME_COARSE with function ktime_get_coarse_real_ts64 (previously current_kernel_time)
-  // This is less precise than CLOCK_REALTIME but saves time
-  return current_time_custom(CLOCK_REALTIME);
+#ifdef __linux__
+struct timespec* current_time_ns_linux_coarse(){
+  // For inode purposes, the linux kernel uses CLOCK_REALTIME_COARSE with function ktime_get_coarse_real_ts64 (previously current_kernel_time)
+  // This is less precise than CLOCK_REALTIME
+  return current_time_custom(CLOCK_REALTIME_COARSE);
+}
+#endif
+
+#ifdef __FreeBSD__
+struct timespec* current_time_ns_freebsd_coarse(){
+// There does not seem to be a way to call vfs_timestamp() from userland
+// ts->tv_nsec does:
+//   1 - call microtime
+//   2 - call TIMEVAL_TO_TIMESPEC
+// Approximation is made by:
+//   1 - calling kern_clock_gettime(CLOCK_REALTIME_PRECISE) that calls nanotime
+//   2 - Floor to microsecond
+
+  struct timespec* ts = current_time_custom(CLOCK_REALTIME_PRECISE);
+  
+  int rest = ts->tv_nsec % 1000;
+  ts->tv_nsec = ts->tv_nsec - rest;
+  return ts;
+}
+#endif
+
+#ifdef __OpenBSD__
+struct timespec* current_time_ns_openbsd_coarse(){
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  getnanotime(ts);
+  return ts;
+}
+#endif
+
+struct timespec* current_time_ns_fslike_osspecific(){
+#ifdef __linux__
+    return current_time_ns_linux_coarse();
+#elif __FreeBSD__
+    return current_time_ns_freebsd_coarse();
+#elif __OpenBSD__
+    return current_time_ns_openbsd_coarse();
+#else
+    return current_time_custom(CLOCK_REALTIME);
+#endif
 }
 
 struct timespec* current_time_ns(){
