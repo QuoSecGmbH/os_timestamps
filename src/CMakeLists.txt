@@ -32,14 +32,15 @@ include_directories(
 add_library(lib_log libs/log/log.h libs/log/log.c)
 add_library(lib_file_ts libs/file_ts/file_ts.h libs/file_ts/file_ts.c)
 add_executable(prototype_file_ts tools/prototype_file_ts.h tools/prototype_file_ts.c)
-target_link_libraries(prototype_file_ts lib_file_ts lib_log)
+target_link_libraries(prototype_file_ts lib_file_ts lib_log lib_misc)
 
 add_library(lib_current_time libs/current_time/current_time.h libs/current_time/current_time.c)
-#add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
-#target_link_libraries(prototype_current_time lib_current_time lib_log)
 
 add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
 add_library(lib_general tests/general/general.h tests/general/general.c)
+
+add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
+target_link_libraries(prototype_current_time lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
 target_link_libraries(run_tests lib_general lib_file_ts lib_current_time lib_log lib_misc)

@@ -3,6 +3,7 @@
 
 #include "time.h"
 #include "stdio.h"
+#include "misc.h"
 #include <sys/stat.h>
 #include <stdarg.h> 
 #include <string.h>

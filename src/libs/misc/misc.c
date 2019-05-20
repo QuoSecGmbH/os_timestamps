@@ -3,6 +3,8 @@
 
 #include "misc.h"
 
+int VERBOSE;
+
 char* misc_concat(char* buf1, char* buf2){
     int len1 = strlen(buf1);
     int len2 = strlen(buf2);

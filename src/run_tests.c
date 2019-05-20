@@ -5,7 +5,12 @@
 
 char* POSIX_c181 = "POSIX_c181";
 
-int main (){
+
+int main (int argc, char **argv){
+    if (argc >= 2){
+        VERBOSE=1;
+    }
+  
     FILE* csv_file = log_open_csv("results.csv");
     FILE* output_file = stdout;
     FILE* error_file = stderr;

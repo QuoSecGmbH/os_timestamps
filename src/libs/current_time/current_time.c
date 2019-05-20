@@ -24,30 +24,34 @@ time_t* current_time_s(){
 }
 
 void print_current_time_ns(){
-  struct timespec* ts = current_time_ns();
+  print_current_time_custom(CLOCK_REALTIME);
+}
+
+void print_current_time_custom(int type){
+  struct timespec* ts = current_time_custom(type);
   struct tm * timeinfo;
   time_t rawtime = ts->tv_sec;
   timeinfo = localtime(&rawtime);
   char* buf = asctime(timeinfo);
   int n = strlen(buf);
   buf[n-1] = 0;
-  printf("%s - ns: %9ld\n", buf, ts->tv_nsec);
+  printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
 }
 
 struct timespec* current_time_ns_coarse(){
-  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
-  
   // For inode purposes, the kernel uses CLOCK_REALTIME_COARSE with function ktime_get_coarse_real_ts64 (previously current_kernel_time)
   // This is less precise than CLOCK_REALTIME but saves time
-  clock_gettime(CLOCK_REALTIME_COARSE, ts);
-  
-  return ts;
+  return current_time_custom(CLOCK_REALTIME);
 }
 
 struct timespec* current_time_ns(){
+  return current_time_custom(CLOCK_REALTIME);
+}
+
+struct timespec* current_time_custom(int type){
   struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   
-  clock_gettime(CLOCK_REALTIME, ts);
+  clock_gettime(type, ts);
   
   return ts;
 }

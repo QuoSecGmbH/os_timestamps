@@ -13,6 +13,8 @@ static const int UPDATE_OPTIONAL = 1;
 static const int NOUPDATE_MANDATORY = 2;
 static const int NOUPDATE_OPTIONAL = 3;
 
+extern int VERBOSE;
+
 char* misc_concat(char* buf1, char* buf2);
 
 int misc_timespec_leq_leq(struct timespec* ts1, struct timespec* ts, struct timespec* ts2);

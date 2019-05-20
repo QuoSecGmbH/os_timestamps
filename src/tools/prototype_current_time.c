@@ -4,10 +4,15 @@
 #include "prototype_current_time.h"
 
 
-int main (){
-  print_current_time_s();
-  print_current_time_ns();
-  check_general_clock_res(NULL, NULL, NULL);
+int main (int argc, char **argv){
+  if (argc >= 2){
+    int type = atoi(argv[1]);
+    print_current_time_custom(type);
+  }
+  else {
+    print_current_time_ns();
+  }
+  
 }
 
 
