@@ -35,7 +35,7 @@ void print_current_time_custom(int type){
   char* buf = asctime(timeinfo);
   int n = strlen(buf);
   buf[n-1] = 0;
-  printf("%s - s: %lld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
+  printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
 }
 
 #ifdef __linux__
@@ -112,7 +112,7 @@ struct timespec* current_time_custom(int type){
   return ts;
 }
 
-int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file){
+int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
   struct timespec ts;
   int res = clock_getres(CLOCK_REALTIME, &ts);
   if (res != 0){
@@ -137,12 +137,12 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file)
     result = 2;
   }
   
-  printf ("INFO: Clock resolution is: %lld s - %ld ns (CLOCK_REALTIME)\n", s, ns);
+  printf ("INFO: Clock resolution is: %ld s - %ld ns (CLOCK_REALTIME)\n", s, ns);
   return result;
 }
 
 
-int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* error_file){
+int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     int i = 0;
     struct timespec* ts = NULL;
     struct timespec* last_ts = NULL;

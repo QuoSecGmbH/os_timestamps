@@ -4,7 +4,47 @@
 #include "run_tests.h"
 
 char* POSIX_c181 = "POSIX_c181";
+long ns_10ms = 10000000; // 10ms: smaller i / 10**i makes a difference with nanosleep + file write + *stat*
 
+int runtest(testenv_struct* env, char* ref, int repeat, long sleep_ns, int (*func)(FILE*, FILE*, FILE*, char*), char* func_name, char* spec, char* spec_name, char* desc){
+    int result = 0;
+    int newresult = 0;
+    char* curr_ref;
+    int i;
+    
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = 0;
+    ts_ns->tv_nsec = sleep_ns; 
+    
+    for (i=0; i<repeat; i++){
+        if (repeat >= 2){
+            curr_ref = (char*) calloc(strlen(ref)+20, 1);
+            sprintf(curr_ref, "%s.%i", ref, i+1);
+        }
+        else {
+            curr_ref = ref;
+        }
+
+        nanosleep(ts_ns, NULL);
+        newresult = func(env->csv_file, env->output_file, env->error_file, env->dir_path);
+        log_csv_add_result(env->csv_file, env->output_file, env->error_file, newresult, desc, spec, spec_name, curr_ref, func_name);
+        
+        if (newresult > result){
+            result = newresult;
+        }
+    }
+    
+    return result;
+}
+
+testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+  testenv_struct* env = (testenv_struct*) calloc(sizeof(testenv_struct), 1);
+  env->csv_file = csv_file;
+  env->output_file = output_file;
+  env->error_file = error_file;
+  env->dir_path = dir_path;
+  return env;
+}
 
 int main (int argc, char **argv){
     if (argc >= 2){
@@ -35,69 +75,34 @@ int main (int argc, char **argv){
     }
     log_info(output_file, error_file, "Directory for tests is: %s", dir_path);
     
-    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
-    ts_ns->tv_sec = 0;
-    ts_ns->tv_nsec = 10000000; // 10ms:smaller i / 10**i makes a difference with nanosleep + file write + *stat*
+    
+    testenv_struct* test_env = testenv_alloc(csv_file, output_file, error_file, dir_path);
     
     log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Ref", "Function");
-    group_check_general_clock(csv_file, output_file, error_file);
-    group_check_general_new_file(csv_file, output_file, error_file, dir_path);
-    nanosleep(ts_ns, NULL);
-    group_check_general_update(csv_file, output_file, error_file, dir_path);
+    group_check_general_clock(test_env);
+    group_check_general_new_file(test_env);
+    group_check_general_update(test_env);
 
     log_close_csv(csv_file);
 }
 
-void group_check_general_clock(FILE* csv_file, FILE* output_file, FILE* error_file){
-    int result;
-    
-    result = check_general_clock_res(csv_file, output_file, error_file);
-    log_csv_add_result(csv_file, output_file, error_file, result, "Clock resolution shall be at max 0.02s (CLOCK_REALTIME)", "Yes", POSIX_c181, "GENERAL.CLOCK.RES", "check_general_clock_res");
-    result = check_general_clock_increments(csv_file, output_file, error_file);
-    log_csv_add_result(csv_file, output_file, error_file, result, "Clock is incremental (increasing)", "No", "", "GENERAL.CLOCK.INCREMENTS", "check_general_clock_increments");
+void group_check_general_clock(testenv_struct* env){
+    runtest(env, "GENERAL.CLOCK.RES", 1, ns_10ms, check_general_clock_res, "check_general_clock_res", "Yes", POSIX_c181, "Clock resolution shall be at max 0.02s (CLOCK_REALTIME)");
+    runtest(env, "GENERAL.CLOCK.INCREMENTS", 1, ns_10ms, check_general_clock_increments, "check_general_clock_increments", "No", "", "Clock is incremental (increasing)");
 }
 
-void group_check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    int result;
-    
-    result = check_general_new_file_realtime(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC updated (CLOCK_REALTIME)", "No", "", "GENERAL.NEW_FILE_REALTIME", "check_general_new_file_realtime");
-    result = check_general_new_file(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC updated", "Yes", POSIX_c181, "GENERAL.NEW_FILE", "check_general_new_file");
-    result = check_general_new_file_mac_eq(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "New file shall have MAC set to same value", "No", "", "GENERAL.NEW_FILE.MAC_eq", "check_general_new_file_mac_eq");
+void group_check_general_new_file(testenv_struct* env){
+    runtest(env, "GENERAL.NEW_FILE_REALTIME", 1, ns_10ms, check_general_new_file_realtime, "check_general_new_file_realtime", "No", "", "New file shall have MAC updated (CLOCK_REALTIME)");
+    runtest(env, "GENERAL.NEW_FILE", 1, ns_10ms, check_general_new_file, "check_general_new_file", "Yes", POSIX_c181, "New file shall have MAC updated");
+    runtest(env, "GENERAL.NEW_FILE.MAC_eq", 1, ns_10ms, check_general_new_file_mac_eq, "check_general_new_file_mac_eq", "No", "", "New file shall have MAC set to same value");
 }
 
-
-void group_check_general_update(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    int result;
-    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
-    ts_ns->tv_sec = 0;
-    ts_ns->tv_nsec = 10000000; // 10ms: smaller i / 10**i makes a difference with nanosleep + file write + *stat*
-    
-    result = check_general_update_write_close(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "(1) fwrite+fclose shall update MC", "Yes", POSIX_c181, "GENERAL.UPDATE.WRITE_CLOSE", "check_general_update_write_close");
-    nanosleep(ts_ns, NULL);
-    result = check_general_update_write_close(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "(2) fwrite+fclose shall update MC", "Yes", POSIX_c181, "GENERAL.UPDATE.WRITE_CLOSE", "check_general_update_write_close");
-    
-    nanosleep(ts_ns, NULL);
-    result = check_general_update_read_close(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "(1) fread+fclose shall update A", "Yes", POSIX_c181, "GENERAL.UPDATE.READ_CLOSE", "check_general_update_read_close");
-    nanosleep(ts_ns, NULL);
-    result = check_general_update_read_close(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "(2) fread+fclose shall update A", "Yes", POSIX_c181, "GENERAL.UPDATE.READ_CLOSE", "check_general_update_read_close");
-    nanosleep(ts_ns, NULL);
-    
-    result = check_general_update_write_stat(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "fwrite+fstat shall update MC", "Yes", POSIX_c181, "GENERAL.UPDATE.WRITE_STAT", "check_general_update_write_stat");
-    nanosleep(ts_ns, NULL);
-    result = check_general_update_read_stat(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "fread+fstat shall update A", "Yes", POSIX_c181, "GENERAL.UPDATE.READ_STAT", "check_general_update_read_stat");
-    nanosleep(ts_ns, NULL);
-    
-    result = check_general_update_chmod(csv_file, output_file, error_file, dir_path);
-    log_csv_add_result(csv_file, output_file, error_file, result, "chmod shall update C", "Yes", POSIX_c181, "GENERAL.UPDATE.CHMOD", "check_general_update_chmod");
+void group_check_general_update(testenv_struct* env){ 
+    runtest(env, "GENERAL.UPDATE.WRITE_CLOSE", 2, ns_10ms, check_general_update_write_close, "check_general_update_write_close", "Yes", POSIX_c181, "fwrite+fclose shall update MC");
+    runtest(env, "GENERAL.UPDATE.READ_CLOSE", 2, ns_10ms, check_general_update_read_close, "check_general_update_read_close", "Yes", POSIX_c181, "fread+fclose shall update A");
+    runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "Yes", POSIX_c181, "fwrite+fstat shall update MC");
+    runtest(env, "GENERAL.UPDATE.READ_STAT", 2, ns_10ms, check_general_update_read_stat, "check_general_update_read_stat", "Yes", POSIX_c181, "fread+fstat shall update A");
+    runtest(env, "GENERAL.UPDATE.CHMOD", 2, ns_10ms, check_general_update_chmod, "check_general_update_chmod", "Yes", POSIX_c181, "chmod shall update C");
 }
 
 #endif
