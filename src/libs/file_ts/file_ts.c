@@ -47,7 +47,6 @@ struct stat* get_path_timestamps(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = stat(path, attr);
     if (res != 0){
-        printf("ERROR: get_path_timestamps_s - stat failed\n");
         return NULL;
     }
     

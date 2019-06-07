@@ -41,6 +41,7 @@ struct timespec* current_time_ns_coarse();
 #else
     #pragma message("OS not detected: current_time_ns_fslike_osspecific will resolve to current_time_ns")
 #endif
+struct timespec* current_time_ns_fslike_generic();
 struct timespec*  current_time_ns_fslike_osspecific();
 
 #endif

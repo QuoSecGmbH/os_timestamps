@@ -4,6 +4,7 @@
 #include "current_time.h"
 #include "log.h"
 #include "general.h"
+#include "interfaces.h"
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
@@ -20,6 +21,7 @@ testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file,
 void group_check_general_clock(testenv_struct* test_env);
 void group_check_general_update(testenv_struct* test_env);
 void group_check_general_new_file(testenv_struct* test_env);
+void group_check_interfaces_exec(testenv_struct* env);
 
 
 #endif

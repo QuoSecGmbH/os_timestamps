@@ -67,6 +67,7 @@ struct timespec* current_time_ns_freebsd_coarse(){
 }
 #endif
 
+
 #ifdef __OpenBSD__
 struct timespec* current_time_ns_openbsd_coarse(){
 // OpenBSD kernel sets inode timestamp to getnanotime()
@@ -74,9 +75,17 @@ struct timespec* current_time_ns_openbsd_coarse(){
 // There does not seem to be any way to access coarse times (get*) from userland
 // Workaround is to write a file then read its M
 
+  return current_time_ns_fslike_generic();
+}
+#endif
+
+
+struct timespec* current_time_ns_fslike_generic(){
+// Workaround in the general case is to write a file then read its M
+
   FILE* fd = fopen("tmp_timemarker", "wb");
   if (fd == NULL) {
-      printf("ERROR: current_time_ns_openbsd_coarse - can't open tmp_timemarker");
+      printf("ERROR: current_time_ns_fslike_generic - can't open tmp_timemarker");
       struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
       return ts;
   }
@@ -86,7 +95,6 @@ struct timespec* current_time_ns_openbsd_coarse(){
   struct stat* file_stat = get_path_timestamps("tmp_timemarker");
   return &(file_stat->st_mtim);
 }
-#endif
 
 struct timespec* current_time_ns_fslike_osspecific(){
 #ifdef __linux__
@@ -96,7 +104,7 @@ struct timespec* current_time_ns_fslike_osspecific(){
 #elif __OpenBSD__
     return current_time_ns_openbsd_coarse();
 #else
-    return current_time_custom(CLOCK_REALTIME);
+    return current_time_ns_fslike_generic();
 #endif
 }
 

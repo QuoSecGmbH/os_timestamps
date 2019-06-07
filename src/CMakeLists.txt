@@ -22,6 +22,7 @@ include_directories(
   libs/log/
   libs/misc/
   tests/general/
+  tests/interfaces/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -35,12 +36,15 @@ add_executable(prototype_file_ts tools/prototype_file_ts.h tools/prototype_file_
 target_link_libraries(prototype_file_ts lib_file_ts lib_log lib_misc)
 
 add_library(lib_current_time libs/current_time/current_time.h libs/current_time/current_time.c)
+target_link_libraries(lib_current_time lib_file_ts)
 
 add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
 add_library(lib_general tests/general/general.h tests/general/general.c)
+add_library(lib_interfaces tests/interfaces/interfaces.h tests/interfaces/interfaces.c)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
+#target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
-target_link_libraries(run_tests lib_general lib_file_ts lib_current_time lib_log lib_misc)
+target_link_libraries(run_tests lib_general lib_interfaces lib_file_ts lib_current_time lib_log lib_misc)
