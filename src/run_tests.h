@@ -23,6 +23,9 @@ void group_check_general_clock(testenv_struct* test_env);
 void group_check_general_update(testenv_struct* test_env);
 void group_check_general_new_file(testenv_struct* test_env);
 void group_check_interfaces_exec(testenv_struct* env);
+void group_check_interfaces_attr(testenv_struct* env);
+void group_check_interfaces_ts_futimens(testenv_struct* env);
+void group_check_interfaces_ts_utimensat(testenv_struct* env);
 
 
 #endif

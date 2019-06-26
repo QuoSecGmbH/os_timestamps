@@ -98,7 +98,11 @@ int main (int argc, char **argv){
     group_check_general_clock(test_env);
     group_check_general_new_file(test_env);
     group_check_general_update(test_env);
+    
     group_check_interfaces_exec(test_env);
+    group_check_interfaces_attr(test_env);
+    group_check_interfaces_ts_futimens(test_env);
+    group_check_interfaces_ts_utimensat(test_env);
 
     log_close_csv(csv_file);
 }
@@ -124,17 +128,42 @@ void group_check_general_update(testenv_struct* env){
 void group_check_interfaces_exec(testenv_struct* env){
     runtest(env, "INTERFACES.EXEC.EXECVP", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_exec_execvp, "check_interfaces_exec_execvp", "Yes", POSIX_c181, MANDATORY, "exec shall update A");
     runtest(env, "INTERFACES.EXEC.EXECVP_LOCAL", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_exec_execvp_local, "check_interfaces_exec_execvp_local", "Yes", POSIX_c181, MANDATORY, "exec shall update A (local)");
+}
+
+void group_check_interfaces_attr(testenv_struct* env){
     runtest(env, "INTERFACES.ATTR.CHMOD", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chmod, "check_interfaces_attr_chmod", "Yes", POSIX_c181, MANDATORY, "chmod shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_GRP", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_grp, "check_interfaces_attr_chown_grp", "Yes", POSIX_c181, MANDATORY, "chown(-1, getgid()) shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_USR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_usr, "check_interfaces_attr_chown_usr", "Yes", POSIX_c181, MANDATORY, "chown(getuid(), -1) shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_GRP_USR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_grp_usr, "check_interfaces_attr_chown_grp_usr", "Yes", POSIX_c181, MANDATORY, "chown(getuid(), getgid()) shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_NOCHANGE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_nochange, "check_interfaces_attr_chown_nochange", "Yes", POSIX_c181, NEEDNOT, "chown(-1, -1) need not update MAC");
-    
-    
+}
+
+void group_check_interfaces_ts_futimens(testenv_struct* env){
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma, "check_interfaces_ts_futimens_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall set MA and update C");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ns, "check_interfaces_ts_futimens_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall give MA granularity to the nanoseconds");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma_eq, "check_interfaces_ts_futimens_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with futimens shall set MA to same value");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MAC_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_mac_eq, "check_interfaces_ts_futimens_now_mac_eq", "No", "", MANDATORY, "Setting MA to now with futimens shall set MAC to same value");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.FUTURE.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_future_a, "check_interfaces_ts_futimens_set_future_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a future value shall set A, keep M and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.PAST.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_past_a, "check_interfaces_ts_futimens_set_past_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a past value shall set A, keep M and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.FUTURE.M", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_future_m, "check_interfaces_ts_futimens_set_future_m", "Yes", POSIX_c181, MANDATORY, "Setting M to a future value shall set M, keep A and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.PAST.M", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_past_m, "check_interfaces_ts_futimens_set_past_m", "Yes", POSIX_c181, MANDATORY, "Setting M to a past value shall set M, keep A and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_future_ma, "check_interfaces_ts_futimens_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_past_ma, "check_interfaces_ts_futimens_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
+    runtest(env, "INTERFACES.TS.FUTIMENS.SET.OMIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_omit, "check_interfaces_ts_futimens_set_omit", "Yes", POSIX_c181, NEEDNOT, "With UTIME_OMIT, C need not to be updated");
+}
+
+void group_check_interfaces_ts_utimensat(testenv_struct* env){
+    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma, "check_interfaces_ts_utimensat_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ns, "check_interfaces_ts_utimensat_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall give MA granularity to the nanoseconds");
+    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma_eq, "check_interfaces_ts_utimensat_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with utimensat shall set MA to same value");
+    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MAC_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_mac_eq, "check_interfaces_ts_utimensat_now_mac_eq", "No", "", MANDATORY, "Setting MA to now with utimensat shall set MAC to same value");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.FUTURE.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_future_a, "check_interfaces_ts_utimensat_set_future_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a future value shall set A, keep M and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.PAST.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_past_a, "check_interfaces_ts_utimensat_set_past_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a past value shall set A, keep M and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.FUTURE.M", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_future_m, "check_interfaces_ts_utimensat_set_future_m", "Yes", POSIX_c181, MANDATORY, "Setting M to a future value shall set M, keep A and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.PAST.M", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_past_m, "check_interfaces_ts_utimensat_set_past_m", "Yes", POSIX_c181, MANDATORY, "Setting M to a past value shall set M, keep A and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_future_ma, "check_interfaces_ts_utimensat_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_past_ma, "check_interfaces_ts_utimensat_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIMENSAT.SET.OMIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_omit, "check_interfaces_ts_utimensat_set_omit", "Yes", POSIX_c181, NEEDNOT, "With UTIME_OMIT, C need not to be updated");
 }
 #endif
 
