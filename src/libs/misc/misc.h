@@ -25,5 +25,6 @@ int misc_timespec_leq(struct timespec* ts1, struct timespec* ts2);
 int misc_timespec_geq(struct timespec* ts1, struct timespec* ts2);
 int misc_timespec_eq(struct timespec* ts1, struct timespec* ts2);
 int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
+int result_MAC_nanosecond(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
 
 #endif

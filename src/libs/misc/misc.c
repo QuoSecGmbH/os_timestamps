@@ -159,4 +159,66 @@ int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file,
     return result;
 }
 
+
+int result_MAC_nanosecond(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+    int result = 0;
+    
+    if (ts_before == NULL || ts_after == NULL || file_stat == NULL){
+        return 1;
+    }
+    
+    if (M==UPDATE_MANDATORY || M==UPDATE_OPTIONAL){
+        if (file_stat->st_mtim.tv_nsec % 1000 == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "M not accurate to the ns");
+            if (M==UPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    else if (M==NOUPDATE_MANDATORY || M==NOUPDATE_OPTIONAL){
+        if (file_stat->st_mtim.tv_nsec % 1000 != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "M accurate to the ns");
+            if (M==NOUPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    
+    if (A==UPDATE_MANDATORY || A==UPDATE_OPTIONAL){
+        if (file_stat->st_atim.tv_nsec % 1000 == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "A not accurate to the ns");
+            if (A==UPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    else if (A==NOUPDATE_MANDATORY || A==NOUPDATE_OPTIONAL){
+        if (file_stat->st_atim.tv_nsec % 1000 != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "A accurate to the ns");
+            if (A==NOUPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    
+    if (C==UPDATE_MANDATORY || C==UPDATE_OPTIONAL){
+        if (file_stat->st_ctim.tv_nsec % 1000 == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "C not accurate to the ns");
+            if (C==UPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    else if (C==NOUPDATE_MANDATORY || C==NOUPDATE_OPTIONAL){
+        if (file_stat->st_ctim.tv_nsec % 1000 != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "C accurate to the ns");
+            if (C==NOUPDATE_MANDATORY){
+                result = 2;
+            }
+        }
+    }
+    
+    return result;
+}
+
 #endif
