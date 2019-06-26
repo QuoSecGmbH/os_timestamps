@@ -40,7 +40,7 @@ target_link_libraries(lib_current_time lib_file_ts)
 
 add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
 add_library(lib_general tests/general/general.h tests/general/general.c)
-add_library(lib_interfaces tests/interfaces/interfaces.h tests/interfaces/interfaces.c)
+add_library(lib_interfaces tests/interfaces/interfaces.h tests/interfaces/interfaces.c tests/interfaces/i_futimens.h tests/interfaces/i_futimens.c)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
 #target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log)

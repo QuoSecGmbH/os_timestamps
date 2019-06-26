@@ -20,7 +20,9 @@ void log_csv_add_line(FILE* csv_file, int buf_count, ...){
     char* buf;
     for (i = 1; i <= buf_count; i++){
         buf = va_arg(buf_list, char *);
+        fwrite("\"", 1, 1, csv_file);
         fwrite(buf, strlen(buf), 1, csv_file);
+        fwrite("\"", 1, 1, csv_file);
         
         if (i < buf_count){
             fwrite(", ", 2, 1, csv_file);
@@ -31,7 +33,7 @@ void log_csv_add_line(FILE* csv_file, int buf_count, ...){
     va_end(buf_list); 
 }
 
-void log_csv_add_result(FILE* csv_file, FILE* output_file, FILE* error_file, int result, char* desc, char* specified, char* spec, char* ref, char* func){
+void log_csv_add_result(FILE* csv_file, FILE* output_file, FILE* error_file, int result, char* desc, char* specified, char* spec, char* speclevel, char* ref, char* func){
     char* res_str; 
     if (result == 0){
         res_str = "Yes";
@@ -43,8 +45,8 @@ void log_csv_add_result(FILE* csv_file, FILE* output_file, FILE* error_file, int
         res_str = "No";
     }
     
-    log_csv_add_line(csv_file, 6, res_str, desc, specified, spec, ref, func);
-    log_result(output_file, error_file, "%s - %s(%s) - %s - %s - %s", res_str, specified, spec, desc, ref, func);
+    log_csv_add_line(csv_file, 6, res_str, desc, specified, spec, speclevel, ref, func);
+    log_result(output_file, error_file, "%s - %s(%s.%s) - %s - %s - %s", res_str, specified, spec, speclevel, desc, ref, func);
 }
 
 void log_result(FILE* output_file, FILE* error_file, const char* format, ...){

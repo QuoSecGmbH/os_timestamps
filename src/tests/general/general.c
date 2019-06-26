@@ -169,22 +169,5 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     return result;
 }
 
-int check_general_update_chmod(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
-    
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    
-    char mode[] = "0777";
-    int i;
-    i = strtol(mode, 0, 8);
-    chmod(path,i) ;
-    
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
-    
-    int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
-    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
-    return result;
-}
 
 #endif
