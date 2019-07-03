@@ -19,7 +19,7 @@ int REPEAT_WORST = 0;
 int REPEAT_BEST = 1;
 
 int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time_t sleep_s, long sleep_ns, int (*func)(FILE*, FILE*, FILE*, char*), char* func_name, char* spec, char* spec_name, char* speclevel, char* desc){
-    int result = 0;
+    int result = -1;
     int newresult = 0;
     char* curr_ref;
     int i;
@@ -31,6 +31,10 @@ int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time
     for (i=0; i<repeat; i++){
         nanosleep(ts_ns, NULL);
         newresult = func(env->csv_file, env->output_file, env->error_file, env->dir_path);
+        if (result == -1){
+            result = newresult;
+        }
+        
         if (repeat >= 2 && VERBOSE){
             curr_ref = (char*) calloc(strlen(ref)+20, 1);
             sprintf(curr_ref, "%s.%i", ref, i+1);
@@ -103,6 +107,8 @@ int main (int argc, char **argv){
     group_check_interfaces_attr(test_env);
     group_check_interfaces_ts_futimens(test_env);
     group_check_interfaces_ts_utimensat(test_env);
+    group_check_interfaces_ts_utimes(test_env);
+    group_check_interfaces_ts_utime(test_env);
 
     log_close_csv(csv_file);
 }
@@ -164,6 +170,22 @@ void group_check_interfaces_ts_utimensat(testenv_struct* env){
     runtest(env, "INTERFACES.TS.UTIMENSAT.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_future_ma, "check_interfaces_ts_utimensat_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIMENSAT.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_past_ma, "check_interfaces_ts_utimensat_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIMENSAT.SET.OMIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_omit, "check_interfaces_ts_utimensat_set_omit", "Yes", POSIX_c181, NEEDNOT, "With UTIME_OMIT, C need not to be updated");
+}
+
+void group_check_interfaces_ts_utimes(testenv_struct* env){
+    runtest(env, "INTERFACES.TS.UTIMES_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_ma, "check_interfaces_ts_utimes_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIMES_NOW_US", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_us, "check_interfaces_ts_utimes_now_us", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall give MA granularity to the microsecond");
+
+    runtest(env, "INTERFACES.TS.UTIMES.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_set_future_ma, "check_interfaces_ts_utimes_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIMES.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_set_past_ma, "check_interfaces_ts_utimes_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
+}
+
+void group_check_interfaces_ts_utime(testenv_struct* env){
+    runtest(env, "INTERFACES.TS.UTIME_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utime_now_ma, "check_interfaces_ts_utime_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utime shall set MA and update C");
+    runtest(env, "INTERFACES.TS.UTIME_NOW_S", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utime_now_s, "check_interfaces_ts_utime_now_us", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utime shall give MA granularity to the second");
+
+    runtest(env, "INTERFACES.TS.UTIME.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utime_set_future_ma, "check_interfaces_ts_utime_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
+//     runtest(env, "INTERFACES.TS.UTIME.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utime_set_past_ma, "check_interfaces_ts_utime_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
 }
 #endif
 
