@@ -6,14 +6,6 @@
 char* POSIX_c181 = "POSIX_c181";
 char* MANDATORY = "MANDATORY";
 char* NEEDNOT = "NEEDNOT";
-long ns_0ns = 0;
-long ns_10ms = 10000000; // 10ms: smaller i / 10**i makes a difference with nanosleep + file write + *stat*
-long ns_100ms = 100000000;
-long ns_1s = 100000000;
-
-time_t s_0s = 0;
-time_t s_1s = 1;
-time_t s_10s = 10;
 
 int REPEAT_WORST = 0;
 int REPEAT_BEST = 1;
@@ -95,6 +87,11 @@ int main (int argc, char **argv){
     }
     log_info(output_file, error_file, "Directory for tests is: %s", dir_path);
     
+    // pre-creating some of the test files
+    misc_concat_ensure_file_exists(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2*s_1s, ns_0ns, output_file, error_file, __func__);
     
     testenv_struct* test_env = testenv_alloc(csv_file, output_file, error_file, dir_path);
     

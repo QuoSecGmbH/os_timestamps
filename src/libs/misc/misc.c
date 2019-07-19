@@ -16,6 +16,35 @@ char* misc_concat(char* buf1, char* buf2){
     return buf;
 }
 
+int misc_ensure_file_exists(char* buf){
+    if( access( buf, F_OK ) != -1 ) {
+        return 0;
+    }
+    return 1;
+}
+
+char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  char* buf = misc_concat(buf1, buf2);
+  if (misc_ensure_file_exists(buf) != 0){
+    log_info(output_file, error_file, "misc_concat_ensure_file_exists in %s - Creating file %s", func_name, buf);
+    
+    FILE* fd = fopen(buf, "wb");
+    if (fd == NULL) {
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
+    }
+    fclose(fd);
+    
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = sleep_s;
+    ts_ns->tv_nsec = sleep_ns; 
+    nanosleep(ts_ns, NULL);
+    free(ts_ns);
+  }
+  
+  
+  return buf;
+}
+
 int stat_succeeds(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = stat(path, attr);
@@ -221,7 +250,7 @@ int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, co
 }
 
 
-int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider_id, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
     int result = 0;
     
     if (ts_before == NULL || ts_after == NULL || file_stat == NULL){
@@ -229,8 +258,14 @@ int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_f
     }
     
     if (M==GRANULARITY_MANDATORY || M==GRANULARITY_OPTIONAL){
-        if (file_stat->st_mtim.tv_nsec % divider == 0){
-            log_warning(output_file, error_file, "%s - %s", func_name, "M not accurate to the ns");
+        if ((divider_id < GRANULARITY_LIST_LEN) && file_stat->st_mtim.tv_nsec % GRANULARITY_LIST[divider_id] == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "M less accurate than expected");
+            if (M==GRANULARITY_MANDATORY){
+                result = 2;
+            }
+        }
+        if ((divider_id != 0) && file_stat->st_mtim.tv_nsec % GRANULARITY_LIST[divider_id-1] != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "M more accurate than expected");
             if (M==GRANULARITY_MANDATORY){
                 result = 2;
             }
@@ -238,8 +273,14 @@ int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_f
     }
     
     if (A==GRANULARITY_MANDATORY || A==GRANULARITY_OPTIONAL){
-        if (file_stat->st_atim.tv_nsec % divider == 0){
-            log_warning(output_file, error_file, "%s - %s", func_name, "A not accurate to the ns");
+        if ((divider_id < GRANULARITY_LIST_LEN) && file_stat->st_atim.tv_nsec % GRANULARITY_LIST[divider_id] == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "A less accurate than expected");
+            if (A==GRANULARITY_MANDATORY){
+                result = 2;
+            }
+        }
+        if ((divider_id != 0) && file_stat->st_atim.tv_nsec % GRANULARITY_LIST[divider_id-1] != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "A more accurate than expected");
             if (A==GRANULARITY_MANDATORY){
                 result = 2;
             }
@@ -247,8 +288,14 @@ int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_f
     }
     
     if (C==GRANULARITY_MANDATORY || C==GRANULARITY_OPTIONAL){
-        if (file_stat->st_ctim.tv_nsec % divider == 0){
-            log_warning(output_file, error_file, "%s - %s", func_name, "C not accurate to the ns");
+        if ((divider_id < GRANULARITY_LIST_LEN) && file_stat->st_ctim.tv_nsec % GRANULARITY_LIST[divider_id] == 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "C less accurate than expected");
+            if (C==GRANULARITY_MANDATORY){
+                result = 2;
+            }
+        }
+        if ((divider_id != 0) && file_stat->st_ctim.tv_nsec % GRANULARITY_LIST[divider_id-1] != 0){
+            log_warning(output_file, error_file, "%s - %s", func_name, "C more accurate than expected");
             if (C==GRANULARITY_MANDATORY){
                 result = 2;
             }

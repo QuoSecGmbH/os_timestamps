@@ -4,7 +4,7 @@
 #include "i_utime.h"
 
 int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -47,7 +47,7 @@ int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* er
 }
 
 int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -70,25 +70,26 @@ int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* err
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path);
     
-    int resultM = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
-    int resultA = result_MAC_granularity(GRANULARITY_NOCHECK, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
-    int result = misc_min2(resultM, resultA);
+//     int resultM = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
+//     int resultA = result_MAC_granularity(GRANULARITY_NOCHECK, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
+//     int result = misc_min2(resultM, resultA);
+    int result = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_S, ts_before, ts_after, file_stat);
     
-    if (result == 2){
-        // Case: granularity for both is not microsecond, we then consider granularity is s as expected
-        result = 0;
-    }
-    else {
-        log_warning(output_file, error_file, "%s - %s %d", __func__, "granularity is not second");
-        result = 2;
-    }
+//     if (result == 2){
+//         // Case: granularity for both is not microsecond, we then consider granularity is s as expected
+//         result = 0;
+//     }
+//     else {
+//         log_warning(output_file, error_file, "%s - %s %d", __func__, "granularity is not second");
+//         result = 2;
+//     }
     
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     return result;
 }
 
 int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat* file_stat_before = get_path_timestamps(path);
@@ -135,7 +136,7 @@ int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, F
 }
 
 int check_interfaces_ts_utime_set_past_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat* file_stat_before = get_path_timestamps(path);
