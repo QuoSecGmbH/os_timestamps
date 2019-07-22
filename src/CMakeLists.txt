@@ -23,6 +23,7 @@ include_directories(
   libs/misc/
   tests/general/
   tests/interfaces/
+  tests/interfaces/file/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -51,6 +52,10 @@ add_library(lib_interfaces
 	tests/interfaces/i_utimes.c
 	tests/interfaces/i_utime.h
 	tests/interfaces/i_utime.c
+	tests/interfaces/file/i_file.h
+	tests/interfaces/file/i_file.c
+	tests/interfaces/file/i_fopen.h
+	tests/interfaces/file/i_fopen.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)

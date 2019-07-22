@@ -28,6 +28,8 @@ void group_check_interfaces_ts_futimens(testenv_struct* env);
 void group_check_interfaces_ts_utimensat(testenv_struct* env);
 void group_check_interfaces_ts_utimes(testenv_struct* env);
 void group_check_interfaces_ts_utime(testenv_struct* env);
+void group_check_interfaces_file(testenv_struct* env);
+void group_check_interfaces_file_fopen(testenv_struct* env);
 
 
 #endif

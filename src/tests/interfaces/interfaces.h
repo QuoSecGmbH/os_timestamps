@@ -14,6 +14,8 @@
 #include "i_utimensat.h"
 #include "i_utimes.h"
 #include "i_utime.h"
+#include "i_file.h"
+#include "i_fopen.h"
 
 int check_interfaces_exec_execvp(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_exec_execvp_local(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);

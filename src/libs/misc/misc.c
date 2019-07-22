@@ -5,6 +5,44 @@
 
 int VERBOSE;
 
+int misc_invert_check_result(int res){
+    if (res == 0){
+        return 2;
+    }
+    else if (res == 2){
+        return 0;
+    }
+    return res;
+}
+
+void misc_nanosleep(int ns){
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = 0;
+    ts_ns->tv_nsec = ns;
+    nanosleep(ts_ns, NULL);
+}
+
+void misc_microsleep(int us){
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = 0;
+    ts_ns->tv_nsec = us*1000;
+    nanosleep(ts_ns, NULL);
+}
+
+void misc_millisleep(int ms){
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = 0;
+    ts_ns->tv_nsec = ms*1000000;
+    nanosleep(ts_ns, NULL);
+}
+
+void misc_sleep(int s){
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = s;
+    ts_ns->tv_nsec = 0;
+    nanosleep(ts_ns, NULL);
+}
+
 char* misc_concat(char* buf1, char* buf2){
     int len1 = strlen(buf1);
     int len2 = strlen(buf2);

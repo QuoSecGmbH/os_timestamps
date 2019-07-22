@@ -60,6 +60,13 @@ static const int GRANULARITY_S = 9; // 10ms
 
 extern int VERBOSE;
 
+int misc_invert_check_result(int res);
+
+void misc_nanosleep(int ns);
+void misc_microsleep(int us);
+void misc_millisleep(int ms);
+void misc_sleep(int s);
+
 char* misc_concat(char* buf1, char* buf2);
 int misc_ensure_file_exists(char* buf);
 char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
