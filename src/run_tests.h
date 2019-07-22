@@ -26,6 +26,8 @@ void group_check_interfaces_exec(testenv_struct* env);
 void group_check_interfaces_attr(testenv_struct* env);
 void group_check_interfaces_ts_futimens(testenv_struct* env);
 void group_check_interfaces_ts_utimensat(testenv_struct* env);
+void group_check_interfaces_ts_utimes(testenv_struct* env);
+void group_check_interfaces_ts_utime(testenv_struct* env);
 
 
 #endif
