@@ -11,6 +11,8 @@
 #include <unistd.h>
 
 
+static const long ns_after_open = 100000000; //ns_100ms
+
 static const long ns_0ns = 0;
 static const long ns_1ns = 1;
 static const long ns_10ns = 10;

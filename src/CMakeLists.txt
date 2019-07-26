@@ -24,6 +24,7 @@ include_directories(
   tests/general/
   tests/interfaces/
   tests/interfaces/file/
+  tests/interfaces/file/w/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -33,8 +34,12 @@ include_directories(
 
 add_library(lib_log libs/log/log.h libs/log/log.c)
 add_library(lib_file_ts libs/file_ts/file_ts.h libs/file_ts/file_ts.c)
+
 add_executable(prototype_file_ts tools/prototype_file_ts.h tools/prototype_file_ts.c)
 target_link_libraries(prototype_file_ts lib_file_ts lib_log lib_misc)
+
+add_executable(prototype_std_ts tools/prototype_std_ts.h tools/prototype_std_ts.c)
+target_link_libraries(prototype_std_ts lib_file_ts lib_log lib_misc)
 
 add_library(lib_current_time libs/current_time/current_time.h libs/current_time/current_time.c)
 target_link_libraries(lib_current_time lib_file_ts)
@@ -56,10 +61,30 @@ add_library(lib_interfaces
 	tests/interfaces/file/i_file.c
 	tests/interfaces/file/i_fopen.h
 	tests/interfaces/file/i_fopen.c
+	tests/interfaces/file/w/i_file_w.h
+	tests/interfaces/file/w/i_file_w.c
+	tests/interfaces/file/w/i_file_w_fprintf.h
+	tests/interfaces/file/w/i_file_w_fprintf.c
+	tests/interfaces/file/w/i_file_w_printf.h
+	tests/interfaces/file/w/i_file_w_printf.c
+	tests/interfaces/file/w/i_file_w_fputc.h
+	tests/interfaces/file/w/i_file_w_fputc.c
+	tests/interfaces/file/w/i_file_w_fputs.h
+	tests/interfaces/file/w/i_file_w_fputs.c
+	tests/interfaces/file/w/i_file_w_fputwc.c
+	tests/interfaces/file/w/i_file_w_fputwc.h
+	tests/interfaces/file/w/i_file_w_fputws.c
+	tests/interfaces/file/w/i_file_w_fputws.h
+	tests/interfaces/file/w/i_file_w_fwprintf.c
+	tests/interfaces/file/w/i_file_w_wprintf.h
+	tests/interfaces/file/w/i_file_w_wprintf.c
+	tests/interfaces/file/w/i_file_w_fwrite.h
+	tests/interfaces/file/w/i_file_w_fwrite.c
+	tests/interfaces/file/w/i_file_w_puts.h
+	tests/interfaces/file/w/i_file_w_puts.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
-#target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
