@@ -26,6 +26,11 @@ int check_interfaces_file_w_fwprintf_fflush(FILE* csv_file, FILE* output_file, F
     
     fclose(fd);
     
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result; 
 }
 
@@ -50,6 +55,10 @@ int check_interfaces_file_w_fwprintf_fclose(FILE* csv_file, FILE* output_file, F
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -70,7 +79,7 @@ int check_interfaces_file_w_fwprintf_exit(FILE* csv_file, FILE* output_file, FIL
     if (child_pid == 0) {
         // Child code
         fwprintf(fd, L"%s\n", "fwprintf test");
-        exit(0);
+        _exit(0);
     }
     
     int wstatus;    
@@ -95,6 +104,10 @@ int check_interfaces_file_w_fwprintf_exit(FILE* csv_file, FILE* output_file, FIL
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -137,6 +150,10 @@ int check_interfaces_file_w_fwprintf_abort(FILE* csv_file, FILE* output_file, FI
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }

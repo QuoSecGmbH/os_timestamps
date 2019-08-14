@@ -103,4 +103,14 @@ struct stat* get_file_timestamps(FILE *f) {
     return attr;
 }
 
+struct stat* get_path_timestamps_lstat(char *path) {
+    struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
+    int res = lstat(path, attr);
+    if (res != 0){
+        return NULL;
+    }
+    
+    return attr;
+}
+
 #endif

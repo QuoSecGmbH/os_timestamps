@@ -16,6 +16,7 @@
 #include "i_utime.h"
 #include "i_file.h"
 #include "i_fopen.h"
+
 #include "i_file_w.h"
 #include "i_file_w_fprintf.h"
 #include "i_file_w_printf.h"
@@ -27,6 +28,25 @@
 #include "i_file_w_wprintf.h"
 #include "i_file_w_fwrite.h"
 #include "i_file_w_puts.h"
+
+#include "i_file_r.h"
+#include "i_file_r_fread.h"
+#include "i_file_r_fgetc.h"
+#include "i_file_r_getc.h"
+#include "i_file_r_fgets.h"
+#include "i_file_r_gets.h"
+#include "i_file_r_getchar.h"
+#include "i_file_r_getdelim.h"
+#include "i_file_r_getline.h"
+#include "i_file_r_fscanf.h"
+#include "i_file_r_scanf.h"
+#include "i_file_r_fwscanf.h"
+#include "i_file_r_wscanf.h"
+
+#include "i_file_new.h"
+#include "i_file_ln.h"
+
+
 
 int check_interfaces_exec_execvp(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_exec_execvp_local(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);

@@ -20,6 +20,7 @@ void misc_nanosleep(int ns){
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = ns;
     nanosleep(ts_ns, NULL);
+    free(ts_ns);
 }
 
 void misc_microsleep(int us){
@@ -27,6 +28,7 @@ void misc_microsleep(int us){
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = us*1000;
     nanosleep(ts_ns, NULL);
+    free(ts_ns);
 }
 
 void misc_millisleep(int ms){
@@ -34,6 +36,7 @@ void misc_millisleep(int ms){
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = ms*1000000;
     nanosleep(ts_ns, NULL);
+    free(ts_ns);
 }
 
 void misc_sleep(int s){
@@ -41,6 +44,7 @@ void misc_sleep(int s){
     ts_ns->tv_sec = s;
     ts_ns->tv_nsec = 0;
     nanosleep(ts_ns, NULL);
+    free(ts_ns);
 }
 
 char* misc_concat(char* buf1, char* buf2){
@@ -61,15 +65,26 @@ int misc_ensure_file_exists(char* buf){
     return 1;
 }
 
-char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
-  char* buf = misc_concat(buf1, buf2);
-  if (misc_ensure_file_exists(buf) != 0){
-    log_info(output_file, error_file, "misc_concat_ensure_file_exists in %s - Creating file %s", func_name, buf);
+char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  char* buf_path = misc_concat(buf1, buf2);
+  if (misc_ensure_file_exists(buf_path) != 0){
+    log_info(output_file, error_file, "misc_concat_ensure_file_exists in %s - Creating file %s", func_name, buf_path);
     
-    FILE* fd = fopen(buf, "wb");
+    FILE* fd = fopen(buf_path, "wb");
     if (fd == NULL) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
     }
+    
+    if (written_size != 0){
+      char buf[115] = "lorem ipsum dolor sit amety consectetur adipiscing elita nulla et purus pulvinari mollis sapien ato suscipit nisl";
+      if (written_size > 115){
+        fwrite(buf, 1, 115, fd);
+      }
+      else {
+        fwrite(buf, 1, written_size, fd);
+      }
+    }
+    
     fclose(fd);
     
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
@@ -79,13 +94,26 @@ char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, lon
     free(ts_ns);
   }
   
-  
-  return buf;
+  return buf_path;
+}
+
+char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  return misc_concat_ensure_file_exists_generic(buf1, buf2, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+}
+
+void misc_concat_ensure_file_exists_free(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  char* buf = misc_concat_ensure_file_exists_generic(buf1, buf2, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+  free(buf);
+}
+
+char* misc_concat_ensure_file_exists_filled(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  return misc_concat_ensure_file_exists_generic(buf1, buf2, written_size, sleep_s, sleep_ns, output_file, error_file, func_name);
 }
 
 int stat_succeeds(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = stat(path, attr);
+    free(attr);
     if (res != 0){
         // stat failed
         return 1;

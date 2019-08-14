@@ -13,5 +13,6 @@ void print_file_timestamps_s(FILE *f);
 void print_path_timestamps_ns(char *path);
 void print_file_timestamps_ns(FILE *f);
 struct stat* get_path_timestamps(char *path);
+struct stat* get_path_timestamps_lstat(char *path);
 struct stat* get_file_timestamps(FILE *f);
 #endif

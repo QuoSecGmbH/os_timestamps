@@ -5,7 +5,8 @@
 
 int helper_interfaces_file_fopen_new_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.new.writemode");
-    char* path_mode = (char*) misc_concat((char*) misc_concat(path_generic, "."), mode);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat(path_dot, mode);
     
     if (misc_ensure_file_exists(path_mode) == 0){
         log_warning(output_file, error_file, "%s - %s %s", __func__, path_mode, "already exists");
@@ -29,6 +30,14 @@ int helper_interfaces_file_fopen_new_writemode(FILE* csv_file, FILE* output_file
     log_info_ts_stat_on_error(output_file, error_file, __func__, result_dir, ts_before, ts_after, dir_stat);
     
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    free(dir_stat);
     
     int result = misc_max2(result_file, result_dir);
     return result; 
@@ -75,7 +84,8 @@ int check_interfaces_file_fopen_new_APB(FILE* csv_file, FILE* output_file, FILE*
 
 int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.writemode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -92,6 +102,13 @@ int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -118,7 +135,8 @@ int check_interfaces_file_fopen_existing_WPB(FILE* csv_file, FILE* output_file, 
 
 int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fwrite.existing.writemode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -132,11 +150,17 @@ int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE*
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat* file_stat = get_path_timestamps(path_mode);
-    struct stat* dir_stat = get_path_timestamps(dir_path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -176,7 +200,8 @@ int check_interfaces_file_fopen_fwrite_existing_RPB(FILE* csv_file, FILE* output
 
 int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.dir.writemode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -195,6 +220,13 @@ int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, F
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
     
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(dir_stat);
     
     return result; 
 }
@@ -233,7 +265,8 @@ int check_interfaces_file_fopen_fwrite_existing_dir_RPB(FILE* csv_file, FILE* ou
 
 int helper_interfaces_file_fopen_existing_readmode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.readmode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -250,6 +283,13 @@ int helper_interfaces_file_fopen_existing_readmode(FILE* csv_file, FILE* output_
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -277,7 +317,8 @@ int check_interfaces_file_fopen_existing_RPB(FILE* csv_file, FILE* output_file, 
 
 int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fread.existing.readmode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
     FILE* f1 = fopen(path_mode, "wb");
     if (f1 == NULL) {
@@ -288,8 +329,8 @@ int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* o
     fwrite("TEXT", 4, 1, f1);
     fclose(f1);
     
+    misc_nanosleep(ns_after_open);
     
-    misc_millisleep(100);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path_mode, mode);
@@ -312,7 +353,15 @@ int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* o
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
+    free(buf);
     fclose(fd);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }
@@ -339,7 +388,8 @@ int check_interfaces_file_fopen_fread_existing_RPB(FILE* csv_file, FILE* output_
 
 int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fread.existing.writemode");
-    char* path_mode = (char*) misc_concat_ensure_file_exists((char*) misc_concat(path_generic, "."), mode, s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path_dot = (char*) misc_concat(path_generic, ".");
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
     FILE* f = fopen(path_mode, mode);
     if (f == NULL) {
@@ -350,7 +400,8 @@ int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* 
     fwrite("TEXT", 4, 1, f);
     fseek(f, 0, SEEK_SET);
     
-    misc_millisleep(100);
+    misc_nanosleep(ns_after_open);
+    
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char* buf = (char*) calloc(3, sizeof(char));
@@ -367,7 +418,15 @@ int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* 
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
+    free(buf);
     fclose(f);
+    
+    free(path_generic);
+    free(path_dot);
+    free(path_mode);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
     
     return result; 
 }

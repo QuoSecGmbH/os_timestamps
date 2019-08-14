@@ -13,7 +13,9 @@ endif()
 # Options
 # Compiler------------------------------------------------------------------
 # Less warnings in C in order to avoid warnings about flex/bison code
-set(CMAKE_C_FLAGS " -std=gnu11 -pedantic -D__STDC_FORMAT_MACROS -DHAVE_STRUCT_TIMESPEC=1 -D_POSIX_C_SOURCE=200809L -D_hypot=hypot -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-result")
+set(CMAKE_C_FLAGS " -std=gnu11 -O0 -pedantic -D__STDC_FORMAT_MACROS -DHAVE_STRUCT_TIMESPEC=1 -D_POSIX_C_SOURCE=200809L -D_hypot=hypot -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-unused-result -Wno-implicit-function-declaration")
+set(CMAKE_C_FLAGS_DEBUG " -O0 -g -fsanitize=address")
+set(CMAKE_C_FLAGS_VALGRIND " -O0 -g")
 
 include_directories(
   ./
@@ -25,6 +27,9 @@ include_directories(
   tests/interfaces/
   tests/interfaces/file/
   tests/interfaces/file/w/
+  tests/interfaces/file/r/
+  tests/interfaces/file/new/
+  tests/interfaces/file/ln/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -41,7 +46,7 @@ target_link_libraries(prototype_file_ts lib_file_ts lib_log lib_misc)
 add_executable(prototype_std_ts tools/prototype_std_ts.h tools/prototype_std_ts.c)
 target_link_libraries(prototype_std_ts lib_file_ts lib_log lib_misc)
 
-add_library(lib_current_time libs/current_time/current_time.h libs/current_time/current_time.c)
+add_library(lib_current_time libs/current_time/current_time.h libs/current_time/current_time_message.c libs/current_time/current_time.c)
 target_link_libraries(lib_current_time lib_file_ts)
 
 add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
@@ -82,6 +87,36 @@ add_library(lib_interfaces
 	tests/interfaces/file/w/i_file_w_fwrite.c
 	tests/interfaces/file/w/i_file_w_puts.h
 	tests/interfaces/file/w/i_file_w_puts.c
+	tests/interfaces/file/r/i_file_r.h
+	tests/interfaces/file/r/i_file_r.c
+	tests/interfaces/file/r/i_file_r_fread.h
+	tests/interfaces/file/r/i_file_r_fread.c
+	tests/interfaces/file/r/i_file_r_fgetc.h
+	tests/interfaces/file/r/i_file_r_fgetc.c
+	tests/interfaces/file/r/i_file_r_getc.h
+	tests/interfaces/file/r/i_file_r_getc.c
+	tests/interfaces/file/r/i_file_r_fgets.h
+	tests/interfaces/file/r/i_file_r_fgets.c
+	tests/interfaces/file/r/i_file_r_gets.h
+	tests/interfaces/file/r/i_file_r_gets.c
+	tests/interfaces/file/r/i_file_r_getchar.h
+	tests/interfaces/file/r/i_file_r_getchar.c
+	tests/interfaces/file/r/i_file_r_getdelim.h
+	tests/interfaces/file/r/i_file_r_getdelim.c
+	tests/interfaces/file/r/i_file_r_getline.h
+	tests/interfaces/file/r/i_file_r_getline.c
+	tests/interfaces/file/r/i_file_r_fscanf.h
+	tests/interfaces/file/r/i_file_r_fscanf.c
+	tests/interfaces/file/r/i_file_r_scanf.h
+	tests/interfaces/file/r/i_file_r_scanf.c
+	tests/interfaces/file/r/i_file_r_fwscanf.h
+	tests/interfaces/file/r/i_file_r_fwscanf.c
+	tests/interfaces/file/r/i_file_r_wscanf.h
+	tests/interfaces/file/r/i_file_r_wscanf.c
+	tests/interfaces/file/new/i_file_new.h
+	tests/interfaces/file/new/i_file_new.c
+	tests/interfaces/file/ln/i_file_ln.h
+	tests/interfaces/file/ln/i_file_ln.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)

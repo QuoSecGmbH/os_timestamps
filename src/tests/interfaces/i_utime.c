@@ -43,6 +43,15 @@ int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* er
     int result_update = result_MAC_updated(UPDATE_NOCHECK, UPDATE_NOCHECK, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_current_time);
+    free(ts_current_time_s);
+    free(ut_now);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -85,6 +94,15 @@ int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* err
 //     }
     
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_current_time);
+    free(ts_current_time_s);
+    free(ut_now);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -92,7 +110,6 @@ int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, F
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
 
     struct utimbuf* ut_future = (struct utimbuf*) calloc(sizeof(struct utimbuf), 1);
     ut_future->actime = 2109839871; // Sun Nov  9 11:37:51 CET 2036
@@ -132,6 +149,15 @@ int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, F
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ut_future);
+    free(ts_A_s);
+    free(ts_M_s);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -139,7 +165,6 @@ int check_interfaces_ts_utime_set_past_ma(FILE* csv_file, FILE* output_file, FIL
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
 
     struct utimbuf* ut_past = (struct utimbuf*) calloc(sizeof(struct utimbuf), 1);
     ut_past->actime = 732098712; // Sun Mar 14 09:45:12 CET 1993
@@ -179,6 +204,15 @@ int check_interfaces_ts_utime_set_past_ma(FILE* csv_file, FILE* output_file, FIL
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ut_past);
+    free(ts_A_s);
+    free(ts_M_s);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 

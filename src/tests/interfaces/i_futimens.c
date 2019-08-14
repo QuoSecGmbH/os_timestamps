@@ -20,8 +20,8 @@ int check_interfaces_ts_futimens_now_ma(FILE* csv_file, FILE* output_file, FILE*
     times[1] = *ts_now2;
     
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -39,6 +39,14 @@ int check_interfaces_ts_futimens_now_ma(FILE* csv_file, FILE* output_file, FILE*
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_now1);
+    free(ts_now2);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -59,8 +67,8 @@ int check_interfaces_ts_futimens_now_ns(FILE* csv_file, FILE* output_file, FILE*
     times[1] = *ts_now2;
     
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -78,6 +86,14 @@ int check_interfaces_ts_futimens_now_ns(FILE* csv_file, FILE* output_file, FILE*
     
     int result = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_NS, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+   
+    free(path);
+    free(ts_now1);
+    free(ts_now2);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -93,6 +109,10 @@ int check_interfaces_ts_futimens_now_ma_eq(FILE* csv_file, FILE* output_file, FI
     }
     
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, NULL, NULL, file_stat);
+    
+    free(path);
+    free(file_stat);
+    
     return result;
 }
 
@@ -108,6 +128,10 @@ int check_interfaces_ts_futimens_now_mac_eq(FILE* csv_file, FILE* output_file, F
     }
     
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, NULL, NULL, file_stat);
+    
+    free(path);
+    free(file_stat);
+    
     return result;
 }
 
@@ -128,8 +152,8 @@ int check_interfaces_ts_futimens_set_future_a(FILE* csv_file, FILE* output_file,
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -157,6 +181,15 @@ int check_interfaces_ts_futimens_set_future_a(FILE* csv_file, FILE* output_file,
     
     result = misc_max3(result, result_keep, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_before);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -177,8 +210,8 @@ int check_interfaces_ts_futimens_set_past_a(FILE* csv_file, FILE* output_file, F
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -206,6 +239,15 @@ int check_interfaces_ts_futimens_set_past_a(FILE* csv_file, FILE* output_file, F
     
     result = misc_max3(result, result_keep, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_before);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -226,8 +268,8 @@ int check_interfaces_ts_futimens_set_future_m(FILE* csv_file, FILE* output_file,
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -255,6 +297,15 @@ int check_interfaces_ts_futimens_set_future_m(FILE* csv_file, FILE* output_file,
     
     result = misc_max3(result, result_keep, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_before);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -275,8 +326,8 @@ int check_interfaces_ts_futimens_set_past_m(FILE* csv_file, FILE* output_file, F
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+   int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -304,6 +355,15 @@ int check_interfaces_ts_futimens_set_past_m(FILE* csv_file, FILE* output_file, F
     
     result = misc_max3(result, result_keep, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_before);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -312,7 +372,6 @@ int check_interfaces_ts_futimens_set_future_ma(FILE* csv_file, FILE* output_file
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.futimens", s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
     
     struct timespec* ts_A = (struct timespec*) calloc(sizeof(struct timespec), 1);
     struct timespec* ts_M = (struct timespec*) calloc(sizeof(struct timespec), 1);
@@ -325,8 +384,8 @@ int check_interfaces_ts_futimens_set_future_ma(FILE* csv_file, FILE* output_file
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -359,6 +418,14 @@ int check_interfaces_ts_futimens_set_future_ma(FILE* csv_file, FILE* output_file
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -367,7 +434,6 @@ int check_interfaces_ts_futimens_set_past_ma(FILE* csv_file, FILE* output_file, 
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.futimens", s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
     
     struct timespec* ts_A = (struct timespec*) calloc(sizeof(struct timespec), 1);
     struct timespec* ts_M = (struct timespec*) calloc(sizeof(struct timespec), 1);
@@ -380,8 +446,8 @@ int check_interfaces_ts_futimens_set_past_ma(FILE* csv_file, FILE* output_file, 
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -414,6 +480,14 @@ int check_interfaces_ts_futimens_set_past_ma(FILE* csv_file, FILE* output_file, 
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -422,7 +496,6 @@ int check_interfaces_ts_futimens_set_omit(FILE* csv_file, FILE* output_file, FIL
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.futimens", s_0s, ns_100ms, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
     
     struct timespec* ts_A = (struct timespec*) calloc(sizeof(struct timespec), 1);
     struct timespec* ts_M = (struct timespec*) calloc(sizeof(struct timespec), 1);
@@ -435,8 +508,8 @@ int check_interfaces_ts_futimens_set_omit(FILE* csv_file, FILE* output_file, FIL
     times[0] = *ts_A;
     times[1] = *ts_M;
     
-    FILE* fd = open(path, O_RDWR);
-    if (fd == NULL) {
+    int fd = open(path, O_RDWR);
+    if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
@@ -455,6 +528,14 @@ int check_interfaces_ts_futimens_set_omit(FILE* csv_file, FILE* output_file, FIL
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat_after);
     
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(ts_A);
+    free(ts_M);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 

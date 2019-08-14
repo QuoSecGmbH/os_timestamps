@@ -16,6 +16,7 @@ void log_csv_add_line(FILE* csv_file, int buf_count, ...){
     va_list buf_list; 
     va_start(buf_list, buf_count); 
 
+//     fwrite("BEGLINE\n", 8, 1, csv_file);
     int i;
     char* buf;
     for (i = 1; i <= buf_count; i++){
@@ -29,6 +30,7 @@ void log_csv_add_line(FILE* csv_file, int buf_count, ...){
         }
     }
     fwrite("\n", 1, 1, csv_file);
+//     fwrite("ENDLINE\n", 8, 1, csv_file);
   
     va_end(buf_list); 
 }
@@ -96,9 +98,14 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     va_end(argptr);
 }
 
-void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat){
+void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat, char* message){
     if (result != 0 || VERBOSE >= 1){
-        log_info(output_file, error_file, "%s:", func_name);
+        if (strlen(message) == 0){
+            log_info(output_file, error_file, "%s:", func_name, message);
+        }
+        else {
+            log_info(output_file, error_file, "%s - %s:", func_name, message);
+        }
         if (ts_before != NULL && ts_after != NULL){
             log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns", ts_before->tv_sec, ts_before->tv_nsec, ts_after->tv_sec, ts_after->tv_nsec);
         }
@@ -108,6 +115,10 @@ void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* 
             log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
         }
     }
+}
+
+void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat){
+    log_info_ts_stat_on_error_message(output_file, error_file, func_name, result, ts_before, ts_after, file_stat, "");
 }
                   
 #endif

@@ -50,6 +50,16 @@ int check_interfaces_ts_utimes_now_ma(FILE* csv_file, FILE* output_file, FILE* e
     int result_update = result_MAC_updated(UPDATE_NOCHECK, UPDATE_NOCHECK, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_current_time);
+    free(ts_current_time_us);
+    free(tv_now1);
+    free(tv_now2);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -83,6 +93,15 @@ int check_interfaces_ts_utimes_now_us(FILE* csv_file, FILE* output_file, FILE* e
     
     int result = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_current_time);
+    free(tv_now1);
+    free(tv_now2);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
     return result;
 }
 
@@ -90,7 +109,6 @@ int check_interfaces_ts_utimes_set_future_ma(FILE* csv_file, FILE* output_file, 
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimes", s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
     
     struct timeval* tv_A = (struct timeval*) calloc(sizeof(struct timeval), 1);
     struct timeval* tv_M = (struct timeval*) calloc(sizeof(struct timeval), 1);
@@ -137,6 +155,16 @@ int check_interfaces_ts_utimes_set_future_ma(FILE* csv_file, FILE* output_file, 
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(tv_A);
+    free(tv_M);
+    free(ts_A_us);
+    free(ts_M_us);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 
@@ -145,7 +173,6 @@ int check_interfaces_ts_utimes_set_past_ma(FILE* csv_file, FILE* output_file, FI
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimes", s_1s, ns_0ns, output_file, error_file, __func__);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_before = get_path_timestamps(path);
     
     struct timeval* tv_A = (struct timeval*) calloc(sizeof(struct timeval), 1);
     struct timeval* tv_M = (struct timeval*) calloc(sizeof(struct timeval), 1);
@@ -192,6 +219,16 @@ int check_interfaces_ts_utimes_set_past_ma(FILE* csv_file, FILE* output_file, FI
     
     result = misc_max2(result, result_update);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat_after);
+    
+    free(path);
+    free(tv_A);
+    free(tv_M);
+    free(ts_A_us);
+    free(ts_M_us);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat_after);
+    
     return result;
 }
 

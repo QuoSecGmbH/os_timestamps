@@ -3,18 +3,12 @@
 
 #include "current_time.h"
 
-
-// int main (){
-//   print_current_time_seconds();
-//   print_current_time_ns();
-//   check_clock_res();
-// }
-
 void print_current_time_s(){
   time_t* rawtime = current_time_s();
   struct tm * timeinfo;
   timeinfo = localtime(rawtime);
   printf("%s", asctime(timeinfo) );
+  free(rawtime);
 }
 
 time_t* current_time_s(){
@@ -36,6 +30,7 @@ void print_current_time_custom(int type){
   int n = strlen(buf);
   buf[n-1] = 0;
   printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
+  free(ts);
 }
 
 #ifdef __linux__
@@ -163,11 +158,15 @@ int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* erro
         if (i != 0){
             if (misc_timespec_leq(last_ts, ts) != 0){
                 result = 2;
+                free(last_ts);
+                free(ts);
                 break;
             }
+            free(last_ts);
         }
         last_ts = ts;
     }
+    free(ts);
     
     return result;
 }

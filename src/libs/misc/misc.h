@@ -12,6 +12,7 @@
 
 
 static const long ns_after_open = 100000000; //ns_100ms
+// static const long ns_after_open = 10; //ns_100ms
 
 static const long ns_0ns = 0;
 static const long ns_1ns = 1;
@@ -71,7 +72,12 @@ void misc_sleep(int s);
 
 char* misc_concat(char* buf1, char* buf2);
 int misc_ensure_file_exists(char* buf);
+
+char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
 char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
+void misc_concat_ensure_file_exists_free(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
+char* misc_concat_ensure_file_exists_filled(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
+
 int stat_succeeds(char *path);
 void misc_cp_rwx_no_overwrite(char* path1, char* path2);
 
