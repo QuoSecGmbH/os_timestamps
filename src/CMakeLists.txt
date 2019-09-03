@@ -21,6 +21,7 @@ include_directories(
   ./
   libs/current_time/
   libs/file_ts/
+  libs/profile/
   libs/log/
   libs/misc/
   tests/general/
@@ -30,6 +31,11 @@ include_directories(
   tests/interfaces/file/r/
   tests/interfaces/file/new/
   tests/interfaces/file/ln/
+  tests/interfaces/file/mv/
+  tests/interfaces/file/rm/
+  tests/utilities/
+  tests/utilities/new/
+  tests/utilities/rm/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -39,6 +45,7 @@ include_directories(
 
 add_library(lib_log libs/log/log.h libs/log/log.c)
 add_library(lib_file_ts libs/file_ts/file_ts.h libs/file_ts/file_ts.c)
+add_library(lib_profile libs/profile/profile.h libs/profile/profile.c)
 
 add_executable(prototype_file_ts tools/prototype_file_ts.h tools/prototype_file_ts.c)
 target_link_libraries(prototype_file_ts lib_file_ts lib_log lib_misc)
@@ -62,6 +69,8 @@ add_library(lib_interfaces
 	tests/interfaces/i_utimes.c
 	tests/interfaces/i_utime.h
 	tests/interfaces/i_utime.c
+	tests/interfaces/i_dir.h
+	tests/interfaces/i_dir.c
 	tests/interfaces/file/i_file.h
 	tests/interfaces/file/i_file.c
 	tests/interfaces/file/i_fopen.h
@@ -117,10 +126,42 @@ add_library(lib_interfaces
 	tests/interfaces/file/new/i_file_new.c
 	tests/interfaces/file/ln/i_file_ln.h
 	tests/interfaces/file/ln/i_file_ln.c
+	tests/interfaces/file/mv/i_file_mv.h
+	tests/interfaces/file/mv/i_file_mv.c
+	tests/interfaces/file/rm/i_file_rm.h
+	tests/interfaces/file/rm/i_file_rm.c
+	tests/utilities/utilities.h
+	tests/utilities/utilities.c
+	tests/utilities/u_cp.h
+	tests/utilities/u_cp.c
+	tests/utilities/u_mv.h
+	tests/utilities/u_mv.c
+	tests/utilities/u_ln.h
+	tests/utilities/u_ln.c
+	tests/utilities/new/u_new_mkdir.h
+	tests/utilities/new/u_new_mkdir.c
+	tests/utilities/new/u_new_mkfifo.h
+	tests/utilities/new/u_new_mkfifo.c
+	tests/utilities/new/u_new_touch.h
+	tests/utilities/new/u_new_touch.c
+	tests/utilities/rm/u_rm_rm.h
+	tests/utilities/rm/u_rm_rm.c
+	tests/utilities/rm/u_rm_rmdir.h
+	tests/utilities/rm/u_rm_rmdir.c
+	tests/utilities/rm/u_rm_unlink.h
+	tests/utilities/rm/u_rm_unlink.c
+	tests/utilities/u_ls.h
+	tests/utilities/u_ls.c
+	tests/utilities/u_vi.h
+	tests/utilities/u_vi.c
+	tests/utilities/u_ex.h
+	tests/utilities/u_ex.c
+	tests/utilities/u_ed.h
+	tests/utilities/u_ed.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
-target_link_libraries(run_tests lib_general lib_interfaces lib_file_ts lib_current_time lib_log lib_misc)
+target_link_libraries(run_tests lib_general lib_interfaces lib_file_ts lib_current_time lib_log lib_misc lib_profile)

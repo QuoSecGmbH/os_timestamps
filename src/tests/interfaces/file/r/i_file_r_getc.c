@@ -94,14 +94,14 @@ int check_interfaces_file_r_getc_ungetc_both(FILE* csv_file, FILE* output_file, 
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     int gotten1 = getc(fd);
-//     int gotten2 = getc(fd);
+    int gotten2 = getc(fd);
     
     if (gotten1 != 0x41){
         log_warning(output_file, error_file, "%s - %s", __func__, "read a different int than the one ungetc provided");
         return 1;
     }
     
-    if (gotten1 == 0){
+    if (gotten2 == 0){
         log_warning(output_file, error_file, "%s - %s", __func__, "could not read data from file");
         return 1;
     }

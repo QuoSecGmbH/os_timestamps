@@ -8,7 +8,7 @@ int helper_interfaces_file_fopen_new_writemode(FILE* csv_file, FILE* output_file
     char* path_dot = (char*) misc_concat(path_generic, ".");
     char* path_mode = (char*) misc_concat(path_dot, mode);
     
-    if (misc_ensure_file_exists(path_mode) == 0){
+    if (misc_file_exists(path_mode) == 0){
         log_warning(output_file, error_file, "%s - %s %s", __func__, path_mode, "already exists");
     }
     

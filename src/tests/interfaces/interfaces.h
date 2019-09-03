@@ -43,8 +43,12 @@
 #include "i_file_r_fwscanf.h"
 #include "i_file_r_wscanf.h"
 
+#include "i_dir.h"
+
 #include "i_file_new.h"
 #include "i_file_ln.h"
+#include "i_file_mv.h"
+#include "i_file_rm.h"
 
 
 

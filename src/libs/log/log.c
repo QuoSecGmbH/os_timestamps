@@ -98,6 +98,64 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     va_end(argptr);
 }
 
+void log_info_ts_profile_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message){
+    if (result != 0 || VERBOSE >= 1){
+        misc_print_profile(pi);
+        
+        if (strlen(message) == 0){
+            log_info(output_file, error_file, "%s:", func_name, message);
+        }
+        else {
+            log_info(output_file, error_file, "%s - %s:", func_name, message);
+        }
+        if (pi->ts_before != NULL && pi->ts_after != NULL && pi->ts_after_delay != NULL){
+            log_info(output_file, error_file, "Before: %lds %ldns ; After: %lds %ldns ; After delay: %lds %ldns",
+                     pi->ts_before->tv_sec, pi->ts_before->tv_nsec,
+                     pi->ts_after->tv_sec, pi->ts_after->tv_nsec,
+                     pi->ts_after_delay->tv_sec, pi->ts_after_delay->tv_nsec);
+        }
+        int i;
+        for (i = 0; i < pi->watch_num; i++){
+            char* path = pi->watch_array[i];
+            struct stat* file_stat_before = pi->multi_stat_before[i];
+            struct stat* file_stat_after = pi->multi_stat_after[i];
+            struct stat* file_stat_after_delay = pi->multi_stat_after_delay[i];
+            int error_printed = 0;
+            if (file_stat_before != NULL){
+                log_info(output_file, error_file, "stat before command for %s", path);
+                log_info(output_file, error_file, "M: %lds %ldns", file_stat_before->st_mtim.tv_sec, file_stat_before->st_mtim.tv_nsec);
+                log_info(output_file, error_file, "A: %lds %ldns", file_stat_before->st_atim.tv_sec, file_stat_before->st_atim.tv_nsec);
+                log_info(output_file, error_file, "C: %lds %ldns", file_stat_before->st_ctim.tv_sec, file_stat_before->st_ctim.tv_nsec);
+            }
+            else if (error_printed == 0) {
+                log_info(output_file, error_file, "stat before command for %s is NULL", path);
+                error_printed = 1;
+                
+            }
+            if (file_stat_after != NULL){
+                log_info(output_file, error_file, "stat after command for %s", path);
+                log_info(output_file, error_file, "M: %lds %ldns", file_stat_after->st_mtim.tv_sec, file_stat_after->st_mtim.tv_nsec);
+                log_info(output_file, error_file, "A: %lds %ldns", file_stat_after->st_atim.tv_sec, file_stat_after->st_atim.tv_nsec);
+                log_info(output_file, error_file, "C: %lds %ldns", file_stat_after->st_ctim.tv_sec, file_stat_after->st_ctim.tv_nsec);
+            }
+            else if (error_printed == 0)  {
+                log_info(output_file, error_file, "stat after command for %s is NULL", path);
+                error_printed = 1;
+            }
+            if (file_stat_after_delay != NULL){
+                log_info(output_file, error_file, "stat after delay for %s", path);
+                log_info(output_file, error_file, "M: %lds %ldns", file_stat_after_delay->st_mtim.tv_sec, file_stat_after_delay->st_mtim.tv_nsec);
+                log_info(output_file, error_file, "A: %lds %ldns", file_stat_after_delay->st_atim.tv_sec, file_stat_after_delay->st_atim.tv_nsec);
+                log_info(output_file, error_file, "C: %lds %ldns", file_stat_after_delay->st_ctim.tv_sec, file_stat_after_delay->st_ctim.tv_nsec);
+            }
+            else if (error_printed == 0) {
+                log_info(output_file, error_file, "stat after delay for %s is NULL", path);
+                error_printed = 1;
+            }
+        }
+    }
+}
+
 void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat, char* message){
     if (result != 0 || VERBOSE >= 1){
         if (strlen(message) == 0){

@@ -36,7 +36,7 @@ int check_interfaces_file_r_read(FILE* csv_file, FILE* output_file, FILE* error_
 }
 
 int check_interfaces_file_r_read_zero(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read.zero", 10, s_0s, ns_100ms, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
@@ -68,7 +68,7 @@ int check_interfaces_file_r_read_zero(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_r_pread(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.pread", 10, s_0s, ns_100ms, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
@@ -100,7 +100,7 @@ int check_interfaces_file_r_pread(FILE* csv_file, FILE* output_file, FILE* error
 }
 
 int check_interfaces_file_r_pread_zero(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.pread.zero", 10, s_0s, ns_100ms, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {

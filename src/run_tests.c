@@ -145,6 +145,8 @@ int main (int argc, char **argv){
     
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_fflush", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_ffclose", s_0s, ns_0ns, output_file, error_file, __func__);
+    
+    
         
     misc_concat_ensure_file_exists_free(dir_path, "run_test_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
     
@@ -165,8 +167,23 @@ int main (int argc, char **argv){
     group_check_interfaces_file_fopen(test_env);
     group_check_interfaces_file_w(test_env);
     group_check_interfaces_file_r(test_env);
-    group_check_interfaces_file_new(test_env);
+    group_check_interfaces_dir(test_env);
     group_check_interfaces_file_ln(test_env);
+    group_check_interfaces_file_new(test_env);
+    group_check_interfaces_file_mv(test_env);
+    group_check_interfaces_file_rm(test_env);
+    
+    group_check_utilities_attr(test_env);
+    group_check_utilities_cp(test_env);
+    group_check_utilities_new(test_env);
+    group_check_utilities_mv(test_env);
+    group_check_utilities_rm(test_env);
+    group_check_utilities_ln(test_env);
+    group_check_utilities_ls(test_env);
+    
+    group_check_utilities_vi(test_env);
+    group_check_utilities_ed(test_env);
+    group_check_utilities_ex(test_env);
     
     free(test_env);
     free(dir_path);
@@ -313,51 +330,51 @@ void group_check_interfaces_file_fopen(testenv_struct* env){
 void group_check_interfaces_file_w(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fflush, "check_interfaces_file_w_fprintf_fflush", "Yes", POSIX_c181, MANDATORY, "fprintf + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fclose, "check_interfaces_file_w_fprintf_fclose", "Yes", POSIX_c181, MANDATORY, "fprintf + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_exit, "check_interfaces_file_w_fprintf_exit", "Yes", POSIX_c181, MANDATORY, "fprintf + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_exit, "check_interfaces_file_w_fprintf_exit", "Yes", POSIX_c181, MANDATORY, "fprintf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_abort, "check_interfaces_file_w_fprintf_abort", "Yes", POSIX_c181, MANDATORY, "fprintf + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.PRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_fflush, "check_interfaces_file_w_printf_fflush", "Yes", POSIX_c181, MANDATORY, "printf + fflush shall update MC");
-    runtest(env, "INTERFACES.FILE.W.PRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_exit, "check_interfaces_file_w_printf_exit", "Yes", POSIX_c181, MANDATORY, "printf + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.PRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_exit, "check_interfaces_file_w_printf_exit", "Yes", POSIX_c181, MANDATORY, "printf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.PRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_abort, "check_interfaces_file_w_printf_abort", "Yes", POSIX_c181, MANDATORY, "printf + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.DPRINTF", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_dprintf, "check_interfaces_file_w_dprintf", "Yes", POSIX_c181, MANDATORY, "dprintf shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FPUTC_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fflush, "check_interfaces_file_w_fputc_fflush", "Yes", POSIX_c181, MANDATORY, "fputc + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTC_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fclose, "check_interfaces_file_w_fputc_fclose", "Yes", POSIX_c181, MANDATORY, "fputc + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FPUTC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_exit, "check_interfaces_file_w_fputc_exit", "Yes", POSIX_c181, MANDATORY, "fputc + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FPUTC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_exit, "check_interfaces_file_w_fputc_exit", "Yes", POSIX_c181, MANDATORY, "fputc + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTC_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_abort, "check_interfaces_file_w_fputc_abort", "Yes", POSIX_c181, MANDATORY, "fputc + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FPUTS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fflush, "check_interfaces_file_w_fputs_fflush", "Yes", POSIX_c181, MANDATORY, "fputs + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTS_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fclose, "check_interfaces_file_w_fputs_fclose", "Yes", POSIX_c181, MANDATORY, "fputs + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FPUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_exit, "check_interfaces_file_w_fputs_exit", "Yes", POSIX_c181, MANDATORY, "fputs + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FPUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_exit, "check_interfaces_file_w_fputs_exit", "Yes", POSIX_c181, MANDATORY, "fputs + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_abort, "check_interfaces_file_w_fputs_abort", "Yes", POSIX_c181, MANDATORY, "fputs + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FPUTWC_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fflush, "check_interfaces_file_w_fputwc_fflush", "Yes", POSIX_c181, MANDATORY, "fputwc + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWC_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fclose, "check_interfaces_file_w_fputwc_fclose", "Yes", POSIX_c181, MANDATORY, "fputwc + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FPUTWC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_exit, "check_interfaces_file_w_fputwc_exit", "Yes", POSIX_c181, MANDATORY, "fputwc + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FPUTWC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_exit, "check_interfaces_file_w_fputwc_exit", "Yes", POSIX_c181, MANDATORY, "fputwc + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWC_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_abort, "check_interfaces_file_w_fputwc_abort", "Yes", POSIX_c181, MANDATORY, "fputwc + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FPUTWS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fflush, "check_interfaces_file_w_fputws_fflush", "Yes", POSIX_c181, MANDATORY, "fputws + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWS_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fclose, "check_interfaces_file_w_fputws_fclose", "Yes", POSIX_c181, MANDATORY, "fputws + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FPUTWS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_exit, "check_interfaces_file_w_fputws_exit", "Yes", POSIX_c181, MANDATORY, "fputws + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FPUTWS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_exit, "check_interfaces_file_w_fputws_exit", "Yes", POSIX_c181, MANDATORY, "fputws + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_abort, "check_interfaces_file_w_fputws_abort", "Yes", POSIX_c181, MANDATORY, "fputws + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fflush, "check_interfaces_file_w_fwprintf_fflush", "Yes", POSIX_c181, MANDATORY, "fwprintf + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fclose, "check_interfaces_file_w_fwprintf_fclose", "Yes", POSIX_c181, MANDATORY, "fwprintf + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FWPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_exit, "check_interfaces_file_w_fwprintf_exit", "Yes", POSIX_c181, MANDATORY, "fwprintf + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FWPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_exit, "check_interfaces_file_w_fwprintf_exit", "Yes", POSIX_c181, MANDATORY, "fwprintf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_abort, "check_interfaces_file_w_fwprintf_abort", "Yes", POSIX_c181, MANDATORY, "fwprintf + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.WPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_fflush, "check_interfaces_file_w_wprintf_fflush", "Yes", POSIX_c181, MANDATORY, "wprintf + fflush shall update MC");
-    runtest(env, "INTERFACES.FILE.W.WPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_exit, "check_interfaces_file_w_wprintf_exit", "Yes", POSIX_c181, MANDATORY, "wprintf + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.WPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_exit, "check_interfaces_file_w_wprintf_exit", "Yes", POSIX_c181, MANDATORY, "wprintf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.WPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_abort, "check_interfaces_file_w_wprintf_abort", "Yes", POSIX_c181, MANDATORY, "wprintf + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FWRITE_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fflush, "check_interfaces_file_w_fwrite_fflush", "Yes", POSIX_c181, MANDATORY, "fwrite + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWRITE_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fclose, "check_interfaces_file_w_fwrite_fclose", "Yes", POSIX_c181, MANDATORY, "fwrite + fclose shall update MC");
-    runtest(env, "INTERFACES.FILE.W.FWRITE_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_exit, "check_interfaces_file_w_fwrite_exit", "Yes", POSIX_c181, MANDATORY, "fwrite + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.FWRITE_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_exit, "check_interfaces_file_w_fwrite_exit", "Yes", POSIX_c181, MANDATORY, "fwrite + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWRITE_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_abort, "check_interfaces_file_w_fwrite_abort", "Yes", POSIX_c181, MANDATORY, "fwrite + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.PUTS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_fflush, "check_interfaces_file_w_puts_fflush", "Yes", POSIX_c181, MANDATORY, "puts + fflush shall update MC");
-    runtest(env, "INTERFACES.FILE.W.PUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_exit, "check_interfaces_file_w_puts_exit", "Yes", POSIX_c181, MANDATORY, "puts + exit shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.PUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_exit, "check_interfaces_file_w_puts_exit", "Yes", POSIX_c181, MANDATORY, "puts + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.PUTS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_abort, "check_interfaces_file_w_puts_abort", "Yes", POSIX_c181, MANDATORY, "puts + abort shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FTRUNCATE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_ftruncate, "check_interfaces_file_w_ftruncate", "Yes", POSIX_c181, MANDATORY, "ftruncate on regular file shall update MC");
@@ -383,43 +400,45 @@ void group_check_interfaces_file_r(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.R.FGETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_ungetc, "check_interfaces_file_r_fgets_ungetc", "Yes", POSIX_c181, MAY, "fgets returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.FGETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_ungetc_both, "check_interfaces_file_r_fgets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fgets returning both data supplied and not supplied by ungetc shall update A");
     
+#ifndef __OpenBSD__
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "INTERFACES.FILE.R.GETS", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets, "check_interfaces_file_r_gets", "Yes", POSIX_c181, MANDATORY, "gets returning data not supplied by ungetc shall update A");
-        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc, "check_interfaces_file_r_gets_ungetc", "Yes", POSIX_c181, MANDATORY, "gets returning data supplied by ungetc may update A");
+        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc, "check_interfaces_file_r_gets_ungetc", "Yes", POSIX_c181, MAY, "gets returning data supplied by ungetc may update A");
         runtest(env, "INTERFACES.FILE.R.GETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc_both, "check_interfaces_file_r_gets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "gets returning both data supplied and not supplied by ungetc shall update A");
     }
+#endif
     
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "INTERFACES.FILE.R.GETCHAR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar, "check_interfaces_file_r_getchar", "Yes", POSIX_c181, MANDATORY, "getchar returning data not supplied by ungetc shall update A");
-        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc, "check_interfaces_file_r_getchar_ungetc", "Yes", POSIX_c181, MANDATORY, "getchar returning data supplied by ungetc may update A");
+        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc, "check_interfaces_file_r_getchar_ungetc", "Yes", POSIX_c181, MAY, "getchar returning data supplied by ungetc may update A");
         runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc_both, "check_interfaces_file_r_getchar_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getchar returning both data supplied and not supplied by ungetc shall update A");
     }
     
     runtest(env, "INTERFACES.FILE.R.GETDELIM", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim, "check_interfaces_file_r_getdelim", "Yes", POSIX_c181, MANDATORY, "getdelim returning data not supplied by ungetc shall update A");
-    runtest(env, "INTERFACES.FILE.R.GETDELIM.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim_ungetc, "check_interfaces_file_r_getdelim_ungetc", "Yes", POSIX_c181, MANDATORY, "getdelim returning data supplied by ungetc may update A");
+    runtest(env, "INTERFACES.FILE.R.GETDELIM.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim_ungetc, "check_interfaces_file_r_getdelim_ungetc", "Yes", POSIX_c181, MAY, "getdelim returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.GETDELIM.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim_ungetc_both, "check_interfaces_file_r_getdelim_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getdelim returning both data supplied and not supplied by ungetc shall update A");
     
     runtest(env, "INTERFACES.FILE.R.GETLINE", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline, "check_interfaces_file_r_getline", "Yes", POSIX_c181, MANDATORY, "getline returning data not supplied by ungetc shall update A");
-    runtest(env, "INTERFACES.FILE.R.GETLINE.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline_ungetc, "check_interfaces_file_r_getline_ungetc", "Yes", POSIX_c181, MANDATORY, "getline returning data supplied by ungetc may update A");
+    runtest(env, "INTERFACES.FILE.R.GETLINE.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline_ungetc, "check_interfaces_file_r_getline_ungetc", "Yes", POSIX_c181, MAY, "getline returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.GETLINE.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline_ungetc_both, "check_interfaces_file_r_getline_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getline returning both data supplied and not supplied by ungetc shall update A");
     
     runtest(env, "INTERFACES.FILE.R.FSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf, "check_interfaces_file_r_fscanf", "Yes", POSIX_c181, MANDATORY, "fscanf returning data not supplied by ungetc shall update A");
-    runtest(env, "INTERFACES.FILE.R.FSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf_ungetc, "check_interfaces_file_r_fscanf_ungetc", "Yes", POSIX_c181, MANDATORY, "fscanf returning data supplied by ungetc may update A");
+    runtest(env, "INTERFACES.FILE.R.FSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf_ungetc, "check_interfaces_file_r_fscanf_ungetc", "Yes", POSIX_c181, MAY, "fscanf returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.FSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf_ungetc_both, "check_interfaces_file_r_fscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fscanf returning both data supplied and not supplied by ungetc shall update A");
     
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "INTERFACES.FILE.R.SCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf, "check_interfaces_file_r_scanf", "Yes", POSIX_c181, MANDATORY, "scanf returning data not supplied by ungetc shall update A");
-        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc, "check_interfaces_file_r_scanf_ungetc", "Yes", POSIX_c181, MANDATORY, "scanf returning data supplied by ungetc may update A");
+        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc, "check_interfaces_file_r_scanf_ungetc", "Yes", POSIX_c181, MAY, "scanf returning data supplied by ungetc may update A");
         runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc_both, "check_interfaces_file_r_scanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "scanf returning both data supplied and not supplied by ungetc shall update A");
     }
     
     runtest(env, "INTERFACES.FILE.R.FWSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf, "check_interfaces_file_r_fwscanf", "Yes", POSIX_c181, MANDATORY, "fwscanf returning data not supplied by ungetc shall update A");
-    runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc, "check_interfaces_file_r_fwscanf_ungetc", "Yes", POSIX_c181, MANDATORY, "fwscanf returning data supplied by ungetc may update A");
+    runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc, "check_interfaces_file_r_fwscanf_ungetc", "Yes", POSIX_c181, MAY, "fwscanf returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc_both, "check_interfaces_file_r_fwscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fwscanf returning both data supplied and not supplied by ungetc shall update A");
     
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "INTERFACES.FILE.R.WSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf, "check_interfaces_file_r_wscanf", "Yes", POSIX_c181, MANDATORY, "wscanf returning data not supplied by ungetc shall update A");
-        runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc, "check_interfaces_file_r_wscanf_ungetc", "Yes", POSIX_c181, MANDATORY, "wscanf returning data supplied by ungetc may update A");
+        runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc, "check_interfaces_file_r_wscanf_ungetc", "Yes", POSIX_c181, MAY, "wscanf returning data supplied by ungetc may update A");
         runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc_both, "check_interfaces_file_r_wscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "wscanf returning both data supplied and not supplied by ungetc shall update A");
     }
     
@@ -429,9 +448,11 @@ void group_check_interfaces_file_r(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.R.PREAD.ZERO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_pread_zero, "check_interfaces_file_r_pread_zero", "Yes", "", MANDATORY, "With nbyte equal to 0, pread shall not update MAC");
 }
 
-void group_check_interfaces_file_new(testenv_struct* env){
-    runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_new, "check_interfaces_file_new_mkdtemp_new", "Yes", POSIX_c181, MANDATORY, "mkdtemp shall create new directory with updated MAC");
-    runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac, "check_interfaces_file_new_mkdtemp_mac", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal");
+void group_check_interfaces_dir(testenv_struct* env){
+    runtest(env, "INTERFACES.DIR.READDIR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir, "check_interfaces_dir_readdir", "Yes", "", MANDATORY, "readdir on a directory shall update A");
+    runtest(env, "INTERFACES.DIR.READDIR.FILES", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_files, "check_interfaces_dir_readdir_files", "Yes", "", MANDATORY, "readdir on a directory shall not update MAC of files in the directory");
+    runtest(env, "INTERFACES.DIR.READDIR_R", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_r, "check_interfaces_dir_readdir_r", "Yes", "", MANDATORY, "readdir_r on a directory shall update A");
+    runtest(env, "INTERFACES.DIR.READDIR_R.FILES", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_r_files, "check_interfaces_dir_readdir_r_files", "Yes", "", MANDATORY, "readdir_r on a directory shall not update MAC of files in the directory");
 }
 
 void group_check_interfaces_file_ln(testenv_struct* env){
@@ -443,6 +464,172 @@ void group_check_interfaces_file_ln(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.LN.READLINKAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_readlinkat, "check_interfaces_file_ln_readlinkat", "Yes", POSIX_c181, MANDATORY, "readlinkat shall update A");
 }
 
+void group_check_interfaces_file_new(testenv_struct* env){
+    runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_new, "check_interfaces_file_new_mkdtemp_new", "Yes", POSIX_c181, MANDATORY, "mkdtemp shall create new directory with updated MAC");
+    runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac, "check_interfaces_file_new_mkdtemp_mac", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal");
+    runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac_1s, "check_interfaces_file_new_mkdtemp_mac_1s", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal after 1s");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdir, "check_interfaces_file_new_mkdir", "Yes", POSIX_c181, MANDATORY, "mkdir shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIR.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdir_mac, "check_interfaces_file_new_mkdir_mac", "Yes", "", MANDATORY, "mkdir shall create new directory with MAC equal");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIR.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdir_mac_1s, "check_interfaces_file_new_mkdir_mac_1s", "Yes", "", MANDATORY, "mkdir shall create new directory with MAC equal 1s after creation");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIRAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat, "check_interfaces_file_new_mkdirat", "Yes", POSIX_c181, MANDATORY, "mkdirat shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIRAT.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat_mac, "check_interfaces_file_new_mkdirat_mac", "Yes", "", MANDATORY, "mkdirat shall create new directory with MAC equal");
+    runtest(env, "INTERFACES.FILE.NEW.MKDIRAT.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat_mac_1s, "check_interfaces_file_new_mkdirat_mac_1s", "Yes", "", MANDATORY, "mkdirat shall create new directory with MAC equal 1s after creation");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo, "check_interfaces_file_new_mkfifo", "Yes", POSIX_c181, MANDATORY, "mkfifo shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac, "check_interfaces_file_new_mkfifo_mac", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac_1s, "check_interfaces_file_new_mkfifo_mac_1s", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal 1s after creation");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat, "check_interfaces_file_new_mkfifoat", "Yes", POSIX_c181, MANDATORY, "mkfifoat shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat_mac, "check_interfaces_file_new_mkfifoat_mac", "Yes", "", MANDATORY, "mkfifoat shall create new directory with MAC equal");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat_mac_1s, "check_interfaces_file_new_mkfifoat_mac_1s", "Yes", "", MANDATORY, "mkfifoat shall create new directory with MAC equal 1s after creation");
+    runtest(env, "INTERFACES.FILE.NEW.MKPIPE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkpipe, "check_interfaces_file_new_mkpipe", "Yes", POSIX_c181, MANDATORY, "pipe shall update MAC of the pipe");
+}
+
+void group_check_interfaces_file_mv(testenv_struct* env){
+    runtest(env, "INTERFACES.FILE.MV.RENAME.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file, "check_interfaces_file_mv_rename_file", "No", "", MANDATORY, "rename on a file shall update C");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_ma, "check_interfaces_file_mv_rename_file_ma", "No", "", MANDATORY, "rename on a file shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_dir, "check_interfaces_file_mv_rename_file_dir", "Yes", POSIX_c181, MANDATORY, "rename on a file shall update MC of parent directory");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir, "check_interfaces_file_mv_rename_dir", "No", "", MANDATORY, "rename on a dir shall update C");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir_ma, "check_interfaces_file_mv_rename_dir_ma", "No", "", MANDATORY, "rename on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.DIR.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir_dir, "check_interfaces_file_mv_rename_dir_dir", "Yes", POSIX_c181, MANDATORY, "rename on a dir shall update MC of parent directory");
+    
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file, "check_interfaces_file_mv_renameat_file", "No", "", MANDATORY, "renameat on a file shall update C");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file_ma, "check_interfaces_file_mv_renameat_file_ma", "No", "", MANDATORY, "renameat on a file shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file_dir, "check_interfaces_file_mv_renameat_file_dir", "Yes", POSIX_c181, MANDATORY, "renameat on a file shall update MC of parent directory");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir, "check_interfaces_file_mv_renameat_dir", "No", "", MANDATORY, "renameat on a dir shall update C");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir_ma, "check_interfaces_file_mv_renameat_dir_ma", "No", "", MANDATORY, "renameat on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir_dir, "check_interfaces_file_mv_renameat_dir_dir", "Yes", POSIX_c181, MANDATORY, "renameat on a dir shall update MC of parent directory");
+}
+
+void group_check_interfaces_file_rm(testenv_struct* env){
+    runtest(env, "INTERFACES.FILE.RM.UNLINK.LAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_last_dir, "check_interfaces_file_rm_unlink_last_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast_dir, "check_interfaces_file_rm_unlink_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast, "check_interfaces_file_rm_unlink_notlast", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update C");
+    
+    runtest(env, "INTERFACES.FILE.RM.UNLINKAT.LAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlinkat_last_dir, "check_interfaces_file_rm_unlinkat_last_dir", "Yes", POSIX_c181, MANDATORY, "unlinkat when file’s link count is 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.UNLINKAT.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlinkat_notlast_dir, "check_interfaces_file_rm_unlinkat_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlinkat when file’s link count is not 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.UNLINKAT.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlinkat_notlast, "check_interfaces_file_rm_unlinkat_notlast", "Yes", POSIX_c181, MANDATORY, "unlinkat when file’s link count is not 0 shall update C");
+    
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.EMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_empty_parentdir, "check_interfaces_file_rm_remove_dir_empty_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on an empty dir shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.NOTEMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_notempty_parentdir, "check_interfaces_file_rm_remove_dir_notempty_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a not empty dir shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_notempty, "check_interfaces_file_rm_remove_dir_notempty", "Yes", POSIX_c181, MANDATORY, "remove on a not empty dir shall update C");
+    
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.FILE.LAST.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_file_last_parentdir, "check_interfaces_file_rm_remove_file_last_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a file who’s link count is 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.FILE.NOLAST.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_file_notlast_parentdir, "check_interfaces_file_rm_remove_file_notlast_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a file who’s link count is not 0 shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.FILE.NOLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_file_notlast, "check_interfaces_file_rm_remove_file_notlast", "Yes", POSIX_c181, MANDATORY, "remove on a file who’s link count is not 0 shall update the file C");
+    
+    runtest(env, "INTERFACES.FILE.RM.RMDIR.EMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_rmdir_empty_parentdir, "check_interfaces_file_rm_rmdir_empty_parentdir", "Yes", POSIX_c181, MANDATORY, "rmdir on an empty dir shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.RMDIR.NOTEMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_rmdir_notempty_parentdir, "check_interfaces_file_rm_rmdir_notempty_parentdir", "Yes", "", MANDATORY, "rmdir on a not empty dir shall not update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.RM.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_rmdir_notempty, "check_interfaces_file_rm_rmdir_notempty", "Yes", "", MANDATORY, "rmdir on a not empty dir shall not update C");
+}
+
+void group_check_utilities_attr(testenv_struct* env){
+    runtest(env, "UTILITIES.ATTR.CHMOD.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_new, "check_utilities_attr_chmod_new", "Yes", POSIX_c181, MANDATORY, "chmod with different mode shall update C");
+    runtest(env, "UTILITIES.ATTR.CHMOD.SAME", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_same, "check_utilities_attr_chmod_same", "Yes", POSIX_c181, MANDATORY, "chmod with same mode shall update C");
+}
+
+void group_check_utilities_cp(testenv_struct* env){
+    runtest(env, "UTILITIES.CP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new, "check_utilities_cp_new", "Yes", POSIX_c181, MANDATORY, "cp with destination not existing shall update MAC");
+    runtest(env, "UTILITIES.CP.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_mac, "check_utilities_cp_new_mac", "No", "", MANDATORY, "cp with destination not existing shall set MAC equal");
+    runtest(env, "UTILITIES.CP.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_dir, "check_utilities_cp_new_dir", "No", "", MANDATORY, "cp with destination not existing shall update MC of dest’s parent dir and not update MAC of src’s parent dir");
+    runtest(env, "UTILITIES.CP.NEW.DIR.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_dir_mc, "check_utilities_cp_new_dir_mc", "No", "", MANDATORY, "cp with destination not existing shall set MC of dest’s parent dir equal");
+     
+    runtest(env, "UTILITIES.CP.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_existing, "check_utilities_cp_existing", "Yes", POSIX_c181, MANDATORY, "cp with destination existing shall update MC");
+    runtest(env, "UTILITIES.CP.EXISTING.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_existing_mc, "check_utilities_cp_existing_mc", "No", "", MANDATORY, "cp with destination existing shall set MC equal");
+    runtest(env, "UTILITIES.CP.EXISTING.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_existing_dir, "check_utilities_cp_existing_dir", "No", "", MANDATORY, "cp with destination existing shall not update MAC of dest’s parent dir and not update MAC of src’s parent dir");
+}
+
+void group_check_utilities_new(testenv_struct* env){
+    runtest(env, "UTILITIES.NEW.TOUCH.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new, "check_utilities_new_touch_new", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MAC");
+    runtest(env, "UTILITIES.NEW.TOUCH.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_mac, "check_utilities_new_touch_new_mac", "No", "", MANDATORY, "touch on non existing file shall set MAC equal");
+    runtest(env, "UTILITIES.NEW.TOUCH.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_dir, "check_utilities_new_touch_new_dir", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MC of parent directory");
+    runtest(env, "UTILITIES.NEW.TOUCH.NEW.DIR.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_dir_mc, "check_utilities_new_touch_new_dir_mc", "No", "", MANDATORY, "touch on non existing file shall set MC of parent directory equal");
+    runtest(env, "UTILITIES.NEW.TOUCH.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_existing, "check_utilities_new_touch_existing", "Yes", POSIX_c181, MANDATORY, "touch on existing file shall update MAC");
+    runtest(env, "UTILITIES.NEW.TOUCH.EXISTING.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_existing_mac, "check_utilities_new_touch_existing_mac", "No", "", MANDATORY, "touch on existing file shall set MAC equal");
+    runtest(env, "UTILITIES.NEW.TOUCH.EXISTING.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_existing_dir, "check_utilities_new_touch_existing_dir", "No", "", MANDATORY, "touch on existing file shall not update MAC of parent directory");
+    
+    runtest(env, "UTILITIES.NEW.MKDIR.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkdir_new, "check_utilities_new_mkdir_new", "Yes", POSIX_c181, MANDATORY, "mkdir on a non existing dir shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "UTILITIES.NEW.MKDIR.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkdir_new_mac, "check_utilities_new_mkdir_new_mac", "No", "", MANDATORY, "mkdir on a non existing dir shall create new directory with MAC equal");
+    runtest(env, "UTILITIES.NEW.MKDIR.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkdir_existing, "check_utilities_new_mkdir_existing", "No", "", MANDATORY, "mkdir on an existing dir shall not update MAC of the directory nor MAC of the parent directory");
+    
+    runtest(env, "UTILITIES.NEW.MKFIFO.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new, "check_utilities_new_mkfifo_new", "Yes", POSIX_c181, MANDATORY, "mkfifo on a non existing mkfifo shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "UTILITIES.NEW.MKFIFO.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new_mac, "check_utilities_new_mkfifo_new_mac", "No", "", MANDATORY, "mkfifo on a non existing mkfifo shall create new directory with MAC equal");
+    runtest(env, "UTILITIES.NEW.MKFIFO.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_existing, "check_utilities_new_mkfifo_existing", "No", "", MANDATORY, "mkfifo on an existing mkfifo shall not update MAC of the directory nor MAC of the parent directory");
+}
+    
+void group_check_utilities_mv(testenv_struct* env){    
+    runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
+    runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.EXISTING.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing_eq, "check_utilities_mv_existing_eq", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update the 5 MC with the same value");
+}
+
+void group_check_utilities_rm(testenv_struct* env){
+    runtest(env, "UTILITIES.RM.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_dir_empty, "check_utilities_rm_rm_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm on an empty dir shall not update MAC of the directory nor of its parent dir");
+    runtest(env, "UTILITIES.RM.R.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_empty, "check_utilities_rm_rm_r_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm -r on an empty dir shall update parent directory MC");
+    runtest(env, "UTILITIES.RM.R.RM.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_notempty, "check_utilities_rm_rm_r_dir_notempty", "Yes", POSIX_c181, MANDATORY, "rm -r on a not empty dir shall update parent directory MC");
+    runtest(env, "UTILITIES.RM.RM.FILE.LAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_file_last, "check_utilities_rm_rm_file_last", "Yes", POSIX_c181, MANDATORY, "rm when file’s link count is 0 shall update parent directory MC");
+    runtest(env, "UTILITIES.RM.RM.FILE.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_file_notlast, "check_utilities_rm_rm_file_notlast", "Yes", POSIX_c181, MANDATORY, "rm when file’s link count is not 0 shall update C");
+    runtest(env, "UTILITIES.RM.RM.FILE.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_file_notlast_dir, "check_utilities_rm_rm_file_notlast_dir", "Yes", POSIX_c181, MANDATORY, "rm when file’s link count is not 0 shall update MC of parent dir");
+    
+    runtest(env, "UTILITIES.RM.RMDIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rmdir_empty, "check_utilities_rm_rmdir_empty", "Yes", POSIX_c181, MANDATORY, "rmdir on an empty dir shall update parent directory MC");
+    runtest(env, "UTILITIES.RM.RMDIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rmdir_notempty, "check_utilities_rm_rmdir_notempty", "No", "", MANDATORY, "rmdir on a not empty dir shall not update MAC");
+    runtest(env, "UTILITIES.RM.RMDIR.NOTEMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rmdir_notempty_parentdir, "check_utilities_rm_rmdir_notempty_parentdir", "No", "", MANDATORY, "rmdir on a not empty dir shall not update parent directory MAC");
+    
+    runtest(env, "UTILITIES.RM.UNLINK.LAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_unlink_last, "check_utilities_rm_unlink_last", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is 0 shall update parent directory MC");
+    runtest(env, "UTILITIES.RM.UNLINK.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_unlink_notlast, "check_utilities_rm_unlink_notlast", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update the file C");
+    runtest(env, "UTILITIES.RM.UNLINK.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_unlink_notlast_dir, "check_utilities_rm_unlink_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update parent directory MC");
+}
+
+void group_check_utilities_ln(testenv_struct* env){
+    runtest(env, "UTILITIES.LN.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_new, "check_utilities_ln_new", "Yes", POSIX_c181, MANDATORY, "ln when the target does not exist shall update C and MC of the directory containing the new entry");
+    runtest(env, "UTILITIES.LN.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_existing, "check_utilities_ln_existing", "Yes", POSIX_c181, MANDATORY, "ln when the target exists shall not update MAC of the target nor of its parent directory");
+    runtest(env, "UTILITIES.LN.S.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_s_new, "check_utilities_ln_s_new", "Yes", POSIX_c181, MANDATORY, "ln -s when the target does not exist shall update MAC of the link and MC of the directory containing the link");
+    runtest(env, "UTILITIES.LN.S.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_s_existing, "check_utilities_ln_s_existing", "Yes", POSIX_c181, MANDATORY, "ln -s when the target exists shall not update MAC of the target nor of its parent directory");
+}
+
+void group_check_utilities_ls(testenv_struct* env){
+    runtest(env, "UTILITIES.LS.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
+    runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "No", "", MANDATORY, "ls shall not update MAC of files in target directory");
+}
+
+void group_check_utilities_vi(testenv_struct* env){
+    if (OPTION_TEST_INPUT == 1){
+        runtest(env, "UTILITIES.VI.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q, "check_utilities_vi_new_i_w_q", "No", "", MANDATORY, "vi on new file (w then q) shall update MAC on write command and update MC of parent directory");
+        runtest(env, "UTILITIES.VI.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q_mac, "check_utilities_vi_new_i_w_q_mac", "No", "", MANDATORY, "vi on new file (w then q) shall update set MAC equal");
+        runtest(env, "UTILITIES.VI.EXISTING.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_w_q, "check_utilities_vi_existing_i_w_q", "No", "", MANDATORY, "vi on existing file (w then q) shall update A on launch, MC on write command");
+        runtest(env, "UTILITIES.VI.EXISTING.I.W.Q.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_w_q_mc, "check_utilities_vi_existing_i_w_q_mc", "No", "", MANDATORY, "vi on existing file (w then q) shall set MC equal");
+        runtest(env, "UTILITIES.VI.EXISTING.I.WQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_wq, "check_utilities_vi_existing_i_wq", "No", "", MANDATORY, "vi on existing file (wq) shall update A on launch MC on write command");
+        runtest(env, "UTILITIES.VI.EXISTING.I.WQ.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_wq_mc, "check_utilities_vi_existing_i_wq_mc", "No", "", MANDATORY, "vi on existing file (wq) shall set MC equal");
+        runtest(env, "UTILITIES.VI.EXISTING.I.X", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_x, "check_utilities_vi_existing_i_x", "No", "", MANDATORY, "vi on existing file (x) shall update A on launch MC on write command");
+        runtest(env, "UTILITIES.VI.EXISTING.I.X.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_x_mc, "check_utilities_vi_existing_i_x_mc", "No", "", MANDATORY, "vi on existing file (x) shall set MC equal");
+        runtest(env, "UTILITIES.VI.EXISTING.I.Q!", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_existing_i_qEM, "check_utilities_vi_existing_i_qEM", "No", "", MANDATORY, "vi on existing file with no write (q!) shall up date A on launch and not MC");
+    }
+}
+
+void group_check_utilities_ed(testenv_struct* env){
+    if (OPTION_TEST_INPUT == 1){
+        runtest(env, "UTILITIES.ED.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_new_i_w_q, "check_utilities_ed_new_i_w_q", "No", "", MANDATORY, "ed on new file (w then q) shall update MAC on write command and update MC of parent directory");
+        runtest(env, "UTILITIES.ED.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_new_i_w_q_mac, "check_utilities_ed_new_i_w_q_mac", "No", "", MANDATORY, "ed on new file (w then q) shall update set MAC equal");
+        runtest(env, "UTILITIES.ED.EXISTING.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_existing_i_w_q, "check_utilities_ed_existing_i_w_q", "No", "", MANDATORY, "ed on existing file (w then q) shall update A on launch, MC on write command");
+        runtest(env, "UTILITIES.ED.EXISTING.I.W.Q.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_existing_i_w_q_mc, "check_utilities_ed_existing_i_w_q_mc", "No", "", MANDATORY, "ed on existing file (w then q) shall set MC equal");
+        runtest(env, "UTILITIES.ED.EXISTING.I.WQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_existing_i_wq, "check_utilities_ed_existing_i_wq", "No", "", MANDATORY, "ed on existing file (wq) shall update A on launch MC on write command");
+        runtest(env, "UTILITIES.ED.EXISTING.I.WQ.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_existing_i_wq_mc, "check_utilities_ed_existing_i_wq_mc", "No", "", MANDATORY, "ed on existing file (wq) shall set MC equal");
+        runtest(env, "UTILITIES.ED.EXISTING.I.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_existing_i_Q, "check_utilities_ed_existing_i_Q", "No", "", MANDATORY, "ed on existing file with no write (q!) shall up date A on launch and not MC");
+    }
+}
+
+void group_check_utilities_ex(testenv_struct* env){
+    if (OPTION_TEST_INPUT == 1){
+        runtest(env, "UTILITIES.EX.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_new_i_w_q, "check_utilities_ex_new_i_w_q", "No", "", MANDATORY, "ex on new file (w then q) shall update MAC on write command and update MC of parent directory");
+        runtest(env, "UTILITIES.EX.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_new_i_w_q_mac, "check_utilities_ex_new_i_w_q_mac", "No", "", MANDATORY, "ex on new file (w then q) shall update set MAC equal");
+        runtest(env, "UTILITIES.EX.EXISTING.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_w_q, "check_utilities_ex_existing_i_w_q", "No", "", MANDATORY, "ex on existing file (w then q) shall update A on launch, MC on write command");
+        runtest(env, "UTILITIES.EX.EXISTING.I.W.Q.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_w_q_mc, "check_utilities_ex_existing_i_w_q_mc", "No", "", MANDATORY, "ex on existing file (w then q) shall set MC equal");
+        runtest(env, "UTILITIES.EX.EXISTING.I.WQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_wq, "check_utilities_ex_existing_i_wq", "No", "", MANDATORY, "ex on existing file (wq) shall update A on launch MC on write command");
+        runtest(env, "UTILITIES.EX.EXISTING.I.WQ.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_wq_mc, "check_utilities_ex_existing_i_wq_mc", "No", "", MANDATORY, "ex on existing file (wq) shall set MC equal");
+        runtest(env, "UTILITIES.EX.EXISTING.I.X", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_x, "check_utilities_ex_existing_i_x", "No", "", MANDATORY, "ex on existing file (x) shall update A on launch MC on write command");
+        runtest(env, "UTILITIES.EX.EXISTING.I.X.MC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_x_mc, "check_utilities_ex_existing_i_x_mc", "No", "", MANDATORY, "ex on existing file (x) shall set MC equal");
+        runtest(env, "UTILITIES.EX.EXISTING.I.Q!", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_existing_i_qEM, "check_utilities_ex_existing_i_qEM", "No", "", MANDATORY, "ex on existing file with no write (q!) shall up date A on launch and not MC");
+    }
+}
 
 #endif
     

@@ -3,6 +3,19 @@
 
 #include "file_ts.h"
 
+int stat_succeeds(char *path) {
+    struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
+    int res = stat(path, attr);
+    free(attr);
+    if (res != 0){
+        // stat failed
+        return 1;
+    }
+    
+    // stat succeeded
+    return 0;
+}
+
 void print_path_timestamps_s(char *path) {
     struct stat* attr = get_path_timestamps(path);
     
@@ -83,9 +96,30 @@ void print_file_timestamps_ns(FILE *f) {
     printf("C: %s - ns: %9ld\n", buf, ns);
 }
 
+struct stat** get_multi_path_timestamps(int watch_num, char** watch_array){
+    struct stat** multi_stat = calloc(sizeof(struct stat*), watch_num);
+    
+    int i;
+    for (i=0; i<watch_num; i++){
+        multi_stat[i] = get_path_timestamps_lstat(watch_array[i]);
+    }
+    
+    return multi_stat;
+}
+
 struct stat* get_path_timestamps(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = stat(path, attr);
+    if (res != 0){
+        return NULL;
+    }
+    
+    return attr;
+}
+
+struct stat* get_fd_timestamps(int fd) {
+    struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
+    int res = fstat(fd, attr);
     if (res != 0){
         return NULL;
     }

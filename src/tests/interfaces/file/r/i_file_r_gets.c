@@ -3,6 +3,7 @@
 
 #include "i_file_r_gets.h"
 
+#ifndef __OpenBSD__
 int check_interfaces_file_r_gets(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     FILE* f = stdin;
     if (f == NULL) {
@@ -131,5 +132,6 @@ int check_interfaces_file_r_gets_ungetc_both(FILE* csv_file, FILE* output_file, 
     
     return result; 
 }
+#endif
 
 #endif

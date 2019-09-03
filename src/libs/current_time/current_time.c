@@ -110,6 +110,7 @@ struct timespec* current_time_ns(){
 struct timespec* current_time_custom(int type){
   struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   
+  // POSIX-specified
   clock_gettime(type, ts);
   
   return ts;

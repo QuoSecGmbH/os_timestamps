@@ -65,7 +65,7 @@ int check_interfaces_file_fflush_nowrite(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_file_fseek_write(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -96,7 +96,7 @@ int check_interfaces_file_fseek_write(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_fseek_nowrite(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
