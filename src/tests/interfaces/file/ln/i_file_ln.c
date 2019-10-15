@@ -4,7 +4,7 @@
 #include "i_file_ln.h"
 
 int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.link.orig", 5, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.link.orig", 5, s_0s, ns_after_open, output_file, error_file, __func__);
         
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -40,7 +40,7 @@ int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error
 }
 
 int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.linkat.orig", 3, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.linkat.orig", 3, s_0s, ns_after_open, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(dir_path, "interfaces.file.ln.linkat.dir/interfaces.file.ln.linkat.link");
     
     int olddir_fd = open(dir_path, S_IRUSR);
@@ -96,7 +96,7 @@ int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* err
 }
 
 int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.symlink.orig", 5, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.symlink.orig", 5, s_0s, ns_after_open, output_file, error_file, __func__);
     char* path_link = misc_concat(dir_path, (char*) "interfaces.file.ln.symlink.link");
 
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
@@ -130,7 +130,7 @@ int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* er
 }
 
 int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.symlinkat.orig", 3, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.symlinkat.orig", 3, s_0s, ns_after_open, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(dir_path, "interfaces.file.ln.symlinkat.dir/interfaces.file.ln.symlinkat.link");
     
     int olddir_fd = open(dir_path, S_IRUSR);
@@ -186,7 +186,7 @@ int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* 
 }
 
 int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.readlink.orig", 5, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.readlink.orig", 5, s_0s, ns_after_open, output_file, error_file, __func__);
     char* relpath_link = "interfaces.file.ln.readlink.link";
     char* path_link = misc_concat(dir_path, relpath_link);
 
@@ -228,7 +228,7 @@ int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_ln_readlinkat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.readlinkat.orig", 3, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.readlinkat.orig", 3, s_0s, ns_after_open, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(dir_path, "interfaces.file.ln.readlinkat.dir/interfaces.file.ln.readlinkat.link");
     
     int olddir_fd = open(dir_path, S_IRUSR);

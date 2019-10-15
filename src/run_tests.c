@@ -55,23 +55,16 @@ int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time
     return result;
 }
 
-testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-  testenv_struct* env = (testenv_struct*) calloc(sizeof(testenv_struct), 1);
-  env->csv_file = csv_file;
-  env->output_file = output_file;
-  env->error_file = error_file;
-  env->dir_path = dir_path;
-  return env;
-}
-
 int main (int argc, char **argv){
     if (argc >= 2){
         VERBOSE=1;
     }
   
     FILE* csv_file = log_open_csv("results.csv");
-    FILE* output_file = stdout;
-    FILE* error_file = stderr;
+//     FILE* output_file = stdout;
+    FILE* output_file = fopen("output.txt", "wb");
+//     FILE* error_file = stderr;
+    FILE* error_file = fopen("error.txt", "wb");
   
     int i;
     char* dir_base_path = "tmp_tests";
@@ -205,8 +198,10 @@ void group_check_general_new_file(testenv_struct* env){
 void group_check_general_update(testenv_struct* env){ 
     runtest(env, "GENERAL.UPDATE.WRITE_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_close, "check_general_update_write_close", "Yes", POSIX_c181, MANDATORY, "fwrite+fclose shall update MC");
     runtest(env, "GENERAL.UPDATE.READ_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_close, "check_general_update_read_close", "Yes", POSIX_c181, MANDATORY, "fread+fclose shall update A");
-    runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "Yes", POSIX_c181, MANDATORY, "fwrite+fstat shall update MC");
-    runtest(env, "GENERAL.UPDATE.READ_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_stat, "check_general_update_read_stat", "Yes", POSIX_c181, MANDATORY, "fread+fstat shall update A");
+    runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "Yes", POSIX_c181, MANDATORY, "fwrite+stat shall update MC");
+    runtest(env, "GENERAL.UPDATE.WRITE_FSTAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_fstat, "check_general_update_write_fstat", "No", "", MANDATORY, "fwrite+fstat shall update MC");
+    runtest(env, "GENERAL.UPDATE.READ_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_stat, "check_general_update_read_stat", "Yes", POSIX_c181, MANDATORY, "fread+stat shall update A");
+    runtest(env, "GENERAL.UPDATE.READ_FSTAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_fstat, "check_general_update_read_fstat", "No", "", MANDATORY, "fread+fstat shall update A");
 }
 
 void group_check_interfaces_exec(testenv_struct* env){
@@ -587,7 +582,7 @@ void group_check_utilities_ln(testenv_struct* env){
 }
 
 void group_check_utilities_ls(testenv_struct* env){
-    runtest(env, "UTILITIES.LS.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
+    runtest(env, "UTILITIES.LS", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
     runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "No", "", MANDATORY, "ls shall not update MAC of files in target directory");
 }
 

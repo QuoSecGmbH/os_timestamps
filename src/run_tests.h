@@ -13,7 +13,6 @@
 #include "profile.h"
 #include "misc.h"
 
-testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
 int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time_t sleep_s, long sleep_ns, int (*func)(FILE*, FILE*, FILE*, char*), char* func_name, char* spec, char* spec_name, char* speclevel, char* desc);
 
 void group_check_general_clock(testenv_struct* test_env);

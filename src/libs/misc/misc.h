@@ -19,9 +19,19 @@ typedef struct testenv_struct{
     char* dir_path;
 } testenv_struct;
 
+testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
+
 static const int PROFILE_UPDATE_COMMAND = 0x01;
 static const int PROFILE_UPDATE_DELAY = 0x02;
 static const int PROFILE_SAMEAS_W0_BEFORE = 0x04;
+static const int PROFILE_EARLIER = 0x08;
+static const int PROFILE_LATER = 0x10;
+
+typedef struct profile_init_struct{
+    struct stat** multi_stat_before;
+    struct timespec* ts_before;
+} profile_init_struct;
+
 typedef struct profile_info_struct{
     int** profile;
     int watch_num;
@@ -37,8 +47,8 @@ typedef struct profile_info_struct{
 static const long ns_after_open = 100000000; //ns_100ms
 // static const long ns_after_open = 10; //ns_100ms
 
-// static const time_t CMD_DELAY_S = 1;
-static const time_t CMD_DELAY_S = 0;
+static const time_t CMD_DELAY_S = 1;
+// static const time_t CMD_DELAY_S = 0;
 // static const long CMD_DELAY_NS = 0;
 static const long CMD_DELAY_NS = 100000000; // 0.1s
 
@@ -132,7 +142,8 @@ int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file,
 int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
 int misc_check_profile_requirements(FILE* output_file, FILE* error_file, const char* func_name, profile_info_struct* pi, int** requirements);
 
-void misc_print_profile(struct profile_info_struct*);
+void misc_print_profile(FILE* output_file, FILE* error_file, struct profile_info_struct* pi);
+void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names);
 
 int misc_min2(int a, int b);
 int misc_min3(int a, int b, int c);

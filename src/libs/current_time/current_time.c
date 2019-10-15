@@ -21,6 +21,18 @@ void print_current_time_ns(){
   print_current_time_custom(CLOCK_REALTIME);
 }
 
+void print_current_time_ns_fslike_osspecific(){
+  struct timespec* ts = current_time_ns_fslike_osspecific();
+  struct tm * timeinfo;
+  time_t rawtime = ts->tv_sec;
+  timeinfo = localtime(&rawtime);
+  char* buf = asctime(timeinfo);
+  int n = strlen(buf);
+  buf[n-1] = 0;
+  printf("%s - s: %ld - ns: %9ld\n", buf, ts->tv_sec, ts->tv_nsec);
+  free(ts);
+}
+
 void print_current_time_custom(int type){
   struct timespec* ts = current_time_custom(type);
   struct tm * timeinfo;

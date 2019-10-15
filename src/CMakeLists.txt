@@ -36,6 +36,7 @@ include_directories(
   tests/utilities/
   tests/utilities/new/
   tests/utilities/rm/
+  tests/profileos/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -130,6 +131,9 @@ add_library(lib_interfaces
 	tests/interfaces/file/mv/i_file_mv.c
 	tests/interfaces/file/rm/i_file_rm.h
 	tests/interfaces/file/rm/i_file_rm.c
+)
+
+add_library(lib_utilities
 	tests/utilities/utilities.h
 	tests/utilities/utilities.c
 	tests/utilities/u_cp.h
@@ -160,8 +164,19 @@ add_library(lib_interfaces
 	tests/utilities/u_ed.c
 	)
 
+add_library(lib_profileos
+	tests/profileos/profileos.h
+	tests/profileos/profileos.c
+	)
+
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
 add_executable(run_tests run_tests.h run_tests.c)
-target_link_libraries(run_tests lib_general lib_interfaces lib_file_ts lib_current_time lib_log lib_misc lib_profile)
+target_link_libraries(run_tests lib_general lib_interfaces lib_utilities lib_file_ts lib_current_time lib_log lib_misc lib_profile)
+
+add_executable(profile_cmd profile_cmd.h profile_cmd.c)
+target_link_libraries(profile_cmd lib_general lib_file_ts lib_profile lib_misc lib_log lib_current_time)
+
+add_executable(profile_os profile_os.h profile_os.c)
+target_link_libraries(profile_os lib_general lib_profileos lib_file_ts lib_profile lib_misc lib_log lib_current_time)

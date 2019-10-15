@@ -69,6 +69,33 @@ void print_path_timestamps_ns(char *path) {
     printf("C: %s - ns: %9ld\n", buf, ns);
 }
 
+void print_path_timestamps_lstat_ns(char *path) {
+    struct stat* attr = get_path_timestamps_lstat(path);
+    
+    if (attr == NULL){
+        printf("ERROR: print_path_timestamps_s - attr is NULL\n");
+        return;
+    }
+    
+    time_t s = attr->st_mtim.tv_sec;
+    long ns = attr->st_mtim.tv_nsec;
+    char* buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("M: %s - ns: %9ld\n", buf, ns);
+    
+    s = attr->st_atim.tv_sec;
+    ns = attr->st_atim.tv_nsec;
+    buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("A: %s - ns: %9ld\n", buf, ns);
+    
+    s = attr->st_ctim.tv_sec;
+    ns = attr->st_ctim.tv_nsec;
+    buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("C: %s - ns: %9ld\n", buf, ns);
+}
+
 void print_file_timestamps_ns(FILE *f) {
     struct stat* attr = get_file_timestamps(f);
     

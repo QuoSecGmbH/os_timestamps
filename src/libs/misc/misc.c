@@ -5,6 +5,15 @@
 
 int VERBOSE;
 
+testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+  testenv_struct* env = (testenv_struct*) calloc(sizeof(testenv_struct), 1);
+  env->csv_file = csv_file;
+  env->output_file = output_file;
+  env->error_file = error_file;
+  env->dir_path = dir_path;
+  return env;
+}
+
 int misc_exec(char* command){
     return system(command);
 }
@@ -542,52 +551,130 @@ int misc_check_profile_requirements(FILE* output_file, FILE* error_file, const c
     return result;
 }
 
+void misc_print_profile(FILE* output_file, FILE* error_file, struct profile_info_struct* pi){
+    return misc_print_profile_masked(output_file, error_file, pi, pi->watch_array);
+}
 
-void misc_print_profile(struct profile_info_struct* pi){
+
+void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names){
     int i;
     for (i = 0; i < pi->watch_num; i++){
-        char* path = pi->watch_array[i];
+        char* path = watch_names[i];
         int** profile = pi->profile;
         int* mac_result = profile[i];
         char* mac_string = "MAC";
         
-        printf("%s\n", path);
-        printf("  Command: ");
+        fprintf(output_file, "%s\n", path);
+//         printf("%s\n", path);
+//         fprintf(output_file, "  ");
+//         printf("  Command: ");
         
         int mac;
+        char printed_verbose = 0;
+        char* res_char = (char*) calloc(3, sizeof(char));
         for (mac = 0; mac < 3; mac++){
             if (mac_result[mac] == -1){
-                printf("!");
+//                 printf("!");
+                res_char[mac] = '!';
                 continue;
             }
             
-            if (mac_result[mac] & PROFILE_UPDATE_COMMAND){
-                printf("%c", mac_string[mac]);
-            }
-            else if (mac_result[mac] & PROFILE_SAMEAS_W0_BEFORE){
-                printf(">"); 
-            }
-            else {
-                printf("-");
-            }
-        }
-        printf("\n");
-        
-        printf("  Delay:   ");
-        for (mac = 0; mac < 3; mac++){
-            if (mac_result[mac] == -1){
-                printf("!");
-                continue;
-            }
-            
+            char c = 0;
             if (mac_result[mac] & PROFILE_UPDATE_DELAY){
-                printf("%c", mac_string[mac]);
+//                 fprintf(output_file, "d", mac_string[mac]);
+                if (c == 0){
+                    c = 'd';
+                }                
+                if (VERBOSE){
+                    fprintf(output_file, "  %c PROFILE_UPDATE_DELAY\n", mac_string[mac]);
+                    printed_verbose = 1;
+                }
+                
+//                 printf("%c", mac_string[mac]);
             }
-            else {
-                printf("-");
+            if (mac_result[mac] & PROFILE_UPDATE_COMMAND){
+//                 fprintf(output_file, "%c", mac_string[mac]);
+                if (c == 0){
+                    c = mac_string[mac];
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c PROFILE_UPDATE_COMMAND\n", mac_string[mac]);
+                    printed_verbose = 1;
+                }
+//                 printf("%c", mac_string[mac]);
             }
+            if (mac_result[mac] & PROFILE_SAMEAS_W0_BEFORE){
+//                 fprintf(output_file, ">"); 
+//                 printf(">");                 
+                if (c == 0){
+                    c = '>';
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c PROFILE_SAMEAS_W0_BEFORE\n", mac_string[mac]);
+                    printed_verbose = 1;
+                }
+            }
+            if (mac_result[mac] & PROFILE_EARLIER){
+//                 fprintf(output_file, "-", mac_string[mac]);
+//                 printf("%c", mac_string[mac]);                
+                if (c == 0){
+                    c = '-';
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c PROFILE_EARLIER\n", mac_string[mac]);
+                    printed_verbose = 1;
+                }
+            }
+            if (mac_result[mac] & PROFILE_LATER){
+//                 fprintf(output_file, "+", mac_string[mac]);
+//                 printf("%c", mac_string[mac]);                
+                if (c == 0){
+                    c = '+';
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c PROFILE_LATER\n", mac_string[mac]);
+                    printed_verbose = 1;
+                }
+            }
+            
+            if (c == 0) {
+//                 fprintf(output_file, ".");
+                c = '.';
+//                 printf("-");
+            }
+            
+            res_char[mac] = c;
         }
-        printf("\n");
+        if (printed_verbose) fprintf(output_file, "\n");
+        fprintf(output_file, "  %c%c%c\n", res_char[0], res_char[1], res_char[2]);
+//         printf("\n");
+        
+        
+//         char delay_found = 0;
+//         if (VERBOSE) fprintf(output_file, "  Delay:   ");
+// //         printf("  Delay:   ");
+//         for (mac = 0; mac < 3; mac++){
+//             if (mac_result[mac] == -1){
+//                 if (VERBOSE) fprintf(output_file, "!");
+// //                 printf("!");
+//                 continue;
+//             }
+//             
+//             if (mac_result[mac] & PROFILE_UPDATE_DELAY){
+//                 if (VERBOSE) fprintf(output_file, "%c", mac_string[mac]);
+//                 delay_found = 1;
+// //                 printf("%c", mac_string[mac]);
+//             }
+//             else {
+//                 if (VERBOSE) fprintf(output_file, ".");
+// //                 printf("-");
+//             }
+//         }
+//         if (VERBOSE) fprintf(output_file, "\n");
+// //         printf("\n");
+//         if (delay_found == 1 && VERBOSE == 0){
+//             log_warning(output_file, error_file, "Delay profiling would be necessary; please rerun with verbose option.");
+//         }
     }
 }
 

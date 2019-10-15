@@ -20,6 +20,7 @@
 
 // int main();
 void print_current_time_s();
+void print_current_time_ns_fslike_osspecific();
 void print_current_time_custom(int type);
 void print_current_time_ns();
 time_t* current_time_s();
