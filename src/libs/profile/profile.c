@@ -6,7 +6,7 @@
 int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, struct timespec* ts_file_before, struct timespec* ts_file_command, struct timespec* W0_before, struct timespec* ts_file_delay){
     int value = 0;
     if (W0_before != NULL && ts_file_command != NULL){
-        if (ts_file_before == NULL || misc_timespec_eq(ts_file_command, ts_file_before) == 1){
+        if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
             if (misc_timespec_eq(ts_file_command, W0_before) == 0){
                 // Case: file timestamp changed between before and after command
                 //         AND file timestamp after command == before timestamp of first file
@@ -15,12 +15,14 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
         }
     }
     
-    if (ts_file_command != NULL && misc_timespec_l(ts_file_command, ts_before) == 0){
-            value |= PROFILE_EARLIER;
-    }
-    
-    if (ts_file_command != NULL && misc_timespec_l(ts_after, ts_file_command) == 0){
-            value |= PROFILE_LATER;
+    if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
+        if (ts_file_command != NULL && misc_timespec_l(ts_file_command, ts_before) == 0){
+                value |= PROFILE_EARLIER;
+        }
+        
+        if (ts_file_command != NULL && misc_timespec_l(ts_after, ts_file_command) == 0){
+                value |= PROFILE_LATER;
+        }
     }
 
     if (misc_timespec_leq_leq(ts_before, ts_file_command, ts_after) == 0){

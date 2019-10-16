@@ -17,7 +17,9 @@ void log_info(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_debug(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_warning(FILE* output_file, FILE* error_file, const char* format, ...);
 void log_error(FILE* output_file, FILE* error_file, const char* format, ...);
+void log_info_ts_profile_on_error_message_generic(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message, int print_profile);
 void log_info_ts_profile_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message);
+void log_info_ts_profile_on_error_message_short(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message);
 void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat, char* message);
 void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
 

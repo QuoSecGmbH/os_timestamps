@@ -124,9 +124,9 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     va_end(argptr);
 }
 
-void log_info_ts_profile_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message){
+void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message, int print_profile){
     if (result != 0 || VERBOSE >= 1){
-        misc_print_profile(output_file, error_file, pi);
+        if (print_profile) misc_print_profile(output_file, error_file, pi);
         
         if (strlen(message) == 0){
             log_info(output_file, error_file, "%s:", func_name, message);
@@ -180,6 +180,14 @@ void log_info_ts_profile_on_error_message(FILE* output_file, FILE* error_file, c
             }
         }
     }
+}
+
+void log_info_ts_profile_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message){
+    log_info_ts_profile_on_error_generic(output_file, error_file, func_name, result, pi, message, 1);
+}
+
+void log_info_ts_profile_on_error_message_short(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message){
+    log_info_ts_profile_on_error_generic(output_file, error_file, func_name, result, pi, message, 0);
 }
 
 void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat, char* message){

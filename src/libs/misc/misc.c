@@ -146,6 +146,11 @@ char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE
     if (ret != 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating dir");
     }
+    
+    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_ns->tv_sec = sleep_s;
+    ts_ns->tv_nsec = sleep_ns; 
+    nanosleep(ts_ns, NULL);
   }
   
   return buf_path;
@@ -645,7 +650,7 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
             
             res_char[mac] = c;
         }
-        if (printed_verbose) fprintf(output_file, "\n");
+//         if (printed_verbose) fprintf(output_file, "\n");
         fprintf(output_file, "  %c%c%c\n", res_char[0], res_char[1], res_char[2]);
 //         printf("\n");
         
@@ -676,6 +681,29 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
 //             log_warning(output_file, error_file, "Delay profiling would be necessary; please rerun with verbose option.");
 //         }
     }
+}
+
+int misc_profile_eq(struct profile_info_struct* pi1, struct profile_info_struct* pi2){
+    int** p1 = pi1->profile;
+    int** p2 = pi2->profile;
+    
+    if (pi1->watch_num != pi2->watch_num){
+        return 1;
+    }
+    
+    int i;
+    for (i = 0; i < pi1->watch_num; i++){
+        int* mac_result1 = p1[i];
+        int* mac_result2 = p2[i];
+        
+        int mac;
+        for (mac = 0; mac < 3; mac++){
+            if (mac_result1[mac] != mac_result2[mac]){
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
 
 int misc_min2(int a, int b){

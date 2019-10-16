@@ -165,8 +165,24 @@ add_library(lib_utilities
 	)
 
 add_library(lib_profileos
-	tests/profileos/profileos.h
-	tests/profileos/profileos.c
+	tests/profileos/pos_filerename.h
+	tests/profileos/pos_filerename.c
+	tests/profileos/pos_localfilemove.h
+	tests/profileos/pos_localfilemove.c
+	tests/profileos/pos_volumefilemove.h
+	tests/profileos/pos_volumefilemove.c
+	tests/profileos/pos_filecopy.h
+	tests/profileos/pos_filecopy.c
+	tests/profileos/pos_fileaccess.h
+	tests/profileos/pos_fileaccess.c
+	tests/profileos/pos_filemodify.h
+	tests/profileos/pos_filemodify.c
+	tests/profileos/pos_filecreation.h
+	tests/profileos/pos_filecreation.c
+	tests/profileos/pos_filedelete.h
+	tests/profileos/pos_filedelete.c
+	tests/profileos/pos_dirlisting.h
+	tests/profileos/pos_dirlisting.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)

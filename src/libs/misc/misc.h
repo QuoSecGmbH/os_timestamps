@@ -144,6 +144,7 @@ int misc_check_profile_requirements(FILE* output_file, FILE* error_file, const c
 
 void misc_print_profile(FILE* output_file, FILE* error_file, struct profile_info_struct* pi);
 void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names);
+int misc_profile_eq(struct profile_info_struct* pi1, struct profile_info_struct* pi2);
 
 int misc_min2(int a, int b);
 int misc_min3(int a, int b, int c);
