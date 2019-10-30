@@ -3,6 +3,8 @@
 
 #include "run_tests.h"
 
+int PROFILE_TREAT_DELAY_AS_COMMAND = 0;
+
 char* POSIX_c181 = "POSIX_c181";
 char* MANDATORY = "MANDATORY";
 char* NEEDNOT = "NEEDNOT";

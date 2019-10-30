@@ -90,7 +90,7 @@ struct timespec* current_time_ns_openbsd_coarse(){
 struct timespec* current_time_ns_fslike_generic(){
 // Workaround in the general case is to write a file then read its M
 
-  FILE* fd = fopen("tmp_timemarker", "wb");
+  FILE* fd = fopen("/tmp/tmp_posixtest_timemarker", "wb");
   if (fd == NULL) {
       printf("ERROR: current_time_ns_fslike_generic - can't open tmp_timemarker");
       struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
@@ -99,7 +99,7 @@ struct timespec* current_time_ns_fslike_generic(){
   fwrite("!", 1, 1, fd);
   fclose(fd);
 
-  struct stat* file_stat = get_path_timestamps("tmp_timemarker");
+  struct stat* file_stat = get_path_timestamps("/tmp/tmp_posixtest_timemarker");
   return &(file_stat->st_mtim);
 }
 

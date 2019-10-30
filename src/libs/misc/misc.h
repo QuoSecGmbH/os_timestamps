@@ -16,16 +16,22 @@ typedef struct testenv_struct{
     FILE* csv_file;
     FILE* output_file;
     FILE* error_file;
+    FILE* csv_file_flags;
     char* dir_path;
+    char* dir_path_volume;
 } testenv_struct;
 
 testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
+testenv_struct* testenv_alloc_csv(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path, char* dir_path_volume, FILE* csv_file_flags);
 
 static const int PROFILE_UPDATE_COMMAND = 0x01;
 static const int PROFILE_UPDATE_DELAY = 0x02;
 static const int PROFILE_SAMEAS_W0_BEFORE = 0x04;
 static const int PROFILE_EARLIER = 0x08;
 static const int PROFILE_LATER = 0x10;
+static const int PROFILE_EQ_COMMAND = 0x20;
+
+extern int PROFILE_TREAT_DELAY_AS_COMMAND;
 
 typedef struct profile_init_struct{
     struct stat** multi_stat_before;
@@ -143,7 +149,8 @@ int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_f
 int misc_check_profile_requirements(FILE* output_file, FILE* error_file, const char* func_name, profile_info_struct* pi, int** requirements);
 
 void misc_print_profile(FILE* output_file, FILE* error_file, struct profile_info_struct* pi);
-void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names);
+// void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names);
+void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profile_info_struct* pi, char** watch_names, char* desc, char* func_name, FILE* csv_file_brief, FILE* csv_file_flags);
 int misc_profile_eq(struct profile_info_struct* pi1, struct profile_info_struct* pi2);
 
 int misc_min2(int a, int b);

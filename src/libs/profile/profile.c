@@ -14,6 +14,18 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
             }
         }
     }
+
+    if (misc_timespec_leq_leq(ts_before, ts_file_command, ts_after) == 0){
+            value |= PROFILE_UPDATE_COMMAND;
+    }
+    if (misc_timespec_l_leq(ts_after, ts_file_delay, ts_after_delay) == 0){
+        if(PROFILE_TREAT_DELAY_AS_COMMAND){
+            value |= PROFILE_UPDATE_COMMAND;
+        }
+        else {
+            value |= PROFILE_UPDATE_DELAY;
+        }
+    }
     
     if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
         if (ts_file_command != NULL && misc_timespec_l(ts_file_command, ts_before) == 0){
@@ -21,15 +33,19 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
         }
         
         if (ts_file_command != NULL && misc_timespec_l(ts_after, ts_file_command) == 0){
+            if (PROFILE_TREAT_DELAY_AS_COMMAND){
+                if (misc_timespec_l(ts_after_delay, ts_file_command) == 0){ 
+                    value |= PROFILE_LATER;
+                }
+            }
+            else{
                 value |= PROFILE_LATER;
+            }
         }
     }
-
-    if (misc_timespec_leq_leq(ts_before, ts_file_command, ts_after) == 0){
-            value |= PROFILE_UPDATE_COMMAND;
-    }
-    if (misc_timespec_l_leq(ts_after, ts_file_delay, ts_after_delay) == 0){
-            value |= PROFILE_UPDATE_DELAY;
+    
+    if (ts_file_before != NULL && ts_file_command != NULL && misc_timespec_eq(ts_file_before, ts_file_command) == 0){
+            value |= PROFILE_EQ_COMMAND;
     }
     return value;
 }
@@ -74,10 +90,28 @@ int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, str
             file_stat_before_timespec_C = &(file_stat_before->st_ctim);
         }
         
+        struct timespec* file_stat_command_timespec_M = NULL;
+        struct timespec* file_stat_command_timespec_A = NULL;
+        struct timespec* file_stat_command_timespec_C = NULL;
+        if (file_stat_command != NULL){
+            file_stat_command_timespec_M = &(file_stat_command->st_mtim);
+            file_stat_command_timespec_A = &(file_stat_command->st_atim);
+            file_stat_command_timespec_C = &(file_stat_command->st_ctim);
+        }
+        
+        struct timespec* file_stat_delay_timespec_M = NULL;
+        struct timespec* file_stat_delay_timespec_A = NULL;
+        struct timespec* file_stat_delay_timespec_C = NULL;
+        if (file_stat_delay != NULL){
+            file_stat_delay_timespec_M = &(file_stat_delay->st_mtim);
+            file_stat_delay_timespec_A = &(file_stat_delay->st_atim);
+            file_stat_delay_timespec_C = &(file_stat_delay->st_ctim);
+        }
+        
         // M, A, C: PROFILE_UPDATE_COMMAND, PROFILE_UPDATE_DELAY or both
-        int value_M = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_M, &(file_stat_command->st_mtim), stat_w0_before_M, &(file_stat_delay->st_mtim));
-        int value_A = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_A, &(file_stat_command->st_atim), stat_w0_before_A, &(file_stat_delay->st_atim));
-        int value_C = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_C, &(file_stat_command->st_ctim), stat_w0_before_C, &(file_stat_delay->st_ctim));
+        int value_M = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_M, file_stat_command_timespec_M, stat_w0_before_M, file_stat_delay_timespec_M);
+        int value_A = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_A, file_stat_command_timespec_A, stat_w0_before_A, file_stat_delay_timespec_A);
+        int value_C = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_C, file_stat_command_timespec_C, stat_w0_before_C, file_stat_delay_timespec_C);
         
         profile[i][0] = value_M;
         profile[i][1] = value_A;

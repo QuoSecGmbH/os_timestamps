@@ -3,6 +3,8 @@
 
 #include "profile_cmd.h"
 
+int PROFILE_TREAT_DELAY_AS_COMMAND = 0;
+
 void print_usage(){
     fprintf(stderr, "Usage: ./profile_cmd [options] \"CMD\"\n");
     fprintf(stderr, "Options:\n");

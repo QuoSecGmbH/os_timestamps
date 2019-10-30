@@ -35,8 +35,8 @@ int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     r4[1] = NOUPDATE_OPTIONAL;
     r4[2] = UPDATE_MANDATORY;
     int* r5 = calloc(sizeof(int), 3);
-    r5[0] = NOUPDATE_OPTIONAL;
-    r5[1] = NOUPDATE_OPTIONAL;
+    r5[0] = NOUPDATE_MANDATORY;
+    r5[1] = NOUPDATE_MANDATORY;
     r5[2] = UPDATE_MANDATORY;
     
     
@@ -118,8 +118,8 @@ int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     r4[1] = NOUPDATE_OPTIONAL;
     r4[2] = UPDATE_MANDATORY;
     int* r5 = calloc(sizeof(int), 3);
-    r5[0] = NOUPDATE_OPTIONAL;
-    r5[1] = NOUPDATE_OPTIONAL;
+    r5[0] = NOUPDATE_MANDATORY;
+    r5[1] = NOUPDATE_MANDATORY;
     r5[2] = UPDATE_MANDATORY;
     
     
