@@ -185,6 +185,8 @@ add_library(lib_profileos
 	tests/profileos/pos_dirlisting.c
 	tests/profileos/pos_dirtraversal.h
 	tests/profileos/pos_dirtraversal.c
+	tests/profileos/pos_execute.h
+	tests/profileos/pos_execute.c
 	)
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)

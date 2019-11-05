@@ -91,7 +91,11 @@ int main (int argc, char **argv){
     }
     log_info(output_file, error_file, "Directory for tests is: %s", dir_path);
     
+    current_time_setup_local_timemarker(output_file, error_file);
+    current_time_setup_local_timemarkerdir(output_file, error_file);
+    
     // pre-creating some of the test files
+    misc_concat_ensure_file_exists_free(dir_path, "/tmp/tmp_posixtest_timemarker", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);

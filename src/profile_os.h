@@ -21,6 +21,7 @@
 #include "pos_filedelete.h"
 #include "pos_dirlisting.h"
 #include "pos_dirtraversal.h"
+#include "pos_execute.h"
 
 #include "log.h"
 #include "general.h"
@@ -56,6 +57,7 @@ void group_profileos_dirdelete(testenv_struct* env);
 void group_profileos_dirlisting_notempty(testenv_struct* env);
 void group_profileos_dirlisting_empty(testenv_struct* env);
 void group_profileos_dirtraversal(testenv_struct* env);
+void group_profileos_execute(testenv_struct* env);
 
 void print_profile(struct profile_info_struct* pi, char** mask, testenv_struct* env, char* desc, char* func_name);
 void process_profiles(char** mask, char* desc, char* ref, char* func_name, testenv_struct* env, struct profile_info_struct** pi_list, int pi_num);

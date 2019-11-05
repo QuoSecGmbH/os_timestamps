@@ -130,11 +130,11 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
         misc_ensure_dir_exists(target_dir, 0, 0, output_file, error_file, __func__);
     }
     
-    char saved_pwd[120];
+    char saved_pwd[256];
     if (pwd_dir != NULL) {
         misc_ensure_dir_exists(pwd_dir, 0, 0, output_file, error_file, __func__);
     
-        char* retc = getcwd(saved_pwd, 120);
+        char* retc = getcwd(saved_pwd, 256);
         if (retc == NULL){
             log_warning(output_file, error_file, "%s - %s", __func__, "error getting saved_pwd");
         }
@@ -158,18 +158,17 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
         }
     }
     struct stat** multi_stat_before = get_multi_path_timestamps(watch_num, watch_array);
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
+    
     if (pwd_dir != NULL){
         int ret = chdir(pwd_dir);
         if (ret != 0){
             log_warning(output_file, error_file, "%s - %s", __func__, "error setting pwd with chdir");
         }
     }
-        
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     misc_exec(command);
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     if (pwd_dir != NULL){
         int ret = chdir(saved_pwd);
@@ -179,12 +178,13 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
     }
     
     struct stat** multi_stat_after = get_multi_path_timestamps(watch_num, watch_array);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     misc_sleep(wait_command_s);
     misc_nanosleep(wait_command_ns);
     
-    struct timespec* ts_after_delay = current_time_ns_fslike_osspecific();
     struct stat** multi_stat_after_delay = get_multi_path_timestamps(watch_num, watch_array);
+    struct timespec* ts_after_delay = current_time_ns_fslike_osspecific();
     
     int** profile = compute_profile(ts_before, ts_after, ts_after_delay, watch_num, multi_stat_before, multi_stat_after, multi_stat_after_delay);
     struct profile_info_struct* pi = (struct profile_info_struct*) calloc(sizeof(struct profile_info_struct), 1);
@@ -213,14 +213,14 @@ struct profile_init_struct* profile_init(int watch_num, char** watch_array){
 }
 
 struct profile_info_struct* profile_analyze(struct profile_init_struct* pis, int watch_num, char** watch_array, time_t wait_command_s, long wait_command_ns){
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat** multi_stat_after = get_multi_path_timestamps(watch_num, watch_array);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     misc_sleep(wait_command_s);
     misc_nanosleep(wait_command_ns);
     
-    struct timespec* ts_after_delay = current_time_ns_fslike_osspecific();
     struct stat** multi_stat_after_delay = get_multi_path_timestamps(watch_num, watch_array);
+    struct timespec* ts_after_delay = current_time_ns_fslike_osspecific();
     
     int** profile = compute_profile(pis->ts_before, ts_after, ts_after_delay, watch_num, pis->multi_stat_before, multi_stat_after, multi_stat_after_delay);
     struct profile_info_struct* pi = (struct profile_info_struct*) calloc(sizeof(struct profile_info_struct), 1);

@@ -3,6 +3,37 @@
 
 #include "current_time.h"
 
+char* path_timemarker;
+char* path_timemarkerdir;
+
+void current_time_setup_local_timemarker(FILE* output_file, FILE* error_file){
+    char current_pwd[256];
+    char* retc = getcwd(current_pwd, 256);
+    if (retc == NULL){
+        log_warning(output_file, error_file, "%s - %s", __func__, "error getting current_pwd");
+        path_timemarker = "/tmp/tmp_posixtest_timemarker";
+    }
+    else{
+        path_timemarker = misc_concat(current_pwd, "tmp_posixtest_timemarker");
+    }
+    
+    misc_concat_ensure_file_exists(path_timemarker, "", 0, ns_after_open, output_file, error_file, __func__);
+}
+
+void current_time_setup_local_timemarkerdir(FILE* output_file, FILE* error_file){
+    char current_pwd[256];
+    char* retc = getcwd(current_pwd, 256);
+    if (retc == NULL){
+        log_warning(output_file, error_file, "%s - %s", __func__, "error getting current_pwd");
+        path_timemarkerdir = "/tmp/tmp_posixtest_timemarker_dir/";
+    }
+    else {
+        path_timemarkerdir = misc_concat(current_pwd, "tmp_posixtest_timemarker_dir/");
+    }
+    
+    misc_ensure_dir_exists(path_timemarkerdir, 0, ns_after_open, output_file, error_file, __func__);
+}
+
 void print_current_time_s(){
   time_t* rawtime = current_time_s();
   struct tm * timeinfo;
@@ -90,29 +121,114 @@ struct timespec* current_time_ns_openbsd_coarse(){
 struct timespec* current_time_ns_fslike_generic(){
 // Workaround in the general case is to write a file then read its M
 
-  FILE* fd = fopen("/tmp/tmp_posixtest_timemarker", "wb");
+  if (path_timemarker == NULL){
+    fprintf(stderr, "ERROR (fatal): path_timemarker not set in %s\n", __func__);
+  }
+    
+  FILE* fd = fopen(path_timemarker, "wb");
   if (fd == NULL) {
-      printf("ERROR: current_time_ns_fslike_generic - can't open tmp_timemarker");
+      printf("ERROR: current_time_ns_fslike_generic - can't open tmp_timemarker\n");
       struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
       return ts;
   }
   fwrite("!", 1, 1, fd);
   fclose(fd);
 
-  struct stat* file_stat = get_path_timestamps("/tmp/tmp_posixtest_timemarker");
+  struct stat* file_stat = get_path_timestamps(path_timemarker);
   return &(file_stat->st_mtim);
 }
 
+struct timespec* current_time_ns_fslike_generic_futimens(){
+// Workaround in the general case is to write a file then read its M
+// Does not write to the file
+    
+  if (path_timemarker == NULL){
+    fprintf(stderr, "ERROR (fatal): path_timemarker not set in %s\n", __func__);
+  }
+
+//   FILE* fd = fopen(, "wb");
+  int fd = open(path_timemarker, O_RDWR);
+  if (fd == 0) {
+      printf("ERROR: current_time_ns_fslike_generic_futimens - can't open tmp_timemarker\n");
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      return ts;
+  }
+  
+  struct timespec* ts_now1 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  struct timespec* ts_now2 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  ts_now1->tv_nsec = UTIME_NOW;
+  ts_now1->tv_sec = 0;
+  ts_now2->tv_nsec = UTIME_NOW;
+  ts_now2->tv_sec = 0;
+    
+  struct timespec times[2];
+  times[0] = *ts_now1;
+  times[1] = *ts_now2;
+    
+  int ret = futimens(fd, times);
+  if (ret != 0) {
+      printf("%s - %s %d\n", __func__, "futimens failed with errno", errno);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      return ts;
+  }
+
+  close(fd);
+  
+  struct stat* file_stat = get_path_timestamps(path_timemarker);
+  return &(file_stat->st_mtim);
+}
+
+struct timespec* current_time_ns_fslike_generic_futimens_dir(){
+// Workaround in the general case is to write a file then read its M
+// Does not write to the directory
+    
+  if (path_timemarkerdir == NULL){
+    fprintf(stderr, "ERROR (fatal): path_timemarkerdir not set in %s\n", __func__);
+  }
+
+//   FILE* fd = fopen(, "wb");
+  int fd = open(path_timemarkerdir, O_RDWR);
+  if (fd == 0) {
+      printf("ERROR: current_time_ns_fslike_generic_futimens - can't open tmp_timemarker\n");
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      return ts;
+  }
+  
+  struct timespec* ts_now1 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  struct timespec* ts_now2 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+  ts_now1->tv_nsec = UTIME_OMIT;
+  ts_now1->tv_sec = 0;
+  ts_now2->tv_nsec = UTIME_NOW;
+  ts_now2->tv_sec = 0;
+    
+  struct timespec times[2];
+  times[0] = *ts_now1;
+  times[1] = *ts_now2;
+    
+  int ret = futimens(fd, times);
+  if (ret != 0) {
+      printf("%s - %s %d\n", __func__, "futimens failed with errno", errno);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      return ts;
+  }
+
+  close(fd);
+  
+  struct stat* file_stat = get_path_timestamps(path_timemarkerdir);
+  return &(file_stat->st_mtim);
+}
+
+
 struct timespec* current_time_ns_fslike_osspecific(){
-#ifdef __linux__
-    return current_time_ns_linux_coarse();
-#elif __FreeBSD__
-    return current_time_ns_freebsd_coarse();
-#elif __OpenBSD__
-    return current_time_ns_openbsd_coarse();
-#else
+// #ifdef __linux__
+//     return current_time_ns_linux_coarse();
+// #elif __FreeBSD__
+//     return current_time_ns_freebsd_coarse();
+// #elif __OpenBSD__
+//     return current_time_ns_openbsd_coarse();
+// // #else
     return current_time_ns_fslike_generic();
-#endif
+// #endif
 }
 
 struct timespec* current_time_ns(){

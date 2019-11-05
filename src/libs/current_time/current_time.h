@@ -12,11 +12,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <sys/types.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #include "log.h"
 #include "misc.h"
 // #include "current_time_message.h"
+
+char* path_timemarker;
+char* path_timemarkerdir;
+
+void current_time_setup_local_timemarker(FILE* output_file, FILE* error_file);
+void current_time_setup_local_timemarkerdir(FILE* output_file, FILE* error_file);
 
 // int main();
 void print_current_time_s();
@@ -32,6 +41,7 @@ struct timespec* current_time_ns_coarse();
 
 
 struct timespec* current_time_ns_fslike_generic();
+struct timespec* current_time_ns_fslike_generic_futimens();
 struct timespec*  current_time_ns_fslike_osspecific();
 
 #endif

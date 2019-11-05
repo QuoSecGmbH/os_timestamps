@@ -120,7 +120,12 @@ int run_profileos(){
     }
     
     
+    current_time_setup_local_timemarker(output_file, error_file);
+    current_time_setup_local_timemarkerdir(output_file, error_file);
+    
     // pre-creating some of the test files
+    misc_concat_ensure_dir_exists("", "/tmp/tmp_posixtest_timemarker_dir/", 0, 0, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists_free("", "/tmp/tmp_posixtest_timemarker", 2*s_1s, ns_0ns, output_file, error_file, __func__);
 //     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
 
 //     misc_concat_ensure_file_exists_free(dir_path, "profile_os_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
@@ -160,7 +165,8 @@ int run_profileos(){
     group_profileos_dirlisting_empty(test_env);
     
     group_profileos_dirtraversal(test_env);
-    
+   
+    group_profileos_execute(test_env);
    
 //     free(test_env);
 //     free(dir_path);
@@ -175,7 +181,7 @@ void group_profileos_filerename(testenv_struct* env){
     struct profile_info_struct* pi3 = profileos_filerename_utilities_new(env);
     struct profile_info_struct* pi4 = profileos_filerename_utilities_existing(env);
     
-    char** mask = misc_char_array3("src", "dst", "dir");
+    char** mask = misc_char_array3("src", "dst", "dir/");
     process_profiles4(mask, "File Rename", "PROFILE.OS.FILE.RENAME", __func__, env, pi1, pi2, pi3, pi4);
 }
 
@@ -184,7 +190,7 @@ void group_profileos_dirrename(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_filerename_interface_dir_existing(env);
     struct profile_info_struct* pi3 = profileos_filerename_utilities_dir_new(env);
     
-    char** mask = misc_char_array3("src", "dst", "dir");
+    char** mask = misc_char_array3("src/", "dst/", "dir/");
     process_profiles3(mask, "Dir Rename", "PROFILE.OS.DIR.RENAME", __func__, env, pi1, pi2, pi3);
 }
 
@@ -194,7 +200,7 @@ void group_profileos_localfilemove(testenv_struct* env){
     struct profile_info_struct* pi3 = profileos_localfilemove_utilities_new(env);
     struct profile_info_struct* pi4 = profileos_localfilemove_utilities_existing(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
     process_profiles4(mask, "Local File Move", "PROFILE.OS.FILE.MV_LOCAL", __func__, env, pi1, pi2, pi3, pi4);
 }
 
@@ -203,12 +209,12 @@ void group_profileos_localdirmove(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_localfilemove_interface_dir_existing(env);
     struct profile_info_struct* pi3 = profileos_localfilemove_utilities_dir_new(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
     process_profiles3(mask, "Local Dir Move", "PROFILE.OS.DIR.MV_LOCAL", __func__, env, pi1, pi2, pi3);
 }
 
 void group_profileos_volumefilemove(testenv_struct* env){
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
     
     // Linux, OpenBSD, FreeBSD: Interface "rename" does not work across file systemes (errno 18 - EXDEV 18 Invalid cross-device link), see: man 2 rename
     struct profile_info_struct* pi1 = profileos_volumefilemove_utilities_new(env);
@@ -217,7 +223,7 @@ void group_profileos_volumefilemove(testenv_struct* env){
 }
 
 void group_profileos_volumedirmove(testenv_struct* env){
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
     
     // Linux, OpenBSD, FreeBSD: Interface "rename" does not work across file systemes (errno 18 - EXDEV 18 Invalid cross-device link), see: man 2 rename
     struct profile_info_struct* pi1 = profileos_volumefilemove_utilities_dir_new(env);
@@ -228,7 +234,7 @@ void group_profileos_filecopy_new(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_interface_new(env);
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_new(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
     process_profiles2(mask, "File Copy (new)", "PROFILE.OS.FILE.COPY.NEW", __func__, env, pi1, pi2);
 }
 
@@ -236,21 +242,21 @@ void group_profileos_filecopy_existing(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_interface_existing(env);
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_existing(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
     process_profiles2(mask, "File Copy (existing)", "PROFILE.OS.FILE.COPY.EXISTING", __func__, env, pi1, pi2);
 }
 
 void group_profileos_dircopy_notempty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_notempty(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
     process_profiles1(mask, "Dir Copy (new, notempty)", "PROFILE.OS.DIR.COPY.NEW.NOTEMPTY", __func__, env, pi1);
 }
 
 void group_profileos_dircopy_empty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_empty(env);
     
-    char** mask = misc_char_array4("src", "srcdir", "dst", "dstdir");
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
     process_profiles1(mask, "Dir Copy (new, empty)", "PROFILE.OS.DIR.COPY.NEW.EMPTY", __func__, env, pi1);
 }
 
@@ -258,7 +264,7 @@ void group_profileos_filecreation(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecreation_interface(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities(env);
     
-    char** mask = misc_char_array2("dir", "newfile");
+    char** mask = misc_char_array2("dir/", "newfile");
     process_profiles2(mask, "File Creation", "PROFILE.OS.FILE.NEW", __func__, env, pi1, pi2);
 }
 
@@ -266,7 +272,7 @@ void group_profileos_dircreation(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecreation_interface_dir(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_dir(env);
     
-    char** mask = misc_char_array2("parentdir", "newdir");
+    char** mask = misc_char_array2("parentdir/", "newdir/");
     process_profiles2(mask, "Dir Creation", "PROFILE.OS.DIR.NEW", __func__, env, pi1, pi2);
 }
 
@@ -274,7 +280,7 @@ void group_profileos_fileaccess(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_fileaccess_interface(env);
     struct profile_info_struct* pi2 = profileos_fileaccess_utilities(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array2("dir/", "file");
     process_profiles2(mask, "File Access", "PROFILE.OS.FILE.READ", __func__, env, pi1, pi2);
 }
 
@@ -284,7 +290,7 @@ void group_profileos_filemodify(testenv_struct* env){
     struct profile_info_struct* pi3 = profileos_filemodify_interface_a(env);
     struct profile_info_struct* pi4 = profileos_filemodify_utilities(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array2("dir/", "file");
     process_profiles4(mask, "File Modify", "PROFILE.OS.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4);
 }
 
@@ -294,7 +300,7 @@ void group_profileos_filedelete_last(testenv_struct* env){
     struct profile_info_struct* pi3 = profileos_filedelete_last_utilities_empty(env);
     struct profile_info_struct* pi4 = profileos_filedelete_last_utilities_notempty(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array2("dir/", "file");
     process_profiles4(mask, "File Delete (last hard link)", "PROFILE.OS.FILE.RM.last", __func__, env, pi1, pi2, pi3, pi4);
 }
 
@@ -304,7 +310,7 @@ void group_profileos_filedelete_notlast(testenv_struct* env){
     struct profile_info_struct* pi3 = profileos_filedelete_notlast_utilities_empty(env);
     struct profile_info_struct* pi4 = profileos_filedelete_notlast_utilities_notempty(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array2("dir/", "file");
     process_profiles4(mask, "File Delete (not last hard link)", "PROFILE.OS.FILE.RM.notlast", __func__, env, pi1, pi2, pi3, pi4);
 }
 
@@ -318,7 +324,7 @@ void group_profileos_dirdelete(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_dirdelete_utilities_rm(env);
     struct profile_info_struct* pi3 = profileos_dirdelete_utilities_rmdir(env);
     
-    char** mask = misc_char_array2("parentdir", "dir");
+    char** mask = misc_char_array2("parentdir/", "dir/");
     process_profiles3(mask, "Dir Delete (last hard link)", "PROFILE.OS.DIR.RM.last", __func__, env, pi1, pi2, pi3);
 }
 
@@ -326,7 +332,7 @@ void group_profileos_dirlisting_notempty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_dirlisting_interface_notempty(env);
     struct profile_info_struct* pi2 = profileos_dirlisting_utilities_notempty(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array2("dir/", "file");
     process_profiles2(mask, "Dir Listing (not empty)", "PROFILE.OS.DIR.LISTING.notempty", __func__, env, pi1, pi2);
 }
 
@@ -334,7 +340,7 @@ void group_profileos_dirlisting_empty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_dirlisting_interface_empty(env);
     struct profile_info_struct* pi2 = profileos_dirlisting_utilities_empty(env);
     
-    char** mask = misc_char_array2("dir", "file");
+    char** mask = misc_char_array1("dir/");
     process_profiles2(mask, "Dir Listing (empty)", "PROFILE.OS.DIR.LISTING.empty", __func__, env, pi1, pi2);
 }
 
@@ -343,8 +349,18 @@ void group_profileos_dirtraversal(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_dirtraversal_utilities(env);
     struct profile_info_struct* pi3 = profileos_dirtraversal_utilities_profileos(env);
     
-    char** mask = misc_char_array1("dir");
+    char** mask = misc_char_array1("dir/");
     process_profiles3(mask, "Dir Traversal", "PROFILE.OS.DIR.TRAVERSAL", __func__, env, pi1, pi2, pi3);
+}
+
+void group_profileos_execute(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_execute_system_interface(env);
+    struct profile_info_struct* pi2 = profileos_execute_system_utilities(env);
+    struct profile_info_struct* pi3 = profileos_execute_local_interface(env);
+    struct profile_info_struct* pi4 = profileos_execute_local_utilities(env);
+    
+    char** mask = misc_char_array3("bin", "dir/", "pwd/");
+    process_profiles4(mask, "Binary Execution", "PROFILE.OS.EXEC", __func__, env, pi1, pi2, pi3, pi4);
 }
 
 void print_profile(struct profile_info_struct* pi, char** mask, testenv_struct* env, char* desc, char* func_name){
