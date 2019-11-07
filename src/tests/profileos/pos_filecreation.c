@@ -20,6 +20,27 @@ struct profile_info_struct* profileos_filecreation_interface(testenv_struct* env
     return pi;
 }
 
+struct profile_info_struct* profileos_filecreation_interface_newhardlink(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_file_exists_filled(path_dir, "newfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_hardlink = misc_concat(path_dir, "hardlink");
+    misc_nanosleep(ns_after_open);
+    
+    char** watch_array = misc_char_array3(path_new, path_hardlink, path_dir);
+    int watch_num = 3;
+    profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
+    int r = link(path_new, path_hardlink);
+    if (r != 0){
+        log_warning(env->output_file, env->error_file, "%s - %s, errno: %d", __func__, "error creating link", errno);
+        return 1;
+    }
+    
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
 struct profile_info_struct* profileos_filecreation_interface_dir(testenv_struct* env){   
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dir, "newdir/");
@@ -30,6 +51,74 @@ struct profile_info_struct* profileos_filecreation_interface_dir(testenv_struct*
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
     mkdir(path_new, 0700);
+    
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_interface_symlink(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_file_exists_filled(path_dir, "newfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_dir, "symlink");
+    misc_nanosleep(ns_after_open);
+    
+    char** watch_array = misc_char_array3(path_new, path_symlink, path_dir);
+    int watch_num = 3;
+    profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
+    int r = symlink("newfile", path_symlink);
+    if (r != 0){
+        log_warning(env->output_file, env->error_file, "%s - %s, errno: %d", __func__, "error creating link", errno);
+        return 1;
+    }
+    
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_interface_intosymlinkdir(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_dir_dir = misc_concat_ensure_dir_exists(path_dir, "dir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_dir_link = misc_concat(path_dir, "symlink");
+    char* path_new = misc_concat(path_dir_link, "/file");
+    misc_nanosleep(ns_after_open);
+        
+    int r = symlink("dir/", path_dir_link);
+    if (r != 0){
+        log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
+        return 1;
+    }
+    misc_nanosleep(ns_after_open);
+    
+    char** watch_array = misc_char_array3(path_dir_dir, path_dir_link, path_new);
+    int watch_num = 3;
+    profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
+    FILE* fd = fopen(path_new, "wb");
+    fclose(fd);
+    
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_interface_symlink_dir(testenv_struct* env){   
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_dir_exists(env->dir_path, "newdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_dir, "symlink");
+    misc_nanosleep(ns_after_open);
+    
+    char** watch_array = misc_char_array3(path_new, path_symlink, path_dir);
+    int watch_num = 3;
+    profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
+    int r = symlink("newdir/", path_symlink);
+    if (r != 0){
+        log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
+        return 1;
+    }
     
     struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
     
@@ -51,6 +140,22 @@ struct profile_info_struct* profileos_filecreation_utilities(testenv_struct* env
     return pi;
 }
 
+struct profile_info_struct* profileos_filecreation_utilities_newhardlink(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_file_exists_filled(path_dir, "newfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_hardlink = misc_concat(path_dir, "hardlink");
+    misc_nanosleep(ns_after_open);
+    
+    char* command = "ln newfile hardlink";
+    
+    char** watch_array = misc_char_array3(path_new, path_hardlink, path_dir);
+    int watch_num = 3;
+    
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
 struct profile_info_struct* profileos_filecreation_utilities_dir(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dir, "newdir/");
@@ -60,6 +165,62 @@ struct profile_info_struct* profileos_filecreation_utilities_dir(testenv_struct*
     
     char** watch_array = misc_char_array2(path_dir, path_new);
     int watch_num = 2;
+    
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_utilities_symlink(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_file_exists_filled(path_dir, "newfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_dir, "symlink");
+    misc_nanosleep(ns_after_open);
+    
+    char* command = "ln -s newfile symlink";
+    
+    char** watch_array = misc_char_array3(path_new, path_symlink, path_dir);
+    int watch_num = 3;
+    
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_utilities_intosymlinkdir(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_dir_dir = misc_concat_ensure_dir_exists(path_dir, "dir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_dir_link = misc_concat(path_dir, "symlink");
+    char* path_new = misc_concat(path_dir_link, "/file");
+    misc_nanosleep(ns_after_open);
+    
+    int r = symlink("dir/", path_dir_link);
+    if (r != 0){
+        log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
+        return 1;
+    }
+    misc_nanosleep(ns_after_open);
+    
+    char* command = "touch symlink/file";
+    
+    char** watch_array = misc_char_array3(path_dir_dir, path_dir_link, path_new);
+    int watch_num = 3;
+    
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    
+    return pi;
+}
+
+struct profile_info_struct* profileos_filecreation_utilities_symlink_dir(testenv_struct* env){
+    char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
+    char* path_new = misc_concat_ensure_dir_exists(env->dir_path, "newdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_dir, "symlink");
+    misc_nanosleep(ns_after_open);
+    
+    char* command = "ln -s newfile/ symlink";
+    
+    char** watch_array = misc_char_array3(path_new, path_symlink, path_dir);
+    int watch_num = 3;
     
     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     

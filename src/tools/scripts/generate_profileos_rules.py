@@ -31,6 +31,16 @@ latex_preamble = r"""
 \usetikzlibrary{shapes.multipart,calc}
 \usetikzlibrary{arrows}
 
+
+%\usepackage{fontspec}
+%\setmonofont{Libertinus Mono}[
+%  Scale=MatchLowercase
+%] % or whatever font you prefer
+
+%\setmonofont{Everson Mono}
+
+\usepackage{inconsolata}
+
 % tikz
 \tikzset{
   state/.style={
@@ -46,7 +56,7 @@ latex_preamble = r"""
 \tikzset{
   snb/.style={
     rectangle,
-    draw=black
+%    draw=black
   },
 }
 
@@ -108,38 +118,40 @@ def tex_end_group(group, group_list):
 
     group_ = group.replace(".", "_")
 
-    tex = "\\node[snb, below = 0.8cm of {}_TITLE.north west, anchor= north west, minimum height=2cm]({}_TEXTBOUNDS){{}};\n".format(group_, group_)
+    tex = "\\node[snb, below = 0.8cm of {}_TITLE.north west, anchor= north west, minimum height=2.3cm]({}_TEXTBOUNDS){{}};\n".format(group_, group_)
 
     #tex = "\\node[snb, below = 0.8cm of {}_TITLE.north west, anchor= north west, minimum height=2cm]".format(group_)
-    tex += "\\node[snb, below = of {}_TEXTBOUNDS.north west, anchor= north west]".format(group_)
-    tex += "({}_FILES){{".format(group_)
     
     i = 0
     for element, mac in group_list:
-        tex += element + ":"
-        if i < len(group_list) - 1:
-            tex += "\\\\"
+        el = element.replace("/", "")
+        cm = 0.3+0.5*i
+        tex += "\\node[snb, below right="+str(cm)+"cm and 0.48cm of {}_TEXTBOUNDS.north west, anchor= north west, minimum height=0.5cm]".format(group_)
+        #tex += "\\node[snb, below ="+str(cm)+"cm of {}_TEXTBOUNDS.north west, anchor= north west, minimum height=0.5cm]".format(group_)
+        tex += "({}_FILES_{}){{".format(group_, el)
+        if element != "":
+            tex += element + ":"
+        tex += "\\vphantom{{{}}}".format(mac)
+        tex += "};\n"
         i += 1
 
-    tex += "};\n"
 
     #tex += "\\node[snb, right = of {}_FILES.north east, anchor=north west, minimum height=2cm]".format(group_)
-    tex += "\\node[snb, right = 1.3cm of {}_FILES.north west, anchor=north west]".format(group_)
     #tex += "\\node[snb, below = 0.1 of {}_TITLE.south west, anchor=north west, minimum height=2cm]".format(group_)
-    tex += "({}_MAC){{".format(group_)
 
     i = 0
     for element, mac in group_list:
+        el = element.replace("/", "")
+        tex += "\\node[snb, right = 1.9cm of {}_FILES_{}.north west, anchor=north west, minimum height=0.5cm]".format(group_, el)
+        tex += "({}_MAC_{}){{".format(group_, el)
         tex += "\\texttt{" + mac + "}"
-        if "/" in element:
-            #tex += "\\vphantom{{/}}"
-            tex += element
-        if i < len(group_list) - 1:
-            tex += "\\\\"
+        #tex += element
+        tex += "\\vphantom{{{}:}}".format(element)
+        tex += "};\n"
+#        if "/" in element:
         i += 1
 
-    tex += "};\n"
-    tex += "\\node[state, fit={{({}_TITLE) ({}_FILES) ({}_MAC) ({}_TEXTBOUNDS)}}] ({}_FIT) {{}};\n".format(group_, group_, group_, group_, group_)
+    tex += "\\node[state, fit={{({}_TITLE) ({}_TEXTBOUNDS)}}] ({}_FIT) {{}};\n".format(group_, group_, group_)
 
     return tex
 
@@ -149,14 +161,14 @@ def tex_new_group(c1, c2, group, last_real_group, below, below_group, args, grou
     group_name = group_corres(group, args, group_desc).replace("_", "\\_")
     
     if last_real_group is None:
-        return "\\node[snb, minimum width=4cm] ({}_TITLE) {{{}}};\n".format(group_, group_name)
+        return "\\node[state, minimum width=3.6cm] ({}_TITLE) {{{}}};\n".format(group_, group_name)
     else:
         last_real_group_ = last_real_group.replace(".", "_")
         if below:
             below_group_ = below_group.replace(".", "_")
-            return "\\node[snb, minimum width=4cm, below = 3cm of {}_TITLE.south west, anchor=north west] ({}_TITLE) {{{}}};\n".format(below_group_, group_, group_name)
+            return "\\node[state, minimum width=3.6cm, below = 3cm of {}_TITLE.south west, anchor=north west] ({}_TITLE) {{{}}};\n".format(below_group_, group_, group_name)
         else:
-            return "\\node[snb, minimum width=4cm, right = 4.5cm of {}_TITLE.north east, anchor=north east] ({}_TITLE) {{{}}};\n".format(last_real_group_, group_, group_name)
+            return "\\node[state, minimum width=3.6cm, right = 4.5cm of {}_TITLE.north east, anchor=north east] ({}_TITLE) {{{}}};\n".format(last_real_group_, group_, group_name)
 
 def get_group_element(c1):
     splitted = c1.split(".")
@@ -169,6 +181,8 @@ def main():
     parser.add_argument(dest="csv_path", help="csv_path")
     parser.add_argument("-md", "--make-dots", dest="make_dots", action="store_true", default=False, help="Converts all occurrences of inherit flag (>) into no change flag (.). Make sure you know what you're doing!!!")
     parser.add_argument("-g", "--group", dest="group", action="store_true", default=False, help="Show group names instead of description")
+    parser.add_argument("-p", "--partial-tex", dest="partial_tex", action="store_true", default=False, help="Outputs only body of tikz file")
+    parser.add_argument("-o", "--output", dest="output_tex", action="store", default="out.tex", help="Path to save TEX file to")
     parser.add_argument("-s", "--skip", dest="skip_list", nargs="+", default=[], help="Skip group")
     parser.add_argument("-gd", "--group-description", dest="group_description", nargs="+", default=[], help="Rename group with custom description")
     args = parser.parse_args()
@@ -185,7 +199,9 @@ def main():
     text = open(path, "r").read()
     lines = text.split("\n")
 
-    tex = latex_preamble
+    tex = ""
+    if not args.partial_tex:
+        tex += latex_preamble
     last_group = None
     last_real_group = None
     below_group = None
@@ -243,7 +259,8 @@ def main():
     if last_group != None:
         tex += tex_end_group(last_group, group_list)
 
-    tex += latex_end
-    open("out.tex", "w").write(tex)
+    if not args.partial_tex:
+        tex += latex_end
+    open(args.output_tex, "w").write(tex)
 
 main()

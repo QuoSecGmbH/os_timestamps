@@ -32,6 +32,7 @@ static const int PROFILE_LATER = 0x10;
 static const int PROFILE_EQ_COMMAND = 0x20;
 
 extern int PROFILE_TREAT_DELAY_AS_COMMAND;
+extern gid_t CHOWN_GROUP_GID;
 
 typedef struct profile_init_struct{
     struct stat** multi_stat_before;

@@ -19,6 +19,7 @@
 #include "pos_fileaccess.h"
 #include "pos_filemodify.h"
 #include "pos_filedelete.h"
+#include "pos_filechange.h"
 #include "pos_dirlisting.h"
 #include "pos_dirtraversal.h"
 #include "pos_execute.h"
@@ -39,25 +40,51 @@ int run_profileos();
 
 void group_profileos_filerename(testenv_struct* env);
 void group_profileos_dirrename(testenv_struct* env);
+
 void group_profileos_localfilemove(testenv_struct* env);
 void group_profileos_localdirmove(testenv_struct* env);
 void group_profileos_volumefilemove(testenv_struct* env);
 void group_profileos_volumedirmove(testenv_struct* env);
+
 void group_profileos_filecopy_new(testenv_struct* env);
 void group_profileos_filecopy_existing(testenv_struct* env);
 void group_profileos_dircopy_notempty(testenv_struct* env);
 void group_profileos_dircopy_empty(testenv_struct* env);
+
 void group_profileos_filecreation(testenv_struct* env);
+void group_profileos_filecreation_newhardlink(testenv_struct* env);
+void group_profileos_filesymlink_creation(testenv_struct* env);
+void group_profileos_filecreation_intosymlinkdir(testenv_struct* env);
 void group_profileos_dircreation(testenv_struct* env);
+void group_profileos_symlinkfile_creation(testenv_struct* env);
+void group_profileos_symlinkdir_creation(testenv_struct* env);
+
 void group_profileos_fileaccess(testenv_struct* env);
+void group_profileos_fileaccess_symlink(testenv_struct* env);
+
+void group_profileos_filemodify_symlink(testenv_struct* env);
 void group_profileos_filemodify(testenv_struct* env);
+
+void group_profileos_filechange(testenv_struct* env);
+void group_profileos_symlinkchange(testenv_struct* env);
+void group_profileos_dirchange(testenv_struct* env);
+
 void group_profileos_filedelete_last(testenv_struct* env);
 void group_profileos_filedelete_notlast(testenv_struct* env);
+void group_profileos_filedelete_symlink(testenv_struct* env);
 void group_profileos_dirdelete(testenv_struct* env);
+void group_profileos_dirdelete_symlink(testenv_struct* env);
+
 void group_profileos_dirlisting_notempty(testenv_struct* env);
 void group_profileos_dirlisting_empty(testenv_struct* env);
+void group_profileos_dirlisting_symlink(testenv_struct* env);
+
 void group_profileos_dirtraversal(testenv_struct* env);
+void group_profileos_dirtraversal_symlink(testenv_struct* env);
+
 void group_profileos_execute(testenv_struct* env);
+void group_profileos_execute_symlink(testenv_struct* env);
+void group_profileos_execute_intosymlinkdir(testenv_struct* env);
 
 void print_profile(struct profile_info_struct* pi, char** mask, testenv_struct* env, char* desc, char* func_name);
 void process_profiles(char** mask, char* desc, char* ref, char* func_name, testenv_struct* env, struct profile_info_struct** pi_list, int pi_num);

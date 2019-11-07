@@ -15,5 +15,9 @@ struct profile_info_struct* profileos_dirtraversal_interface(testenv_struct* env
 struct profile_info_struct* profileos_dirtraversal_utilities(testenv_struct* env);
 struct profile_info_struct* profileos_dirtraversal_utilities_profileos(testenv_struct* env);
 
+struct profile_info_struct* profileos_dirtraversal_interface_symlink(testenv_struct* env);
+struct profile_info_struct* profileos_dirtraversal_utilities_symlink(testenv_struct* env);
+struct profile_info_struct* profileos_dirtraversal_utilities_profileos_symlink(testenv_struct* env);
+
 
 #endif

@@ -13,8 +13,10 @@
 
 struct profile_info_struct* profileos_dirlisting_interface_notempty(testenv_struct* env);
 struct profile_info_struct* profileos_dirlisting_interface_empty(testenv_struct* env);
+struct profile_info_struct* profileos_dirlisting_interface_symlink(testenv_struct* env);
 struct profile_info_struct* profileos_dirlisting_utilities_notempty(testenv_struct* env);
 struct profile_info_struct* profileos_dirlisting_utilities_empty(testenv_struct* env);
+struct profile_info_struct* profileos_dirlisting_utilities_symlink(testenv_struct* env);
 
 
 #endif

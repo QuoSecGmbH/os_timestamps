@@ -12,6 +12,8 @@
 #include "profile.h"
 
 struct profile_info_struct* profileos_fileaccess_interface(testenv_struct* env);
+struct profile_info_struct* profileos_fileaccess_interface_symlink(testenv_struct* env);
 struct profile_info_struct* profileos_fileaccess_utilities(testenv_struct* env);
+struct profile_info_struct* profileos_fileaccess_utilities_symlink(testenv_struct* env);
 
 #endif
