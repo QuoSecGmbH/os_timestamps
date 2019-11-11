@@ -56,17 +56,20 @@ void group_profileos_filecreation_newhardlink(testenv_struct* env);
 void group_profileos_filesymlink_creation(testenv_struct* env);
 void group_profileos_filecreation_intosymlinkdir(testenv_struct* env);
 void group_profileos_dircreation(testenv_struct* env);
+void group_profileos_dirsymlink_creation(testenv_struct* env);
 void group_profileos_symlinkfile_creation(testenv_struct* env);
 void group_profileos_symlinkdir_creation(testenv_struct* env);
 
 void group_profileos_fileaccess(testenv_struct* env);
 void group_profileos_fileaccess_symlink(testenv_struct* env);
+void group_profileos_symlink_readlink(testenv_struct* env);
 
 void group_profileos_filemodify_symlink(testenv_struct* env);
 void group_profileos_filemodify(testenv_struct* env);
 
 void group_profileos_filechange(testenv_struct* env);
 void group_profileos_symlinkchange(testenv_struct* env);
+void group_profileos_symlinkchange_nofollow(testenv_struct* env);
 void group_profileos_dirchange(testenv_struct* env);
 
 void group_profileos_filedelete_last(testenv_struct* env);

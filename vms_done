@@ -1,0 +1,38 @@
+freebsd:
+kbdmap
+VMShared: /mnt
+su
+mount_vboxfs -w VMShared /mnt
+cp -r /mnt/posix_timestamps /home/freebsd/
+reboot on errors for remount
+scp -r posix_timestamps freebsd@192.168.56.102:~/
+./profile_os -m mnt/ -g 0
+
+mount -fur /
+tunefs -n disable
+reboot
+
+
+openbsd:
+scp -r posix_timestamps openbsd@192.168.56.101:~/
+./profile_os -m /tmp/ -g 0
+
+mount:
+su
+mdconfig ../../profileos.ufs
+mount /dev/md0 mnt/
+
+inodes:
+stat -f "%i" ttt
+
+
+scp -r openbsd@192.168.56.101:~/posix_timestamps/build/results.csv results_2019_09_03/openbsd/
+scp -r openbsd@192.168.56.101:~/posix_timestamps/build/output.txt results_2019_09_03/openbsd/
+scp -r openbsd@192.168.56.101:~/posix_timestamps/build/error.txt results_2019_09_03/openbsd/
+
+
+scp -r openbsd@192.168.56.101:~/posix_timestamps/build/os_profile_results.csv results_2019_00_22/profileos/openbsd/
+scp -r openbsd@192.168.56.101:~/posix_timestamps/build/os_profile_flags.csv results_2019_00_22/profileos/openbsd/
+scp -r freebsd@192.168.56.102:~/posix_timestamps/build/os_profile_results.csv results_2019_00_22/profileos/freebsd/
+scp -r freebsd@192.168.56.102:~/posix_timestamps/build/os_profile_flags.csv results_2019_00_22/profileos/freebsd/
+cp posix_timestamps/build/os_profile_results.csv posix_timestamps/build/os_profile_flags.csv results_2019_00_22/profileos/linux/

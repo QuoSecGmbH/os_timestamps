@@ -1,0 +1,112 @@
+
+% \documentclass[a4paper,10pt]{article}
+\documentclass{article}
+\usepackage[pdftex,active,tightpage]{preview}
+\setlength\PreviewBorder{2mm} % use to add a border around the image
+% \usepackage{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[english]{babel}
+% \usepackage{fullpage}
+
+% \usepackage{scrextend}
+
+% \usepackage[algoruled,french,onelanguage]{algorithm2e}
+% \usepackage{amsfonts}
+% \usepackage{amsmath}
+% \usepackage{placeins}
+% \usepackage{verbatim}
+% \usepackage{graphicx}
+% \usepackage{listings}
+% \usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usetikzlibrary{shapes.multipart,calc}
+\usetikzlibrary{arrows}
+
+
+%\usepackage{fontspec}
+%\setmonofont{Libertinus Mono}[
+%  Scale=MatchLowercase
+%] % or whatever font you prefer
+
+%\setmonofont{Everson Mono}
+
+\usepackage{inconsolata}
+
+% tikz
+\tikzset{
+  state/.style={
+    rectangle,
+    rounded corners=1pt,
+    draw=black, very thick,
+    minimum height=2em
+%     text centered,
+  },
+}
+
+% tikz
+\tikzset{
+  snb/.style={
+    rectangle,
+%    draw=black
+  },
+}
+
+
+\usepackage[margin=2.2cm]{geometry}
+
+\begin{document}
+% \documentclass{standalone}
+\begin{preview}
+\begin{center}
+	\begin{Huge}
+		Linux MAC Timestamps\\
+	\end{Huge}
+~\\
+% \hspace{-1cm}
+% 	\begin{tabular}{lp{6cm}|lp{5cm}}
+% 	&  & Mount Option & Description \\
+% 	\texttt{>} & M/A/C is the same as src file/dir & relatime (\textbf{default}) & \textbf{A is updated if earlier than M or C, or if more than 1 day old} \\
+% 	\texttt{M/A/C} & M/A/C is updated (to current time) & strictatime & A is always updated \\
+% 	\texttt{.} & M/A/C is not modified & noatime & A is never updated \\
+% 	 & & nodiratime & A is never updated for directories \\
+% \end{tabular}
+
+\begin{minipage}[t]{.45\textwidth}
+\vspace{0.5cm}
+	\begin{tabular}[t]{|ll|}
+% 	 & \\
+	\hline
+	\texttt{>} & M/A/C is the same as src file/dir\\
+	\texttt{M/A/C} & M/A/C is updated to current time\\
+	\texttt{.} & M/A/C is not modified \\
+	\hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}[t]{.55\textwidth}
+% \vspace{-7cm}
+	\begin{tabular}[t]{l|p{6cm}}
+	Mount Option & Description \\
+	\hline
+	relatime (\textbf{default}) & \textbf{A is updated if earlier than M or C, or if older than 1 day old} \\
+	strictatime & A is always updated \\
+	nodiratime & A is never updated for directories \\
+	noatime & A is never updated \\
+\end{tabular}
+\end{minipage}%
+
+\end{center}
+\begin{tikzpicture}[->,scale=1,>=stealth',thick, node distance=0cm]
+	\input{linux_mac_results_partial.tex}
+	\node[snb, below right = -0.5cm and 5.3cm of PROFILE_OS_FILE_COPY_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+% 	\node[snb, below right = -1.8cm and 5.3cm of PROFILE_OS_SYMLINK_FILE_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+
+% 	\node[state, draw=red, fit={(PROFILE_OS_FILE_MV_LOCAL_FIT) (PROFILE_OS_FILE_COPY_NEW_FIT) (PROFILE_OS_FILE_COPY_EXISTING_FIT)}] (PROFILE_OS_FILE_WRITE_FIT) {};
+
+	
+	\end{tikzpicture}%}
+\end{preview}
+% \end{document}
+\end{document}

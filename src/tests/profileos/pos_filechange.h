@@ -21,6 +21,10 @@ struct profile_info_struct* profileos_filechange_interface_chmod_symlink(testenv
 struct profile_info_struct* profileos_filechange_interface_chown_symlink(testenv_struct* env);
 struct profile_info_struct* profileos_filechange_utilities_chmod_symlink(testenv_struct* env);
 struct profile_info_struct* profileos_filechange_utilities_chown_symlink(testenv_struct* env);
+struct profile_info_struct* profileos_filechange_interface_chmod_symlink_nofollow(testenv_struct* env);
+struct profile_info_struct* profileos_filechange_interface_chown_symlink_nofollow(testenv_struct* env);
+struct profile_info_struct* profileos_filechange_utilities_chmod_symlink_nofollow(testenv_struct* env);
+struct profile_info_struct* profileos_filechange_utilities_chown_symlink_nofollow(testenv_struct* env);
 
 struct profile_info_struct* profileos_filechange_interface_chmod_dir(testenv_struct* env);
 struct profile_info_struct* profileos_filechange_interface_chown_dir(testenv_struct* env);

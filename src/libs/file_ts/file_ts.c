@@ -33,7 +33,7 @@ void print_file_timestamps_s(FILE *f) {
     struct stat* attr = get_file_timestamps(f);
     
     if (attr == NULL){
-        printf("ERROR: print_path_timestamps_s - attr is NULL\n");
+        printf("ERROR: print_file_timestamps_s - attr is NULL\n");
         return;
     }
     
@@ -46,7 +46,7 @@ void print_path_timestamps_ns(char *path) {
     struct stat* attr = get_path_timestamps(path);
     
     if (attr == NULL){
-        printf("ERROR: print_path_timestamps_s - attr is NULL\n");
+        printf("ERROR: print_path_timestamps_ns - attr is NULL\n");
         return;
     }
     
@@ -73,7 +73,7 @@ void print_path_timestamps_lstat_ns(char *path) {
     struct stat* attr = get_path_timestamps_lstat(path);
     
     if (attr == NULL){
-        printf("ERROR: print_path_timestamps_s - attr is NULL\n");
+        printf("ERROR: print_path_timestamps_lstat_ns - attr is NULL\n");
         return;
     }
     
@@ -100,7 +100,7 @@ void print_file_timestamps_ns(FILE *f) {
     struct stat* attr = get_file_timestamps(f);
     
     if (attr == NULL){
-        printf("ERROR: print_path_timestamps_s - attr is NULL\n");
+        printf("ERROR: print_file_timestamps_ns - attr is NULL\n");
         return;
     }
     
@@ -172,6 +172,53 @@ struct stat* get_path_timestamps_lstat(char *path) {
     }
     
     return attr;
+}
+
+struct statx* get_path_timestamps_statx(char *path) {
+    struct statx* attr_statx = (struct statx*) calloc(sizeof(struct statx), 1);
+    // man 2 statx
+    // Note: There is no glibc wrapper for statx(); see NOTES.
+    // NOTES
+    // Glibc does not (yet) provide a wrapper for the statx() system call; call it using syscall(2).
+    int res = syscall(SYS_statx, AT_FDCWD, path, 0, 0, attr_statx);
+    if (res != 0){
+        return NULL;
+    }
+    
+    return attr_statx;
+}
+
+void print_path_timestamps_statx_ns(char *path) {
+    struct statx* attr_statx = get_path_timestamps_statx(path);
+    
+    if (attr_statx == NULL){
+        printf("ERROR: print_path_timestamps_statx_ns - attr is NULL\n");
+        return;
+    }
+    
+    time_t s = attr_statx->stx_mtime.tv_sec;
+    long ns = attr_statx->stx_mtime.tv_nsec;
+    char* buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("M: %s - ns: %9ld\n", buf, ns);
+    
+    s = attr_statx->stx_atime.tv_sec;
+    ns = attr_statx->stx_atime.tv_nsec;
+    buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("A: %s - ns: %9ld\n", buf, ns);
+    
+    s = attr_statx->stx_ctime.tv_sec;
+    ns = attr_statx->stx_ctime.tv_nsec;
+    buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("C: %s - ns: %9ld\n", buf, ns);
+    
+    s = attr_statx->stx_btime.tv_sec;
+    ns = attr_statx->stx_btime.tv_nsec;
+    buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("B: %s - ns: %9ld\n", buf, ns);
 }
 
 #endif

@@ -16,4 +16,10 @@ struct profile_info_struct* profileos_fileaccess_interface_symlink(testenv_struc
 struct profile_info_struct* profileos_fileaccess_utilities(testenv_struct* env);
 struct profile_info_struct* profileos_fileaccess_utilities_symlink(testenv_struct* env);
 
+struct profile_info_struct* profileos_symlink_readlink_interface(testenv_struct* env);
+struct profile_info_struct* profileos_symlink_readlink_interface_dir(testenv_struct* env);
+struct profile_info_struct* profileos_symlink_readlink_utilities(testenv_struct* env);
+struct profile_info_struct* profileos_symlink_readlink_utilities_dir(testenv_struct* env);
+
+
 #endif

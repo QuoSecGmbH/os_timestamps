@@ -5,6 +5,7 @@
 
 int PROFILE_TREAT_DELAY_AS_COMMAND = 0;
 int OPTION_VOLUME_FILE_MOVE = 0;
+int OPTION_QUICK = 0;
 gid_t CHOWN_GROUP_GID = -1;
 char* mounted = NULL;
 
@@ -36,12 +37,13 @@ int main(int argc, char *argv[]) {
 //             {"timewait", required_argument, 0, 't'},
             {"mounted", required_argument, 0, 'm'},
             {"guid-chown", required_argument, 0, 'g'},
+            {"quick", required_argument, 0, 'q'},
             {0, 0, 0, 0}
             };
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "vdm:g:",
+        c = getopt_long (argc, argv, "vdm:g:q",
                         long_options, &option_index);
 
         if (c == -1)
@@ -55,6 +57,10 @@ int main(int argc, char *argv[]) {
             }            
             case 'd': {
                 PROFILE_TREAT_DELAY_AS_COMMAND = 1; 
+                break;
+            }
+            case 'q': {
+                OPTION_QUICK = 1; 
                 break;
             }
 //             case 't': {
@@ -147,54 +153,78 @@ int run_profileos(){
     log_csv_add_line(csv_file_brief, 2, "Reference", "MAC");
     log_csv_add_line(csv_file_flags, 4, "Description", "File", "M/A/C", "Flag");
 
-    group_profileos_filerename(test_env);
-    group_profileos_dirrename(test_env);
-    group_profileos_localfilemove(test_env);
-    group_profileos_localdirmove(test_env);
-    if (OPTION_VOLUME_FILE_MOVE){
-        group_profileos_volumefilemove(test_env);
-        group_profileos_volumedirmove(test_env);
+//     group_profileos_filerename(test_env);
+//     group_profileos_dirrename(test_env);
+//     group_profileos_localfilemove(test_env);
+//     group_profileos_localdirmove(test_env);
+//     if (OPTION_VOLUME_FILE_MOVE){
+//         group_profileos_volumefilemove(test_env);
+//         group_profileos_volumedirmove(test_env);
+//     }
+//     group_profileos_filecopy_new(test_env);
+//     group_profileos_filecopy_existing(test_env);
+//     
+//     group_profileos_dircopy_notempty(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_dircopy_empty(test_env);
+//     }
+//     
+//     group_profileos_filecreation(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_filecreation_newhardlink(test_env);
+//         group_profileos_filesymlink_creation(test_env);
+//         group_profileos_filecreation_intosymlinkdir(test_env);
+//     }
+//     group_profileos_dircreation(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_dirsymlink_creation(test_env);
+//     }
+//     
+//     
+//     group_profileos_fileaccess(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_fileaccess_symlink(test_env);
+//         group_profileos_symlink_readlink(test_env);
+//     }
+//     
+//     group_profileos_filemodify(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_filemodify_symlink(test_env);
+//     }
+//     
+//     group_profileos_filechange(test_env);
+    if (!OPTION_QUICK){
+        group_profileos_symlinkchange(test_env);
+        group_profileos_symlinkchange_nofollow(test_env);
     }
-    group_profileos_filecopy_new(test_env);
-    group_profileos_filecopy_existing(test_env);
-    
-    group_profileos_dircopy_notempty(test_env);
-    group_profileos_dircopy_empty(test_env);
-    
-    group_profileos_filecreation(test_env);
-    group_profileos_filecreation_newhardlink(test_env);
-    group_profileos_filesymlink_creation(test_env);
-    group_profileos_filecreation_intosymlinkdir(test_env);
-    group_profileos_dircreation(test_env);
-    group_profileos_dirsymlink_creation(test_env);
-    
-    
-    group_profileos_fileaccess(test_env);
-    group_profileos_fileaccess_symlink(test_env);
-    
-    group_profileos_filemodify(test_env);
-    group_profileos_filemodify_symlink(test_env);
-    
-    group_profileos_filechange(test_env);
-    group_profileos_symlinkchange(test_env);
-    group_profileos_dirchange(test_env);
-    
-    group_profileos_filedelete_last(test_env);
-    group_profileos_filedelete_notlast(test_env);
-    group_profileos_filedelete_symlink(test_env);
-    group_profileos_dirdelete(test_env);
-    group_profileos_dirdelete_symlink(test_env);
-    
-    group_profileos_dirlisting_notempty(test_env);
-    group_profileos_dirlisting_empty(test_env);
-    group_profileos_dirlisting_symlink(test_env);
-    
-    group_profileos_dirtraversal(test_env);
-    group_profileos_dirtraversal_symlink(test_env);
-   
-    group_profileos_execute(test_env);
-    group_profileos_execute_symlink(test_env);
-    group_profileos_execute_intosymlinkdir(test_env);
+//     group_profileos_dirchange(test_env);
+//     
+//     group_profileos_filedelete_last(test_env);
+//     group_profileos_filedelete_notlast(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_filedelete_symlink(test_env);
+//     }
+//     group_profileos_dirdelete(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_dirdelete_symlink(test_env);
+//     }
+//     
+//     group_profileos_dirlisting_notempty(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_dirlisting_empty(test_env);
+//         group_profileos_dirlisting_symlink(test_env);
+//     }
+//     
+//     group_profileos_dirtraversal(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_dirtraversal_symlink(test_env);
+//     }
+//    
+//     group_profileos_execute(test_env);
+//     if (!OPTION_QUICK){
+//         group_profileos_execute_symlink(test_env);
+//         group_profileos_execute_intosymlinkdir(test_env);
+//     }
    
 //     free(test_env);
 //     free(dir_path);
@@ -300,7 +330,7 @@ void group_profileos_filecreation_newhardlink(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecreation_interface_newhardlink(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_newhardlink(env);
     
-    char** mask = misc_char_array3("file", "hardlink", "dir/");
+    char** mask = misc_char_array4("file", "hardlink", "filedir/", "linkdir/");
     process_profiles2(mask, "Hardlink (to file) Creation", "PROFILE.OS.HARDLINK.FILE.NEW", __func__, env, pi1, pi2);
 }
 
@@ -308,8 +338,8 @@ void group_profileos_filesymlink_creation(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecreation_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_symlink(env);
     
-    char** mask = misc_char_array3("file", "newsymlink", "dir/");
-    process_profiles2(mask, "File Symlink Creation", "PROFILE.OS.SYMLINK.FILE.NEW", __func__, env, pi1, pi2);
+    char** mask = misc_char_array3("file", "symlink", "dir/");
+    process_profiles2(mask, "Symlink (to file) Creation", "PROFILE.OS.SYMLINK.FILE.NEW", __func__, env, pi1, pi2);
 }
 
 void group_profileos_filecreation_intosymlinkdir(testenv_struct* env){
@@ -317,7 +347,7 @@ void group_profileos_filecreation_intosymlinkdir(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_intosymlinkdir(env);
     
     char** mask = misc_char_array3("dir/", "symlinkdir", "file");
-    process_profiles2(mask, "File Creation into Symlink Dir", "PROFILE.OS.SYMLINK.FILE.NEW.INTOSYMLINKDIR", __func__, env, pi1, pi2);
+    process_profiles2(mask, "File Creation into Symlink Dir", "PROFILE.OS.FILE.NEW.INTOSYMLINKDIR", __func__, env, pi1, pi2);
 }
 
 void group_profileos_dircreation(testenv_struct* env){
@@ -332,8 +362,8 @@ void group_profileos_dirsymlink_creation(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecreation_interface_symlink_dir(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_symlink_dir(env);
     
-    char** mask = misc_char_array3("file", "newsymlink", "dir/");
-    process_profiles2(mask, "Dir Symlink Creation", "PROFILE.OS.SYMLINK.DIR.NEW", __func__, env, pi1, pi2);
+    char** mask = misc_char_array3("newdir/", "newsymlink", "dir/");
+    process_profiles2(mask, "Symlink (to dir) Creation", "PROFILE.OS.SYMLINK.DIR.NEW", __func__, env, pi1, pi2);
 }
 
 
@@ -345,12 +375,22 @@ void group_profileos_fileaccess(testenv_struct* env){
     process_profiles2(mask, "File Access", "PROFILE.OS.FILE.READ", __func__, env, pi1, pi2);
 }
 
+void group_profileos_symlink_readlink(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_symlink_readlink_interface(env);
+    struct profile_info_struct* pi2 = profileos_symlink_readlink_utilities(env);
+    struct profile_info_struct* pi3 = profileos_symlink_readlink_interface_dir(env);
+    struct profile_info_struct* pi4 = profileos_symlink_readlink_utilities_dir(env);
+    
+    char** mask = misc_char_array3("dir/", "target", "symlink");
+    process_profiles4(mask, "Symlink (to file/dir) readlink", "PROFILE.OS.SYMLINK.READLINK", __func__, env, pi1, pi2, pi3, pi4);
+}
+
 void group_profileos_fileaccess_symlink(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_fileaccess_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_fileaccess_utilities_symlink(env);
     
     char** mask = misc_char_array3("file", "symlink", "dir/");
-    process_profiles2(mask, "Symlink (to file) Access", "PROFILE.OS.SYMLINK.FILE.READ", __func__, env, pi1, pi2);
+    process_profiles2(mask, "Symlink (to file) Access (defaut follow)", "PROFILE.OS.SYMLINK.FILE.READ", __func__, env, pi1, pi2);
 }
 
 void group_profileos_filemodify(testenv_struct* env){
@@ -370,7 +410,7 @@ void group_profileos_filemodify_symlink(testenv_struct* env){
     struct profile_info_struct* pi4 = profileos_filemodify_utilities_symlink(env);
     
     char** mask = misc_char_array3("file", "symlink", "dir/");
-    process_profiles4(mask, "Symlink (to file) Modify", "PROFILE.OS.SYMLINK.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4);
+    process_profiles4(mask, "Symlink (to file) Modify (defaut follow)", "PROFILE.OS.SYMLINK.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4);
 }
 
 void group_profileos_filechange(testenv_struct* env){
@@ -390,7 +430,22 @@ void group_profileos_symlinkchange(testenv_struct* env){
     struct profile_info_struct* pi4 = profileos_filechange_utilities_chown_symlink(env);
     
     char** mask = misc_char_array3("dir/", "file", "symlink");
-    process_profiles4(mask, "Symlink (to file) Change", "PROFILE.OS.SYMLINK.FILE.CHANGE", __func__, env, pi1, pi2, pi3, pi4);
+    process_profiles4(mask, "Symlink (to file) Change (defaut follow)", "PROFILE.OS.SYMLINK.FILE.CHANGE", __func__, env, pi1, pi2, pi3, pi4);
+}
+
+void group_profileos_symlinkchange_nofollow(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_filechange_utilities_chown_symlink_nofollow(env);
+    struct profile_info_struct* pi2 = profileos_filechange_interface_chown_symlink_nofollow(env);
+    
+    char** mask = misc_char_array3("dir/", "file", "symlink");
+#ifdef __linux__
+    process_profiles2(mask, "Symlink (to file) Change (no follow)", "PROFILE.OS.SYMLINK.FILE.CHANGE.NOFOLLOW", __func__, env, pi1, pi2);
+#else
+    struct profile_info_struct* pi3 = profileos_filechange_interface_chmod_symlink_nofollow(env);
+    struct profile_info_struct* pi4 = profileos_filechange_utilities_chmod_symlink_nofollow(env);
+    
+    process_profiles4(mask, "Symlink (to file) Change (no follow)", "PROFILE.OS.SYMLINK.FILE.CHANGE.NOFOLLOW", __func__, env, pi1, pi2, pi3, pi4);
+#endif
 }
 
 void group_profileos_dirchange(testenv_struct* env){
@@ -544,7 +599,7 @@ void process_profiles(char** mask, char* desc, char* ref, char* func_name, teste
         }
     }
     
-    fprintf(env->output_file, "%s (%s):\n", desc, func_name);
+    fprintf(env->output_file, "%s (%s):\n", desc, ref);
     if (all_eq){
         print_profile(pi_list[0], mask, env, ref, func_name);
         

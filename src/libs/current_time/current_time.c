@@ -224,15 +224,15 @@ struct timespec* current_time_ns_fslike_generic_futimens_dir(){
 
 
 struct timespec* current_time_ns_fslike_osspecific(){
-// #ifdef __linux__
-//     return current_time_ns_linux_coarse();
-// #elif __FreeBSD__
-//     return current_time_ns_freebsd_coarse();
-// #elif __OpenBSD__
-//     return current_time_ns_openbsd_coarse();
-// // #else
+#ifdef __linux__
+    return current_time_ns_linux_coarse();
+#elif __FreeBSD__
+    return current_time_ns_freebsd_coarse();
+#elif __OpenBSD__
+    return current_time_ns_openbsd_coarse();
+#else
     return current_time_ns_fslike_generic_futimens_dir();
-// #endif
+#endif
 }
 
 struct timespec* current_time_ns(){

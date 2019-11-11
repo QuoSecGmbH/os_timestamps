@@ -48,7 +48,8 @@ latex_preamble = r"""
     rounded corners=1pt,
     draw=black, very thick,
     minimum height=2em
-%     text centered,
+    text centered,
+    align=center,
   },
 }
 
@@ -56,10 +57,10 @@ latex_preamble = r"""
 \tikzset{
   snb/.style={
     rectangle,
+    align=left,
 %    draw=black
   },
 }
-
 
 \begin{document}
 % \documentclass{standalone}
@@ -84,6 +85,46 @@ def group_corres(group, args, group_desc):
     print(group)
     print(group_desc)
 
+    dl = dict()
+    dl["PROFILE.OS.FILE.RENAME"] = "File Rename"
+    dl["PROFILE.OS.DIR.RENAME"] = "Dir Rename"
+    dl["PROFILE.OS.FILE.MV_LOCAL"] = "Local File Move"
+    dl["PROFILE.OS.DIR.MV_LOCAL"] = "Local Dir Move"
+    dl["PROFILE.OS.FILE.MV_VOLUME"] = "Volume File Move"
+    dl["PROFILE.OS.DIR.MV_VOLUME"] = "Volume Dir Move"
+    dl["PROFILE.OS.FILE.COPY.NEW"] = "File Copy (new)"
+    dl["PROFILE.OS.FILE.COPY.EXISTING"] = "File Copy (existing)"
+    dl["PROFILE.OS.DIR.COPY.NEW.NOTEMPTY"] = "Dir Copy (notempty)"
+    dl["PROFILE.OS.DIR.COPY.NEW.EMPTY"] = "Dir Copy (empty)"
+    dl["PROFILE.OS.FILE.NEW"] = "New File"
+    dl["PROFILE.OS.DIR.NEW"] = "New Dir"
+    dl["PROFILE.OS.FILE.READ"] = "File Read"
+    dl["PROFILE.OS.FILE.WRITE"] = "File Write"
+    dl["PROFILE.OS.FILE.RM.last"] = "File Delete (last)"
+    dl["PROFILE.OS.FILE.RM.notlast"] = "File Delete (notlast)"
+    dl["PROFILE.OS.DIR.RM.last"] = "Dir Delete (last)"
+    dl["PROFILE.OS.DIR.LISTING.notempty"] = "Dir Listing (notempty)"
+    dl["PROFILE.OS.DIR.LISTING.empty"] = "Dir Listing (empty)"
+    dl["PROFILE.OS.DIR.TRAVERSAL"] = "Dir Traversal"
+    dl["PROFILE.OS.EXEC"] = "Binary Execution"
+
+    dl["PROFILE.OS.HARDLINK.FILE.NEW"] = "New Hardlink\\\\(to file)"
+    dl["PROFILE.OS.FILE.NEW.INTOSYMLINKDIR"] =  "File Creation\\\\ into Symlink Dir"
+    dl["PROFILE.OS.SYMLINK.FILE.READ"] = "Symlink (to file)\\\\ Access"
+    dl["PROFILE.OS.SYMLINK.READLINK"] = "Symlink readlink"
+    dl["PROFILE.OS.SYMLINK.FILE.WRITE"] = "Symlink (to file)\\\\ Modify"
+    dl["PROFILE.OS.FILE.CHANGE"] = "File Change"
+    dl["PROFILE.OS.SYMLINK.FILE.CHANGE"] = "Symlink (to file)\\\\ Change"
+    dl["PROFILE.OS.DIR.CHANGE"] = "Dir Change"
+    dl["PROFILE.OS.SYMLINK.FILE.RM.last"] = "Symlink (to file)\\\\ Delete"
+    dl["PROFILE.OS.SYMLINK.DIR.RM.last"] = "Symlink (to dir)\\\\ Delete"
+    dl["PROFILE.OS.SYMLINK.DIR.LISTING.notempty"] = "Symlink (to dir)\\\\ Listing"
+    dl["PROFILE.OS.SYMLINK.DIR.TRAVERSAL"] = "Symlink (to dir)\\\\ Traversal"
+    dl["PROFILE.OS.SYMLINK.EXEC"] = "Symlink (to binary)\\\\ Execution"
+    dl["PROFILE.OS.EXEC.INTOSYMLINKDIR"] = "Binary Execution\\\\ into Symlink Dir"
+    dl["PROFILE.OS.VIRTUAL.SYMLINK.FILE.OP"] = "Action on symlink\\\\target (read, listing...)"
+    dl["PROFILE.OS.SYMLINK.FILE.CHANGE.NOFOLLOW"] = "Symlink Link Change"
+
     d = dict()
     d["PROFILE.OS.FILE.RENAME"] = "File Rename"
     d["PROFILE.OS.DIR.RENAME"] = "Dir Rename"
@@ -107,14 +148,34 @@ def group_corres(group, args, group_desc):
     d["PROFILE.OS.DIR.TRAVERSAL"] = "Dir Traversal"
     d["PROFILE.OS.EXEC"] = "Binary Execution"
 
+    d["PROFILE.OS.HARDLINK.FILE.NEW"] = "New Hardlink\\\\(to file)"
+    d["PROFILE.OS.FILE.NEW.INTOSYMLINKDIR"] =  "File Creation\\\\ into Symlink Dir"
+    d["PROFILE.OS.SYMLINK.FILE.READ"] = "Symlink (to file)\\\\ Access"
+    d["PROFILE.OS.SYMLINK.READLINK"] = "Symlink readlink"
+    d["PROFILE.OS.SYMLINK.FILE.WRITE"] = "Symlink (to file)\\\\ Modify"
+    d["PROFILE.OS.FILE.CHANGE"] = "File Change"
+    d["PROFILE.OS.SYMLINK.FILE.CHANGE"] = "Symlink (to file)\\\\ Change"
+    d["PROFILE.OS.DIR.CHANGE"] = "Dir Change"
+    d["PROFILE.OS.SYMLINK.FILE.RM.last"] = "Symlink (to file)\\\\ Delete"
+    d["PROFILE.OS.SYMLINK.DIR.RM.last"] = "Symlink (to dir)\\\\ Delete"
+    d["PROFILE.OS.SYMLINK.DIR.LISTING.notempty"] = "Symlink (to dir)\\\\ Listing"
+    d["PROFILE.OS.SYMLINK.DIR.TRAVERSAL"] = "Symlink (to dir)\\\\ Traversal"
+    d["PROFILE.OS.SYMLINK.EXEC"] = "Symlink (to binary)\\\\ Execution"
+    d["PROFILE.OS.EXEC.INTOSYMLINKDIR"] = "Binary Execution\\\\ into Symlink Dir"
+    d["PROFILE.OS.VIRTUAL.SYMLINK.FILE.OP"] = "Action on symlink\\\\target (read, listing...)"
 
-    if group in d:
-        return d[group]
+    if group in dl:
+        return dl[group]
     return group
 
 def tex_end_group(group, group_list):
     if len(group_list) == 0:
         return ""
+
+    if group == "":
+        v_style="snb"
+    else:
+        v_style="state"
 
     group_ = group.replace(".", "_")
 
@@ -130,7 +191,7 @@ def tex_end_group(group, group_list):
         #tex += "\\node[snb, below ="+str(cm)+"cm of {}_TEXTBOUNDS.north west, anchor= north west, minimum height=0.5cm]".format(group_)
         tex += "({}_FILES_{}){{".format(group_, el)
         if element != "":
-            tex += element + ":"
+            tex += element.replace("_", "\\_") + ":"
         tex += "\\vphantom{{{}}}".format(mac)
         tex += "};\n"
         i += 1
@@ -146,12 +207,12 @@ def tex_end_group(group, group_list):
         tex += "({}_MAC_{}){{".format(group_, el)
         tex += "\\texttt{" + mac + "}"
         #tex += element
-        tex += "\\vphantom{{{}:}}".format(element)
+        tex += "\\vphantom{{{}:}}".format(element.replace("_", "\\_"))
         tex += "};\n"
 #        if "/" in element:
         i += 1
 
-    tex += "\\node[state, fit={{({}_TITLE) ({}_TEXTBOUNDS)}}] ({}_FIT) {{}};\n".format(group_, group_, group_)
+    tex += "\\node[{}, fit={{({}_TITLE) ({}_TEXTBOUNDS)}}] ({}_FIT) {{}};\n".format(v_style, group_, group_, group_)
 
     return tex
 
@@ -159,16 +220,21 @@ def tex_end_group(group, group_list):
 def tex_new_group(c1, c2, group, last_real_group, below, below_group, args, group_desc):
     group_ = group.replace(".", "_")
     group_name = group_corres(group, args, group_desc).replace("_", "\\_")
+
+    if group == "":
+        v_style = "snb"
+    else:
+        v_style = "state"
     
     if last_real_group is None:
-        return "\\node[state, minimum width=3.6cm] ({}_TITLE) {{{}}};\n".format(group_, group_name)
+        return "\\node[{}, minimum width=3.6cm, align=center] ({}_TITLE) {{{}}};\n".format(v_style, group_, group_name)
     else:
         last_real_group_ = last_real_group.replace(".", "_")
         if below:
             below_group_ = below_group.replace(".", "_")
-            return "\\node[state, minimum width=3.6cm, below = 3cm of {}_TITLE.south west, anchor=north west] ({}_TITLE) {{{}}};\n".format(below_group_, group_, group_name)
+            return "\\node[{}, minimum width=3.6cm, align=center, below = 3cm of {}_TITLE.south west, anchor=north west] ({}_TITLE) {{{}}};\n".format(v_style, below_group_, group_, group_name)
         else:
-            return "\\node[state, minimum width=3.6cm, right = 4.5cm of {}_TITLE.north east, anchor=north east] ({}_TITLE) {{{}}};\n".format(last_real_group_, group_, group_name)
+            return "\\node[{}, minimum width=3.6cm, align=center, right = 4.5cm of {}_TITLE.north east, anchor=north east] ({}_TITLE) {{{}}};\n".format(v_style, last_real_group_, group_, group_name)
 
 def get_group_element(c1):
     splitted = c1.split(".")
@@ -185,6 +251,7 @@ def main():
     parser.add_argument("-o", "--output", dest="output_tex", action="store", default="out.tex", help="Path to save TEX file to")
     parser.add_argument("-s", "--skip", dest="skip_list", nargs="+", default=[], help="Skip group")
     parser.add_argument("-gd", "--group-description", dest="group_description", nargs="+", default=[], help="Rename group with custom description")
+    parser.add_argument("-rs", "--row_size", dest="row_size", action="store", default=3, help="Number of items per row")
     args = parser.parse_args()
 
     print(args.group_description)
@@ -237,7 +304,7 @@ def main():
                 last_real_group = last_group
                 tex += "\n\n"
             print("ncol:", ncol)
-            if ncol <= 3:
+            if ncol < int(args.row_size):
                 below = False
             else:
                 below = True
