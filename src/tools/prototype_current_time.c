@@ -6,6 +6,8 @@
 
 int main (int argc, char **argv){
   if (argc >= 3){
+    current_time_setup_local_timemarker(stdout, stderr);
+    current_time_setup_local_timemarkerdir(stdout, stderr);
     print_current_time_ns_fslike_osspecific();
   }
   else if (argc >= 2){

@@ -103,21 +103,22 @@ struct profile_info_struct* profileos_execute_local_interface(testenv_struct* en
 struct profile_info_struct* profileos_execute_local_interface_symlink(testenv_struct* env){
     char* path_pwd = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "_pwd/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_bindir = misc_concat_ensure_dir_exists(path_pwd, "bindir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_pwd, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_id = (char*) "/usr/bin/id";
     char* path_id_local = misc_concat(path_bindir, "id_local");
-    char* path_id_link = misc_concat(path_bindir, "id_local_link");
+    char* path_id_link = misc_concat(path_linkdir, "id_local_link");
     misc_cp_rwx_no_overwrite(path_id, path_id_local);
     misc_nanosleep(ns_after_open);
     
-    int r = symlink("id_local", path_id_link);
+    int r = symlink("../bindir/id_local", path_id_link);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char** watch_array = misc_char_array4(path_id_local, path_id_link, path_bindir, path_pwd);
-    int watch_num = 4;
+    char** watch_array = misc_char_array5(path_id_local, path_id_link, path_bindir, path_linkdir, path_pwd);
+    int watch_num = 5;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
     chdir(path_pwd);
@@ -125,7 +126,7 @@ struct profile_info_struct* profileos_execute_local_interface_symlink(testenv_st
     pid_t child_pid = fork();
     if (child_pid == 0) {
         // Child code
-        char *args[]={"bindir/id_local_link", NULL}; 
+        char *args[]={"linkdir/id_local_link", NULL}; 
         int ret = execvp(args[0],args);
         _exit(ret);
     }
@@ -224,23 +225,24 @@ struct profile_info_struct* profileos_execute_local_utilities(testenv_struct* en
 struct profile_info_struct* profileos_execute_local_utilities_symlink(testenv_struct* env){
     char* path_pwd = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "_pwd/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_bindir = misc_concat_ensure_dir_exists(path_pwd, "bindir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_pwd, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_id = (char*) "/usr/bin/id";
     char* path_id_local = misc_concat(path_bindir, "id_local");
-    char* path_id_link = misc_concat(path_bindir, "id_local_link");
+    char* path_id_link = misc_concat(path_linkdir, "id_local_link");
     misc_cp_rwx_no_overwrite(path_id, path_id_local);
     misc_nanosleep(ns_after_open); 
     
-    int r = symlink("id_local", path_id_link);
+    int r = symlink("../bindir/id_local", path_id_link);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char* command = "./bindir/id_local_link";
+    char* command = "./linkdir/id_local_link";
     
-    char** watch_array = misc_char_array4(path_id_local, path_id_link, path_bindir, path_pwd);
-    int watch_num = 4;
+    char** watch_array = misc_char_array5(path_id_local, path_id_link, path_bindir, path_linkdir, path_pwd);
+    int watch_num = 5;
     
     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     return pi;

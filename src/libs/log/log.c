@@ -143,15 +143,16 @@ void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, c
         int i;
         for (i = 0; i < pi->watch_num; i++){
             char* path = pi->watch_array[i];
-            struct stat* file_stat_before = pi->multi_stat_before[i];
-            struct stat* file_stat_after = pi->multi_stat_after[i];
-            struct stat* file_stat_after_delay = pi->multi_stat_after_delay[i];
+            struct stat_macb* file_stat_before = pi->multi_stat_before[i];
+            struct stat_macb* file_stat_after = pi->multi_stat_after[i];
+            struct stat_macb* file_stat_after_delay = pi->multi_stat_after_delay[i];
             int error_printed = 0;
             if (file_stat_before != NULL){
                 log_info(output_file, error_file, "stat before command for %s", path);
                 log_info(output_file, error_file, "M: %lds %ldns", file_stat_before->st_mtim.tv_sec, file_stat_before->st_mtim.tv_nsec);
                 log_info(output_file, error_file, "A: %lds %ldns", file_stat_before->st_atim.tv_sec, file_stat_before->st_atim.tv_nsec);
                 log_info(output_file, error_file, "C: %lds %ldns", file_stat_before->st_ctim.tv_sec, file_stat_before->st_ctim.tv_nsec);
+                log_info(output_file, error_file, "B: %lds %ldns", file_stat_before->st_btim.tv_sec, file_stat_before->st_btim.tv_nsec);
             }
             else if (error_printed == 0) {
                 log_info(output_file, error_file, "stat before command for %s is NULL", path);
@@ -163,6 +164,7 @@ void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, c
                 log_info(output_file, error_file, "M: %lds %ldns", file_stat_after->st_mtim.tv_sec, file_stat_after->st_mtim.tv_nsec);
                 log_info(output_file, error_file, "A: %lds %ldns", file_stat_after->st_atim.tv_sec, file_stat_after->st_atim.tv_nsec);
                 log_info(output_file, error_file, "C: %lds %ldns", file_stat_after->st_ctim.tv_sec, file_stat_after->st_ctim.tv_nsec);
+                log_info(output_file, error_file, "B: %lds %ldns", file_stat_after->st_btim.tv_sec, file_stat_after->st_btim.tv_nsec);
             }
             else if (error_printed == 0)  {
                 log_info(output_file, error_file, "stat after command for %s is NULL", path);
@@ -173,6 +175,7 @@ void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, c
                 log_info(output_file, error_file, "M: %lds %ldns", file_stat_after_delay->st_mtim.tv_sec, file_stat_after_delay->st_mtim.tv_nsec);
                 log_info(output_file, error_file, "A: %lds %ldns", file_stat_after_delay->st_atim.tv_sec, file_stat_after_delay->st_atim.tv_nsec);
                 log_info(output_file, error_file, "C: %lds %ldns", file_stat_after_delay->st_ctim.tv_sec, file_stat_after_delay->st_ctim.tv_nsec);
+                log_info(output_file, error_file, "B: %lds %ldns", file_stat_after_delay->st_btim.tv_sec, file_stat_after_delay->st_btim.tv_nsec);
             }
             else if (error_printed == 0) {
                 log_info(output_file, error_file, "stat after delay for %s is NULL", path);
@@ -190,7 +193,7 @@ void log_info_ts_profile_on_error_message_short(FILE* output_file, FILE* error_f
     log_info_ts_profile_on_error_generic(output_file, error_file, func_name, result, pi, message, 0);
 }
 
-void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat, char* message){
+void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat, char* message){
     if (result != 0 || VERBOSE >= 1){
         if (strlen(message) == 0){
             log_info(output_file, error_file, "%s:", func_name, message);
@@ -205,11 +208,12 @@ void log_info_ts_stat_on_error_message(FILE* output_file, FILE* error_file, cons
             log_info(output_file, error_file, "M: %lds %ldns", file_stat->st_mtim.tv_sec, file_stat->st_mtim.tv_nsec);
             log_info(output_file, error_file, "A: %lds %ldns", file_stat->st_atim.tv_sec, file_stat->st_atim.tv_nsec);
             log_info(output_file, error_file, "C: %lds %ldns", file_stat->st_ctim.tv_sec, file_stat->st_ctim.tv_nsec);
+            log_info(output_file, error_file, "B: %lds %ldns", file_stat->st_btim.tv_sec, file_stat->st_btim.tv_nsec);
         }
     }
 }
 
-void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat){
+void log_info_ts_stat_on_error(FILE* output_file, FILE* error_file, const char* func_name, int result, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat){
     log_info_ts_stat_on_error_message(output_file, error_file, func_name, result, ts_before, ts_after, file_stat, "");
 }
                   

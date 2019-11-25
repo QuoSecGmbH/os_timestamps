@@ -584,62 +584,63 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
     for (i = 0; i < pi->watch_num; i++){
         char* path = watch_names[i];
         int** profile = pi->profile;
-        int* mac_result = profile[i];
-        char* mac_string = "MAC";
-        char** mac_strings = calloc(3, sizeof(char*));
-        mac_strings[0] = "M";
-        mac_strings[1] = "A";
-        mac_strings[2] = "C";
+        int* macb_result = profile[i];
+        char* macb_string = "MACB";
+        char** macb_strings = calloc(5, sizeof(char*));
+        macb_strings[0] = "M";
+        macb_strings[1] = "A";
+        macb_strings[2] = "C";
+        macb_strings[3] = "B";
         
         fprintf(output_file, "%s\n", path);
 //         printf("%s\n", path);
 //         fprintf(output_file, "  ");
 //         printf("  Command: ");
         
-        int mac;
+        int macb;
         char printed_verbose = 0;
-        char* res_char = (char*) calloc(4, sizeof(char));
-        for (mac = 0; mac < 3; mac++){
-            if (mac_result[mac] == -1){
+        char* res_char = (char*) calloc(5, sizeof(char));
+        for (macb = 0; macb < 4; macb++){
+            if (macb_result[macb] == -1){
 //                 printf("!");
-                res_char[mac] = '!';
+                res_char[macb] = '!';
                 continue;
             }
             
             char c = 0;
             char* flag = "";
-            if (mac_result[mac] & PROFILE_UPDATE_DELAY){
+            if (macb_result[macb] & PROFILE_UPDATE_DELAY){
 //                 fprintf(output_file, "d", mac_string[mac]);
                 if (c == 0){
                     c = 'd';
                 }           
                 flag = "PROFILE_UPDATE_DELAY";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, mac_strings[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
                 
 //                 printf("%c", mac_string[mac]);
             }
-            if (mac_result[mac] & PROFILE_UPDATE_COMMAND){
+            if (macb_result[macb] & PROFILE_UPDATE_COMMAND){
 //                 fprintf(output_file, "%c", mac_string[mac]);
                 if (c == 0){
-                    c = mac_string[mac];
+                    c = macb_string[macb];
                 }
                 flag = "PROFILE_UPDATE_COMMAND";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, mac_strings[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
 //                 printf("%c", mac_string[mac]);
             }
-            if (mac_result[mac] & PROFILE_SAMEAS_W0_BEFORE){
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_BEFORE){
 //                 fprintf(output_file, ">"); 
 //                 printf(">");                 
                 if (c == 0){
@@ -647,14 +648,14 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
                 flag = "PROFILE_SAMEAS_W0_BEFORE";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, mac_strings[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
             }
-            if (mac_result[mac] & PROFILE_EARLIER){
+            if (macb_result[macb] & PROFILE_EARLIER){
 //                 fprintf(output_file, "-", mac_string[mac]);
 //                 printf("%c", mac_string[mac]);                
                 if (c == 0){
@@ -662,14 +663,14 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
                 flag = "PROFILE_EARLIER";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, mac_strings[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
             }
-            if (mac_result[mac] & PROFILE_LATER){
+            if (macb_result[macb] & PROFILE_LATER){
 //                 fprintf(output_file, "+", mac_string[mac]);
 //                 printf("%c", mac_string[mac]);                
                 if (c == 0){
@@ -677,23 +678,23 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
                 flag = "PROFILE_LATER";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, &mac_string[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, &macb_string[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
             }
-            if (mac_result[mac] & PROFILE_EQ_COMMAND){
+            if (macb_result[macb] & PROFILE_EQ_COMMAND){
                 flag = "PROFILE_EQ_COMMAND";
                 if (c == 0){
                     c = '.';
                 }
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, &mac_string[mac], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, &macb_string[macb], flag);
                 }
                 if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", mac_string[mac], flag);
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
             }
@@ -704,10 +705,10 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
 //                 printf("-");
             }
             
-            res_char[mac] = c;
+            res_char[macb] = c;
         }
 //         if (printed_verbose) fprintf(output_file, "\n");
-        fprintf(output_file, "  %c%c%c\n", res_char[0], res_char[1], res_char[2]);
+        fprintf(output_file, "  %c%c%c%c\n", res_char[0], res_char[1], res_char[2], res_char[3]);
         if (desc != NULL && csv_file_brief != NULL){
 //             log_csv_add_line(csv_file_brief, 3, desc, path, res_char);
             log_csv_add_line(csv_file_brief, 2, misc_concat(misc_concat(desc, "."), path), res_char);

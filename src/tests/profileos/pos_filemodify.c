@@ -69,19 +69,21 @@ struct profile_info_struct* profileos_filemodify_utilities(testenv_struct* env){
 
 struct profile_info_struct* profileos_filemodify_interface_wb_symlink(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    char* path_symlink = misc_concat(path_dir, "symlink");
+    char* path_filedir = misc_concat_ensure_dir_exists(path_dir, "filedir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_dir, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(path_filedir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_linkdir, "symlink");
     misc_nanosleep(ns_after_open);
     
-    int r = symlink("file", path_symlink);
+    int r = symlink("../filedir/file", path_symlink);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char** watch_array = misc_char_array3(path, path_symlink, path_dir);
-    int watch_num = 3;
+    char** watch_array = misc_char_array4(path, path_symlink, path_filedir, path_linkdir);
+    int watch_num = 4;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
     FILE* fd = fopen(path_symlink, "wb");
@@ -95,19 +97,21 @@ struct profile_info_struct* profileos_filemodify_interface_wb_symlink(testenv_st
 
 struct profile_info_struct* profileos_filemodify_interface_rp_symlink(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    char* path_symlink = misc_concat(path_dir, "symlink");
+    char* path_filedir = misc_concat_ensure_dir_exists(path_dir, "filedir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_dir, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(path_filedir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_linkdir, "symlink");
     misc_nanosleep(ns_after_open);
     
-    int r = symlink("file", path_symlink);
+    int r = symlink("../filedir/file", path_symlink);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char** watch_array = misc_char_array3(path, path_symlink, path_dir);
-    int watch_num = 3;
+    char** watch_array = misc_char_array4(path, path_symlink, path_filedir, path_linkdir);
+    int watch_num = 4;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
     FILE* fd = fopen(path_symlink, "r+");
@@ -121,19 +125,21 @@ struct profile_info_struct* profileos_filemodify_interface_rp_symlink(testenv_st
 
 struct profile_info_struct* profileos_filemodify_interface_a_symlink(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    char* path_symlink = misc_concat(path_dir, "symlink");
+    char* path_filedir = misc_concat_ensure_dir_exists(path_dir, "filedir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_dir, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(path_filedir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_linkdir, "symlink");
     misc_nanosleep(ns_after_open);
     
-    int r = symlink("file", path_symlink);
+    int r = symlink("../filedir/file", path_symlink);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char** watch_array = misc_char_array3(path, path_symlink, path_dir);
-    int watch_num = 3;
+    char** watch_array = misc_char_array4(path, path_symlink, path_filedir, path_linkdir);
+    int watch_num = 4;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
     FILE* fd = fopen(path_symlink, "a");
@@ -147,21 +153,23 @@ struct profile_info_struct* profileos_filemodify_interface_a_symlink(testenv_str
 
 struct profile_info_struct* profileos_filemodify_utilities_symlink(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    char* path_symlink = misc_concat(path_dir, "symlink");
+    char* path_filedir = misc_concat_ensure_dir_exists(path_dir, "filedir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path_linkdir = misc_concat_ensure_dir_exists(path_dir, "linkdir/", 0, 0, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_file_exists_filled(path_filedir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_symlink = misc_concat(path_linkdir, "symlink");
     misc_nanosleep(ns_after_open);
     
-    int r = symlink("file", path_symlink);
+    int r = symlink("../filedir/file", path_symlink);
     if (r != 0){
         log_warning(env->output_file, env->error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
     misc_nanosleep(ns_after_open);
     
-    char* command = "echo a >> symlink";
+    char* command = "echo a >> linkdir/symlink";
     
-    char** watch_array = misc_char_array3(path, path_symlink, path_dir);
-    int watch_num = 3;
+    char** watch_array = misc_char_array4(path, path_symlink, path_filedir, path_linkdir);
+    int watch_num = 4;
     
     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     return pi;

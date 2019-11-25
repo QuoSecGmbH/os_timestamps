@@ -40,6 +40,19 @@ struct timespec* current_time_ns();
 struct timespec* current_time_ns_coarse();
 
 
+#ifdef __linux__
+struct timespec* current_time_ns_linux_coarse();
+#endif
+
+#ifdef __FreeBSD__
+struct timespec* current_time_ns_freebsd_coarse();
+#endif
+
+#ifdef __OpenBSD__
+struct timespec* current_time_ns_openbsd_coarse();
+#endif
+
+
 struct timespec* current_time_ns_fslike_generic();
 struct timespec* current_time_ns_fslike_generic_futimens();
 struct timespec*  current_time_ns_fslike_osspecific();
