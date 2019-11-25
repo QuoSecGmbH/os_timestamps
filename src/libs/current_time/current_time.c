@@ -182,7 +182,7 @@ struct timespec* current_time_ns_fslike_generic_futimens(){
 
   close(fd);
   
-  struct stat* file_stat = get_path_timestamps(path_timemarker);
+  struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
   return &(file_stat->st_mtim);
 }
 
@@ -221,7 +221,7 @@ struct timespec* current_time_ns_fslike_generic_futimens_dir(){
 
   close(fd);
   
-  struct stat* file_stat = get_path_timestamps(path_timemarkerdir);
+  struct stat_macb* file_stat = get_path_timestamps(path_timemarkerdir);
   return &(file_stat->st_mtim);
 }
 

@@ -19,8 +19,8 @@ int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_link);
-    struct stat* dir_stat = get_path_timestamps(dir_path);
+    struct stat_macb* file_stat = get_path_timestamps(path_link);
+    struct stat_macb* dir_stat = get_path_timestamps(dir_path);
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -74,8 +74,8 @@ int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* err
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_link);
-    struct stat* dir_stat = get_path_timestamps(newdir_path);
+    struct stat_macb* file_stat = get_path_timestamps(path_link);
+    struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -109,8 +109,8 @@ int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* er
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps_lstat(path_link);
-    struct stat* dir_stat = get_path_timestamps(dir_path);
+    struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
+    struct stat_macb* dir_stat = get_path_timestamps(dir_path);
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -164,8 +164,8 @@ int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* 
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps_lstat(path_link);
-    struct stat* dir_stat = get_path_timestamps(newdir_path);
+    struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
+    struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -213,7 +213,7 @@ int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* e
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps_lstat(path_link);
+    struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error_message(output_file, error_file, __func__, result, ts_before, ts_after, file_stat, "link");
@@ -273,7 +273,7 @@ int check_interfaces_file_ln_readlinkat(FILE* csv_file, FILE* output_file, FILE*
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps_lstat(path_link);
+    struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error_message(output_file, error_file, __func__, result, ts_before, ts_after, file_stat, "link");

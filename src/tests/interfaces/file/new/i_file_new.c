@@ -11,7 +11,7 @@ int check_interfaces_file_new_mkdtemp_new(FILE* csv_file, FILE* output_file, FIL
     char* path_dir = mkdtemp(template);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_dir);
+    struct stat_macb* file_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -29,7 +29,7 @@ int check_interfaces_file_new_mkdtemp_mac(FILE* csv_file, FILE* output_file, FIL
     
     char* path_dir = mkdtemp(template);
     
-    struct stat* file_stat = get_path_timestamps(path_dir);
+    struct stat_macb* file_stat = get_path_timestamps(path_dir);
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_atim)) != 0 || misc_timespec_eq(&(file_stat->st_atim), &(file_stat->st_ctim)) != 0){
         log_warning(output_file, error_file, "%s - MAC not equal", __func__);
@@ -48,7 +48,7 @@ int check_interfaces_file_new_mkdtemp_mac_1s(FILE* csv_file, FILE* output_file, 
     char* path_dir = mkdtemp(template);
     misc_sleep(1);
     
-    struct stat* file_stat = get_path_timestamps(path_dir);
+    struct stat_macb* file_stat = get_path_timestamps(path_dir);
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_atim)) != 0 || misc_timespec_eq(&(file_stat->st_atim), &(file_stat->st_ctim)) != 0){
         log_warning(output_file, error_file, "%s - MAC not equal", __func__);
@@ -73,8 +73,8 @@ int check_interfaces_file_new_mkdir(FILE* csv_file, FILE* output_file, FILE* err
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
-    struct stat* parent_dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
     int dir_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     int parent_dir_result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, parent_dir_stat);
@@ -100,7 +100,7 @@ int check_interfaces_file_new_mkdir_mac(FILE* csv_file, FILE* output_file, FILE*
     
     mkdir(path_new_dir, 0700);
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
 
     int result = 0;
     if (misc_timespec_eq(&(dir_stat->st_mtim), &(dir_stat->st_atim)) != 0 || misc_timespec_eq(&(dir_stat->st_atim), &(dir_stat->st_ctim)) != 0){
@@ -124,7 +124,7 @@ int check_interfaces_file_new_mkdir_mac_1s(FILE* csv_file, FILE* output_file, FI
     mkdir(path_new_dir, 0700);
     misc_sleep(1);
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
     
     int result = 0;
     if (misc_timespec_eq(&(dir_stat->st_mtim), &(dir_stat->st_atim)) != 0 || misc_timespec_eq(&(dir_stat->st_atim), &(dir_stat->st_ctim)) != 0){
@@ -152,8 +152,8 @@ int check_interfaces_file_new_mkdirat(FILE* csv_file, FILE* output_file, FILE* e
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
-    struct stat* parent_dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
     int dir_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     int parent_dir_result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, parent_dir_stat);
@@ -179,7 +179,7 @@ int check_interfaces_file_new_mkdirat_mac(FILE* csv_file, FILE* output_file, FIL
     
     mkdirat(AT_FDCWD, path_new_dir, S_IRWXU | S_IRWXG);
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
 
     int result = 0;
     if (misc_timespec_eq(&(dir_stat->st_mtim), &(dir_stat->st_atim)) != 0 || misc_timespec_eq(&(dir_stat->st_atim), &(dir_stat->st_ctim)) != 0){
@@ -203,7 +203,7 @@ int check_interfaces_file_new_mkdirat_mac_1s(FILE* csv_file, FILE* output_file, 
     mkdirat(AT_FDCWD, path_new_dir, S_IRWXU | S_IRWXG);
     misc_sleep(1);
     
-    struct stat* dir_stat = get_path_timestamps(path_new_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
     
     int result = 0;
     if (misc_timespec_eq(&(dir_stat->st_mtim), &(dir_stat->st_atim)) != 0 || misc_timespec_eq(&(dir_stat->st_atim), &(dir_stat->st_ctim)) != 0){
@@ -230,8 +230,8 @@ int check_interfaces_file_new_mkfifo(FILE* csv_file, FILE* output_file, FILE* er
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
-    struct stat* parent_dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
     int fifo_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, fifo_stat);
     int parent_dir_result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, parent_dir_stat);
@@ -257,7 +257,7 @@ int check_interfaces_file_new_mkfifo_mac(FILE* csv_file, FILE* output_file, FILE
     
     mkfifo(path_fifo, 0700);
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
 
     int result = 0;
     if (misc_timespec_eq(&(fifo_stat->st_mtim), &(fifo_stat->st_atim)) != 0 || misc_timespec_eq(&(fifo_stat->st_atim), &(fifo_stat->st_ctim)) != 0){
@@ -281,7 +281,7 @@ int check_interfaces_file_new_mkfifo_mac_1s(FILE* csv_file, FILE* output_file, F
     mkfifo(path_fifo, 0700);
     misc_sleep(1);
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
 
     int result = 0;
     if (misc_timespec_eq(&(fifo_stat->st_mtim), &(fifo_stat->st_atim)) != 0 || misc_timespec_eq(&(fifo_stat->st_atim), &(fifo_stat->st_ctim)) != 0){
@@ -308,8 +308,8 @@ int check_interfaces_file_new_mkfifoat(FILE* csv_file, FILE* output_file, FILE* 
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
-    struct stat* parent_dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
     int fifo_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, fifo_stat);
     int parent_dir_result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, parent_dir_stat);
@@ -335,7 +335,7 @@ int check_interfaces_file_new_mkfifoat_mac(FILE* csv_file, FILE* output_file, FI
     
     mkfifoat(AT_FDCWD, path_fifo, 0700);
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
 
     int result = 0;
     if (misc_timespec_eq(&(fifo_stat->st_mtim), &(fifo_stat->st_atim)) != 0 || misc_timespec_eq(&(fifo_stat->st_atim), &(fifo_stat->st_ctim)) != 0){
@@ -359,7 +359,7 @@ int check_interfaces_file_new_mkfifoat_mac_1s(FILE* csv_file, FILE* output_file,
     mkfifoat(AT_FDCWD, path_fifo, 0700);
     misc_sleep(1);
     
-    struct stat* fifo_stat = get_path_timestamps(path_fifo);
+    struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
 
     int result = 0;
     if (misc_timespec_eq(&(fifo_stat->st_mtim), &(fifo_stat->st_atim)) != 0 || misc_timespec_eq(&(fifo_stat->st_atim), &(fifo_stat->st_ctim)) != 0){

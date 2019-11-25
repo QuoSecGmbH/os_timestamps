@@ -20,7 +20,7 @@ int check_interfaces_file_w_fwrite_fflush(FILE* csv_file, FILE* output_file, FIL
     fflush(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -52,7 +52,7 @@ int check_interfaces_file_w_fwrite_fclose(FILE* csv_file, FILE* output_file, FIL
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -102,7 +102,7 @@ int check_interfaces_file_w_fwrite_exit(FILE* csv_file, FILE* output_file, FILE*
     }
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -149,7 +149,7 @@ int check_interfaces_file_w_fwrite_abort(FILE* csv_file, FILE* output_file, FILE
     }
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);

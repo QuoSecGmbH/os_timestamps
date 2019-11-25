@@ -21,8 +21,8 @@ int helper_interfaces_file_fopen_new_writemode(FILE* csv_file, FILE* output_file
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
-    struct stat* dir_stat = get_path_timestamps(dir_path);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* dir_stat = get_path_timestamps(dir_path);
       
     int result_file = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -96,7 +96,7 @@ int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -149,7 +149,7 @@ int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE*
     fwrite("Hihallo", 7, 1, fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
@@ -214,7 +214,7 @@ int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, F
     fwrite("Hihallo", 7, 1, fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* dir_stat = get_path_timestamps(dir_path);
+    struct stat_macb* dir_stat = get_path_timestamps(dir_path);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
@@ -277,7 +277,7 @@ int helper_interfaces_file_fopen_existing_readmode(FILE* csv_file, FILE* output_
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -337,7 +337,7 @@ int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* o
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -392,7 +392,7 @@ int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* 
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path_mode);
+    struct stat_macb* file_stat = get_path_timestamps(path_mode);
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);

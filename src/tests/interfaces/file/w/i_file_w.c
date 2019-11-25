@@ -18,7 +18,7 @@ int check_interfaces_file_w_dprintf(FILE* csv_file, FILE* output_file, FILE* err
     dprintf((intptr_t) fd, "%s\n", "dprintf test");
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -58,7 +58,7 @@ int check_interfaces_file_w_ftruncate(FILE* csv_file, FILE* output_file, FILE* e
     ftruncate(fd, 3);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -89,7 +89,7 @@ int check_interfaces_file_w_write(FILE* csv_file, FILE* output_file, FILE* error
     write(fd, buf, 11);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -120,7 +120,7 @@ int check_interfaces_file_w_write_zero(FILE* csv_file, FILE* output_file, FILE* 
     write(fd, buf, 0);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);

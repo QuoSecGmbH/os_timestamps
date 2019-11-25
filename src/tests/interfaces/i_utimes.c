@@ -32,7 +32,7 @@ int check_interfaces_ts_utimes_now_ma(FILE* csv_file, FILE* output_file, FILE* e
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_atim), ts_current_time_us) != 0){
@@ -89,7 +89,7 @@ int check_interfaces_ts_utimes_now_us(FILE* csv_file, FILE* output_file, FILE* e
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -136,7 +136,7 @@ int check_interfaces_ts_utimes_set_future_ma(FILE* csv_file, FILE* output_file, 
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_after = get_path_timestamps(path);
+    struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_after->st_atim), ts_A_us) != 0){
@@ -200,7 +200,7 @@ int check_interfaces_ts_utimes_set_past_ma(FILE* csv_file, FILE* output_file, FI
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat_after = get_path_timestamps(path);
+    struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_after->st_atim), ts_A_us) != 0){

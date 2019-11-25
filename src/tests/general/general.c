@@ -17,7 +17,7 @@ int check_general_new_file_realtime(FILE* csv_file, FILE* output_file, FILE* err
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -44,7 +44,7 @@ int check_general_new_file(FILE* csv_file, FILE* output_file, FILE* error_file, 
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -69,7 +69,7 @@ int check_general_new_file_mac_eq(FILE* csv_file, FILE* output_file, FILE* error
     
     fclose(fd);
     
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_atim)) != 0 || misc_timespec_eq(&(file_stat->st_atim), &(file_stat->st_ctim)) != 0){
@@ -101,7 +101,7 @@ int check_general_update_write_close(FILE* csv_file, FILE* output_file, FILE* er
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -131,7 +131,7 @@ int check_general_update_read_close(FILE* csv_file, FILE* output_file, FILE* err
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -159,7 +159,7 @@ int check_general_update_write_fstat(FILE* csv_file, FILE* output_file, FILE* er
     fstat((uintptr_t)fd, attr);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     free(attr);
     fclose(fd);
@@ -190,7 +190,7 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
     stat(path, attr);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     free(attr);
     fclose(fd);
@@ -224,7 +224,7 @@ int check_general_update_read_fstat(FILE* csv_file, FILE* output_file, FILE* err
     fstat((uintptr_t)fd, attr);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     free(attr);
     fclose(fd);
@@ -258,7 +258,7 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     stat(path, attr);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     free(attr);
     fclose(fd);

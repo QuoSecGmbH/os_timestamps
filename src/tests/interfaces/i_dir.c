@@ -19,7 +19,7 @@ int check_interfaces_dir_readdir(FILE* csv_file, FILE* output_file, FILE* error_
     readdir(dp);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     closedir(dp);
     
@@ -55,7 +55,7 @@ int check_interfaces_dir_readdir_files(FILE* csv_file, FILE* output_file, FILE* 
     }
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(file_path);
+    struct stat_macb* file_stat = get_path_timestamps(file_path);
     
     closedir(dp);
     
@@ -88,7 +88,7 @@ int check_interfaces_dir_readdir_r(FILE* csv_file, FILE* output_file, FILE* erro
     readdir_r(dp, de1, de2);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(path);
+    struct stat_macb* file_stat = get_path_timestamps(path);
     
     closedir(dp);
     
@@ -126,7 +126,7 @@ int check_interfaces_dir_readdir_r_files(FILE* csv_file, FILE* output_file, FILE
     }
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_path_timestamps(file_path);
+    struct stat_macb* file_stat = get_path_timestamps(file_path);
     
     closedir(dp);
     

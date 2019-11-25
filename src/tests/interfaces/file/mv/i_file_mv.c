@@ -17,7 +17,7 @@ int check_interfaces_file_mv_rename_file(FILE* csv_file, FILE* output_file, FILE
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_new);
+    struct stat_macb* file_stat = get_path_timestamps(path_new);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -39,11 +39,11 @@ int check_interfaces_file_mv_rename_file_ma(FILE* csv_file, FILE* output_file, F
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
     
-    struct stat* file_stat_before = get_path_timestamps(path);
+    struct stat_macb* file_stat_before = get_path_timestamps(path);
     
     rename(path, path_new);
     
-    struct stat* file_stat_after = get_path_timestamps(path_new);
+    struct stat_macb* file_stat_after = get_path_timestamps(path_new);
 
     int result = 0;
     if (misc_timespec_eq(&(file_stat_before->st_mtim), &(file_stat_after->st_mtim)) != 0 || misc_timespec_eq(&(file_stat_before->st_atim), &(file_stat_after->st_atim)) != 0) {
@@ -76,7 +76,7 @@ int check_interfaces_file_mv_rename_file_dir(FILE* csv_file, FILE* output_file, 
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
@@ -105,7 +105,7 @@ int check_interfaces_file_mv_rename_dir(FILE* csv_file, FILE* output_file, FILE*
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_new);
+    struct stat_macb* file_stat = get_path_timestamps(path_new);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -128,11 +128,11 @@ int check_interfaces_file_mv_rename_dir_ma(FILE* csv_file, FILE* output_file, FI
     mkdir(path, 0700);
     misc_nanosleep(ns_after_open);
     
-    struct stat* file_stat_before = get_path_timestamps(path);
+    struct stat_macb* file_stat_before = get_path_timestamps(path);
     
     rename(path, path_new);
     
-    struct stat* file_stat_after = get_path_timestamps(path_new);
+    struct stat_macb* file_stat_after = get_path_timestamps(path_new);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_before->st_mtim), &(file_stat_after->st_mtim)) != 0 || misc_timespec_eq(&(file_stat_before->st_atim), &(file_stat_after->st_atim)) != 0) {
@@ -167,7 +167,7 @@ int check_interfaces_file_mv_rename_dir_dir(FILE* csv_file, FILE* output_file, F
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
@@ -195,7 +195,7 @@ int check_interfaces_file_mv_renameat_file(FILE* csv_file, FILE* output_file, FI
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_new);
+    struct stat_macb* file_stat = get_path_timestamps(path_new);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -217,11 +217,11 @@ int check_interfaces_file_mv_renameat_file_ma(FILE* csv_file, FILE* output_file,
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
     
-    struct stat* file_stat_before = get_path_timestamps(path);
+    struct stat_macb* file_stat_before = get_path_timestamps(path);
     
     renameat((int) AT_FDCWD, path, (int) AT_FDCWD, path_new);
     
-    struct stat* file_stat_after = get_path_timestamps(path_new);
+    struct stat_macb* file_stat_after = get_path_timestamps(path_new);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_before->st_mtim), &(file_stat_after->st_mtim)) != 0 || misc_timespec_eq(&(file_stat_before->st_atim), &(file_stat_after->st_atim)) != 0) {
@@ -254,7 +254,7 @@ int check_interfaces_file_mv_renameat_file_dir(FILE* csv_file, FILE* output_file
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
@@ -283,7 +283,7 @@ int check_interfaces_file_mv_renameat_dir(FILE* csv_file, FILE* output_file, FIL
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* file_stat = get_path_timestamps(path_new);
+    struct stat_macb* file_stat = get_path_timestamps(path_new);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -306,11 +306,11 @@ int check_interfaces_file_mv_renameat_dir_ma(FILE* csv_file, FILE* output_file, 
     mkdir(path, 0700);
     misc_nanosleep(ns_after_open);
     
-    struct stat* file_stat_before = get_path_timestamps(path);
+    struct stat_macb* file_stat_before = get_path_timestamps(path);
     
     renameat((int) AT_FDCWD, path, (int) AT_FDCWD, path_new);
     
-    struct stat* file_stat_after = get_path_timestamps(path_new);
+    struct stat_macb* file_stat_after = get_path_timestamps(path_new);
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_before->st_mtim), &(file_stat_after->st_mtim)) != 0 || misc_timespec_eq(&(file_stat_before->st_atim), &(file_stat_after->st_atim)) != 0) {
@@ -344,7 +344,7 @@ int check_interfaces_file_mv_renameat_dir_dir(FILE* csv_file, FILE* output_file,
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* dir_stat = get_path_timestamps(path_dir);
+    struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
