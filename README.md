@@ -11,6 +11,15 @@ Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps.
 
 # profile_os
 
+This profiles common file operations:
+- New file/dir
+- File read (cat)
+- File write (echo AA > file)
+- File change (chown, chmod)
+- Local File Copy
+- Volume file copy
+- ...
+
 To have complete results you will need:
 - For "Volume Copy" (copy a file to a different file system): the other file system to test, mounted into mnt/
     - On Linux you can create an Ext4 fs with:
