@@ -45,7 +45,7 @@ dstdir/
 Symbols you will encounter:
 ```
 M/A/C/B - M/A/C/B was updated to current time
-\>      - M/A/C/B was set to the same value as the source file/dir
+>       - M/A/C/B was set to the same value as the source file/dir
 m/a/c/b - M/A/C/B was set to the same M/A/C/B value as the source file/dir
 .       - M/A/C/B was not modified
 d       - M/A/C/B seem to have been updated after the command ended (delay - this may hidden with -d option)
