@@ -12,7 +12,7 @@ Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps.
 # profile_os
 
 To have complete results you will need:
-- For "Volume Copy" (copy a file to a different file system): the other file system to test, mounts into mnt/
+- For "Volume Copy" (copy a file to a different file system): the other file system to test, mounted into mnt/
     - On Linux you can create an Ext4 fs with:
         - dd if=/dev/zero of=profileos.ext4 bs=4M count=10
         - mkfs.ext4 -O extra_isize -I 256 profileos.ext4
