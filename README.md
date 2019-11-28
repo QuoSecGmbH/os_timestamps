@@ -20,7 +20,7 @@ To have complete results you will need:
 - For reliable chown tests ("File Change"...): the GID of a group you can attribute to a file (you shall be able to do `chown :GID file`)
     - On OpenBSD & FreeBSD, GID 0 (wheel) can be used
 
-`./profile_os -m mnt/ -g 1002`:
+`./profile_os -m mnt/ -g 1002`
 
 ```
 INFO: Directory for tests is: tmp_os_profile_10/
