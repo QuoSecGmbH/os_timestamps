@@ -6,7 +6,7 @@ Profile how your Unix-like (Linux, BSD...) OS modifies MAC(B) timestamps.
 # Build
 
 - `mkdir build; cd build/`
-- `cmake ../src/
+- `cmake ../src/`
 - `make`
 
 # profile_os
