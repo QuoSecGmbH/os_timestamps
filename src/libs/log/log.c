@@ -103,11 +103,11 @@ void log_warning(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
         
-    va_start(argptr, format);
-    fprintf(stdout, "WARNING: ");
-    vfprintf(stdout, format, argptr);
-    fprintf(stdout, "\n");
-    va_end(argptr);
+//     va_start(argptr, format);
+//     fprintf(stdout, "WARNING: ");
+//     vfprintf(stdout, format, argptr);
+//     fprintf(stdout, "\n");
+//     va_end(argptr);
 }
 
 void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -117,11 +117,11 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(error_file, format, argptr);
     fprintf(error_file, "\n");
         
-    va_start(argptr, format);
-    fprintf(stderr, "ERROR: ");
-    vfprintf(stderr, format, argptr);
-    fprintf(stderr, "\n");
-    va_end(argptr);
+//     va_start(argptr, format);
+//     fprintf(stderr, "ERROR: ");
+//     vfprintf(stderr, format, argptr);
+//     fprintf(stderr, "\n");
+//     va_end(argptr);
 }
 
 void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message, int print_profile){

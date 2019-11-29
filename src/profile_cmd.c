@@ -20,8 +20,6 @@ void print_usage(){
 }
 
 int main(int argc, char *argv[]) {
-//     char verbose = 0;
-    
     char quick = 0;
     char* pwd_dir = NULL;
     int watch_num = 0;
@@ -123,8 +121,12 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
     
+#ifndef __linux__
+#ifndef __FreeBSD__
     current_time_setup_local_timemarker(stdout, stderr);
     current_time_setup_local_timemarkerdir(stdout, stderr);
+#endif
+#endif
     
     if (VERBOSE){
         if (precommand != NULL) printf("Precommand: %s\n", precommand);

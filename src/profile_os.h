@@ -47,6 +47,10 @@ void group_profileos_filecopy_new(testenv_struct* env);
 void group_profileos_filecopy_existing(testenv_struct* env);
 void group_profileos_dircopy_notempty(testenv_struct* env);
 void group_profileos_dircopy_empty(testenv_struct* env);
+void group_profileos_volumefilecopy_new(testenv_struct* env);
+void group_profileos_volumefilecopy_existing(testenv_struct* env);
+void group_profileos_volumedircopy_notempty(testenv_struct* env);
+void group_profileos_volumedircopy_empty(testenv_struct* env);
 
 void group_profileos_filecreation(testenv_struct* env);
 void group_profileos_filecreation_newhardlink(testenv_struct* env);

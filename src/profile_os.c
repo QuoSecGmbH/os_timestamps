@@ -10,11 +10,14 @@ gid_t CHOWN_GROUP_GID = -1;
 char* mounted = NULL;
 
 void print_usage(){
-    fprintf(stderr, "Usage: ./profile_cmd [options] \"CMD\"\n");
+    fprintf(stderr, "Usage: ./profile_os [options]\n");
     fprintf(stderr, "Options:\n");
-    fprintf(stderr, "  --verbose / -v\n");
+    fprintf(stderr, "  -q, --quick            Skip some operations (on symlink, on hardlink...)\n");
+    fprintf(stderr, "  -v, --verbose         \n");
+    fprintf(stderr, "  -g, --guid-chown GID   GID to be used in chown tests (you should be able to do a chown :GID file) \n");
 //     fprintf(stderr, "  --timewait / -t TIMEWAIT\n");
-    fprintf(stderr, "  --mounted / -m MNT\n");
+    fprintf(stderr, "  -m, --mounted MNT/     Path of the mounted filesystem for tests on Volume Copy\n");
+    fprintf(stderr, "  -d, --nodelay          Treat delays as command updates\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -63,10 +66,6 @@ int main(int argc, char *argv[]) {
                 OPTION_QUICK = 1; 
                 break;
             }
-//             case 't': {
-//                 ns_after_open = (time_t) atoi(optarg); 
-//                 break;
-//             }
             case 'm': {
                 OPTION_VOLUME_FILE_MOVE = 1;
                 mounted = optarg;
@@ -90,9 +89,7 @@ int run_profileos(){
     FILE* csv_file_brief = log_open_csv("os_profile_results.csv");
     FILE* csv_file_flags = log_open_csv("os_profile_flags.csv");
     FILE* output_file = stdout;
-//     FILE* output_file = fopen("os_profile_output.txt", "wb");
     FILE* error_file = stderr;
-//     FILE* error_file = fopen("os_profile_error.txt", "wb");
   
     int i;
     char* dir_base_path = "tmp_os_profile";
@@ -133,23 +130,18 @@ int run_profileos(){
     }
     
     if (CHOWN_GROUP_GID == -1){
-        log_warning(output_file, error_file, "Group gid is -1, tests using chown (filechange) may be non-reliable. Set git with -g option.");
+        log_warning(output_file, error_file, "Group GID to use for chown tests is unset (default: -1), tests using chown (PROFILE.OS.*.CHANGE.*) will probably fail. Set GID with -g option.");
     }
     
-    
+#ifndef __linux__
+#ifndef __freebsd__
     current_time_setup_local_timemarker(output_file, error_file);
     current_time_setup_local_timemarkerdir(output_file, error_file);
-    
-    // pre-creating some of the test files
-//     misc_concat_ensure_dir_exists("", "/tmp/tmp_posixtest_timemarker_dir/", 0, 0, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free("", "/tmp/tmp_posixtest_timemarker", 2*s_1s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
-
-//     misc_concat_ensure_file_exists_free(dir_path, "profile_os_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
+#endif
+#endif
     
     testenv_struct* test_env = testenv_alloc_csv(csv_file_brief, output_file, error_file, dir_path, dir_path_volume, csv_file_flags);
     
-//     log_csv_add_line(csv_file_brief, 3, "Description", "File", "MAC");
     log_csv_add_line(csv_file_brief, 2, "Reference", "MACB");
     log_csv_add_line(csv_file_flags, 4, "Description", "File", "M/A/C/B", "Flag");
 
@@ -163,11 +155,22 @@ int run_profileos(){
     }
     group_profileos_filecopy_new(test_env);
     group_profileos_filecopy_existing(test_env);
+    if (OPTION_VOLUME_FILE_MOVE){
+        group_profileos_volumefilecopy_new(test_env);
+        group_profileos_volumefilecopy_existing(test_env);
+    }
     
-    group_profileos_dircopy_notempty(test_env);
+    group_profileos_dircopy_notempty(test_env);    
+    if (OPTION_VOLUME_FILE_MOVE){
+        group_profileos_volumedircopy_notempty(test_env);
+    }
     if (!OPTION_QUICK){
         group_profileos_dircopy_empty(test_env);
+        if (OPTION_VOLUME_FILE_MOVE){
+        group_profileos_volumedircopy_empty(test_env);
+        }
     }
+
     
     group_profileos_filecreation(test_env);
     if (!OPTION_QUICK){
@@ -293,7 +296,15 @@ void group_profileos_filecopy_new(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_new(env);
     
     char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
-    process_profiles2(mask, "File Copy (new)", "PROFILE.OS.FILE.COPY.NEW", __func__, env, pi1, pi2);
+    process_profiles2(mask, "Local File Copy (new)", "PROFILE.OS.FILE.COPY_LOCAL.NEW", __func__, env, pi1, pi2);
+}
+
+void group_profileos_volumefilecopy_new(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_volumefilecopy_interface_new(env);
+    struct profile_info_struct* pi2 = profileos_volumefilecopy_utilities_new(env);
+    
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
+    process_profiles2(mask, "Volume File Copy (new)", "PROFILE.OS.FILE.COPY_VOLUME.NEW", __func__, env, pi1, pi2);
 }
 
 void group_profileos_filecopy_existing(testenv_struct* env){
@@ -301,21 +312,43 @@ void group_profileos_filecopy_existing(testenv_struct* env){
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_existing(env);
     
     char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
-    process_profiles2(mask, "File Copy (existing)", "PROFILE.OS.FILE.COPY.EXISTING", __func__, env, pi1, pi2);
+    process_profiles2(mask, "Local File Copy (existing)", "PROFILE.OS.FILE.COPY_LOCAL.EXISTING", __func__, env, pi1, pi2);
+}
+
+void group_profileos_volumefilecopy_existing(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_volumefilecopy_interface_existing(env);
+    struct profile_info_struct* pi2 = profileos_volumefilecopy_utilities_existing(env);
+    
+    char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
+    process_profiles2(mask, "Volume File Copy (existing)", "PROFILE.OS.FILE.COPY_VOLUME.EXISTING", __func__, env, pi1, pi2);
 }
 
 void group_profileos_dircopy_notempty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_notempty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
-    process_profiles1(mask, "Dir Copy (new, notempty)", "PROFILE.OS.DIR.COPY.NEW.NOTEMPTY", __func__, env, pi1);
+    process_profiles1(mask, "Local Dir Copy (new, notempty)", "PROFILE.OS.DIR.COPY_LOCAL.NEW.NOTEMPTY", __func__, env, pi1);
+}
+
+void group_profileos_volumedircopy_notempty(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_volumefilecopy_utilities_dir_new_notempty(env);
+    
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
+    process_profiles1(mask, "Volume Dir Copy (new, notempty)", "PROFILE.OS.DIR.COPY_VOLUME.NEW.NOTEMPTY", __func__, env, pi1);
 }
 
 void group_profileos_dircopy_empty(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_empty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
-    process_profiles1(mask, "Dir Copy (new, empty)", "PROFILE.OS.DIR.COPY.NEW.EMPTY", __func__, env, pi1);
+    process_profiles1(mask, "Local Dir Copy (new, empty)", "PROFILE.OS.DIR.COPY_LOCAL.NEW.EMPTY", __func__, env, pi1);
+}
+
+void group_profileos_volumedircopy_empty(testenv_struct* env){
+    struct profile_info_struct* pi1 = profileos_volumefilecopy_utilities_dir_new_empty(env);
+    
+    char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
+    process_profiles1(mask, "Volume Dir Copy (new, empty)", "PROFILE.OS.DIR.COPY_VOLUME.NEW.EMPTY", __func__, env, pi1);
 }
 
 void group_profileos_filecreation(testenv_struct* env){
