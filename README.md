@@ -9,7 +9,7 @@ Profile how your Unix-like OS (Linux, BSD...)  modifies MACB timestamps.
 
 # OS Profiling
 Please read the blog post for more information on the results and OS implementations:
-- https://...
+- https://medium.com/@quoscient/mac-b-timestamps-across-posix-implementations-linux-openbsd-freebsd-1e2d5893e4f
 
 `profile_os` profiles common file operations:
 - New file/dir
