@@ -71,7 +71,7 @@ The provided results will need some interpretation and a bit of context (mount o
 POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
 - blabla
 
-***** is an additional symbol for when POSIX leaves choice to the implementation:
+**\*** is an additional symbol for when POSIX leaves choice to the implementation:
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
 
 ## Results
