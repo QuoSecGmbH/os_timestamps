@@ -1,15 +1,13 @@
 # os_timestamps
 ### [https://github.com/quoscient/os_timestamps](https://github.com/quoscient/os_timestamps)
-
 Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps, can be used to test POSIX compliance.
 
 # Build
-
 - `mkdir build; cd build/`
 - `cmake ../src/`
 - `make`
 
-# profile_os
+# OS Profiling
 Please read the blog post for more information on the results and OS implementations:
 - https://...
 
@@ -71,7 +69,6 @@ Two CSV files are also created:
 The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
 
 ## POSIX
-
 POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
 - blabla
 
@@ -79,7 +76,6 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
 
 ## Results
-
 For easier comparison of MAC updates, a result file without B updates (os_profile_results_mac.csv) is provided.
 
 Some more PDF options are in the Release section.
@@ -102,9 +98,32 @@ FreeBSD:
 - os_profile_results_mac.csv:
 - os_profile_flags.csv:
 
-# profile_cmd
+# Command Profiling
+`profile_cmd` is an interactive tool to profile any shell commands.
 
+You need to manually define which files/dirs you want to watch for change.
 
+The first watched path is considered as the source file/dir (for `>` and `m/a/c/b`), so be careful to define it correctly.
+
+New File:
+```
+$ ./profile_cmd -w file 'touch file'
+file
+  MACB
+```
+
+Dir Move:
+```
+$ ./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'
+dir/
+  !!!!
+dst/
+  M.C.
+dst/dir/
+  >>C>
+```
 
 # Tools
 ## prototype_file_ts
+
+
