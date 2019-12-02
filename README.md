@@ -114,7 +114,7 @@ file
 
 Dir Move:
 ```
-$ ./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'
+$ **./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'**
 dir/
   !!!!
 dst/
