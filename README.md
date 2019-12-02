@@ -81,7 +81,7 @@ Some more PDF options are in the Release section.
 
 Linux:
 - PDF: 
-- os_profile_results.csv:
+- os_profile_results.csv: [results/2019_11_29/linux/os_profile_results.csv](results/2019_11_29/linux/os_profile_results.csv)
 - os_profile_results_mac.csv:
 - os_profile_flags.csv:
 
