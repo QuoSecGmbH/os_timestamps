@@ -126,6 +126,7 @@ dst/dir/
 ## Get MACB Timestamps
 
 `prototype_file_ts TARGET [MODE]` will output the target's MACB timestamps.
+As it uses the **stat()** (and **statx()** on Linux) system calls, it shall not update any timestamp of the target.
 
 Mode can be:
 - 0 (default): use **stat** to get MAC and gets B by OS-specific method
