@@ -14,7 +14,7 @@ Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps, can be
 Please read the blog post for more information on the results and OS implementations:
 - https://...
 
-This profiles common file operations:
+`profile_os` profiles common file operations:
 - New file/dir
 - File read (cat)
 - File write (echo AA > file)
