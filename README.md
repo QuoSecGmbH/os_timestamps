@@ -1,6 +1,6 @@
 # os_timestamps
 ### [https://github.com/quoscient/os_timestamps](https://github.com/quoscient/os_timestamps)
-Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps, can be used to test POSIX compliance.
+Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps.
 
 # Build
 - `mkdir build; cd build/`
