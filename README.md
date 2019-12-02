@@ -29,9 +29,8 @@ To have complete results you will need:
 - For reliable chown tests ("File Change"...): the GID of a group you can attribute to a file (you shall be able to do `chown :GID file`)
     - On OpenBSD & FreeBSD, GID 0 (wheel) can be used
 
-`./profile_os -m mnt/ -g 1002`
-
 ```
+$ ./profile_os -m mnt/ -g 1002
 INFO: Directory for tests is: tmp_os_profile_10/
 INFO: Volume path is: mnt/tmp_os_profile_10/
 File Creation (PROFILE.OS.FILE.NEW):
@@ -72,7 +71,7 @@ The provided results will need some interpretation and a bit of context (mount o
 POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
 - blabla
 
-`*` is an additional symbol for when POSIX leaves choice to the implementation:
+***** is an additional symbol for when POSIX leaves choice to the implementation:
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
 
 ## Results
@@ -103,18 +102,18 @@ FreeBSD:
 
 You need to manually define which files/dirs you want to watch for change.
 
-The first watched path is considered as the source file/dir (for `>` and `m/a/c/b`), so be careful to define it correctly.
+The first watched path is considered as the source file/dir (for **>** and **m/a/c/b**), so be careful to define it correctly.
 
-New File:
+**New File:**
 ```
 $ ./profile_cmd -w file 'touch file'
 file
   MACB
 ```
 
-Dir Move:
+**Dir Move:**
 ```
-$ **./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'**
+$ ./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'
 dir/
   !!!!
 dst/
