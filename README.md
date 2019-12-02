@@ -71,7 +71,37 @@ Two CSV files are also created:
 
 The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
 
+## POSIX
+
+POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
+- 
+
+`*` is an additional symbol for when POSIX leaves choice to the implementation:
+> Some implementations mark for update the last file status change timestamp of renamed files and some do not.
+
 ## Results
+
+For easier comparison of MAC updates, a result file without B updates (os_profile_results_mac.csv) is provided.
+
+Some more PDF options are in the Release section.
+
+Linux:
+- PDF: 
+- os_profile_results.csv:
+- os_profile_results_mac.csv:
+- os_profile_flags.csv:
+
+OpenBSD:
+- PDF: 
+- os_profile_results.csv:
+- os_profile_results_mac.csv:
+- os_profile_flags.csv:
+
+FreeBSD:
+- PDF: 
+- os_profile_results.csv:
+- os_profile_results_mac.csv:
+- os_profile_flags.csv:
 
 # profile_cmd
 
