@@ -10,7 +10,6 @@ Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps, can be
 - `make`
 
 # profile_os
-
 Please read the blog post for more information on the results and OS implementations:
 - https://...
 
@@ -104,6 +103,8 @@ FreeBSD:
 - os_profile_flags.csv:
 
 # profile_cmd
+
+
 
 # Tools
 ## prototype_file_ts
