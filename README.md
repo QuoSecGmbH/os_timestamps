@@ -132,7 +132,7 @@ Mode can be:
 - 1: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
 - 2: Linux only: use **statx** to get MACB
 
-OS-specific methods:
+Implemented OS-specific methods:
 - Linux: use the **statx** system call
 - OpenBSD: **struct stat** has a field called **__st_birthtim**
 - FreeBSD: **struct stat** has a field called **st_birthtim**
