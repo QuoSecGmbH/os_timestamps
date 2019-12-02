@@ -134,8 +134,8 @@ Mode can be:
 
 OS-specific methods:
 - Linux: use the **statx** system call
-- OpenBSD: **struct stat** have a field called **__st_birthtim**
-- OpenBSD: **struct stat** have a field called **st_birthtim**
+- OpenBSD: **struct stat** has a field called **__st_birthtim**
+- FreeBSD: **struct stat** has a field called **st_birthtim**
 
 ```
 $ ./prototype_file_ts file
