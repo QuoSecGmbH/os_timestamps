@@ -71,7 +71,7 @@ The provided results will need some interpretation and a bit of context (mount o
 POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
 - blabla
 
-**\*** is an additional symbol for when POSIX leaves choice to the implementation:
+`*` is an additional symbol for when POSIX leaves choice to the implementation:
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
 
 ## Results
@@ -123,6 +123,20 @@ dst/dir/
 ```
 
 # Tools
-## prototype_file_ts
+## Get MACB Timestamps
 
+`prototype_file_ts TARGET [MODE]` will output the target's MACB timestamps.
 
+Mode can be:
+- 0 (default): use stat to get MAC and gets B by OS-specific method
+- 1: same as 0 but with lstat and OS-specific method that does not follow symlinks
+- 2: Linux only: use statx to get MACB
+
+```
+$ ./prototype_file_ts file
+file: (stat + B)
+M: Mon Dec  2 13:59:38 2019 - ns: 766478455
+A: Mon Dec  2 13:59:36 2019 - ns: 870434493
+C: Mon Dec  2 13:59:42 2019 - ns: 554566399
+B: Mon Dec  2 13:42:32 2019 - ns: 126956318
+```
