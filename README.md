@@ -128,9 +128,14 @@ dst/dir/
 `prototype_file_ts TARGET [MODE]` will output the target's MACB timestamps.
 
 Mode can be:
-- 0 (default): use stat to get MAC and gets B by OS-specific method
-- 1: same as 0 but with lstat and OS-specific method that does not follow symlinks
-- 2: Linux only: use statx to get MACB
+- 0 (default): use **stat** to get MAC and gets B by OS-specific method
+- 1: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
+- 2: Linux only: use **statx** to get MACB
+
+OS-specific methods:
+- Linux: use the **statx** system call
+- OpenBSD: **struct stat** have a field called **__st_birthtim**
+- OpenBSD: **struct stat** have a field called **st_birthtim**
 
 ```
 $ ./prototype_file_ts file
