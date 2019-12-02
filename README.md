@@ -70,3 +70,7 @@ Two CSV files are also created:
 - os_profile_flags.csv   - Contains a more detailed view of the results, explaining precisely what happens to each timestamp
 
 The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
+
+# profile_cmd
+
+# prototype_file_ts
