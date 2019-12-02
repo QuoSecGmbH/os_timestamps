@@ -69,7 +69,7 @@ The provided results will need some interpretation and a bit of context (mount o
 
 ## POSIX
 POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
-- blabla
+- [results/2019_11_29/profileos/posix/os_profile.csv](results/2019_11_29/profileos/posix/os_profile.csv)
 
 `*` is an additional symbol for when POSIX leaves choice to the implementation:
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
@@ -82,20 +82,20 @@ Some more PDF options are in the Release section.
 Linux:
 - PDF: 
 - os_profile_results.csv: [results/2019_11_29/profileos/linux/os_profile_results.csv](results/2019_11_29/profileos/linux/os_profile_results.csv)
-- os_profile_results_mac.csv:
-- os_profile_flags.csv:
+- os_profile_results_mac.csv: [results/2019_11_29/profileos/linux/os_profile_results_mac.csv](results/2019_11_29/profileos/linux/os_profile_results_mac.csv)
+- os_profile_flags.csv: [results/2019_11_29/profileos/linux/os_profile_flags.csv](results/2019_11_29/profileos/linux/os_profile_flags.csv)
 
 OpenBSD:
 - PDF: 
-- os_profile_results.csv:
-- os_profile_results_mac.csv:
-- os_profile_flags.csv:
+- os_profile_results.csv: [results/2019_11_29/profileos/openbsd/os_profile_results.csv](results/2019_11_29/profileos/openbsd/os_profile_results.csv)
+- os_profile_results_mac.csv: [results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv](results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv)
+- os_profile_flags.csv: [results/2019_11_29/profileos/openbsd/os_profile_flags.csv](results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
 
 FreeBSD:
 - PDF: 
-- os_profile_results.csv:
-- os_profile_results_mac.csv:
-- os_profile_flags.csv:
+- os_profile_results.csv: [results/2019_11_29/profileos/freebsd/os_profile_results.csv](results/2019_11_29/profileos/freebsd/os_profile_results.csv)
+- os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
+- os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
 
 # Command Profiling
 `profile_cmd` is an interactive tool to profile any shell commands.
