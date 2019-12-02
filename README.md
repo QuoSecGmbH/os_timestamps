@@ -71,6 +71,10 @@ Two CSV files are also created:
 
 The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
 
+## Results
+
 # profile_cmd
 
-# prototype_file_ts
+# Tools
+
+## prototype_file_ts
