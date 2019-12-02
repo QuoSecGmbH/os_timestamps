@@ -11,6 +11,9 @@ Profile how your Unix-like OS(Linux, BSD...)  modifies MAC(B) timestamps.
 
 # profile_os
 
+Please read the blog post for more information on the results and OS implementations:
+- 
+
 This profiles common file operations:
 - New file/dir
 - File read (cat)
@@ -54,8 +57,8 @@ dstdir/
 Symbols you will encounter:
 ```
 M/A/C/B - M/A/C/B was updated to current time
->       - M/A/C/B was set to the same value as the source file/dir
-m/a/c/b - M/A/C/B was set to the same M/A/C/B value as the source file/dir
+m/a/c/b - M/A/C/B was set to the same m/a/c/b value as the source file/dir
+>       - M/A/C/B was set to the same value as the source file/dir (same as m/a/c/b but for the same timestamp)
 .       - M/A/C/B was not modified
 d       - M/A/C/B seem to have been updated after the command ended (delay - this may hidden with -d option)
 0       - M/A/C/B was 0 after command execution
@@ -65,3 +68,5 @@ d       - M/A/C/B seem to have been updated after the command ended (delay - thi
 Two CSV files are also created:
 - os_profile_results.csv - Contains a condensed view of the results, can be used for comparison
 - os_profile_flags.csv   - Contains a more detailed view of the results, explaining precisely what happens to each timestamp
+
+The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
