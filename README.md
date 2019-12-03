@@ -80,19 +80,19 @@ For easier comparison of MAC updates, a result file without B updates (os_profil
 Some more PDF options are in the Release section.
 
 Linux:
-- PDF: 
+- PDF: [linux_macb.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/linux_macb.pdf)
 - os_profile_results.csv: [results/2019_11_29/profileos/linux/os_profile_results.csv](results/2019_11_29/profileos/linux/os_profile_results.csv)
 - os_profile_results_mac.csv: [results/2019_11_29/profileos/linux/os_profile_results_mac.csv](results/2019_11_29/profileos/linux/os_profile_results_mac.csv)
 - os_profile_flags.csv: [results/2019_11_29/profileos/linux/os_profile_flags.csv](results/2019_11_29/profileos/linux/os_profile_flags.csv)
 
 OpenBSD:
-- PDF: 
+- PDF: [openbsd_mac.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/openbsd_mac.pdf)
 - os_profile_results.csv: [results/2019_11_29/profileos/openbsd/os_profile_results.csv](results/2019_11_29/profileos/openbsd/os_profile_results.csv)
 - os_profile_results_mac.csv: [results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv](results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv)
 - os_profile_flags.csv: [results/2019_11_29/profileos/openbsd/os_profile_flags.csv](results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
 
 FreeBSD:
-- PDF: 
+- PDF: [freebsd_macb.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/freebsd_macb.pdf)
 - os_profile_results.csv: [results/2019_11_29/profileos/freebsd/os_profile_results.csv](results/2019_11_29/profileos/freebsd/os_profile_results.csv)
 - os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
 - os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
