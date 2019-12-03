@@ -38,6 +38,34 @@ On Linux:
 #define CLOCK_BOOTTIME              7
 #define CLOCK_REALTIME_ALARM        8
 #define CLOCK_BOOTTIME_ALARM        9
+
+On OpenBSD:
+    - https://man.openbsd.org/clock_settime
+    - https://github.com/openbsd/src/blob/master/sys/sys/_time.h#L35
+#define CLOCK_REALTIME              0
+#define CLOCK_PROCESS_CPUTIME_ID    2
+#define CLOCK_MONOTONIC             3
+#define CLOCK_THREAD_CPUTIME_ID     4
+#define CLOCK_UPTIME                5
+#define CLOCK_BOOTTIME              6
+
+On FreeBSD:
+    - https://www.freebsd.org/cgi/man.cgi?query=clock_gettime
+    - https://github.com/freebsd/freebsd/blob/96ac98747a90910e1178abccc617e9f04692dcec/sys/sys/time.h#L463
+#define	CLOCK_REALTIME              0
+#define	CLOCK_VIRTUAL               1
+#define	CLOCK_PROF                  2
+#define	CLOCK_MONOTONIC             4
+#define	CLOCK_UPTIME                5	FreeBSD-specific. 
+#define	CLOCK_UPTIME_PRECISE        7	FreeBSD-specific. 
+#define	CLOCK_UPTIME_FAST           8	FreeBSD-specific. 
+#define	CLOCK_REALTIME_PRECISE      9	FreeBSD-specific. 
+#define	CLOCK_REALTIME_FAST         10	FreeBSD-specific. 
+#define	CLOCK_MONOTONIC_PRECISE     11	FreeBSD-specific. 
+#define	CLOCK_MONOTONIC_FAST        12	FreeBSD-specific. 
+#define	CLOCK_SECOND                13	FreeBSD-specific. 
+#define	CLOCK_THREAD_CPUTIME_ID     14
+#define	CLOCK_PROCESS_CPUTIME_ID    15
 */
 
 
