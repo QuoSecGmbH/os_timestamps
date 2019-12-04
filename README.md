@@ -130,11 +130,11 @@ dst/dir/
 As it uses the **stat()** (and **statx()** on Linux) system calls, it shall not update any timestamp of the target.
 
 Mode can be:
-- 0 (default): use **stat** to get MAC and gets B by OS-specific method
+- 0 (default): uses **stat** to get MAC and gets B by OS-specific method that follows symlinks
 - 1: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
-- 2: Linux only: use **statx** to get MACB
+- 2: Linux only: gets MACB with **statx**, with the AT_SYMLINK_NOFOLLOW flag (do not follow symlinks)
 
-Implemented OS-specific methods:
+Implemented OS-specific methods to read B:
 - Linux: use the **statx** system call
 - OpenBSD: **struct stat** has a field called **__st_birthtim**
 - FreeBSD: **struct stat** has a field called **st_birthtim**
