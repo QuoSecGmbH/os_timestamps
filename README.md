@@ -98,7 +98,7 @@ FreeBSD:
 - os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
 
 # Command Profiling
-`profile_cmd` is an interactive tool to profile any shell commands.
+`profile_cmd` is an interactive tool to profile shell commands.
 
 You need to manually define which files/dirs you want to watch for change.
 
