@@ -104,14 +104,14 @@ You need to manually define which files/dirs you want to watch for change.
 
 The first watched path is considered as the source file/dir (for **>** and **m/a/c/b**), so be careful to define it correctly.
 
-**New File:**
+**New File (Linux):**
 ```
 $ ./profile_cmd -w file 'touch file'
 file
   MACB
 ```
 
-**Dir Move:**
+**Dir Move (Linux):**
 ```
 $ ./profile_cmd -w dir/ -w dst/ -w dst/dir/ 'mv dir/ dst/'
 dir/
