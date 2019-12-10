@@ -75,8 +75,9 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 > Some implementations mark for update the last file status change timestamp of renamed files and some do not.
 
 ## Results
-For easier comparison of MAC updates, a result file without B updates (os_profile_results_mac.csv) is provided.
+For easier comparison of MACB updates, a result file without B updates (os_profile_results_mac.csv) is provided.
 
+The tables are interpreted from the results files and OS implementation.
 Some more PDF options are in the Release section.
 
 Linux:
@@ -92,6 +93,8 @@ OpenBSD:
 - os_profile_flags.csv: [results/2019_11_29/profileos/openbsd/os_profile_flags.csv](results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
 
 FreeBSD:
+![FreeBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/freebsd_macb.png)
+
 - PDF: [freebsd_macb.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/freebsd_macb.pdf)
 - os_profile_results.csv: [results/2019_11_29/profileos/freebsd/os_profile_results.csv](results/2019_11_29/profileos/freebsd/os_profile_results.csv)
 - os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
