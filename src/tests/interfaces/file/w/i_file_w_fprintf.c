@@ -4,7 +4,7 @@
 #include "i_file_w_fprintf.h"
 
 int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fflush" , s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fflush" , s_0s, ns_after_open, output_file, error_file, __func__);
 
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -35,7 +35,7 @@ int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FI
 }
 
 int check_interfaces_file_w_fprintf_fclose(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fclose" , s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fclose" , s_0s, ns_after_open, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -64,7 +64,7 @@ int check_interfaces_file_w_fprintf_fclose(FILE* csv_file, FILE* output_file, FI
 }
 
 int check_interfaces_file_w_fprintf_exit(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_exit" , s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_exit" , s_0s, ns_after_open, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -116,7 +116,7 @@ int check_interfaces_file_w_fprintf_exit(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_file_w_fprintf_abort(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_abort" , s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_abort" , s_0s, ns_after_open, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
