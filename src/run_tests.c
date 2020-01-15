@@ -345,8 +345,8 @@ void group_check_general_update(testenv_struct* env){
     
     runtest(env, "GENERAL.UPDATE.WRITE_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_close, "check_general_update_write_close", "Yes", POSIX_c181, MANDATORY, "fwrite+fclose shall update MC");
     runtest(env, "GENERAL.UPDATE.READ_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_close, "check_general_update_read_close", "Yes", POSIX_c181, MANDATORY, "fread+fclose shall update A");
-    runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "Yes", POSIX_c181, MANDATORY, "fwrite+stat shall update MC");
-    runtest(env, "GENERAL.UPDATE.WRITE_BEFORE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_before_stat, "check_general_update_write_before_stat", "Yes", POSIX_c181, MANDATORY, "fwrite+stat shall update MC (before stat)");
+    runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "No", "", MANDATORY, "fwrite+stat shall update MC");
+    runtest(env, "GENERAL.UPDATE.WRITE_BEFORE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_before_stat, "check_general_update_write_before_stat", "No", "", MANDATORY, "fwrite+stat shall update MC (before stat)");
     runtest(env, "GENERAL.UPDATE.WRITE_FSTAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_fstat, "check_general_update_write_fstat", "No", "", MANDATORY, "fwrite+fstat shall update MC");
     runtest(env, "GENERAL.UPDATE.READ_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_stat, "check_general_update_read_stat", "Yes", POSIX_c181, MANDATORY, "fread+stat shall update A");
     runtest(env, "GENERAL.UPDATE.READ_BEFORE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_before_stat, "check_general_update_read_before_stat", "Yes", POSIX_c181, MANDATORY, "fread+stat shall update A (before stat)");
