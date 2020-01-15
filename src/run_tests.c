@@ -20,6 +20,16 @@ int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time
     int newresult = 0;
     char* curr_ref;
     int i;
+
+    if (env->n_test != 0 && misc_str_in_list(ref, env->n_test, env->test_list) == 0){
+        // Case: using a test whitelist and test ref is not listed
+        return -1;
+    }
+    
+    if (env->n_testnot != 0 && misc_str_in_list(ref, env->n_testnot, env->testnot_list) == 1){
+        // Case: test ref is blacklisted
+        return -1;
+    }
     
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = sleep_s;
@@ -57,16 +67,22 @@ int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time
     return result;
 }
 
-int main (int argc, char **argv){
-    if (argc >= 2){
-        VERBOSE=1;
-    }
-  
-    FILE* csv_file = log_open_csv("results.csv");
-//     FILE* output_file = stdout;
-    FILE* output_file = fopen("output.txt", "wb");
-//     FILE* error_file = stderr;
-    FILE* error_file = fopen("error.txt", "wb");
+void print_usage(){
+    fprintf(stderr, "Usage: ./run_tests [options]\n");
+    fprintf(stderr, "Options:\n");
+    fprintf(stderr, "  -v, --verbose\n");
+//     fprintf(stderr, "  --timewait / -t TIMEWAIT\n");
+    fprintf(stderr, "  -d, --nodelay          Treat delays as command updates\n");
+    fprintf(stderr, "  -i, --input-tests      Perform tests that require user input\n");
+    fprintf(stderr, "  -a, --append           Append results to existing CSV file\n");
+    fprintf(stderr, "  -t, --test             Whitelist test reference (will be run)\n");
+    fprintf(stderr, "  -u, --test-not         Blacklist test reference (will not be run)\n");
+    fprintf(stderr, "  -g, --group            Whitelist group reference (will be run)\n");
+    fprintf(stderr, "  -h, --group-not        Blacklist group reference (will not be run)\n");
+}
+
+int main (int argc, char **argv){  
+    int OPTION_APPEND_CSV = 0;
   
     int i;
     char* dir_base_path = "tmp_tests";
@@ -85,6 +101,113 @@ int main (int argc, char **argv){
         free(attr);
     }
     
+    
+    char** test_list = NULL;
+    int n_test = 0;
+    char** testnot_list = NULL;
+    int n_testnot = 0;
+    char** group_list = NULL;
+    int n_group = 0;
+    char** groupnot_list = NULL;
+    int n_groupnot = 0;
+    
+    int c;
+    while (1) {
+        static struct option long_options[] =
+            {
+            {"verbose", no_argument,       0, 'v'},
+            {"nodelay", no_argument,       0, 'd'},
+            {"input-tests", no_argument, 0, 'i'},
+            {"append", no_argument, 0, 'a'},
+//             {"timewait", required_argument, 0, 't'},
+            {"test", required_argument, 0, 't'},
+            {"test-not", required_argument, 0, 'u'},
+            {"group", required_argument, 0, 'g'},
+            {"group-not", required_argument, 0, 'h'},
+            {0, 0, 0, 0}
+            };
+        /* getopt_long stores the option index here. */
+        int option_index = 0;
+
+        c = getopt_long (argc, argv, "vdiat:u:g:h:",
+                        long_options, &option_index);
+        
+            
+        if (c == -1)
+            break;
+
+        switch (c)
+            {
+            case 'v': {
+                VERBOSE = 1; 
+                break;
+            }            
+            case 'd': {
+                PROFILE_TREAT_DELAY_AS_COMMAND = 1; 
+                break;
+            }
+            case 'i': {
+                OPTION_TEST_INPUT = 1;
+                break;
+            }
+            case 'a': {
+                OPTION_APPEND_CSV = 1;
+                break;
+            }
+            case 't': {
+                if (VERBOSE) printf("Whitelisting test: %s\n", optarg);
+//                 misc_add_to_list(optarg, &(test_env->n_test), &(test_env->test_list));
+                misc_add_to_list(optarg, &(n_test), &(test_list));
+                break;
+            }
+            case 'u': {
+                if (VERBOSE) printf("Blacklisting test: %s\n", optarg);
+//                 misc_add_to_list(optarg, &(test_env->n_testnot), &(test_env->testnot_list));
+                misc_add_to_list(optarg, &(n_testnot), &(testnot_list));
+                break;
+            }
+            case 'g': {
+                if (VERBOSE) printf("Whitelisting group: %s\n", optarg);
+//                 misc_add_to_list(optarg, &(test_env->n_group), &(test_env->group_list));
+                misc_add_to_list(optarg, &(n_group), &(group_list));
+                break;
+            }
+            case 'h': {
+                if (VERBOSE) printf("Blacklisting group: %s\n", optarg);
+//                 misc_add_to_list(optarg, &(test_env->n_groupnot), &(test_env->groupnot_list));
+                misc_add_to_list(optarg, &(n_groupnot), &(groupnot_list));
+                break;
+            }
+            default:
+                fprintf(stderr, "Unknown argument.\n");
+                print_usage();
+                exit(EXIT_FAILURE);
+            }
+        }
+    
+        
+    FILE* csv_file = NULL;
+    if (OPTION_APPEND_CSV == 1){
+        csv_file = log_open_csv_append("results.csv");
+    }
+    else {
+        csv_file = log_open_csv("results.csv");
+    }
+    
+//     FILE* output_file = stdout;
+    FILE* output_file = fopen("output.txt", "wb");
+//     FILE* error_file = stderr;
+    FILE* error_file = fopen("error.txt", "wb");
+    testenv_struct* test_env = testenv_alloc(csv_file, output_file, error_file, dir_path);
+    test_env->n_test = n_test;
+    test_env->test_list = test_list;
+    test_env->n_testnot = n_testnot;
+    test_env->testnot_list = testnot_list;
+    test_env->n_group = n_group;
+    test_env->group_list = group_list;
+    test_env->n_groupnot = n_groupnot;
+    test_env->groupnot_list = groupnot_list;
+    
     if (dir_path == NULL){
         log_error(output_file, error_file, "%s", "Impossible to find suitable directory for tests, exiting.");
         return 1;
@@ -95,7 +218,7 @@ int main (int argc, char **argv){
     current_time_setup_local_timemarkerdir(output_file, error_file);
     
     // pre-creating some of the test files
-    misc_concat_ensure_file_exists_free(dir_path, "/tmp/tmp_posixtest_timemarker", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "/tmp/tmp_posixtest_timemarker", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);
@@ -149,9 +272,7 @@ int main (int argc, char **argv){
         
     misc_concat_ensure_file_exists_free(dir_path, "run_test_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
     
-    testenv_struct* test_env = testenv_alloc(csv_file, output_file, error_file, dir_path);
-    
-    log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Level", "Ref", "Function");
+    if (OPTION_APPEND_CSV == 0) log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Level", "Ref", "Function");
     group_check_general_clock(test_env);
     group_check_general_new_file(test_env);
     group_check_general_update(test_env);
@@ -190,18 +311,38 @@ int main (int argc, char **argv){
     log_close_csv(csv_file);
 }
 
+int should_group_run(testenv_struct* env, char* group){
+    if (env->n_group != 0 && misc_str_in_list(group, env->n_group, env->group_list) == 0){
+        // Case: using a group whitelist and group is not listed
+        return 0;
+    }
+    
+    if (env->n_groupnot != 0 && misc_str_in_list(group, env->n_groupnot, env->groupnot_list) == 1){
+        // Case: group is blacklisted
+        return 0;
+    }
+    
+    return 1;
+}
+
 void group_check_general_clock(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "GENERAL.CLOCK.RES", 1, REPEAT_WORST, s_0s, ns_10ms, check_general_clock_res, "check_general_clock_res", "Yes", POSIX_c181, MANDATORY, "Clock resolution shall be at max 0.02s (CLOCK_REALTIME)");
     runtest(env, "GENERAL.CLOCK.INCREMENTS", 1, REPEAT_WORST, s_0s, ns_10ms, check_general_clock_increments, "check_general_clock_increments", "No", "", MANDATORY, "Clock is incremental (increasing)");
 }
 
 void group_check_general_new_file(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "GENERAL.NEW_FILE_REALTIME", 1, REPEAT_WORST, s_0s, ns_10ms, check_general_new_file_realtime, "check_general_new_file_realtime", "No", "", MANDATORY, "New file shall have MAC updated (CLOCK_REALTIME)");
     runtest(env, "GENERAL.NEW_FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_general_new_file, "check_general_new_file", "Yes", POSIX_c181, MANDATORY, "New file shall have MAC updated");
     runtest(env, "GENERAL.NEW_FILE.MAC_eq", 1, REPEAT_WORST, s_0s, ns_10ms, check_general_new_file_mac_eq, "check_general_new_file_mac_eq", "No", "", MANDATORY, "New file shall have MAC set to same value");
 }
 
 void group_check_general_update(testenv_struct* env){ 
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "GENERAL.UPDATE.WRITE_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_close, "check_general_update_write_close", "Yes", POSIX_c181, MANDATORY, "fwrite+fclose shall update MC");
     runtest(env, "GENERAL.UPDATE.READ_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_close, "check_general_update_read_close", "Yes", POSIX_c181, MANDATORY, "fread+fclose shall update A");
     runtest(env, "GENERAL.UPDATE.WRITE_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write_stat, "check_general_update_write_stat", "Yes", POSIX_c181, MANDATORY, "fwrite+stat shall update MC");
@@ -211,11 +352,15 @@ void group_check_general_update(testenv_struct* env){
 }
 
 void group_check_interfaces_exec(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.EXEC.EXECVP", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_exec_execvp, "check_interfaces_exec_execvp", "Yes", POSIX_c181, MANDATORY, "exec shall update A");
     runtest(env, "INTERFACES.EXEC.EXECVP_LOCAL", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_exec_execvp_local, "check_interfaces_exec_execvp_local", "Yes", POSIX_c181, MANDATORY, "exec shall update A (local)");
 }
 
 void group_check_interfaces_attr(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.ATTR.CHMOD", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chmod, "check_interfaces_attr_chmod", "Yes", POSIX_c181, MANDATORY, "chmod shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_GRP", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_grp, "check_interfaces_attr_chown_grp", "Yes", POSIX_c181, MANDATORY, "chown(-1, getgid()) shall update C");
     runtest(env, "INTERFACES.ATTR.CHOWN_USR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_attr_chown_usr, "check_interfaces_attr_chown_usr", "Yes", POSIX_c181, MANDATORY, "chown(getuid(), -1) shall update C");
@@ -224,6 +369,8 @@ void group_check_interfaces_attr(testenv_struct* env){
 }
 
 void group_check_interfaces_ts_futimens(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma, "check_interfaces_ts_futimens_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall set MA and update C");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ns, "check_interfaces_ts_futimens_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall give MA granularity to the nanoseconds");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma_eq, "check_interfaces_ts_futimens_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with futimens shall set MA to same value");
@@ -238,6 +385,8 @@ void group_check_interfaces_ts_futimens(testenv_struct* env){
 }
 
 void group_check_interfaces_ts_utimensat(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma, "check_interfaces_ts_utimensat_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ns, "check_interfaces_ts_utimensat_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall give MA granularity to the nanoseconds");
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma_eq, "check_interfaces_ts_utimensat_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with utimensat shall set MA to same value");
@@ -252,6 +401,8 @@ void group_check_interfaces_ts_utimensat(testenv_struct* env){
 }
 
 void group_check_interfaces_ts_utimes(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.TS.UTIMES_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_ma, "check_interfaces_ts_utimes_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIMES_NOW_US", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_us, "check_interfaces_ts_utimes_now_us", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall give MA granularity to the microsecond");
 
@@ -260,6 +411,8 @@ void group_check_interfaces_ts_utimes(testenv_struct* env){
 }
 
 void group_check_interfaces_ts_utime(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.TS.UTIME_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utime_now_ma, "check_interfaces_ts_utime_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utime shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIME_NOW_S", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utime_now_s, "check_interfaces_ts_utime_now_us", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utime shall give MA granularity to the second");
 
@@ -268,6 +421,8 @@ void group_check_interfaces_ts_utime(testenv_struct* env){
 }
 
 void group_check_interfaces_file(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.FFLUSH.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_write, "check_interfaces_file_fflush_write", "Yes", POSIX_c181, MANDATORY, "fflush with unwritten data shall update MC");
     runtest(env, "INTERFACES.FILE.FFLUSH.NOWRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_nowrite, "check_interfaces_file_fflush_nowrite", "Yes", "", MANDATORY, "fflush with no unwritten data shall not update MAC");
     runtest(env, "INTERFACES.FILE.FSEEK.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fseek_write, "check_interfaces_file_fseek_write", "Yes", POSIX_c181, MANDATORY, "fseek with unwritten data shall update MC");
@@ -277,6 +432,8 @@ void group_check_interfaces_file(testenv_struct* env){
 }
 
 void group_check_interfaces_file_fopen(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.FOPEN.NEW.W", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_new_W, "check_interfaces_file_fopen_new_W", "Yes", POSIX_c181, MANDATORY, "fopen(w) on non existing file shall create file, update file MAC and parent directory MC");
     runtest(env, "INTERFACES.FILE.FOPEN.NEW.WB", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_new_WB, "check_interfaces_file_fopen_new_WB", "Yes", POSIX_c181, MANDATORY, "fopen(wb) on non existing file shall create file, update file MAC and parent directory MC");
     runtest(env, "INTERFACES.FILE.FOPEN.NEW.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_new_A, "check_interfaces_file_fopen_new_A", "Yes", POSIX_c181, MANDATORY, "fopen(a) on non existing file shall create file, update file MAC and parent directory MC");
@@ -329,6 +486,8 @@ void group_check_interfaces_file_fopen(testenv_struct* env){
 }
 
 void group_check_interfaces_file_w(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fflush, "check_interfaces_file_w_fprintf_fflush", "Yes", POSIX_c181, MANDATORY, "fprintf + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fclose, "check_interfaces_file_w_fprintf_fclose", "Yes", POSIX_c181, MANDATORY, "fprintf + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_exit, "check_interfaces_file_w_fprintf_exit", "Yes", POSIX_c181, MANDATORY, "fprintf + exit shall update MC");
@@ -385,6 +544,8 @@ void group_check_interfaces_file_w(testenv_struct* env){
 }
 
 void group_check_interfaces_file_r(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.R.FREAD", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fread, "check_interfaces_file_r_fread", "Yes", POSIX_c181, MANDATORY, "fread returning data not supplied by ungetc shall update A");
     runtest(env, "INTERFACES.FILE.R.FREAD.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fread_ungetc, "check_interfaces_file_r_fread_ungetc", "Yes", POSIX_c181, MAY, "fread returning data supplied by ungetc may update A");
     runtest(env, "INTERFACES.FILE.R.FREAD.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fread_ungetc_both, "check_interfaces_file_r_fread_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fread returning both data supplied and not supplied by ungetc shall update A");
@@ -438,6 +599,7 @@ void group_check_interfaces_file_r(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc_both, "check_interfaces_file_r_fwscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fwscanf returning both data supplied and not supplied by ungetc shall update A");
     
     if (OPTION_TEST_INPUT == 1){
+        // WARNING: it messes with stdin, I could not find a solution...
         runtest(env, "INTERFACES.FILE.R.WSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf, "check_interfaces_file_r_wscanf", "Yes", POSIX_c181, MANDATORY, "wscanf returning data not supplied by ungetc shall update A");
         runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc, "check_interfaces_file_r_wscanf_ungetc", "Yes", POSIX_c181, MAY, "wscanf returning data supplied by ungetc may update A");
         runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc_both, "check_interfaces_file_r_wscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "wscanf returning both data supplied and not supplied by ungetc shall update A");
@@ -450,6 +612,8 @@ void group_check_interfaces_file_r(testenv_struct* env){
 }
 
 void group_check_interfaces_dir(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.DIR.READDIR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir, "check_interfaces_dir_readdir", "Yes", "", MANDATORY, "readdir on a directory shall update A");
     runtest(env, "INTERFACES.DIR.READDIR.FILES", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_files, "check_interfaces_dir_readdir_files", "Yes", "", MANDATORY, "readdir on a directory shall not update MAC of files in the directory");
     runtest(env, "INTERFACES.DIR.READDIR_R", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_r, "check_interfaces_dir_readdir_r", "Yes", "", MANDATORY, "readdir_r on a directory shall update A");
@@ -457,6 +621,8 @@ void group_check_interfaces_dir(testenv_struct* env){
 }
 
 void group_check_interfaces_file_ln(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.LN.LINK", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_link, "check_interfaces_file_ln_link", "Yes", POSIX_c181, MANDATORY, "link shall update C and MC of the directory containing the new entry");
     runtest(env, "INTERFACES.FILE.LN.LINKAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_linkat, "check_interfaces_file_ln_linkat", "Yes", POSIX_c181, MANDATORY, "linkat shall update C and MC of the directory containing the new entry");
     runtest(env, "INTERFACES.FILE.LN.SYMLINK", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_symlink, "check_interfaces_file_ln_symlink", "Yes", POSIX_c181, MANDATORY, "symlink shall update C and MC of the directory containing the new entry");
@@ -466,6 +632,8 @@ void group_check_interfaces_file_ln(testenv_struct* env){
 }
 
 void group_check_interfaces_file_new(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_new, "check_interfaces_file_new_mkdtemp_new", "Yes", POSIX_c181, MANDATORY, "mkdtemp shall create new directory with updated MAC");
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac, "check_interfaces_file_new_mkdtemp_mac", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac_1s, "check_interfaces_file_new_mkdtemp_mac_1s", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal after 1s");
@@ -485,6 +653,8 @@ void group_check_interfaces_file_new(testenv_struct* env){
 }
 
 void group_check_interfaces_file_mv(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file, "check_interfaces_file_mv_rename_file", "No", "", MANDATORY, "rename on a file shall update C");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_ma, "check_interfaces_file_mv_rename_file_ma", "No", "", MANDATORY, "rename on a file shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_dir, "check_interfaces_file_mv_rename_file_dir", "Yes", POSIX_c181, MANDATORY, "rename on a file shall update MC of parent directory");
@@ -501,6 +671,8 @@ void group_check_interfaces_file_mv(testenv_struct* env){
 }
 
 void group_check_interfaces_file_rm(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "INTERFACES.FILE.RM.UNLINK.LAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_last_dir, "check_interfaces_file_rm_unlink_last_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast_dir, "check_interfaces_file_rm_unlink_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast, "check_interfaces_file_rm_unlink_notlast", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update C");
@@ -523,11 +695,15 @@ void group_check_interfaces_file_rm(testenv_struct* env){
 }
 
 void group_check_utilities_attr(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.ATTR.CHMOD.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_new, "check_utilities_attr_chmod_new", "Yes", POSIX_c181, MANDATORY, "chmod with different mode shall update C");
     runtest(env, "UTILITIES.ATTR.CHMOD.SAME", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_same, "check_utilities_attr_chmod_same", "Yes", POSIX_c181, MANDATORY, "chmod with same mode shall update C");
 }
 
 void group_check_utilities_cp(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.CP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new, "check_utilities_cp_new", "Yes", POSIX_c181, MANDATORY, "cp with destination not existing shall update MAC");
     runtest(env, "UTILITIES.CP.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_mac, "check_utilities_cp_new_mac", "No", "", MANDATORY, "cp with destination not existing shall set MAC equal");
     runtest(env, "UTILITIES.CP.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_dir, "check_utilities_cp_new_dir", "No", "", MANDATORY, "cp with destination not existing shall update MC of dest’s parent dir and not update MAC of src’s parent dir");
@@ -539,6 +715,8 @@ void group_check_utilities_cp(testenv_struct* env){
 }
 
 void group_check_utilities_new(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.NEW.TOUCH.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new, "check_utilities_new_touch_new", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MAC");
     runtest(env, "UTILITIES.NEW.TOUCH.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_mac, "check_utilities_new_touch_new_mac", "No", "", MANDATORY, "touch on non existing file shall set MAC equal");
     runtest(env, "UTILITIES.NEW.TOUCH.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_dir, "check_utilities_new_touch_new_dir", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MC of parent directory");
@@ -557,13 +735,17 @@ void group_check_utilities_new(testenv_struct* env){
 }
     
 void group_check_utilities_mv(testenv_struct* env){    
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
-    runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
+    runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", "", MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
     runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
-    runtest(env, "UTILITIES.MV.EXISTING.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing_eq, "check_utilities_mv_existing_eq", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update the 5 MC with the same value");
+    runtest(env, "UTILITIES.MV.EXISTING.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing_eq, "check_utilities_mv_existing_eq", "Yes", "", MANDATORY, "mv when destination is an existing file shall update the 5 MC with the same value");
 }
 
 void group_check_utilities_rm(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.RM.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_dir_empty, "check_utilities_rm_rm_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm on an empty dir shall not update MAC of the directory nor of its parent dir");
     runtest(env, "UTILITIES.RM.R.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_empty, "check_utilities_rm_rm_r_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm -r on an empty dir shall update parent directory MC");
     runtest(env, "UTILITIES.RM.R.RM.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_notempty, "check_utilities_rm_rm_r_dir_notempty", "Yes", POSIX_c181, MANDATORY, "rm -r on a not empty dir shall update parent directory MC");
@@ -581,6 +763,8 @@ void group_check_utilities_rm(testenv_struct* env){
 }
 
 void group_check_utilities_ln(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.LN.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_new, "check_utilities_ln_new", "Yes", POSIX_c181, MANDATORY, "ln when the target does not exist shall update C and MC of the directory containing the new entry");
     runtest(env, "UTILITIES.LN.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_existing, "check_utilities_ln_existing", "Yes", POSIX_c181, MANDATORY, "ln when the target exists shall not update MAC of the target nor of its parent directory");
     runtest(env, "UTILITIES.LN.S.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_s_new, "check_utilities_ln_s_new", "Yes", POSIX_c181, MANDATORY, "ln -s when the target does not exist shall update MAC of the link and MC of the directory containing the link");
@@ -588,11 +772,17 @@ void group_check_utilities_ln(testenv_struct* env){
 }
 
 void group_check_utilities_ls(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     runtest(env, "UTILITIES.LS", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
     runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "No", "", MANDATORY, "ls shall not update MAC of files in target directory");
 }
 
 void group_check_utilities_vi(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
+//     fseek(stdin, 0, SEEK_END);
+    
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "UTILITIES.VI.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q, "check_utilities_vi_new_i_w_q", "No", "", MANDATORY, "vi on new file (w then q) shall update MAC on write command and update MC of parent directory");
         runtest(env, "UTILITIES.VI.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q_mac, "check_utilities_vi_new_i_w_q_mac", "No", "", MANDATORY, "vi on new file (w then q) shall update set MAC equal");
@@ -607,6 +797,8 @@ void group_check_utilities_vi(testenv_struct* env){
 }
 
 void group_check_utilities_ed(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "UTILITIES.ED.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_new_i_w_q, "check_utilities_ed_new_i_w_q", "No", "", MANDATORY, "ed on new file (w then q) shall update MAC on write command and update MC of parent directory");
         runtest(env, "UTILITIES.ED.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ed_new_i_w_q_mac, "check_utilities_ed_new_i_w_q_mac", "No", "", MANDATORY, "ed on new file (w then q) shall update set MAC equal");
@@ -619,6 +811,8 @@ void group_check_utilities_ed(testenv_struct* env){
 }
 
 void group_check_utilities_ex(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "UTILITIES.EX.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_new_i_w_q, "check_utilities_ex_new_i_w_q", "No", "", MANDATORY, "ex on new file (w then q) shall update MAC on write command and update MC of parent directory");
         runtest(env, "UTILITIES.EX.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ex_new_i_w_q_mac, "check_utilities_ex_new_i_w_q_mac", "No", "", MANDATORY, "ex on new file (w then q) shall update set MAC equal");

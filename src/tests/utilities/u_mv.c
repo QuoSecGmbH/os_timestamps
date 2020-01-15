@@ -68,9 +68,9 @@ int check_utilities_mv_new_eq(FILE* csv_file, FILE* output_file, FILE* error_fil
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
-    struct stat* srcdir_stat = pi->multi_stat_after[0];
-    struct stat* targetdir_stat = pi->multi_stat_after[1];
-    struct stat* copy_stat = pi->multi_stat_after[2];
+    struct stat_macb* srcdir_stat = pi->multi_stat_after[0];
+    struct stat_macb* targetdir_stat = pi->multi_stat_after[1];
+    struct stat_macb* copy_stat = pi->multi_stat_after[2];
 
     int result = 0;
     if (misc_timespec_eq(&(srcdir_stat->st_mtim), &(srcdir_stat->st_ctim)) != 0 || 
@@ -151,9 +151,9 @@ int check_utilities_mv_existing_eq(FILE* csv_file, FILE* output_file, FILE* erro
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
-    struct stat* srcdir_stat = pi->multi_stat_after[0];
-    struct stat* targetdir_stat = pi->multi_stat_after[1];
-    struct stat* copy_stat = pi->multi_stat_after[2];
+    struct stat_macb* srcdir_stat = pi->multi_stat_after[0];
+    struct stat_macb* targetdir_stat = pi->multi_stat_after[1];
+    struct stat_macb* copy_stat = pi->multi_stat_after[2];
 
     int result = 0;
     if (misc_timespec_eq(&(srcdir_stat->st_mtim), &(srcdir_stat->st_ctim)) != 0 || 

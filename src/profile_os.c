@@ -397,20 +397,22 @@ void group_profileos_filemodify(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filemodify_interface_wb(env);
     struct profile_info_struct* pi2 = profileos_filemodify_interface_rp(env);
     struct profile_info_struct* pi3 = profileos_filemodify_interface_a(env);
-    struct profile_info_struct* pi4 = profileos_filemodify_utilities(env);
+    struct profile_info_struct* pi4 = profileos_filemodify_utilities_r1(env);
+    struct profile_info_struct* pi5 = profileos_filemodify_utilities_r2(env);
     
     char** mask = misc_char_array2("dir/", "file");
-    process_profiles4(mask, "File Modify", "PROFILE.OS.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4);
+    process_profiles5(mask, "File Modify", "PROFILE.OS.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4, pi5);
 }
 
 void group_profileos_filemodify_symlink(testenv_struct* env){
     struct profile_info_struct* pi1 = profileos_filemodify_interface_wb_symlink(env);
     struct profile_info_struct* pi2 = profileos_filemodify_interface_rp_symlink(env);
     struct profile_info_struct* pi3 = profileos_filemodify_interface_a_symlink(env);
-    struct profile_info_struct* pi4 = profileos_filemodify_utilities_symlink(env);
+    struct profile_info_struct* pi4 = profileos_filemodify_utilities_r1_symlink(env);
+    struct profile_info_struct* pi5 = profileos_filemodify_utilities_r2_symlink(env);
     
     char** mask = misc_char_array4("file", "symlink", "filedir/", "linkdir/");
-    process_profiles4(mask, "Symlink (to file) Modify (defaut follow)", "PROFILE.OS.SYMLINK.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4);
+    process_profiles5(mask, "Symlink (to file) Modify (defaut follow)", "PROFILE.OS.SYMLINK.FILE.WRITE", __func__, env, pi1, pi2, pi3, pi4, pi5);
 }
 
 void group_profileos_filechange(testenv_struct* env){

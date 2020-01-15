@@ -21,10 +21,11 @@ void print_usage(){
 
 int main(int argc, char *argv[]) {
 //     char verbose = 0;
+    
     char quick = 0;
     char* pwd_dir = NULL;
     int watch_num = 0;
-    char** watch_array;
+    char** watch_array = (char**) malloc(sizeof(char*));
     char* precommand = NULL;
     time_t wait_pre_s = 0;
     long wait_pre_ns =  ns_after_open;
@@ -122,6 +123,9 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
     
+    current_time_setup_local_timemarker(stdout, stderr);
+    current_time_setup_local_timemarkerdir(stdout, stderr);
+    
     if (VERBOSE){
         if (precommand != NULL) printf("Precommand: %s\n", precommand);
         if (command != NULL) printf("Command: %s\n", command);
@@ -131,7 +135,7 @@ int main(int argc, char *argv[]) {
     misc_print_profile(stdout, stderr, pi);
     
     if (VERBOSE){
-        log_info_ts_profile_on_error_message(stdout, stderr, "profile_cmd", 0, pi, "");
+        log_info_ts_profile_on_error_message_short(stdout, stderr, "profile_cmd", 0, pi, "");
     }
 }
 

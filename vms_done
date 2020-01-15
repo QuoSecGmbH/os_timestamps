@@ -6,6 +6,7 @@ mount_vboxfs -w VMShared /mnt
 cp -r /mnt/posix_timestamps /home/freebsd/
 reboot on errors for remount
 scp -r posix_timestamps freebsd@192.168.56.102:~/
+scp -r os_timestamps freebsd@192.168.56.102:~/
 ./profile_os -m mnt/ -g 0
 
 mount -fur /
@@ -15,6 +16,7 @@ reboot
 
 openbsd:
 scp -r posix_timestamps openbsd@192.168.56.101:~/
+scp -r os_timestamps openbsd@192.168.56.101:~/
 ./profile_os -m /tmp/ -g 0
 
 mount:
@@ -36,3 +38,11 @@ scp -r openbsd@192.168.56.101:~/posix_timestamps/build/os_profile_flags.csv resu
 scp -r freebsd@192.168.56.102:~/posix_timestamps/build/os_profile_results.csv results_2019_00_22/profileos/freebsd/
 scp -r freebsd@192.168.56.102:~/posix_timestamps/build/os_profile_flags.csv results_2019_00_22/profileos/freebsd/
 cp posix_timestamps/build/os_profile_results.csv posix_timestamps/build/os_profile_flags.csv results_2019_00_22/profileos/linux/
+
+./posix_timestamps/get_profileos_res.sh results_2019_11.../
+vim -d posix/os_profile.csv linux/os_profile_results_mac.csv
+xterm
+vim -d posix/os_profile.csv linux/os_profile_results_mac.csv openbsd/os_profile_results_mac.csv freebsd/os_profile_results_mac.csv
+vim -d linux/os_profile_results.csv openbsd/os_profile_results.csv freebsd/os_profile_results.csv
+vim -d linux/os_profile_results.csv freebsd/os_profile_results.csv
+

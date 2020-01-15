@@ -13,6 +13,14 @@ testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_fil
   env->dir_path = dir_path;
   env->dir_path_volume = NULL;
   env->csv_file_flags = NULL;
+  env->test_list = NULL;
+  env->n_test = 0;
+  env->testnot_list = NULL;
+  env->n_testnot = 0;
+  env->group_list = NULL;
+  env->n_group = 0;
+  env->groupnot_list = NULL;
+  env->n_groupnot = 0;
   return env;
 }
 
@@ -24,7 +32,21 @@ testenv_struct* testenv_alloc_csv(FILE* csv_file, FILE* output_file, FILE* error
   env->dir_path = dir_path;
   env->dir_path_volume = dir_path_volume;
   env->csv_file_flags = csv_file_flags;
+  env->test_list = NULL;
+  env->n_test = 0;
+  env->testnot_list = NULL;
+  env->n_testnot = 0;
+  env->group_list = NULL;
+  env->n_group = 0;
+  env->groupnot_list = NULL;
+  env->n_groupnot = 0;
   return env; 
+}
+
+int misc_add_to_list(char* e, int* n, char*** list){
+    (*n)++;
+    *list = (char**) realloc(*list, (*n)*sizeof(char*));
+    (*list)[*n-1] = e;
 }
 
 int misc_exec(char* command){
@@ -76,6 +98,11 @@ char** misc_char_array5(char* c1, char* c2, char* c3, char* c4, char* c5){
     return char_array;
 }
 
+void misc_wait_for_input() {
+    getchar();
+}
+
+
 int misc_invert_check_result(int res){
     if (res == 0){
         return 2;
@@ -84,6 +111,21 @@ int misc_invert_check_result(int res){
         return 0;
     }
     return res;
+}
+
+int misc_str_in_list(char* ref, int list_size, char** list){
+    if (list_size == 0 || list == NULL){
+        return 0;
+    }
+    
+    int i;
+    for (i=0; i<list_size; i++){
+        if (strcmp(ref, list[i]) == 0){
+            return 1;
+        }
+    }
+    
+    return 0;
 }
 
 void misc_nanosleep(int ns){
@@ -257,6 +299,13 @@ void misc_cp_rwx_no_overwrite(char* path1, char* path2){
     }
 }
 
+int misc_timespec_zero(struct timespec* ts){
+    if (ts->tv_sec == 0 && ts->tv_nsec == 0){
+        return 0;
+    }
+    return 1;
+}
+
 int misc_timespec_leq_leq(struct timespec* ts1, struct timespec* ts, struct timespec* ts2){
     if (misc_timespec_leq(ts1, ts) == 0 && misc_timespec_leq(ts, ts2) == 0){
         return 0;
@@ -333,7 +382,7 @@ struct timespec* misc_timespec_diff_abs(struct timespec *ts1, struct timespec *t
     }
 }
 
-int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat) {
     int result = 0;
     
     if (ts_before == NULL || ts_after == NULL || file_stat == NULL){
@@ -394,7 +443,7 @@ int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file,
     return result;
 }
 
-int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct stat* file_stat_before, struct stat* file_stat_after) {
+int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct stat_macb* file_stat_before, struct stat_macb* file_stat_after) {
     int result = 0;
     
     if (file_stat_before == NULL || file_stat_after == NULL){
@@ -456,7 +505,7 @@ int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, co
 }
 
 
-int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider_id, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider_id, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat) {
     int result = 0;
     
     if (ts_before == NULL || ts_after == NULL || file_stat == NULL){
@@ -609,6 +658,22 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
             
             char c = 0;
             char* flag = "";
+            if (macb_result[macb] & PROFILE_ZERO){
+//                 fprintf(output_file, "d", mac_string[mac]);
+                if (c == 0){
+                    c = '0';
+                }           
+                flag = "PROFILE_ZERO";
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+                
+//                 printf("%c", mac_string[mac]);
+            }
             if (macb_result[macb] & PROFILE_UPDATE_DELAY){
 //                 fprintf(output_file, "d", mac_string[mac]);
                 if (c == 0){
@@ -655,6 +720,71 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                     printed_verbose = 1;
                 }
             }
+            if (macb_result[macb] & PROFILE_EQ_COMMAND){
+                flag = "PROFILE_EQ_COMMAND";
+                if (c == 0){
+                    c = '.';
+                }
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+            }
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_M_BEFORE){             
+                if (c == 0){
+                    c = 'm';
+                }
+                flag = "PROFILE_SAMEAS_W0_M_BEFORE";
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+            }
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_A_BEFORE){             
+                if (c == 0){
+                    c = 'a';
+                }
+                flag = "PROFILE_SAMEAS_W0_A_BEFORE";
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+            }
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_C_BEFORE){             
+                if (c == 0){
+                    c = 'c';
+                }
+                flag = "PROFILE_SAMEAS_W0_C_BEFORE";
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+            }
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_B_BEFORE){             
+                if (c == 0){
+                    c = 'b';
+                }
+                flag = "PROFILE_SAMEAS_W0_B_BEFORE";
+                if (desc != NULL && csv_file_flags != NULL){
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
+                }
+                if (VERBOSE){
+                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
+                    printed_verbose = 1;
+                }
+            }
             if (macb_result[macb] & PROFILE_EARLIER){
 //                 fprintf(output_file, "-", mac_string[mac]);
 //                 printf("%c", mac_string[mac]);                
@@ -678,27 +808,13 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
                 flag = "PROFILE_LATER";
                 if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, &macb_string[macb], flag);
+                    log_csv_add_line(csv_file_flags, 4, desc, path, macb_strings[macb], flag);
                 }
                 if (VERBOSE){
                     fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
                     printed_verbose = 1;
                 }
             }
-            if (macb_result[macb] & PROFILE_EQ_COMMAND){
-                flag = "PROFILE_EQ_COMMAND";
-                if (c == 0){
-                    c = '.';
-                }
-                if (desc != NULL && csv_file_flags != NULL){
-                    log_csv_add_line(csv_file_flags, 4, desc, path, &macb_string[macb], flag);
-                }
-                if (VERBOSE){
-                    fprintf(output_file, "  %c %s\n", macb_string[macb], flag);
-                    printed_verbose = 1;
-                }
-            }
-            
             if (c == 0) {
 //                 fprintf(output_file, ".");
                 c = '?';
@@ -757,9 +873,26 @@ int misc_profile_eq(struct profile_info_struct* pi1, struct profile_info_struct*
         int* mac_result1 = p1[i];
         int* mac_result2 = p2[i];
         
-        int mac;
-        for (mac = 0; mac < 3; mac++){
-            if (mac_result1[mac] != mac_result2[mac]){
+        int macb;
+        for (macb = 0; macb < 4; macb++){
+            if ((mac_result1[macb] & PROFILE_ZERO) != 0 && (mac_result2[macb] & PROFILE_ZERO) != 0){
+                continue;
+            }
+            
+            if ((mac_result1[macb] & PROFILE_UPDATE_DELAY) != (mac_result2[macb] & PROFILE_UPDATE_DELAY)){
+                return 1;
+            }
+            
+            int mask1 = PROFILE_UPDATE_COMMAND | PROFILE_SAMEAS_W0_BEFORE | PROFILE_EQ_COMMAND | PROFILE_ZERO;
+            int mask2 = PROFILE_SAMEAS_W0_M_BEFORE | PROFILE_SAMEAS_W0_A_BEFORE | PROFILE_SAMEAS_W0_C_BEFORE | PROFILE_SAMEAS_W0_B_BEFORE;
+            
+            if ((mac_result1[macb] & mask1) != 0 && (mac_result1[macb] & mask1) == (mac_result2[macb] & mask1)){
+                continue;
+            }
+            else if ((mac_result1[macb] & mask2) != 0 && (mac_result1[macb] & mask2) == (mac_result2[macb] & mask2)){
+                continue;
+            }
+            else if (mac_result1[macb] != mac_result2[macb]){
                 return 1;
             }
         }

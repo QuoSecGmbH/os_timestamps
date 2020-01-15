@@ -71,6 +71,13 @@ int check_interfaces_file_w_fputs_exit(FILE* csv_file, FILE* output_file, FILE* 
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
+    // Flushing to prevent output duplication on child abort (FreeBSD)
+    fflush(csv_file);
+    fflush(output_file);
+    fflush(error_file);
+    fflush(stdout);
+    fflush(stderr);
+    
     misc_nanosleep(ns_after_open); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
@@ -120,6 +127,13 @@ int check_interfaces_file_w_fputs_abort(FILE* csv_file, FILE* output_file, FILE*
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
+    // Flushing to prevent output duplication on child abort (FreeBSD)
+    fflush(csv_file);
+    fflush(output_file);
+    fflush(error_file);
+    fflush(stdout);
+    fflush(stderr);
+    
     misc_nanosleep(ns_after_open); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();

@@ -136,7 +136,7 @@ int check_interfaces_file_mv_rename_dir_ma(FILE* csv_file, FILE* output_file, FI
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat_before->st_mtim), &(file_stat_after->st_mtim)) != 0 || misc_timespec_eq(&(file_stat_before->st_atim), &(file_stat_after->st_atim)) != 0) {
-        log_warning(output_file, error_file, "%s - MC not kept", __func__);
+        log_warning(output_file, error_file, "%s - MA not kept", __func__);
         result = 2;
     }
     

@@ -383,8 +383,8 @@ int check_interfaces_file_new_mkpipe(FILE* csv_file, FILE* output_file, FILE* er
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    struct stat* pipe0_stat = get_fd_timestamps(pipefd[0]);
-    struct stat* pipe1_stat = get_fd_timestamps(pipefd[1]);
+    struct stat_macb* pipe0_stat = get_fd_timestamps(pipefd[0]);
+    struct stat_macb* pipe1_stat = get_fd_timestamps(pipefd[1]);
 
     int pipe0_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, pipe0_stat);
     int pipe1_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, pipe1_stat);

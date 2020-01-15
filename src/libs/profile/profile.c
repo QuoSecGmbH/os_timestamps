@@ -3,14 +3,39 @@
 
 #include "profile.h"
 
-int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, struct timespec* ts_file_before, struct timespec* ts_file_command, struct timespec* W0_before, struct timespec* ts_file_delay){
-    int value = 0;
+int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, struct timespec* ts_file_before, struct timespec* ts_file_command, int macb_index, struct timespec** W0_before_4, struct timespec* ts_file_delay){
+    struct timespec* W0_before = W0_before_4[macb_index];
+    int value = 0;    
+    
     if (W0_before != NULL && ts_file_command != NULL){
         if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
             if (misc_timespec_eq(ts_file_command, W0_before) == 0){
                 // Case: file timestamp changed between before and after command
                 //         AND file timestamp after command == before timestamp of first file
                     value |= PROFILE_SAMEAS_W0_BEFORE;
+            }
+        }
+    }
+    
+    // This is a generalization for the other MACB
+    if (ts_file_command != NULL){
+        if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
+            int macb_i;
+            for (macb_i=0; macb_i<4; macb_i++){
+                if (W0_before_4[macb_i] != NULL && misc_timespec_eq(ts_file_command, W0_before_4[macb_i]) == 0){
+                    if (macb_i == 0){
+                        value |= PROFILE_SAMEAS_W0_M_BEFORE;
+                    }
+                    else if (macb_i == 1){
+                        value |= PROFILE_SAMEAS_W0_A_BEFORE;
+                    }
+                    else if (macb_i == 2){
+                        value |= PROFILE_SAMEAS_W0_C_BEFORE;
+                    }
+                    else if (macb_i == 3){
+                        value |= PROFILE_SAMEAS_W0_B_BEFORE;
+                    }
+                }
             }
         }
     }
@@ -28,7 +53,7 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
     }
     
     if (ts_file_before == NULL || misc_timespec_eq(ts_file_before, ts_file_command) == 1){
-        if (ts_file_command != NULL && misc_timespec_l(ts_file_command, ts_before) == 0){
+        if (ts_file_before != NULL && ts_file_command != NULL && misc_timespec_l(ts_file_command, ts_before) == 0){
                 value |= PROFILE_EARLIER;
         }
         
@@ -45,12 +70,18 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
     }
     
     if (ts_file_before != NULL && ts_file_command != NULL && misc_timespec_eq(ts_file_before, ts_file_command) == 0){
+//             printf("ts_file_before  s: %ld - ns: %9ld\n", ts_file_before->tv_sec, ts_file_before->tv_nsec);
+//             printf("ts_file_command s: %ld - ns: %9ld\n", ts_file_command->tv_sec, ts_file_command->tv_nsec); 
             value |= PROFILE_EQ_COMMAND;
+    }
+    
+    if (misc_timespec_zero(ts_file_command) == 0){
+            value |= PROFILE_ZERO;
     }
     return value;
 }
 
-int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, int watch_num, struct stat** multi_stat_before, struct stat** multi_stat_after, struct stat** multi_stat_after_delay){
+int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, int watch_num, struct stat_macb** multi_stat_before, struct stat_macb** multi_stat_after, struct stat_macb** multi_stat_after_delay){
     int** profile = (int**) calloc(sizeof(int*), watch_num);
     
     struct timespec* stat_w0_before_M = NULL;
@@ -117,11 +148,17 @@ int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, str
             file_stat_delay_timespec_B = &(file_stat_delay->st_btim);
         }
         
-        // M, A, C: PROFILE_UPDATE_COMMAND, PROFILE_UPDATE_DELAY or both
-        int value_M = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_M, file_stat_command_timespec_M, stat_w0_before_M, file_stat_delay_timespec_M);
-        int value_A = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_A, file_stat_command_timespec_A, stat_w0_before_A, file_stat_delay_timespec_A);
-        int value_C = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_C, file_stat_command_timespec_C, stat_w0_before_C, file_stat_delay_timespec_C);
-        int value_B = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_B, file_stat_command_timespec_B, stat_w0_before_B, file_stat_delay_timespec_B);
+        struct timespec* stat_w0_before_4[4];
+        stat_w0_before_4[0] = stat_w0_before_M;
+        stat_w0_before_4[1] = stat_w0_before_A;
+        stat_w0_before_4[2] = stat_w0_before_C;
+        stat_w0_before_4[3] = stat_w0_before_B;
+        
+        // M, A, C, B: PROFILE_UPDATE_COMMAND, PROFILE_UPDATE_DELAY...
+        int value_M = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_M, file_stat_command_timespec_M, 0, stat_w0_before_4, file_stat_delay_timespec_M);
+        int value_A = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_A, file_stat_command_timespec_A, 1, stat_w0_before_4, file_stat_delay_timespec_A);
+        int value_C = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_C, file_stat_command_timespec_C, 2, stat_w0_before_4, file_stat_delay_timespec_C);
+        int value_B = get_profile_value(ts_before, ts_after, ts_after_delay, file_stat_before_timespec_B, file_stat_command_timespec_B, 3, stat_w0_before_4, file_stat_delay_timespec_B);
         
         profile[i][0] = value_M;
         profile[i][1] = value_A;
@@ -158,7 +195,6 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
     if (precommand != NULL){
         misc_exec(precommand);
     }
-    
     misc_sleep(wait_pre_s);
     misc_nanosleep(wait_pre_ns);
     
@@ -177,7 +213,6 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
             log_warning(output_file, error_file, "%s - %s", __func__, "error setting pwd with chdir");
         }
     }
-    
     misc_exec(command);
     
     

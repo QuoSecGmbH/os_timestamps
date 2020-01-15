@@ -8,6 +8,11 @@ FILE* log_open_csv(char* path){
     return csv_file;
 }
 
+FILE* log_open_csv_append(char* path){
+    FILE* csv_file = fopen(path, "ab");
+    return csv_file;
+}
+
 void log_close_csv(FILE* csv_file){
     fclose(csv_file);
 }
@@ -58,11 +63,11 @@ void log_result(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
         
-//     va_start(argptr, format);
-//     fprintf(stdout, "RESULT: ");
-//     vfprintf(stdout, format, argptr);
-//     fprintf(stdout, "\n");
-//     va_end(argptr);
+    va_start(argptr, format);
+    fprintf(stdout, "RESULT: ");
+    vfprintf(stdout, format, argptr);
+    fprintf(stdout, "\n");
+    va_end(argptr);
 }
 
 void log_info(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -72,11 +77,11 @@ void log_info(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
     
-//     va_start(argptr, format);
-//     fprintf(stdout, "INFO: ");
-//     vfprintf(stdout, format, argptr);
-//     fprintf(stdout, "\n");
-//     va_end(argptr);
+    va_start(argptr, format);
+    fprintf(stdout, "INFO: ");
+    vfprintf(stdout, format, argptr);
+    fprintf(stdout, "\n");
+    va_end(argptr);
 }
 
 void log_debug(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -88,11 +93,11 @@ void log_debug(FILE* output_file, FILE* error_file, const char* format, ...){
         fprintf(output_file, "\n");
         
             
-//         va_start(argptr, format);
-//         fprintf(stdout, "DEBUG: ");
-//         vfprintf(stdout, format, argptr);
-//         fprintf(stdout, "\n");
-//         va_end(argptr);
+        va_start(argptr, format);
+        fprintf(stdout, "DEBUG: ");
+        vfprintf(stdout, format, argptr);
+        fprintf(stdout, "\n");
+        va_end(argptr);
     }
 }
 

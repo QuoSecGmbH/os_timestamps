@@ -138,10 +138,7 @@ struct timespec* current_time_ns_fslike_generic(){
   fwrite("!", 1, 1, fd);
   fclose(fd);
 
-//   struct stat* file_stat = get_path_timestamps(path_timemarker);
-  struct stat_macb* file_stat = get_path_timestamps(".");
-  printf("file_stat: %p\n", file_stat);
-  printf("file_stat M: %p\n", file_stat->st_mtime);
+  struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
   return &(file_stat->st_mtim);
 }
 

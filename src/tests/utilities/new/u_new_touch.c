@@ -57,7 +57,7 @@ int check_utilities_new_touch_new_mac(FILE* csv_file, FILE* output_file, FILE* e
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
-    struct stat* file_stat = pi->multi_stat_after[0];
+    struct stat_macb* file_stat = pi->multi_stat_after[0];
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_atim)) != 0 || misc_timespec_eq(&(file_stat->st_atim), &(file_stat->st_ctim)) != 0){
@@ -122,7 +122,7 @@ int check_utilities_new_touch_new_dir_mc(FILE* csv_file, FILE* output_file, FILE
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
-    struct stat* file_stat = pi->multi_stat_after[0];
+    struct stat_macb* file_stat = pi->multi_stat_after[0];
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_ctim)) != 0){
@@ -189,7 +189,7 @@ int check_utilities_new_touch_existing_mac(FILE* csv_file, FILE* output_file, FI
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
-    struct stat* file_stat = pi->multi_stat_after[0];
+    struct stat_macb* file_stat = pi->multi_stat_after[0];
     
     int result = 0;
     if (misc_timespec_eq(&(file_stat->st_mtim), &(file_stat->st_atim)) != 0 || misc_timespec_eq(&(file_stat->st_atim), &(file_stat->st_ctim)) != 0){

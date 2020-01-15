@@ -12,9 +12,14 @@
 #include <sys/stat.h>
 #include "profile.h"
 #include "misc.h"
+#include <getopt.h>
 
 int runtest(testenv_struct* env, char* ref, int repeat, int repeatOperator, time_t sleep_s, long sleep_ns, int (*func)(FILE*, FILE*, FILE*, char*), char* func_name, char* spec, char* spec_name, char* speclevel, char* desc);
+void print_usage();
+int main (int argc, char **argv);
 
+int should_group_run(testenv_struct* env, char* group);
+    
 void group_check_general_clock(testenv_struct* test_env);
 void group_check_general_update(testenv_struct* test_env);
 void group_check_general_new_file(testenv_struct* test_env);

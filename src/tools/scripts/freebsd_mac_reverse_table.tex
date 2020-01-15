@@ -1,0 +1,200 @@
+% \documentclass{article}
+% VS
+\documentclass[a4paper,landscape]{article}
+
+% \documentclass[a4paper,10pt]{article}
+
+% \usepackage[pdftex,active,tightpage]{preview}
+% \setlength\PreviewBorder{2mm} % use to add a border around the image
+% VS
+\usepackage{fullpage}
+\pagenumbering{gobble}
+
+% \usepackage{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[english]{babel}
+% \usepackage{fullpage}
+
+% \usepackage{scrextend}
+
+% \usepackage[algoruled,french,onelanguage]{algorithm2e}
+% \usepackage{amsfonts}
+% \usepackage{amsmath}
+% \usepackage{placeins}
+% \usepackage{verbatim}
+% \usepackage{graphicx}
+% \usepackage{listings}
+% \usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usetikzlibrary{shapes.multipart,calc}
+\usetikzlibrary{arrows}
+
+
+% \documentclass[12pt]{article}
+% \usepackage[utf8]{inputenc}
+\usepackage{fourier} 
+\usepackage{array}
+\usepackage{makecell}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\newcommand{\cellmacb}[1]{\makecell{\Large{#1}}}
+
+%\usepackage{fontspec}
+%\setmonofont{Libertinus Mono}[
+%  Scale=MatchLowercase
+%] % or whatever font you prefer
+
+%\setmonofont{Everson Mono}
+
+\usepackage{inconsolata}
+
+% tikz
+\tikzset{
+  state/.style={
+    rectangle,
+    rounded corners=1pt,
+    draw=black, very thick,
+    minimum height=2em
+%     text centered,
+  },
+}
+
+% tikz
+\tikzset{
+  snb/.style={
+    rectangle,
+%    draw=black
+  },
+}
+
+
+% \usepackage[margin=-2.1cm]{geometry} % VS
+
+\begin{document}
+% \documentclass{standalone}
+
+% \begin{preview} % VS
+\begin{center}
+	\begin{Huge}
+		FreeBSD MACB Timestamps\\
+	\end{Huge}
+% Tested against Ext4 on Ubuntu \& ArchLinux\\
+~\\
+% \vspace{0.3cm}
+% \hspace{-1cm}
+% 	\begin{tabular}{lp{6cm}|lp{5cm}}
+% 	&  & Mount Option & Description \\
+% 	\texttt{>} & M/A/C is the same as src file/dir & relatime (\textbf{default}) & \textbf{A is updated if earlier than M or C, or if more than 1 day old} \\
+% 	\texttt{M/A/C} & M/A/C is updated (to current time) & strictatime & A is always updated \\
+% 	\texttt{.} & M/A/C is not modified & noatime & A is never updated \\
+% 	 & & nodiratime & A is never updated for directories \\
+% \end{tabular}
+
+\vspace{-0.2cm} % VS
+\begin{minipage}[t]{.55\textwidth}
+% \vspace{0.5cm}
+% \hspace{2cm}
+\begin{center}
+\begin{tabular}[t]{|ll|}
+% 	 & \\
+	\hline
+    \texttt{M} & Last data Modification \\
+    \texttt{A} & Last data Access \\
+    \texttt{C} & Last file status Change \\
+    \texttt{B} & Birth \\
+    Resolution & Default: 1000 nanosecond ($1\mu s$)\\
+	\hline
+	\hline
+	\texttt{M/A/C/B} & M/A/C/B is updated to current time\\
+	\texttt{m/a/c/b} & M/A/C/B is inherited from m/a/c/b of source file/dir\\
+	\texttt{.} & M/A/C/B is not modified \\
+	\hline
+\end{tabular}
+\end{center}
+\end{minipage}%
+\begin{minipage}[t]{.45\textwidth}
+% \hspace{1cm}
+\vspace{0.4cm}
+\begin{center}
+\begin{tabular}[t]{l|l}
+	Mount Option & Description \\
+	\hline
+	\textbf{(default)} & MACB updates are all performed\\
+	noatime & A is never updated\\
+\end{tabular}
+% \\~\\~\\
+% \hspace{-0.9cm}
+% Default Resolution: 1 microsecond (1000 ns)
+\end{center}
+\end{minipage}%
+\end{center}
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+   & \makecell{New\\File/Dir} & \makecell{File Read\\/Execute} & \makecell{Symlink\\Read/Follow} & \makecell{File\\Write} & \makecell{File/Dir\\Change} & \makecell{New/Delete\\Hardlink} & \makecell{File/Dir\\Rename} & \makecell{Local\\File Move} & \makecell{Local\\Dir Move} & \makecell{Volume\\File/Dir Move} & \makecell{File/Dir\\Copy (new)} & \makecell{File Copy\\(existing)} \\
+ & \texttt{touch, mkdir} & \texttt{cat, exec()} & \texttt{readlink} & \texttt{>, >>} & \texttt{chmod, chown} & \texttt{ln, rm} & \texttt{mv} & \texttt{mv} & \texttt{mv} & \texttt{cp} & \texttt{cp} \\
+	\hline
+ M & \cellmacb{M} & \cellmacb{.} & \cellmacb{.} & \cellmacb{M} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{M} & \cellmacb{m} & \cellmacb{M} & \cellmacb{M}\\
+	\hline
+ A & \cellmacb{A} & \cellmacb{A} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{a} & \cellmacb{A} & \cellmacb{.}\\
+	\hline
+ C & \cellmacb{C} & \cellmacb{.} & \cellmacb{.} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C}\\
+	\hline
+ B & \cellmacb{B} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{m} & \cellmacb{B} & \cellmacb{.}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c}
+   & \makecell{\textbf{Dir}\\Traversal} & \makecell{\textbf{Dir}\\Listing} & \makecell{\textbf{Dir}: New/Rename Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Delete Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Child\\Read/Exec/Write/Change}\\
+% 	\hline
+ & \texttt{cd} & \texttt{ls} & \texttt{touch, mkdir, ln, mv, cp} & \texttt{rm, mv} & \texttt{cat, readlink, >>...} \\
+	\hline
+ M & \cellmacb{.} & \cellmacb{.} & \cellmacb{M} & \cellmacb{M} & \cellmacb{.} \\
+	\hline
+ A & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+	\hline
+ C & \cellmacb{.} & \cellmacb{.} & \cellmacb{C} & \cellmacb{C} & \cellmacb{.} \\
+	\hline
+ B & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+\end{tabular}
+\end{center}
+
+% \begin{center}
+% \begin{tabular}{c|c|c|c|c|c|c}
+%    & \makecell{\textbf{Dir}\\Traversal} & \makecell{\textbf{Dir}\\Listing} & \makecell{\textbf{Dir}: New Dir\\Moved into (Local)} & \makecell{\textbf{Dir}: New Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Delete Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Child\\Read/Exec/Write/Change}\\
+% % 	\hline
+%  & \texttt{cd} & \texttt{ls} & \texttt{mv} & \texttt{touch, mkdir, ln, mv, cp} & \texttt{rm, mv} & \texttt{cat, readlink, >>...} \\
+% 	\hline
+%  M & \cellmacb{.} & \cellmacb{.} & \cellmacb{M} & \cellmacb{M} & \cellmacb{M} & \cellmacb{.} \\
+% 	\hline
+%  A & \cellmacb{.} & \cellmacb{A} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+% 	\hline
+%  C & \cellmacb{.} & \cellmacb{.} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{.} \\
+% 	\hline
+%  B & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+% \end{tabular}
+% \end{center}
+
+\vspace{-0.35cm} % VS
+QuoScient, 2019-12-03 \hspace{15.4cm} Tested against UFS2 on FreeBSD 12.0
+
+% \begin{tikzpicture}[->,scale=1,>=stealth',thick, node distance=0cm]
+% % 	\input{linux_mac_results_partial.tex}
+% % 	\node[snb, below right = -0.5cm and 5.3cm of PROFILE_OS_FILE_COPY_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+% % 	\node[snb, below right = -1.8cm and 5.3cm of PROFILE_OS_SYMLINK_FILE_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+% 
+% % 	\node[state, draw=red, fit={(PROFILE_OS_FILE_MV_LOCAL_FIT) (PROFILE_OS_FILE_COPY_NEW_FIT) (PROFILE_OS_FILE_COPY_EXISTING_FIT)}] (PROFILE_OS_FILE_WRITE_FIT) {};
+% 
+% 	
+% 	\end{tikzpicture}%}
+
+% \end{preview} % VS
+\end{document}

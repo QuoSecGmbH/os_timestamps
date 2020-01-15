@@ -19,16 +19,18 @@ int check_interfaces_file_r_wscanf(FILE* csv_file, FILE* output_file, FILE* erro
     
     if (n_read == 0){
         log_warning(output_file, error_file, "%s - %s", __func__, "could not read data from file");
-        return 1;
+        int result = 1;
+        goto clean;
     }
     
     if (buf[0] != 0x42){
         log_warning(output_file, error_file, "%s - %s but %d", __func__, "read a wrong input (not B / 0x42)", buf[0]);
-        return 1;
+        int result = 1;
+        goto clean;
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_file_timestamps(f);
+    struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -38,6 +40,14 @@ int check_interfaces_file_r_wscanf(FILE* csv_file, FILE* output_file, FILE* erro
     free(ts_before);
     free(ts_after);
     free(file_stat);
+    
+    int ch;
+    
+    clean:
+//     while ((ch = getwchar()) != '\n' && ch != EOF);
+//     while ((ch = getwchar()) != '\n' && ch != EOF);
+    while ((ch = getwchar()) != '\n' && ch != EOF);
+    while ((ch = getchar()) != '\n' && ch != EOF);
     
     return result; 
 }
@@ -60,16 +70,18 @@ int check_interfaces_file_r_wscanf_ungetc(FILE* csv_file, FILE* output_file, FIL
     
     if (n_read == 0){
         log_warning(output_file, error_file, "%s - %s", __func__, "could not read data from file");
-        return 1;
+        int result = 1;
+        goto clean;
     }
     
     if (buf[0] != L'A'){
         log_warning(output_file, error_file, "%s - %s", __func__, "read a different int than the one ungetc provided");
-        return 1;
+        int result = 1;
+        goto clean;
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_file_timestamps(f);
+    struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -79,6 +91,10 @@ int check_interfaces_file_r_wscanf_ungetc(FILE* csv_file, FILE* output_file, FIL
     free(ts_before);
     free(ts_after);
     free(file_stat);
+        
+    int ch;
+    
+    clean:
     
     return result; 
 }
@@ -106,21 +122,24 @@ int check_interfaces_file_r_wscanf_ungetc_both(FILE* csv_file, FILE* output_file
     
     if (n_read1 == 0 || n_read2 == 0){
         log_warning(output_file, error_file, "%s - %s", __func__, "could not read data from file");
-        return 1;
+        int result = 1;
+        goto clean;
     }
     
     if (buf1[0] != L'A'){
-        log_warning(output_file, error_file, "%s - %s: %d", __func__, "read a different int than the one ungetc provided", buf1[0]);
-        return 1;
+        log_warning(output_file, error_file, "%s - %s: %d", __func__, "read a different int than the one ungetc provided", buf1[0]);   
+        int result = 1;
+        goto clean;
     }
     
     if (buf2[0] != L'B'){
-        log_warning(output_file, error_file, "%s - %s but %d", __func__, "read a wrong input (not B / 0x42)", buf2[0]);
-        return 1;
+        log_warning(output_file, error_file, "%s - %s but %d", __func__, "read a wrong input (not B / 0x42)", buf2[0]);        
+        int result = 1;
+        goto clean;
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    struct stat* file_stat = get_file_timestamps(f);
+    struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -131,6 +150,10 @@ int check_interfaces_file_r_wscanf_ungetc_both(FILE* csv_file, FILE* output_file
     free(ts_before);
     free(ts_after);
     free(file_stat);
+        
+    int ch;
+    
+    clean:
     
     return result; 
 }

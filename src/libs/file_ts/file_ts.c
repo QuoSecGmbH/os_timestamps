@@ -209,23 +209,16 @@ struct stat_macb* get_path_timestamps(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = stat(path, attr);
     if (res != 0){
-        fprintf(stderr, "ERROR: stat failed\n");
         return NULL;
     }
     
-    printf("get_path_timestamps_1 %p\n", attr->st_mtime);
-    struct stat_macb* s_macb = stat_macb_from_stat_add_b(attr, path, 1);
-    printf("get_path_timestamps_2 %p\n", s_macb->st_mtime);
-    
-    return s_macb;
-//     return stat_macb_from_stat_add_b(attr, path, 1);
+    return stat_macb_from_stat_add_b(attr, path, 1);
 }
 
 struct stat_macb* get_fd_timestamps(int fd) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = fstat(fd, attr);
     if (res != 0){
-        fprintf(stderr, "ERROR: fstat failed\n");
         return NULL;
     }
     
@@ -236,7 +229,6 @@ struct stat_macb* get_file_timestamps(FILE *f) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = fstat(fileno(f), attr);
     if (res != 0){
-        fprintf(stderr, "ERROR: fstat failed\n");
         return NULL;
     }
     
@@ -247,14 +239,10 @@ struct stat_macb* get_path_timestamps_lstat(char *path) {
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
     int res = lstat(path, attr);
     if (res != 0){
-        fprintf(stderr, "ERROR: lstat failed\n");
         return NULL;
     }
     
-    printf("get_path_timestamps_lstat_1 %p\n", attr->st_mtime);
-    struct stat_macb* s_macb = stat_macb_from_stat_add_b(attr, path, 1);
-    printf("get_path_timestamps_lstat_1 %p\n", s_macb->st_mtime);
-//     return stat_macb_from_stat_add_b(attr, path, 0);
+    return stat_macb_from_stat_add_b(attr, path, 0);
 }
 
 #ifdef __linux__

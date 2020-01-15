@@ -9,6 +9,7 @@
 #include <string.h>
 
 FILE* log_open_csv(char* path);
+FILE* log_open_csv_append(char* path);
 void log_close_csv(FILE* csv_file);
 void log_csv_add_line(FILE* csv_file, int buf_count, ...);
 void log_csv_add_result(FILE* csv_file, FILE* output_file, FILE* error_file, int result, char* desc, char* specified, char* spec, char* speclevel, char* ref, char* func);

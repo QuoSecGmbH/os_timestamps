@@ -18,7 +18,7 @@ int check_utilities_ex_new_i_w_q(FILE* csv_file, FILE* output_file, FILE* error_
     log_info(output_file, error_file, "ex will now be tested.");
     log_info(output_file, error_file, "Please:\n 1 - set input more (i then enter)\n 2 - type hello world\n 3 - quit input mode (. then enter)\n 4 - execute the write command (w then enter)\n 5 - wait 1s\n 6 - quit (q then enter)");
     log_info(output_file, error_file, "Press enter when ready.");
-    getchar();
+    misc_wait_for_input();
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
@@ -109,7 +109,7 @@ int check_utilities_ex_existing_i_w_q(FILE* csv_file, FILE* output_file, FILE* e
     log_info(output_file, error_file, "ex will now be tested.");
     log_info(output_file, error_file, "Please:\n 1 - set input more (i then enter)\n 2 - type hello world\n 3 - quit input mode (. then enter)\n 4 - execute the write command (w then enter)\n 5 - wait 1s\n 6 - quit (q then enter)");
     log_info(output_file, error_file, "Press enter when ready.");
-    getchar();
+    misc_wait_for_input();
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
@@ -210,7 +210,7 @@ int check_utilities_ex_existing_i_wq(FILE* csv_file, FILE* output_file, FILE* er
     log_info(output_file, error_file, "ex will now be tested.");
     log_info(output_file, error_file, "Please:\n 1 - set input more (i then enter)\n 2 - type hello world\n 3 - quit input mode (. then enter)\n 4 - wait 1s\n 5 - execute the write and quit command (wq then enter)");
     log_info(output_file, error_file, "Press enter when ready.");
-    getchar();
+    misc_wait_for_input();
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
@@ -312,7 +312,7 @@ int check_utilities_ex_existing_i_x(FILE* csv_file, FILE* output_file, FILE* err
     log_info(output_file, error_file, "ex will now be tested.");
     log_info(output_file, error_file, "Please:\n 1 - set input more (i then enter)\n 2 - type hello world\n 3 - quit input mode (. then enter)\n 4 - wait 1s\n 5 - execute the exit command (x then enter)");
     log_info(output_file, error_file, "Press enter when ready.");
-    getchar();
+    misc_wait_for_input();
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
@@ -413,7 +413,7 @@ int check_utilities_ex_existing_i_qEM(FILE* csv_file, FILE* output_file, FILE* e
     log_info(output_file, error_file, "ex will now be tested.");
     log_info(output_file, error_file, "Please:\n 1 - set input more (i then enter)\n 2 - type hello world\n 3 - quit input mode (. then enter)\n 4 - execute the quit with no write (q! then enter)");
     log_info(output_file, error_file, "Press enter when ready.");
-    getchar();
+    misc_wait_for_input();
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
     
