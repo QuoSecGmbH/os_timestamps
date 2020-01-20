@@ -26,6 +26,9 @@ int main (int argc, char **argv){
         print_path_timestamps_statx_ns(argv[1], 0);
         #endif
     }
+    else if (mode == 3){
+        print_path_timestamps_csv_ns(argv[1]);
+    }
     else {
         printf("%s: (stat + B)\n", path);
         print_path_timestamps_ns(path);

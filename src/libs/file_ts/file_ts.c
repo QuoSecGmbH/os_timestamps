@@ -128,6 +128,28 @@ void print_path_timestamps_ns(char *path) {
     printf("B: %s - ns: %9ld\n", buf, ns);
 }
 
+void print_path_timestamps_csv_ns(char *path) {
+    struct stat_macb* attr = get_path_timestamps(path);
+    
+    if (attr == NULL){
+        printf("ERROR: print_path_timestamps_ns - attr is NULL\n");
+        return;
+    }
+    
+    time_t s_M = attr->st_mtim.tv_sec;
+    long ns_M = attr->st_mtim.tv_nsec;
+    
+    time_t s_A = attr->st_atim.tv_sec;
+    long ns_A = attr->st_atim.tv_nsec;
+    
+    time_t s_C = attr->st_ctim.tv_sec;
+    long ns_c = attr->st_ctim.tv_nsec;
+    
+    time_t s_B = attr->st_btim.tv_sec;
+    long ns_B = attr->st_btim.tv_nsec;
+    printf("%s,%d.%9ld,%d.%9ld,%d.%9ld,%d.%9ld\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
+}
+
 void print_path_timestamps_lstat_ns(char *path) {
     struct stat_macb* attr = get_path_timestamps_lstat(path);
     
