@@ -17,10 +17,10 @@ int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error
         return 1;
     }
 
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
     struct stat_macb* file_stat = get_path_timestamps(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(dir_path);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -70,12 +70,11 @@ int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* err
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error creating link", errno);
         return 1;
     }
-
-    
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     struct stat_macb* file_stat = get_path_timestamps(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -106,11 +105,11 @@ int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* er
         log_warning(output_file, error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
-
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(dir_path);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -161,11 +160,10 @@ int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* 
         return 1;
     }
 
-    
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -210,10 +208,10 @@ int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* e
     else {
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error reading symlink", errno);
     }
-
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
+
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error_message(output_file, error_file, __func__, result, ts_before, ts_after, file_stat, "link");
@@ -271,9 +269,9 @@ int check_interfaces_file_ln_readlinkat(FILE* csv_file, FILE* output_file, FILE*
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error reading symlink", errno);
     }
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error_message(output_file, error_file, __func__, result, ts_before, ts_after, file_stat, "link");

@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <time.h> 
+#include <stdlib.h>
 
 #ifdef __linux__
 #include <linux/stat.h>
@@ -18,17 +19,17 @@ void print_attr(struct stat* attr){
         return;
     }
     
-    time_t s = attr->st_mtim.tv_sec;
-    long ns = attr->st_mtim.tv_nsec;
+//     time_t s = attr->st_mtim.tv_sec;
+//     long ns = attr->st_mtim.tv_nsec;
+//     char* buf = ctime(&s);
+//     buf[strlen(buf)-1] = 0;
+//     printf("M: %s - ns: %9ld\n", buf, ns);
+    
+    time_t s = attr->st_atim.tv_sec;
+    long ns = attr->st_atim.tv_nsec;
     char* buf = ctime(&s);
     buf[strlen(buf)-1] = 0;
-    printf("M: %s - ns: %9ld\n", buf, ns);
-    
-//     s = attr->st_atim.tv_sec;
-//     ns = attr->st_atim.tv_nsec;
-//     buf = ctime(&s);
-//     buf[strlen(buf)-1] = 0;
-//     printf("A: %s - ns: %9ld\n", buf, ns);
+    printf("A: %s - ns: %9ld\n", buf, ns);
     
 //     s = attr->st_ctim.tv_sec;
 //     ns = attr->st_ctim.tv_nsec;
@@ -69,54 +70,60 @@ struct stat* path_timestamps_ns(char* path) {
     return attr;
 }
 
-void update_marker(char* path){
-    FILE* fdm = fopen(path, "wb");
-    if (fdm == NULL) {
-        printf("Error opening/creating marker file.\n");
-        return;
-    }
-    fwrite("!", 1, 1, fdm);
-    fclose(fdm);
-}
-
 int main(int argc, char* argv[]){
-    char* path = (char*) "standalone.fprintf_fflush";
-    char* path_marker = (char*) "standalone.fprintf_fflush.marker";
+    char* path = (char*) "standalone.fwrite_fstat_fclose_stat";
     
-    update_marker(path_marker);
-    struct stat* attr_fdm_1 = path_timestamps_ns(path_marker);
-
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
         printf("Error opening/creating file.\n");
         return 1;
     }
-    struct stat* attr_fd_1 = file_timestamps_ns(fd);
+    char* buf = "Hello this is a test.";
+    fwrite(buf, 1, strlen(buf), fd);
+    fclose(fd);
+    
+    struct stat* attr_fd_1 = path_timestamps_ns(path);
+    
     sleep(1);
-    fprintf(fd, "%s\n", "fprintf test");
-    fflush(fd);
-
-    update_marker(path_marker);
-    struct stat* attr_fdm_2 = path_timestamps_ns(path_marker);
+    
+    fd = fopen(path, "rb");    
+    char buf2[6];
+    fread(buf2, 5, 1, fd);
+    printf("read: %s\n", buf2);
     
     struct stat* attr_fd_2 = file_timestamps_ns(fd);
-    
-    printf("standalone.fprintf_fflush.marker after creation:\n");
-    print_attr(attr_fdm_1);
-    
-    printf("standalone.fprintf_fflush after creation:\n");
-    print_attr(attr_fd_1);
-    
-    printf("standalone.fprintf_fflush after fprintf+fflush:\n");
-    print_attr(attr_fd_2);
-    
-    printf("standalone.fprintf_fflush.marker after fwrite+fclose:\n");
-    print_attr(attr_fdm_2);
+    struct stat* attr_fd_3 = file_timestamps_ns(fd);
     
     sleep(1);
     
-//     fclose(fdm);
+    struct stat* attr_fd_4 = file_timestamps_ns(fd);
+    
+    sleep(1);
+    
     fclose(fd);
+    struct stat* attr_fd_5 = path_timestamps_ns(path);
+    
+    sleep(1);
+    
+    struct stat* attr_fd_6 = path_timestamps_ns(path);
+    
+    printf("After creation:\n");
+    print_attr(attr_fd_1);
+    
+    printf("After fread (fstat):\n");
+    print_attr(attr_fd_2);
+    
+    printf("After fread+fstat (fstat):\n");
+    print_attr(attr_fd_3);
+    
+    printf("After fread+fstat+fstat+sleep(1):\n");
+    print_attr(attr_fd_4);
+    
+    printf("After fread+fstat+fstat+sleep(1)+fclose (stat):\n");
+    print_attr(attr_fd_5);
+    
+    printf("After fread+fstat+fstat+sleep(1)+fclose+sleep(1) (stat):\n");
+    print_attr(attr_fd_6);
     
     return 0; 
 }

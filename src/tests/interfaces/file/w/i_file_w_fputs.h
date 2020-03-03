@@ -5,6 +5,7 @@
 // #include <unistd.h>
 #include <fcntl.h>
 
+int check_interfaces_file_w_fputs_fflush_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_w_fputs_fflush(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_w_fputs_fclose(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_w_fputs_exit(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);

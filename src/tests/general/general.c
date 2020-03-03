@@ -332,5 +332,68 @@ int check_general_update_read_before_stat(FILE* csv_file, FILE* output_file, FIL
     return result;
 }
 
+int check_general_update_fopen_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, 0, ns_after_open, output_file, error_file, __func__);
+    
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
+    
+    FILE* fd = fopen(path, "rb");
+    if (fd == NULL) {
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
+        return 1;
+    }
+    
+    struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
+    stat(path, attr);
+    
+    struct stat_macb* file_stat = get_path_timestamps(path);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    
+    free(attr);
+    fclose(fd);
+    
+    int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
+    return result;
+}
+
+int check_general_update_fopen_fstat_fclose(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path = misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, 0, ns_after_open, output_file, error_file, __func__);
+    
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
+    
+    FILE* fd = fopen(path, "rb");
+    if (fd == NULL) {
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
+        return 1;
+    }
+    
+    struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
+    fstat(path, fd);
+    fclose(fd);
+    
+    struct stat_macb* file_stat = get_path_timestamps(path);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    
+    free(attr);
+    
+    int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
+    return result;
+}
+
+
 
 #endif

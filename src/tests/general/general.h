@@ -18,4 +18,6 @@ int check_general_update_write_fstat(FILE* csv_file, FILE* output_file, FILE* er
 int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_general_update_read_before_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_general_update_read_fstat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+int check_general_update_fopen_stat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+int check_general_update_fopen_fstat_fclose(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 #endif

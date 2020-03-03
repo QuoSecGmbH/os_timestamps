@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <time.h> 
+#include <stdlib.h>
 
 #ifdef __linux__
 #include <linux/stat.h>
@@ -69,54 +70,45 @@ struct stat* path_timestamps_ns(char* path) {
     return attr;
 }
 
-void update_marker(char* path){
-    FILE* fdm = fopen(path, "wb");
-    if (fdm == NULL) {
-        printf("Error opening/creating marker file.\n");
-        return;
-    }
-    fwrite("!", 1, 1, fdm);
-    fclose(fdm);
-}
-
 int main(int argc, char* argv[]){
-    char* path = (char*) "standalone.fprintf_fflush";
-    char* path_marker = (char*) "standalone.fprintf_fflush.marker";
+    char* path = (char*) "standalone.fwrite_fstat";
     
-    update_marker(path_marker);
-    struct stat* attr_fdm_1 = path_timestamps_ns(path_marker);
-
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
         printf("Error opening/creating file.\n");
         return 1;
     }
     struct stat* attr_fd_1 = file_timestamps_ns(fd);
+    
     sleep(1);
-    fprintf(fd, "%s\n", "fprintf test");
-    fflush(fd);
-
-    update_marker(path_marker);
-    struct stat* attr_fdm_2 = path_timestamps_ns(path_marker);
     
+    fwrite("!", 1, 1, fd);
     struct stat* attr_fd_2 = file_timestamps_ns(fd);
+    struct stat* attr_fd_3 = file_timestamps_ns(fd);
     
-    printf("standalone.fprintf_fflush.marker after creation:\n");
-    print_attr(attr_fdm_1);
+    sleep(1);
     
-    printf("standalone.fprintf_fflush after creation:\n");
+    struct stat* attr_fd_4 = file_timestamps_ns(fd);
+    
+    sleep(1);
+    
+    fclose(fd);
+    struct stat* attr_fd_5 = path_timestamps_ns(path);
+    
+    printf("After creation:\n");
     print_attr(attr_fd_1);
     
-    printf("standalone.fprintf_fflush after fprintf+fflush:\n");
+    printf("After fwrite (fstat):\n");
     print_attr(attr_fd_2);
     
-    printf("standalone.fprintf_fflush.marker after fwrite+fclose:\n");
-    print_attr(attr_fdm_2);
+    printf("After fwrite+fstat (fstat):\n");
+    print_attr(attr_fd_3);
     
-    sleep(1);
+    printf("After fwrite+fstat+fstat+sleep(1):\n");
+    print_attr(attr_fd_4);
     
-//     fclose(fdm);
-    fclose(fd);
+    printf("After fwrite+fstat+fstat+sleep(1)+fclose (stat):\n");
+    print_attr(attr_fd_5);
     
     return 0; 
 }

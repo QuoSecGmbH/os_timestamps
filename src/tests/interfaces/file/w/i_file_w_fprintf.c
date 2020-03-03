@@ -3,8 +3,8 @@
 
 #include "i_file_w_fprintf.h"
 
-int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fflush" , s_0s, ns_after_open, output_file, error_file, __func__);
+int check_interfaces_file_w_fprintf_fflush_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fflush.IMM" , s_0s, ns_after_open, output_file, error_file, __func__);
 
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -20,7 +20,7 @@ int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FI
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat = get_path_timestamps(path);
-      
+    
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
@@ -33,6 +33,39 @@ int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FI
     
     return result; 
 }
+
+int check_interfaces_file_w_fprintf_fflush(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fflush" , s_0s, ns_after_open, output_file, error_file, __func__);
+
+    FILE* fd = fopen(path, "wb");
+    if (fd == NULL) {
+        log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
+        return 1;
+    }
+    misc_nanosleep(ns_after_open);
+    
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
+    
+    fprintf(fd, "%s\n", "fprintf test");
+    fflush(fd);
+    
+    struct stat_macb* file_stat = get_path_timestamps(path);
+    
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    
+    int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
+    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
+    
+    fclose(fd);
+    
+    free(path);
+    free(ts_before);
+    free(ts_after);
+    free(file_stat);
+    
+    return result; 
+}
+
 
 int check_interfaces_file_w_fprintf_fclose(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.w.fprintf_fclose" , s_0s, ns_after_open, output_file, error_file, __func__);

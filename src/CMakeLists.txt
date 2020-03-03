@@ -24,6 +24,7 @@ include_directories(
   libs/profile/
   libs/log/
   libs/misc/
+  plot/
   tests/general/
   tests/interfaces/
   tests/interfaces/file/
@@ -202,3 +203,6 @@ target_link_libraries(profile_cmd lib_general lib_file_ts lib_profile lib_misc l
 
 add_executable(profile_os profile_os.h profile_os.c)
 target_link_libraries(profile_os lib_general lib_profileos lib_file_ts lib_profile lib_misc lib_log lib_current_time)
+
+add_executable(plot_fread_fstat plot/plot_fread_fstat.h plot/plot_fread_fstat.c)
+target_link_libraries(plot_fread_fstat lib_file_ts lib_current_time lib_log lib_misc)
