@@ -1,6 +1,7 @@
 # posix_timestamps
 ### [https://github.com/quosecgmbh/posix_timestamps](https://github.com/quosecgmbh/posix_timestamps)
-Profile how your Unix-like OS (Linux, BSD...)  modifies MACB timestamps.
+* Profile how your Unix-like OS (Linux, BSD...)  modifies MACB timestamps.
+* Test POSIX compliance
 
 # Build
 - `mkdir build; cd build/`
