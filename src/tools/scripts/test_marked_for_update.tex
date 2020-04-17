@@ -1,10 +1,12 @@
-\documentclass{article}
+% \documentclass{article}
+\documentclass{standalone}
 % VS
 % \documentclass[a4paper,landscape]{article}
 
 % \documentclass[a4paper,10pt]{article}
 
-\usepackage[pdftex,active,tightpage]{preview}
+% \usepackage[pdftex,active,tightpage]{preview}
+% \PreviewEnvironment[{[]}]{tikzpicture}
 % \setlength\PreviewBorder{2mm} % use to add a border around the image
 % VS
 % \usepackage{fullpage}
@@ -39,10 +41,10 @@
 \usepackage{array}
 \usepackage{makecell}
 
-\renewcommand\theadalign{bc}
-\renewcommand\theadfont{\bfseries}
-\renewcommand\theadgape{\Gape[4pt]}
-\renewcommand\cellgape{\Gape[4pt]}
+% \renewcommand\theadalign{bc}
+% \renewcommand\theadfont{\bfseries}
+% \renewcommand\theadgape{\Gape[4pt]}
+% \renewcommand\cellgape{\Gape[4pt]}
 
 \newcommand{\cellmacb}[1]{\makecell{\Large{#1}}}
 
@@ -80,8 +82,8 @@
 \begin{document}
 % \documentclass{standalone}
 
-\begin{preview} % VS
-\begin{center}
+% \begin{preview} % VS
+% \begin{center}
 % 	\begin{Huge}
 % 		Linux MACB Timestamps\\
 % 	\end{Huge}
@@ -110,25 +112,49 @@
 
 
 \node[] (ROOT) {};
-\node[right=1cm of ROOT.east, anchor = west, text width=0.6cm] (FOPEN) {};
-\fill (FOPEN) circle (3pt) node[above=0.1cm] {fopen()};
-\node[right=2cm of FOPEN.east, anchor = west, text width=0.6cm, inner sep=0, outer sep = 0] (FREAD) {};
-\fill (FREAD) circle (3pt) node[above=0.1cm] {fread()};
-\node[below=-0.1cm of FREAD.south, anchor = north] (FREAD_ARROW1) {};
-\node[below=0.3cm of FREAD.south, anchor = north, inner sep=0, outer sep = 0] (FREAD_ARROW1p) {};
-\node[below=0.8cm of FREAD_ARROW1.south, anchor = east] (FREAD_ARROW2) {A marked for update};
+\node[right=00.5cm of ROOT.east, anchor = west, text width=0.6cm] (PREP1) {};
+\fill (PREP1) circle (3pt) node[above=0.1cm] {};
+\node[above=0.1cm of PREP1.north, anchor = south] (PREP1ABOVE) {};
 
-\node[right=2cm of FREAD.east, anchor = west, text width=0cm, inner sep=0, outer sep = 0] (FCLOSE) {};
-\node[below=0.3cm of FCLOSE.south, anchor = north, inner sep=0, outer sep = 0] (FCLOSE_ARROW1) {};
-\fill (FCLOSE) circle (3pt) node[above=0.1cm] {fclose()};
-\node[right=2cm of FCLOSE.east, anchor = west, text width=0.6cm] (T) {time};
-\draw [-] (ROOT) -- node[above](Z1){} (FOPEN);
-\draw [-] (FOPEN) -- node[above](Z2){} (FREAD);
-\draw [-] (FREAD) -- node[above](Z3){} (FCLOSE);
+\node[right=2cm of PREP1.east, anchor = west, text width=0.6cm] (PREP2) {};
+\fill (PREP2) circle (3pt) node[above=0.1cm] {};
+\node[below=0.1cm of PREP2.south, anchor = north] (PREP2BELOW) {};
+\node[above=0.1cm of PREP2.north, anchor = south] (PREP2ABOVE) {};
+
+\node[right=1.5cm of PREP2.east, anchor = west, text width=0cm] (DELAY2) {};
+\node[below=0.1cm of DELAY2.south, anchor = north] (FCLOSE_ARROW1) {};
+\fill (DELAY2) circle (3pt) node[below right] {$t_{1}$};
+% \node[below=-0.1cm of DELAY2.south, anchor = north] (FREAD_ARROW1) {};
+% \node[below=0.8cm of DELAY2.south, anchor = west] (FREAD_ARROW2) {TB};
+% \draw [->] (FREAD_ARROW2) -- node[above](){} (FREAD_ARROW1);
+\node[above=0.1cm of DELAY2.north, anchor = south] (DELAY2ABOVE) {};
+
+
+% \node[right=2cm of DELAY2.east, anchor = west, text width=0cm, inner sep=0, outer sep = 0] (ACTION) {};
+% \fill (ACTION) circle (3pt) node[above=0.1cm] {action};
+% 
+\node[right=4cm of DELAY2.east, anchor = west, text width=0cm] (STAT) {};
+\fill (STAT) circle (3pt) node[below right] {stat(file)};
+% \node[below=-0.1cm of STAT.south, anchor = north] (STAT_ARROW1) {};
+% \node[below=0.8cm of STAT.south, anchor = west] (STAT_ARROW2) {stat(file)};
+% \draw [->] (STAT_ARROW2) -- node[above](){} (STAT_ARROW1);
+\node[above=0.1cm of STAT.north, anchor = south] (STATABOVE) {};
+
+\node[right=2cm of STAT.east, anchor = west, text width=0cm] (TA) {};
+\fill (TA) circle (3pt) node[below right] {$t_{2}$};
+% \node[below=-0.1cm of TA.south, anchor = north] (FREAD_ARROWTA1) {};
+% \node[below=0.8cm of TA.south, anchor = west] (FREAD_ARROWTA2) {TA};
+% \draw [->] (FREAD_ARROWTA2) -- node[above](){} (FREAD_ARROWTA1);
+
+\node[right=2cm of TA.east, anchor = west, text width=0.6cm] (T) {time};
+% \draw [-] (ROOT) -- node[above](Z1){} (PREP1);
+% \draw [-] (PREP1) -- node[above](Z2){} (PREP2);
+% \draw [-] (PREP2) -- node[above](Z3){} (DELAY2);
 \draw [->] (ROOT) -- node[above](Z4){} (T);
 
-\draw [->] (FREAD_ARROW2) -- node[above](){} (FREAD_ARROW1);
-\draw [|-|] (FREAD_ARROW1p) -- node[below](){A updated} (FCLOSE_ARROW1);
+\draw [|-|] (PREP1ABOVE) -- node[above](){Preparation} (PREP2ABOVE);
+\draw [|-|] (PREP2BELOW) -- node[below](){Delay} (FCLOSE_ARROW1);
+\draw [|-|] (DELAY2ABOVE) -- node[above](){Action(s) that mark file for update} (STATABOVE);
 
 % \node[state, below left=0.5cm and 0.6cm of GRAP, \nodedisascolor, text width=3.6cm] (DISAS) {Disassembly\footnotemark: python (based on Capstone)};
 % % \node[state, right=0.1cm of ASM.east, draw=none, anchor = west] (EQ) {=};
@@ -164,7 +190,7 @@
 % \draw [-] (DATA) -- (HELLO);
 % \draw (ASM) -- node[above=0.5cm]{Assemblage} (BIN);
 \end{tikzpicture}
-\end{center}
+% \end{center}
 
-\end{preview} % VS
+% \end{preview} % VS
 \end{document}

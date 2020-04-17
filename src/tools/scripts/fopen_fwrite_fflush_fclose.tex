@@ -112,23 +112,30 @@
 \node[] (ROOT) {};
 \node[right=1cm of ROOT.east, anchor = west, text width=0.6cm] (FOPEN) {};
 \fill (FOPEN) circle (3pt) node[above=0.1cm] {fopen()};
-\node[right=2cm of FOPEN.east, anchor = west, text width=0.6cm, inner sep=0, outer sep = 0] (FREAD) {};
-\fill (FREAD) circle (3pt) node[above=0.1cm] {fread()};
-\node[below=-0.1cm of FREAD.south, anchor = north] (FREAD_ARROW1) {};
-\node[below=0.3cm of FREAD.south, anchor = north, inner sep=0, outer sep = 0] (FREAD_ARROW1p) {};
-\node[below=0.8cm of FREAD_ARROW1.south, anchor = east] (FREAD_ARROW2) {A marked for update};
+\node[right=2cm of FOPEN.east, anchor = west, text width=0.6cm, inner sep=0, outer sep = 0] (FWRITE) {};
+\fill (FWRITE) circle (3pt) node[above=0.1cm] {fwrite()};
+\node[below=-0.1cm of FWRITE.south, anchor = north] (FWRITE_ARROW1) {};
+\node[below=0.3cm of FWRITE.south, anchor = north, inner sep=0, outer sep = 0] (FWRITE_ARROW1p) {};
+\node[right=1.8cm of FWRITE_ARROW1p.east, inner sep=0, outer sep = 0] (FWRITE_ARROW1p_M4U) {};
+\fill (FWRITE_ARROW1p_M4U) circle (2pt) {};
+\node[below=0.7cm of FWRITE_ARROW1p_M4U.south, inner sep=0, outer sep = 0] (FWRITE_ARROW1p_M4U_BELOW) {};
 
-\node[right=2cm of FREAD.east, anchor = west, text width=0cm, inner sep=0, outer sep = 0] (FCLOSE) {};
-\node[below=0.3cm of FCLOSE.south, anchor = north, inner sep=0, outer sep = 0] (FCLOSE_ARROW1) {};
+\node[right=2cm of FWRITE.east, anchor = west, text width=0cm, inner sep=0, outer sep = 0] (FFLUSH) {};
+\node[below=0.3cm of FFLUSH.south, anchor = north, inner sep=0, outer sep = 0] (FFLUSH_ARROW1p) {};
+\fill (FFLUSH) circle (3pt) node[above=0.1cm] {fflush()};
+
+\node[right=2cm of FFLUSH.east, anchor = west, text width=0cm, inner sep=0, outer sep = 0] (FCLOSE) {};
+\node[below=1.035cm of FCLOSE.south, anchor = north, inner sep=0, outer sep = 0] (FCLOSE_ARROW1) {};
 \fill (FCLOSE) circle (3pt) node[above=0.1cm] {fclose()};
 \node[right=2cm of FCLOSE.east, anchor = west, text width=0.6cm] (T) {time};
 \draw [-] (ROOT) -- node[above](Z1){} (FOPEN);
-\draw [-] (FOPEN) -- node[above](Z2){} (FREAD);
-\draw [-] (FREAD) -- node[above](Z3){} (FCLOSE);
+\draw [-] (FOPEN) -- node[above](Z2){} (FWRITE);
+\draw [-] (FWRITE) -- node[above](Z3){} (FCLOSE);
 \draw [->] (ROOT) -- node[above](Z4){} (T);
 
-\draw [->] (FREAD_ARROW2) -- node[above](){} (FREAD_ARROW1);
-\draw [|-|] (FREAD_ARROW1p) -- node[below](){A updated} (FCLOSE_ARROW1);
+% \draw [->] (FREAD_ARROW2) -- node[above](){} (FWRITE_ARROW1);
+\draw [|-|] (FWRITE_ARROW1p) -- node[below=0.1cm](){MC marked for update} (FFLUSH_ARROW1p);
+\draw [|-|] (FWRITE_ARROW1p_M4U_BELOW) -- node[below](){MC updated} (FCLOSE_ARROW1);
 
 % \node[state, below left=0.5cm and 0.6cm of GRAP, \nodedisascolor, text width=3.6cm] (DISAS) {Disassembly\footnotemark: python (based on Capstone)};
 % % \node[state, right=0.1cm of ASM.east, draw=none, anchor = west] (EQ) {=};
