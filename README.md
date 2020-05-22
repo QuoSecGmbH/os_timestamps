@@ -132,9 +132,34 @@ dst/dir/
 # Test POSIX Compliance
 `run_tests` will test OS behavior against POSIX tests. The file `results.csv` will be created with parsable information on tests that were run and the results.
 
-* `run_tests` by default will run all non-interactive tests
-* `run_tests --dry-run` will not perform tests but can be used to enumerate them
-* `run_tests -t GENERAL.NEW_FILE_REALTIME` will run specific test only (can be used multiple times)
+* `./run_tests` by default will run all non-interactive tests
+* `./run_tests --dry-run` will not perform tests but can be used to enumerate them
+* `./run_tests -t GENERAL.NEW_FILE_REALTIME` will run specific test only (can be used multiple times)
+
+By default details are only shown when a test fails but it can be forced in verbose mode (`-v`). Output when something fails look like the following.
+
+```
+./run_tests -t GENERAL.NEW_FILE_REALTIME
+INFO: Directory for tests is: tmp_tests_19/
+WARNING: check_general_new_file_realtime - M not updated
+WARNING: check_general_new_file_realtime - A not updated
+WARNING: check_general_new_file_realtime - C not updated
+INFO: check_general_new_file_realtime:
+INFO: Before: 1590125151s 5644975ns ; After: 1590125151s 5684126ns
+INFO: M: 1590125151s 4162603ns
+INFO: A: 1590125151s 4162603ns
+INFO: C: 1590125151s 4162603ns
+INFO: B: 1590125151s 4162603ns
+RESULT: No - No(.UNKNOWN) - New file shall have MAC updated (CLOCK_REALTIME) - GENERAL.NEW_FILE_REALTIME - check_general_new_file_realtime
+```
+
+It means that:
+* Folders and files for this test are in folder with relative path `tmp_tests_19/`
+* Test determined that MAC were not updated when it was expected
+* Test occurs in function called `check_general_new_file_realtime`
+* Timestamp before the action were: 1590125151.5644975s
+* Timestamp after the action were: 1590125151.5684126s
+* Relevant MAC for comparison are all equal to: 1590125151.4162603s
 
 
 # Tools
