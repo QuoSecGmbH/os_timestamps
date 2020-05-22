@@ -278,7 +278,7 @@ int check_general_clock_res(FILE* csv_file, FILE* output_file, FILE* error_file,
 }
 
 
-int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+int check_general_clock_realtime_increments(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     int i = 0;
     struct timespec* ts = NULL;
     struct timespec* last_ts = NULL;
@@ -286,6 +286,32 @@ int check_general_clock_increments(FILE* csv_file, FILE* output_file, FILE* erro
     int result = 0;
     for (i=0; i<100; i++){
         ts = current_time_ns();
+        log_debug(output_file, error_file, "%ld - %ld", ts->tv_sec, ts->tv_nsec);
+        
+        if (i != 0){
+            if (misc_timespec_leq(last_ts, ts) != 0){
+                result = 2;
+                free(last_ts);
+                free(ts);
+                break;
+            }
+            free(last_ts);
+        }
+        last_ts = ts;
+    }
+    free(ts);
+    
+    return result;
+}
+
+int check_general_clock_ns_fslike_osspecific_increments(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    int i = 0;
+    struct timespec* ts = NULL;
+    struct timespec* last_ts = NULL;
+    
+    int result = 0;
+    for (i=0; i<100; i++){
+        ts = current_time_ns_fslike_osspecific();
         log_debug(output_file, error_file, "%ld - %ld", ts->tv_sec, ts->tv_nsec);
         
         if (i != 0){

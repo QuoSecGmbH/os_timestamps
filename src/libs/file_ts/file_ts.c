@@ -147,7 +147,7 @@ void print_path_timestamps_csv_ns(char *path) {
     
     time_t s_B = attr->st_btim.tv_sec;
     long ns_B = attr->st_btim.tv_nsec;
-    printf("%s,%d.%9ld,%d.%9ld,%d.%9ld,%d.%9ld\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
+    printf("%s,%d.%ld,%d.%ld,%d.%ld,%d.%ld\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
 }
 
 void print_path_timestamps_lstat_ns(char *path) {

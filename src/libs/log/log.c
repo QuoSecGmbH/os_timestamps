@@ -8,6 +8,11 @@ FILE* log_open_csv(char* path){
     return csv_file;
 }
 
+FILE* log_open_csv_append(char* path){
+    FILE* csv_file = fopen(path, "ab");
+    return csv_file;
+}
+
 void log_close_csv(FILE* csv_file){
     fclose(csv_file);
 }
@@ -58,11 +63,14 @@ void log_result(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
         
-//     va_start(argptr, format);
-//     fprintf(stdout, "RESULT: ");
-//     vfprintf(stdout, format, argptr);
-//     fprintf(stdout, "\n");
-//     va_end(argptr);
+    if (output_file != stdout){
+        va_start(argptr, format);
+        fprintf(stdout, "RESULT: ");
+        vfprintf(stdout, format, argptr);
+        fprintf(stdout, "\n");
+    }
+    
+    va_end(argptr);
 }
 
 void log_info(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -72,11 +80,14 @@ void log_info(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
     
-//     va_start(argptr, format);
-//     fprintf(stdout, "INFO: ");
-//     vfprintf(stdout, format, argptr);
-//     fprintf(stdout, "\n");
-//     va_end(argptr);
+    if (output_file != stdout){
+        va_start(argptr, format);
+        fprintf(stdout, "INFO: ");
+        vfprintf(stdout, format, argptr);
+        fprintf(stdout, "\n");
+    }
+    
+    va_end(argptr);
 }
 
 void log_debug(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -88,11 +99,14 @@ void log_debug(FILE* output_file, FILE* error_file, const char* format, ...){
         fprintf(output_file, "\n");
         
             
-//         va_start(argptr, format);
-//         fprintf(stdout, "DEBUG: ");
-//         vfprintf(stdout, format, argptr);
-//         fprintf(stdout, "\n");
-//         va_end(argptr);
+        if (output_file != stdout){
+            va_start(argptr, format);
+            fprintf(stdout, "DEBUG: ");
+            vfprintf(stdout, format, argptr);
+            fprintf(stdout, "\n");
+        }
+        
+        va_end(argptr);
     }
 }
 
@@ -103,11 +117,14 @@ void log_warning(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(output_file, format, argptr);
     fprintf(output_file, "\n");
         
-//     va_start(argptr, format);
-//     fprintf(stdout, "WARNING: ");
-//     vfprintf(stdout, format, argptr);
-//     fprintf(stdout, "\n");
-//     va_end(argptr);
+    if (output_file != stdout){
+        va_start(argptr, format);
+        fprintf(stdout, "WARNING: ");
+        vfprintf(stdout, format, argptr);
+        fprintf(stdout, "\n");
+    }
+    
+    va_end(argptr);
 }
 
 void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
@@ -117,11 +134,14 @@ void log_error(FILE* output_file, FILE* error_file, const char* format, ...){
     vfprintf(error_file, format, argptr);
     fprintf(error_file, "\n");
         
-//     va_start(argptr, format);
-//     fprintf(stderr, "ERROR: ");
-//     vfprintf(stderr, format, argptr);
-//     fprintf(stderr, "\n");
-//     va_end(argptr);
+    if (error_file != stderr){
+        va_start(argptr, format);
+        fprintf(stderr, "ERROR: ");
+        vfprintf(stderr, format, argptr);
+        fprintf(stderr, "\n");
+    }
+    
+    va_end(argptr);
 }
 
 void log_info_ts_profile_on_error_generic(FILE* output_file, FILE* error_file, const char* func_name, int result, struct profile_info_struct* pi, char* message, int print_profile){

@@ -10,6 +10,7 @@
 #include "file_ts.h"
 #include <unistd.h>
 #include <dirent.h>
+#include <errno.h>
 // #include "profile.h"
 
 typedef struct testenv_struct{
@@ -19,6 +20,14 @@ typedef struct testenv_struct{
     FILE* csv_file_flags;
     char* dir_path;
     char* dir_path_volume;
+    char** test_list;
+    int n_test;
+    char** testnot_list;
+    int n_testnot;
+    char** group_list;
+    int n_group;
+    char** groupnot_list;
+    int n_groupnot;
 } testenv_struct;
 
 testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
@@ -40,7 +49,7 @@ extern int PROFILE_TREAT_DELAY_AS_COMMAND;
 extern gid_t CHOWN_GROUP_GID;
 
 typedef struct profile_init_struct{
-    struct stat** multi_stat_before;
+    struct stat_macb** multi_stat_before;
     struct timespec* ts_before;
 } profile_init_struct;
 
@@ -48,15 +57,17 @@ typedef struct profile_info_struct{
     int** profile;
     int watch_num;
     char** watch_array;
-    struct stat** multi_stat_before;
-    struct stat** multi_stat_after;
-    struct stat** multi_stat_after_delay;
+    struct stat_macb** multi_stat_before;
+    struct stat_macb** multi_stat_after;
+    struct stat_macb** multi_stat_after_delay;
     struct timespec* ts_before;
     struct timespec* ts_after;
     struct timespec* ts_after_delay;
 } profile_info_struct;
 
 static const long ns_after_open = 100000000; //ns_100ms
+// static const long ns_after_open = 1100000000; //ns_1.1s
+static const long ns_DELAY = 1100000000; //ns_1.1s
 // static const long ns_after_open = 10; //ns_100ms
 
 static const time_t CMD_DELAY_S = 1;
@@ -123,6 +134,10 @@ char** misc_char_array5(char* c1, char* c2, char* c3, char* c4, char* c5);
 
 int misc_invert_check_result(int res);
 
+int misc_str_in_list(char* ref, int list_size, char** list);
+
+void misc_wait_for_input();
+
 void misc_nanosleep(int ns);
 void misc_microsleep(int us);
 void misc_millisleep(int ms);
@@ -151,8 +166,8 @@ int misc_timespec_eq(struct timespec* ts1, struct timespec* ts2);
 struct timespec* misc_timespec_diff_ts2_ts1(struct timespec *ts1, struct timespec *ts2);
 struct timespec* misc_timespec_diff_abs(struct timespec *ts1, struct timespec *ts2);
 
-int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
-int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat);
+int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat);
+int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat);
 int misc_check_profile_requirements(FILE* output_file, FILE* error_file, const char* func_name, profile_info_struct* pi, int** requirements);
 
 void misc_print_profile(FILE* output_file, FILE* error_file, struct profile_info_struct* pi);

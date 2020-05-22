@@ -13,6 +13,14 @@ testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_fil
   env->dir_path = dir_path;
   env->dir_path_volume = NULL;
   env->csv_file_flags = NULL;
+  env->test_list = NULL;
+  env->n_test = 0;
+  env->testnot_list = NULL;
+  env->n_testnot = 0;
+  env->group_list = NULL;
+  env->n_group = 0;
+  env->groupnot_list = NULL;
+  env->n_groupnot = 0;
   return env;
 }
 
@@ -24,7 +32,21 @@ testenv_struct* testenv_alloc_csv(FILE* csv_file, FILE* output_file, FILE* error
   env->dir_path = dir_path;
   env->dir_path_volume = dir_path_volume;
   env->csv_file_flags = csv_file_flags;
+  env->test_list = NULL;
+  env->n_test = 0;
+  env->testnot_list = NULL;
+  env->n_testnot = 0;
+  env->group_list = NULL;
+  env->n_group = 0;
+  env->groupnot_list = NULL;
+  env->n_groupnot = 0;
   return env; 
+}
+
+int misc_add_to_list(char* e, int* n, char*** list){
+    (*n)++;
+    *list = (char**) realloc(*list, (*n)*sizeof(char*));
+    (*list)[*n-1] = e;
 }
 
 int misc_exec(char* command){
@@ -76,6 +98,11 @@ char** misc_char_array5(char* c1, char* c2, char* c3, char* c4, char* c5){
     return char_array;
 }
 
+void misc_wait_for_input() {
+    getchar();
+}
+
+
 int misc_invert_check_result(int res){
     if (res == 0){
         return 2;
@@ -86,11 +113,26 @@ int misc_invert_check_result(int res){
     return res;
 }
 
+int misc_str_in_list(char* ref, int list_size, char** list){
+    if (list_size == 0 || list == NULL){
+        return 0;
+    }
+    
+    int i;
+    for (i=0; i<list_size; i++){
+        if (strcmp(ref, list[i]) == 0){
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
 void misc_nanosleep(int ns){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
-    ts_ns->tv_sec = 0;
-    ts_ns->tv_nsec = ns;
-    nanosleep(ts_ns, NULL);
+    ts_ns->tv_sec = (time_t) ns / ns_1s;
+    ts_ns->tv_nsec = ns % ns_1s;
+    nanosleep(ts_ns, CLOCK_REALTIME);
     free(ts_ns);
 }
 
@@ -98,7 +140,7 @@ void misc_microsleep(int us){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = us*1000;
-    nanosleep(ts_ns, NULL);
+    nanosleep(ts_ns, CLOCK_REALTIME);
     free(ts_ns);
 }
 
@@ -106,7 +148,7 @@ void misc_millisleep(int ms){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = ms*1000000;
-    nanosleep(ts_ns, NULL);
+    nanosleep(ts_ns, CLOCK_REALTIME);
     free(ts_ns);
 }
 
@@ -114,7 +156,7 @@ void misc_sleep(int s){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = s;
     ts_ns->tv_nsec = 0;
-    nanosleep(ts_ns, NULL);
+    nanosleep(ts_ns, CLOCK_REALTIME);
     free(ts_ns);
 }
 
@@ -163,7 +205,7 @@ char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = sleep_s;
     ts_ns->tv_nsec = sleep_ns; 
-    nanosleep(ts_ns, NULL);
+    nanosleep(ts_ns, CLOCK_REALTIME);
   }
   
   return buf_path;
@@ -200,8 +242,9 @@ char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written
     
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = sleep_s;
-    ts_ns->tv_nsec = sleep_ns; 
-    nanosleep(ts_ns, NULL);
+    ts_ns->tv_nsec = 0; 
+    nanosleep(ts_ns, CLOCK_REALTIME);
+    misc_nanosleep(sleep_ns);
     free(ts_ns);
   }
   
@@ -340,7 +383,7 @@ struct timespec* misc_timespec_diff_abs(struct timespec *ts1, struct timespec *t
     }
 }
 
-int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat) {
     int result = 0;
     
     if (ts_before == NULL || ts_after == NULL || file_stat == NULL){
@@ -401,7 +444,7 @@ int result_MAC_updated(int M, int A, int C, FILE* output_file, FILE* error_file,
     return result;
 }
 
-int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct stat* file_stat_before, struct stat* file_stat_after) {
+int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, struct stat_macb* file_stat_before, struct stat_macb* file_stat_after) {
     int result = 0;
     
     if (file_stat_before == NULL || file_stat_after == NULL){
@@ -463,7 +506,7 @@ int result_MAC_kept(int M, int A, int C, FILE* output_file, FILE* error_file, co
 }
 
 
-int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider_id, struct timespec* ts_before, struct timespec* ts_after, struct stat* file_stat) {
+int result_MAC_granularity(int M, int A, int C, FILE* output_file, FILE* error_file, const char* func_name, int divider_id, struct timespec* ts_before, struct timespec* ts_after, struct stat_macb* file_stat) {
     int result = 0;
     
     if (ts_before == NULL || ts_after == NULL || file_stat == NULL){

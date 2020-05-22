@@ -25,6 +25,7 @@ include_directories(
   libs/log/
   libs/misc/
   tests/profileos/
+  tests/general/
 )
 
 # Libraries-----------------------------------------------------------------
@@ -43,6 +44,7 @@ add_library(lib_current_time libs/current_time/current_time.h libs/current_time/
 target_link_libraries(lib_current_time lib_file_ts)
 
 add_library(lib_misc libs/misc/misc.h libs/misc/misc.c)
+add_library(lib_general tests/general/general.h tests/general/general.c)
 
 add_library(lib_profileos
 	tests/profileos/pos_filerename.h
@@ -79,3 +81,6 @@ target_link_libraries(profile_cmd lib_file_ts lib_profile lib_misc lib_log lib_c
 
 add_executable(profile_os profile_os.h profile_os.c)
 target_link_libraries(profile_os lib_profileos lib_file_ts lib_profile lib_misc lib_log lib_current_time)
+
+add_executable(run_tests run_tests.h run_tests.c)
+target_link_libraries(run_tests lib_general lib_file_ts lib_current_time lib_log lib_misc lib_profile)
