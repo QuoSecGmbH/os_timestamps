@@ -134,7 +134,7 @@ dst/dir/
 
 * `run_tests` by default will run all non-interactive tests
 * `run_tests --dry-run` will not perform tests but can be used to enumerate them
-* `run_tests -t UTILITIES.RM.RMDIR.EMPTY` will run specific test only (can be used multiple times)
+* `run_tests -t GENERAL.NEW_FILE_REALTIME` will run specific test only (can be used multiple times)
 
 
 # Tools
