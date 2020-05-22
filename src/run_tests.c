@@ -366,7 +366,7 @@ void group_check_general_update(testenv_struct* env){
     runtest(env, "GENERAL.UPDATE.WRITE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_write, "check_general_update_write", "No", "", UNKNOWN, "fwrite shall update MC");
     runtest(env, "GENERAL.UPDATE.READ_CLOSE", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_close, "check_general_update_read_close", "Yes", POSIX_c181, MANDATORY, "fread+fclose shall update A");
     runtest(env, "GENERAL.UPDATE.READ_STAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_stat, "check_general_update_read_stat", "Yes", POSIX_c181, MANDATORY, "fread+stat shall update A");
-    runtest(env, "GENERAL.UPDATE.READ", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read, "check_general_update_read", "Yes", POSIX_c181, NEEDNOT, "fread does not need to update A");
+    runtest(env, "GENERAL.UPDATE.READ", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read, "check_general_update_read", "No", "", MANDATORY, "fread shall not update A");
     runtest(env, "GENERAL.UPDATE.MARK.READ", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_mark_read, "check_general_update_mark_read", "Yes", POSIX_c181, MANDATORY, "fread shall mark A for update");
     runtest(env, "GENERAL.UPDATE.READ_FSTAT", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_read_fstat, "check_general_update_read_fstat", "Yes", POSIX_c181, MANDATORY, "fread+fstat shall update A");
     runtest(env, "GENERAL.UPDATE.FOPEN_R", 2, REPEAT_WORST, s_0s, ns_10ms, check_general_update_fopen_r, "check_general_update_fopen_r", "Yes", POSIX_c181, MANDATORY, "fopen(rb) shall not update MAC");
