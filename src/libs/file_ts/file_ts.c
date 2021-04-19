@@ -257,8 +257,7 @@ struct statx* get_path_timestamps_statx(char *path, int follow) {
         flags |= AT_SYMLINK_NOFOLLOW;
     }
     
-//     unsigned int mask = STATX_ATIME || STATX_MTIME || STATX_CTIME || STATX_BTIME;
-    unsigned int mask = STATX_ALL;
+    unsigned int mask = STATX_ATIME | STATX_MTIME | STATX_CTIME | STATX_BTIME;
     int res = syscall(SYS_statx, AT_FDCWD, path, flags, mask, attr_statx);
     if (res != 0){
         fprintf(stderr, "ERROR: SYS_statx failed\n");
