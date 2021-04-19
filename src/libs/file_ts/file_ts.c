@@ -256,7 +256,9 @@ struct statx* get_path_timestamps_statx(char *path, int follow) {
     if (follow == 0){
         flags |= AT_SYMLINK_NOFOLLOW;
     }
-    unsigned int mask = STATX_ATIME || STATX_MTIME || STATX_CTIME || STATX_BTIME;
+    
+//     unsigned int mask = STATX_ATIME || STATX_MTIME || STATX_CTIME || STATX_BTIME;
+    unsigned int mask = STATX_ALL;
     int res = syscall(SYS_statx, AT_FDCWD, path, flags, mask, attr_statx);
     if (res != 0){
         fprintf(stderr, "ERROR: SYS_statx failed\n");
@@ -298,6 +300,32 @@ void print_path_timestamps_statx_ns(char *path, int follow) {
     buf[strlen(buf)-1] = 0;
     printf("B: %s - ns: %9ld\n", buf, ns);
 }
+
+void print_path_timestamps_statx_int_ns(char *path, int follow) {
+    struct statx* attr_statx = get_path_timestamps_statx(path, follow);
+    
+    if (attr_statx == NULL){
+        printf("ERROR: print_path_timestamps_statx_int_ns - attr is NULL\n");
+        return;
+    }
+    
+    time_t s = attr_statx->stx_mtime.tv_sec;
+    long ns = attr_statx->stx_mtime.tv_nsec;
+    printf("M: %d.%09ld\n", s, ns);
+    
+    s = attr_statx->stx_atime.tv_sec;
+    ns = attr_statx->stx_atime.tv_nsec;
+    printf("A: %d.%09ld\n", s, ns);
+    
+    s = attr_statx->stx_ctime.tv_sec;
+    ns = attr_statx->stx_ctime.tv_nsec;
+    printf("C: %d.%09ld\n", s, ns);
+    
+    s = attr_statx->stx_btime.tv_sec;
+    ns = attr_statx->stx_btime.tv_nsec;
+    printf("B: %d.%09ld\n", s, ns);
+}
+
 #endif
 
 
