@@ -594,11 +594,13 @@ void group_check_interfaces_file_r(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.R.FGETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_ungetc_both, "check_interfaces_file_r_fgets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fgets returning both data supplied and not supplied by ungetc shall mark A for update");
     
 #ifndef __OpenBSD__
+#ifndef __FreeBSD__
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "INTERFACES.FILE.R.GETS", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets, "check_interfaces_file_r_gets", "Yes", POSIX_c181, MANDATORY, "gets returning data not supplied by ungetc shall mark A for update");
         runtest(env, "INTERFACES.FILE.R.GETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc, "check_interfaces_file_r_gets_ungetc", "Yes", POSIX_c181, MAY, "gets returning data supplied by ungetc may mark A for update");
         runtest(env, "INTERFACES.FILE.R.GETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc_both, "check_interfaces_file_r_gets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "gets returning both data supplied and not supplied by ungetc shall mark A for update");
     }
+#endif
 #endif
     
     if (OPTION_TEST_INPUT == 1){
