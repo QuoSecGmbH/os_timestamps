@@ -154,6 +154,7 @@ char* misc_concat_ensure_file_exists_filled(char* buf1, char* buf2, int written_
 
 void misc_cp_rwx_no_overwrite(char* path1, char* path2);
 
+void misc_print_timespec(char* desc, struct timespec* ts);
 int misc_timespec_zero(struct timespec* ts);
 int misc_timespec_leq_leq(struct timespec* ts1, struct timespec* ts, struct timespec* ts2);
 int misc_timespec_l_leq(struct timespec* ts1, struct timespec* ts, struct timespec* ts2);
