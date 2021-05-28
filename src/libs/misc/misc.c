@@ -299,6 +299,15 @@ void misc_cp_rwx_no_overwrite(char* path1, char* path2){
     }
 }
 
+
+void misc_print_timespec(char* desc, struct timespec* ts){
+    time_t s = ts->tv_sec;
+    long ns = ts->tv_nsec;
+    char* buf = ctime(&s);
+    buf[strlen(buf)-1] = 0;
+    printf("%s: %s - s: %9ld - ns: %9ld\n", desc, buf, s, ns);
+}
+
 int misc_timespec_zero(struct timespec* ts){
     if (ts->tv_sec == 0 && ts->tv_nsec == 0){
         return 0;
