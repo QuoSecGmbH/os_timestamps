@@ -206,3 +206,6 @@ target_link_libraries(profile_os lib_general lib_profileos lib_file_ts lib_profi
 
 add_executable(plot_fread_fstat plot/plot_fread_fstat.h plot/plot_fread_fstat.c)
 target_link_libraries(plot_fread_fstat lib_file_ts lib_current_time lib_log lib_misc)
+
+add_executable(plot_fread_fstat2 plot/plot_fread_fstat2.h plot/plot_fread_fstat2.c)
+target_link_libraries(plot_fread_fstat2 lib_file_ts lib_current_time lib_log lib_misc)
