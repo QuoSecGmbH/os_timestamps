@@ -4,7 +4,7 @@
 #include "plot_fwrite_fstat2.h"
 
 char* get_file_path(int n){
-    char* base_name = "plot.fread_fstat2.file";
+    char* base_name = "plot.fwrite_fstat2.file";
     char* buf_name = (char*) calloc(sizeof(char), strlen(base_name)+10);
     sprintf(buf_name, "%s_%08d", base_name, n);
     //    char* path = misc_concat("./", buf_name);
@@ -13,19 +13,19 @@ char* get_file_path(int n){
 
 void action_before(int mode, int n_file, FILE* f, char* file_path){
     if (mode == 0){
-        char* buf = (char*) calloc(3, sizeof(char));
-        int n_read = fwrite(buf, 1, 2, f);
+        char buf[20] = "fwrite test";
+        fwrite(buf, 1, 12, f);
         fflush(f);
     }
     else if (mode == 1){
-        char* buf = (char*) calloc(3, sizeof(char));
-        int n_read = fread(buf, 1, 2, f);
+        char buf[20] = "fwrite test";
+        fwrite(buf, 1, 12, f);
         struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
         fstat(fileno(f), attr);
     }
     else if (mode == 2){
-        char* buf = (char*) calloc(3, sizeof(char));
-        int n_read = fread(buf, 1, 2, f);
+        char buf[20] = "fwrite test";
+        fwrite(buf, 1, 12, f);
     }
 }
 
@@ -56,16 +56,16 @@ int main (int argc, char **argv){
     }
     
     if (mode == 0){
-        desc = "fopen+fread+fflush ... fclose";
-        csv_name = "plot.delay.fread_fflush.csv";
+        desc = "fopen+fwrite+fflush ... fclose";
+        csv_name = "plot.delay.fwrite_fflush.csv";
     }
     else if (mode == 1){
-        desc = "fopen+fread+fstat ... fclose";
-        csv_name = "plot.delay.fread_fstat.csv";
+        desc = "fopen+fwrite+fstat ... fclose";
+        csv_name = "plot.delay.fwrite_fstat.csv";
     }
     else if (mode == 2){
-        desc = "fopen+fread ... fclose";
-        csv_name = "plot.delay.fread.csv";
+        desc = "fopen+fwrite ... fclose";
+        csv_name = "plot.delay.fwrite.csv";
     }
     else {
         printf("Unknown mode %d, exiting.\n", mode);
@@ -94,9 +94,9 @@ int main (int argc, char **argv){
 //     int n_delays=3*600; // 3 minutes
     int n_delays=3*600; // 3 minutes
 
-//     int n_fopen = 1;
-    int n_fopen = 5;
-    int n_files = n_delays * n_fopen;
+//     int n_fwrite = 1;
+    int n_fwrite = 5;
+    int n_files = n_delays * n_fwrite;
 
     struct  timespec* files_ts_time_fopen_before[n_files]; 
     struct  timespec* files_ts_time_fopen_after[n_files]; 
@@ -106,8 +106,8 @@ int main (int argc, char **argv){
     int n;
     // Create empty files
     for (d = 0; d < n_delays; d++){
-        for (n = 0; n < n_fopen; n++){
-            int n_file = d*n_fopen+n;
+        for (n = 0; n < n_fwrite; n++){
+            int n_file = d*n_fwrite+n;
             char* file_path = get_file_path(n_file);
             if (misc_file_exists(file_path) == 0){
                 int r = unlink(file_path);
@@ -125,14 +125,14 @@ int main (int argc, char **argv){
     struct timespec* ts_start = current_time_ns_fslike_osspecific();
     misc_print_timespec("ts_start", ts_start);
   
-    // fopen() + fread()
+    // fopen() + fwrite()
     for (d = 0; d < n_delays; d++){
-        printf("Reading %d file(s) at step: %d (delay_fopen=%d s + %lu ns, n_delays=%d):\n", n_fopen, d, s_delay_fopen, ns_delay_fopen, n_delays);
-        for (n = 0; n < n_fopen; n++){
-            int n_file = d*n_fopen+n;
+        printf("Writing %d file(s) at step: %d (delay_fwrite=%d s + %lu ns, n_delays=%d):\n", n_fwrite, d, s_delay_fopen, ns_delay_fopen, n_delays);
+        for (n = 0; n < n_fwrite; n++){
+            int n_file = d*n_fwrite+n;
             char* file_path = get_file_path(n_file);
             struct timespec* ts_before = current_time_ns_fslike_osspecific();
-            FILE* f = fopen(file_path, "rb");
+            FILE* f = fopen(file_path, "wb");
             if (f == NULL) {
                 log_warning(stdout, stderr, "%s - %s %s", __func__, "error opening/creating file", file_path);
                 return NULL;
@@ -140,7 +140,7 @@ int main (int argc, char **argv){
             action_before(mode, n_file, f, file_path);
             struct timespec* ts_after = current_time_ns_fslike_osspecific();
 
-            printf("%d read:\n", n_file);
+            printf("%d written:\n", n_file);
             misc_print_timespec("  ts_before", ts_before);
             misc_print_timespec("  ts_after ", ts_after);
 
@@ -155,12 +155,12 @@ int main (int argc, char **argv){
     printf("Delaying for %d seconds (wait_close)\n", s_wait_close);
     nanosleep(ts_wait_close, NULL);
 
-    struct timespec* last_ts_A = NULL;
+    struct timespec* last_ts_M = NULL;
     
     // fclose and calculate
     for (d = 0; d < n_delays; d++){
-        for (n = 0; n < n_fopen; n++){
-            int n_file = d*n_fopen+n;
+        for (n = 0; n < n_fwrite; n++){
+            int n_file = d*n_fwrite+n;
             char* file_path = get_file_path(n_file);
             struct timespec* ts_before = files_ts_time_fopen_before[n_file];
             struct timespec* ts_after= files_ts_time_fopen_after[n_file];
@@ -172,29 +172,29 @@ int main (int argc, char **argv){
             action_after(mode, n_file, f, file_path);
             
             struct stat_macb* file_stat = get_path_timestamps(file_path);
-            struct timespec* ts_A = &(file_stat->st_atim);
+            struct timespec* ts_M = &(file_stat->st_mtim);
             printf("%d:\n", n_file);
             misc_print_timespec("ts_before", ts_before);
             misc_print_timespec("ts_after", ts_after);
-            misc_print_timespec("ts_A", ts_A);
+            misc_print_timespec("ts_M", ts_M);
             
             if (n_file != 0){
-                if (misc_timespec_l(ts_A, last_ts_A) == 0){
-                    printf("WARNING TS_A_DEC: %d_A < %d_A\n", n_file, n_file-1);
-                    misc_print_timespec("  ts_A     ", ts_A);
-                    misc_print_timespec("  last_ts_A", last_ts_A);
+                if (misc_timespec_l(ts_M, last_ts_M) == 0){
+                    printf("WARNING TS_A_DEC: %d_M < %d_M\n", n_file, n_file-1);
+                    misc_print_timespec("  ts_M     ", ts_M);
+                    misc_print_timespec("  last_ts_M", last_ts_M);
                     n_warn_ts_a_dec++;
                 }
             }
             
             struct timespec* ts_delta;
-            if (misc_timespec_leq_leq(ts_before, ts_A, ts_after) == 0){
+            if (misc_timespec_leq_leq(ts_before, ts_M, ts_after) == 0){
                 ts_delta = (struct timespec*) calloc(sizeof(struct timespec), 1);
                 ts_delta->tv_sec = 0;
                 ts_delta->tv_nsec = 0;
             }
             else {
-                ts_delta = misc_timespec_diff_ts2_ts1(ts_after, ts_A);
+                ts_delta = misc_timespec_diff_ts2_ts1(ts_after, ts_M);
             }
             
             misc_print_timespec("ts_delta", ts_delta);
@@ -210,7 +210,7 @@ int main (int argc, char **argv){
             
             fprintf(csv_file, "%lu %lu\n", ns_delay, ns_delta);
             
-            last_ts_A = ts_A;
+            last_ts_M = ts_M;
         }
     }
     

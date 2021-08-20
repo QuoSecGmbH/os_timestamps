@@ -73,6 +73,8 @@ struct stat* path_timestamps_ns(char* path) {
 int main(int argc, char* argv[]){
     char* path = (char*) "standalone.fwrite_fstat";
     
+    struct stat* attr_fd_0_path = path_timestamps_ns(path);
+    
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
         printf("Error opening/creating file.\n");
@@ -82,9 +84,12 @@ int main(int argc, char* argv[]){
     
     sleep(1);
     
+    struct stat* attr_fd_1_sleep = file_timestamps_ns(fd);
+    
     fwrite("!", 1, 1, fd);
     struct stat* attr_fd_2 = file_timestamps_ns(fd);
     struct stat* attr_fd_3 = file_timestamps_ns(fd);
+    struct stat* attr_fd_3_path = path_timestamps_ns(path);
     
     sleep(1);
     
@@ -95,14 +100,23 @@ int main(int argc, char* argv[]){
     fclose(fd);
     struct stat* attr_fd_5 = path_timestamps_ns(path);
     
-    printf("After creation:\n");
+    printf("Before fopen (stat):\n");
+    print_attr(attr_fd_0_path);
+    
+    printf("After fopen(wb) (fstat):\n");
     print_attr(attr_fd_1);
+    
+    printf("After fopen(wb)+sleep(1) (fstat):\n");
+    print_attr(attr_fd_1_sleep);
     
     printf("After fwrite (fstat):\n");
     print_attr(attr_fd_2);
     
     printf("After fwrite+fstat (fstat):\n");
     print_attr(attr_fd_3);
+    
+    printf("After fwrite+fstat+fstat (stat):\n");
+    print_attr(attr_fd_3_path);
     
     printf("After fwrite+fstat+fstat+sleep(1):\n");
     print_attr(attr_fd_4);

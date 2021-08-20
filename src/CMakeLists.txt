@@ -209,3 +209,6 @@ target_link_libraries(plot_fread_fstat lib_file_ts lib_current_time lib_log lib_
 
 add_executable(plot_fread_fstat2 plot/plot_fread_fstat2.h plot/plot_fread_fstat2.c)
 target_link_libraries(plot_fread_fstat2 lib_file_ts lib_current_time lib_log lib_misc)
+
+add_executable(plot_fwrite_fstat2 plot/plot_fwrite_fstat2.h plot/plot_fwrite_fstat2.c)
+target_link_libraries(plot_fwrite_fstat2 lib_file_ts lib_current_time lib_log lib_misc)
