@@ -17,23 +17,23 @@ int main (int argc, char **argv){
     }
 
     if (mode == 1){
+        print_path_timestamps_csv_ns(argv[1]);
+    }
+    else if (mode == 2){
         printf("%s: (lstat + B)\n", path);
         print_path_timestamps_lstat_ns(path);
     }
-    else if (mode == 2){
+    else if (mode == 3){
         #ifdef __linux__
         printf("%s: (statx AT_SYMLINK_NOFOLLOW)\n", argv[1]);
         print_path_timestamps_statx_ns(argv[1], 0);
         #endif
     }
-    else if (mode == 3){
+    else if (mode == 4){
         #ifdef __linux__
         printf("%s: (statx AT_SYMLINK_NOFOLLOW (int))\n", argv[1]);
         print_path_timestamps_statx_int_ns(argv[1], 0);
         #endif
-    }
-    else if (mode == 4){
-        print_path_timestamps_csv_ns(argv[1]);
     }
     else {
         printf("%s: (stat + B)\n", path);

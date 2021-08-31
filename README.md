@@ -171,9 +171,10 @@ As it uses the **stat()** (and **statx()** on Linux) system calls, it shall not 
 
 Mode can be:
 - 0 (default): uses **stat** to get MAC and gets B by OS-specific method that follows symlinks
-- 1: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
-- 2: Linux only: gets MACB with **statx**, with the AT_SYMLINK_NOFOLLOW flag (do not follow symlinks)
-- 3: Linux only: same as 2 but outputs with the format second.nanosecond for easier parsing
+- 1: Same as 0 but outputs as csv
+- 2: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
+- 3: Linux only: gets MACB with **statx**, with the AT_SYMLINK_NOFOLLOW flag (do not follow symlinks)
+- 4: Linux only: same as 3 but outputs with the format second.nanosecond for easier parsing
 
 Implemented OS-specific methods to read B:
 - Linux: use the **statx** system call
