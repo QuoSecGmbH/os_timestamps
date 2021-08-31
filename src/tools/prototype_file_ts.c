@@ -27,6 +27,12 @@ int main (int argc, char **argv){
         #endif
     }
     else if (mode == 3){
+        #ifdef __linux__
+        printf("%s: (statx AT_SYMLINK_NOFOLLOW (int))\n", argv[1]);
+        print_path_timestamps_statx_int_ns(argv[1], 0);
+        #endif
+    }
+    else if (mode == 4){
         print_path_timestamps_csv_ns(argv[1]);
     }
     else {

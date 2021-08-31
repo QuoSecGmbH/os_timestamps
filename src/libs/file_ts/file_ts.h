@@ -42,6 +42,7 @@ struct stat_macb* get_fd_timestamps(int fd);
 #ifdef __linux__
 struct statx* get_path_timestamps_statx(char *path, int follow);
 void print_path_timestamps_statx_ns(char *path, int follow);
+void print_path_timestamps_statx_int_ns(char *path, int follow);
 #endif
 
 #endif

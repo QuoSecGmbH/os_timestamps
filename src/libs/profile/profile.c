@@ -81,7 +81,7 @@ int get_profile_value(struct timespec* ts_before, struct timespec* ts_after, str
     return value;
 }
 
-int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, int watch_num, struct stat** multi_stat_before, struct stat** multi_stat_after, struct stat** multi_stat_after_delay){
+int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, struct timespec* ts_after_delay, int watch_num, struct stat_macb** multi_stat_before, struct stat_macb** multi_stat_after, struct stat_macb** multi_stat_after_delay){
     int** profile = (int**) calloc(sizeof(int*), watch_num);
     
     struct timespec* stat_w0_before_M = NULL;
