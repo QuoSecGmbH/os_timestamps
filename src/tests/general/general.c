@@ -164,6 +164,7 @@ int check_general_update_write_fstat(FILE* csv_file, FILE* output_file, FILE* er
     
     get_file_timestamps(fd);
     misc_nanosleep(ns_DELAY);
+    
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     fwrite("Hallo", 5, 1, fd);
@@ -198,8 +199,9 @@ int check_general_update_write(FILE* csv_file, FILE* output_file, FILE* error_fi
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     fwrite("Hallo", 5, 1, fd);
     
@@ -230,8 +232,9 @@ int check_general_update_write_stat(FILE* csv_file, FILE* output_file, FILE* err
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     fwrite("Hallo", 5, 1, fd);
     struct stat* attr = (struct stat*) calloc(sizeof(struct stat), 1);
@@ -265,8 +268,8 @@ int check_general_update_read_fstat(FILE* csv_file, FILE* output_file, FILE* err
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char buf[6];
     fread(buf, 5, 1, fd);
@@ -302,8 +305,8 @@ int check_general_update_read_stat(FILE* csv_file, FILE* output_file, FILE* erro
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char buf[6];
     fread(buf, 5, 1, fd);
@@ -340,8 +343,8 @@ int check_general_update_read(FILE* csv_file, FILE* output_file, FILE* error_fil
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char buf[6];
     fread(buf, 5, 1, fd);
@@ -373,8 +376,8 @@ int check_general_update_mark_read(FILE* csv_file, FILE* output_file, FILE* erro
     }
     
     get_file_timestamps(fd);
-    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
+    struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char buf[6];
     fread(buf, 5, 1, fd);
