@@ -82,6 +82,7 @@ void print_usage(){
     fprintf(stderr, "Options:\n");
     fprintf(stderr, "  -v, --verbose\n");
 //     fprintf(stderr, "  --timewait / -t TIMEWAIT\n");
+    fprintf(stderr, "  -o, --output-csv          Choose output file (default: results.csv)\n");
     fprintf(stderr, "  -d, --nodelay          Treat delays as command updates\n");
     fprintf(stderr, "  -i, --input-tests      Perform tests that require user input\n");
     fprintf(stderr, "  -a, --append           Append results to existing CSV file\n");
@@ -121,6 +122,7 @@ int main (int argc, char **argv){
     int n_group = 0;
     char** groupnot_list = NULL;
     int n_groupnot = 0;
+    char* wanted_csv = "results.csv";
     
     int c;
     while (1) {
@@ -136,12 +138,13 @@ int main (int argc, char **argv){
             {"test-not", required_argument, 0, 'u'},
             {"group", required_argument, 0, 'g'},
             {"group-not", required_argument, 0, 'h'},
+            {"output", required_argument, 0, 'o'},
             {0, 0, 0, 0}
             };
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "vdia0t:u:g:h:",
+        c = getopt_long (argc, argv, "vdia0t:u:g:h:o:",
                         long_options, &option_index);
         
             
@@ -194,6 +197,10 @@ int main (int argc, char **argv){
                 misc_add_to_list(optarg, &(n_groupnot), &(groupnot_list));
                 break;
             }
+            case 'o': {
+                wanted_csv = (char*) optarg;
+                break;
+            }
             default:
                 fprintf(stderr, "Unknown argument.\n");
                 print_usage();
@@ -204,10 +211,10 @@ int main (int argc, char **argv){
         
     FILE* csv_file = NULL;
     if (OPTION_APPEND_CSV == 1){
-        csv_file = log_open_csv_append("results.csv");
+        csv_file = log_open_csv_append(wanted_csv);
     }
     else {
-        csv_file = log_open_csv("results.csv");
+        csv_file = log_open_csv(wanted_csv);
     }
     
 //     FILE* output_file = stdout;
@@ -286,7 +293,7 @@ int main (int argc, char **argv){
     
     
         
-    misc_concat_ensure_file_exists_free(dir_path, "run_test_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "run_test_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
     
     if (OPTION_APPEND_CSV == 0) log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Level", "Ref", "Function");
     group_check_general_clock(test_env);
