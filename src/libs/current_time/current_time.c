@@ -139,7 +139,11 @@ struct timespec* current_time_ns_fslike_generic(){
   fclose(fd);
 
   struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
-  return &(file_stat->st_mtim);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  ts->tv_sec = (file_stat->st_mtim).tv_sec;
+  ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
+  free(file_stat);
+  return ts;
 }
 
 struct timespec* current_time_ns_fslike_generic_futimens(){
@@ -180,7 +184,11 @@ struct timespec* current_time_ns_fslike_generic_futimens(){
   close(fd);
   
   struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
-  return &(file_stat->st_mtim);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  ts->tv_sec = (file_stat->st_mtim).tv_sec;
+  ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
+  free(file_stat);
+  return ts;
 }
 
 struct timespec* current_time_ns_fslike_generic_futimens_dir(){
@@ -219,7 +227,11 @@ struct timespec* current_time_ns_fslike_generic_futimens_dir(){
   close(fd);
   
   struct stat_macb* file_stat = get_path_timestamps(path_timemarkerdir);
-  return &(file_stat->st_mtim);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  ts->tv_sec = (file_stat->st_mtim).tv_sec;
+  ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
+  free(file_stat);
+  return ts;
 }
 
 
