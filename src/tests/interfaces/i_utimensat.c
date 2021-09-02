@@ -4,7 +4,8 @@
 #include "i_futimens.h"
 
 int check_interfaces_ts_utimensat_now_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -26,6 +27,7 @@ int check_interfaces_ts_utimensat_now_ma(FILE* csv_file, FILE* output_file, FILE
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -42,7 +44,8 @@ int check_interfaces_ts_utimensat_now_ma(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_ts_utimensat_now_ns(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -64,6 +67,7 @@ int check_interfaces_ts_utimensat_now_ns(FILE* csv_file, FILE* output_file, FILE
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_NS, ts_before, ts_after, file_stat);
@@ -80,7 +84,25 @@ int check_interfaces_ts_utimensat_now_ns(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_ts_utimensat_now_ma_eq(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "interfaces.utimensat");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
+    
+    struct timespec* ts_now1 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    struct timespec* ts_now2 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_now1->tv_nsec = UTIME_NOW;
+    ts_now1->tv_sec = 0;
+    ts_now2->tv_nsec = UTIME_NOW;
+    ts_now2->tv_sec = 0;
+    
+    struct timespec times[2];
+    times[0] = *ts_now1;
+    times[1] = *ts_now2;
+    
+    int ret = utimensat(AT_FDCWD, path, times, 0);
+    if (ret != 0) {
+        log_warning(output_file, error_file, "%s - %s %d", __func__, "futimens failed with errno", errno);
+        return 1;
+    }
     
     struct stat_macb* file_stat = get_path_timestamps(path);
     
@@ -99,7 +121,25 @@ int check_interfaces_ts_utimensat_now_ma_eq(FILE* csv_file, FILE* output_file, F
 }
 
 int check_interfaces_ts_utimensat_now_mac_eq(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "interfaces.utimensat");
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
+    
+    struct timespec* ts_now1 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    struct timespec* ts_now2 = (struct timespec*) calloc(sizeof(struct timespec), 1);
+    ts_now1->tv_nsec = UTIME_NOW;
+    ts_now1->tv_sec = 0;
+    ts_now2->tv_nsec = UTIME_NOW;
+    ts_now2->tv_sec = 0;
+    
+    struct timespec times[2];
+    times[0] = *ts_now1;
+    times[1] = *ts_now2;
+    
+    int ret = utimensat(AT_FDCWD, path, times, 0);
+    if (ret != 0) {
+        log_warning(output_file, error_file, "%s - %s %d", __func__, "futimens failed with errno", errno);
+        return 1;
+    }
     
     struct stat_macb* file_stat = get_path_timestamps(path);
     
@@ -118,7 +158,8 @@ int check_interfaces_ts_utimensat_now_mac_eq(FILE* csv_file, FILE* output_file, 
 }
 
 int check_interfaces_ts_utimensat_set_future_a(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat_before = get_path_timestamps(path);
@@ -141,6 +182,7 @@ int check_interfaces_ts_utimensat_set_future_a(FILE* csv_file, FILE* output_file
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -168,7 +210,8 @@ int check_interfaces_ts_utimensat_set_future_a(FILE* csv_file, FILE* output_file
 }
 
 int check_interfaces_ts_utimensat_set_past_a(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat_before = get_path_timestamps(path);
@@ -191,6 +234,7 @@ int check_interfaces_ts_utimensat_set_past_a(FILE* csv_file, FILE* output_file, 
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -218,7 +262,8 @@ int check_interfaces_ts_utimensat_set_past_a(FILE* csv_file, FILE* output_file, 
 }
 
 int check_interfaces_ts_utimensat_set_future_m(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat_before = get_path_timestamps(path);
@@ -241,6 +286,7 @@ int check_interfaces_ts_utimensat_set_future_m(FILE* csv_file, FILE* output_file
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -268,7 +314,8 @@ int check_interfaces_ts_utimensat_set_future_m(FILE* csv_file, FILE* output_file
 }
 
 int check_interfaces_ts_utimensat_set_past_m(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat_before = get_path_timestamps(path);
@@ -291,6 +338,7 @@ int check_interfaces_ts_utimensat_set_past_m(FILE* csv_file, FILE* output_file, 
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -319,7 +367,8 @@ int check_interfaces_ts_utimensat_set_past_m(FILE* csv_file, FILE* output_file, 
 
 
 int check_interfaces_ts_utimensat_set_future_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -341,6 +390,7 @@ int check_interfaces_ts_utimensat_set_future_ma(FILE* csv_file, FILE* output_fil
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -373,7 +423,8 @@ int check_interfaces_ts_utimensat_set_future_ma(FILE* csv_file, FILE* output_fil
 
 
 int check_interfaces_ts_utimensat_set_past_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -395,6 +446,7 @@ int check_interfaces_ts_utimensat_set_past_ma(FILE* csv_file, FILE* output_file,
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -427,7 +479,8 @@ int check_interfaces_ts_utimensat_set_past_ma(FILE* csv_file, FILE* output_file,
 
 
 int check_interfaces_ts_utimensat_set_omit(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utimensat", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -449,6 +502,7 @@ int check_interfaces_ts_utimensat_set_omit(FILE* csv_file, FILE* output_file, FI
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat_after);

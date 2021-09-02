@@ -4,21 +4,22 @@
 #include "i_dir.h"
 
 int check_interfaces_dir_readdir(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, "interfaces.dir.readdir", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists(dir_path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
 
     DIR *dp = opendir(path);
     if (dp == NULL) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening directory");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     readdir(dp);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     closedir(dp);
@@ -35,8 +36,8 @@ int check_interfaces_dir_readdir(FILE* csv_file, FILE* output_file, FILE* error_
 }
 
 int check_interfaces_dir_readdir_files(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, "interfaces.dir.readdir", s_0s, ns_0ns, output_file, error_file, __func__);
-    char* file_path = misc_concat_ensure_file_exists(dir_path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    char* file_path = misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
 
     DIR *dp = opendir(path);
     if (dp == NULL) {
@@ -45,7 +46,7 @@ int check_interfaces_dir_readdir_files(FILE* csv_file, FILE* output_file, FILE* 
     }
     struct dirent *de;   
     int first = 0;
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -55,6 +56,7 @@ int check_interfaces_dir_readdir_files(FILE* csv_file, FILE* output_file, FILE* 
     }
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(file_path);
     
     closedir(dp);
@@ -71,8 +73,8 @@ int check_interfaces_dir_readdir_files(FILE* csv_file, FILE* output_file, FILE* 
 }
 
 int check_interfaces_dir_readdir_r(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, "interfaces.dir.readdir_r", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists(dir_path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
 
     DIR *dp = opendir(path);
     if (dp == NULL) {
@@ -81,13 +83,14 @@ int check_interfaces_dir_readdir_r(FILE* csv_file, FILE* output_file, FILE* erro
     }
     struct dirent* de1 = (struct dirent*) calloc(sizeof(struct dirent), 1);
     struct dirent** de2 = (struct dirent**) calloc(sizeof(struct dirent*), 1);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     readdir_r(dp, de1, de2);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     closedir(dp);
@@ -104,8 +107,8 @@ int check_interfaces_dir_readdir_r(FILE* csv_file, FILE* output_file, FILE* erro
 }
 
 int check_interfaces_dir_readdir_r_files(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, "interfaces.dir.readdir", s_0s, ns_0ns, output_file, error_file, __func__);
-    char* file_path = misc_concat_ensure_file_exists(dir_path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_dir_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    char* file_path = misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
 
     DIR *dp = opendir(path);
     if (dp == NULL) {
@@ -116,7 +119,7 @@ int check_interfaces_dir_readdir_r_files(FILE* csv_file, FILE* output_file, FILE
     struct dirent **de2 = (struct dirent**) calloc(sizeof(struct dirent*), 1);
     int ret = 0;
     int first = 0;
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -126,6 +129,7 @@ int check_interfaces_dir_readdir_r_files(FILE* csv_file, FILE* output_file, FILE
     }
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(file_path);
     
     closedir(dp);

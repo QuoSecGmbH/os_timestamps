@@ -16,6 +16,7 @@ int check_interfaces_file_w_puts_fflush(FILE* csv_file, FILE* output_file, FILE*
     fflush(f);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -93,6 +94,7 @@ int check_interfaces_file_w_puts_exit(FILE* csv_file, FILE* output_file, FILE* e
     }
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -142,6 +144,7 @@ int check_interfaces_file_w_puts_abort(FILE* csv_file, FILE* output_file, FILE* 
     }
 
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_file_timestamps(f);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

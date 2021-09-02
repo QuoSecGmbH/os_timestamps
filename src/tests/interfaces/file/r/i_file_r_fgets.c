@@ -4,14 +4,14 @@
 #include "i_file_r_fgets.h"
 
 int check_interfaces_file_r_fgets_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.fgets.IMM", 10, s_0s, ns_100ms, output_file, error_file, __func__);
-    
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10 , s_0s, ns_0ns, output_file, error_file, __func__);
+
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open); 
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -23,8 +23,9 @@ int check_interfaces_file_r_fgets_imm(FILE* csv_file, FILE* output_file, FILE* e
         return 1;
     }
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     struct stat_macb* file_stat = get_path_timestamps(path);
+    // Mark for update
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -42,14 +43,14 @@ int check_interfaces_file_r_fgets_imm(FILE* csv_file, FILE* output_file, FILE* e
 
 
 int check_interfaces_file_r_fgets(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.fgets", 10, s_0s, ns_100ms, output_file, error_file, __func__);
-    
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10 , s_0s, ns_0ns, output_file, error_file, __func__);
+
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open); 
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -62,7 +63,7 @@ int check_interfaces_file_r_fgets(FILE* csv_file, FILE* output_file, FILE* error
     }
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -82,7 +83,7 @@ int check_interfaces_file_r_fgets(FILE* csv_file, FILE* output_file, FILE* error
 
 
 int check_interfaces_file_r_fgets_ungetc(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.fgets.ungetc", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10 , s_0s, ns_0ns, output_file, error_file, __func__);
     
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
@@ -90,7 +91,7 @@ int check_interfaces_file_r_fgets_ungetc(FILE* csv_file, FILE* output_file, FILE
         return 1;
     }
     ungetc(0x41, fd);
-    misc_nanosleep(ns_after_open); 
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -108,7 +109,7 @@ int check_interfaces_file_r_fgets_ungetc(FILE* csv_file, FILE* output_file, FILE
     }
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -126,15 +127,15 @@ int check_interfaces_file_r_fgets_ungetc(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_file_r_fgets_ungetc_both(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.fgets.ungetc.both", 10, s_0s, ns_100ms, output_file, error_file, __func__);
-    
+    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10 , s_0s, ns_0ns, output_file, error_file, __func__);
+
     FILE* fd = fopen(path, "rb");
     if (fd == NULL) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
     ungetc(0x41, fd);
-    misc_nanosleep(ns_after_open); 
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -152,7 +153,7 @@ int check_interfaces_file_r_fgets_ungetc_both(FILE* csv_file, FILE* output_file,
     }
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

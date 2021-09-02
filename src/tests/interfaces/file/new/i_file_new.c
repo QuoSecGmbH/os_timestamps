@@ -65,14 +65,14 @@ int check_interfaces_file_new_mkdir(FILE* csv_file, FILE* output_file, FILE* err
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdir/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdir/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     mkdir(path_new_dir, 0700);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
     struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
@@ -96,7 +96,7 @@ int check_interfaces_file_new_mkdir_mac(FILE* csv_file, FILE* output_file, FILE*
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdir.mac/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdir/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkdir(path_new_dir, 0700);
     
@@ -119,7 +119,7 @@ int check_interfaces_file_new_mkdir_mac_1s(FILE* csv_file, FILE* output_file, FI
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdir.mac_1s/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdir/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkdir(path_new_dir, 0700);
     misc_sleep(1);
@@ -144,14 +144,14 @@ int check_interfaces_file_new_mkdirat(FILE* csv_file, FILE* output_file, FILE* e
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdirat/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdirat/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     mkdirat(AT_FDCWD, path_new_dir, S_IRWXU | S_IRWXG);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_new_dir);
     struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
@@ -175,7 +175,7 @@ int check_interfaces_file_new_mkdirat_mac(FILE* csv_file, FILE* output_file, FIL
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdirat.mac/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdirat/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkdirat(AT_FDCWD, path_new_dir, S_IRWXU | S_IRWXG);
     
@@ -198,7 +198,7 @@ int check_interfaces_file_new_mkdirat_mac_1s(FILE* csv_file, FILE* output_file, 
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkdirat.mac_1s/");
     char* path_new_dir = misc_concat(path_dir, (char*) "mkdirat/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkdirat(AT_FDCWD, path_new_dir, S_IRWXU | S_IRWXG);
     misc_sleep(1);
@@ -222,14 +222,14 @@ int check_interfaces_file_new_mkfifo(FILE* csv_file, FILE* output_file, FILE* er
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifo/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     mkfifo(path_fifo, 0700);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
     struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
@@ -253,7 +253,7 @@ int check_interfaces_file_new_mkfifo_mac(FILE* csv_file, FILE* output_file, FILE
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifo.mac/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkfifo(path_fifo, 0700);
     
@@ -276,7 +276,7 @@ int check_interfaces_file_new_mkfifo_mac_1s(FILE* csv_file, FILE* output_file, F
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifo.mac_1s/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkfifo(path_fifo, 0700);
     misc_sleep(1);
@@ -300,14 +300,14 @@ int check_interfaces_file_new_mkfifoat(FILE* csv_file, FILE* output_file, FILE* 
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifoat/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     mkfifoat(AT_FDCWD, path_fifo, 0700);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
     struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
     
@@ -331,7 +331,7 @@ int check_interfaces_file_new_mkfifoat_mac(FILE* csv_file, FILE* output_file, FI
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifoat.mac/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkfifoat(AT_FDCWD, path_fifo, 0700);
     
@@ -354,7 +354,7 @@ int check_interfaces_file_new_mkfifoat_mac_1s(FILE* csv_file, FILE* output_file,
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifoat.mac_1s/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     mkfifoat(AT_FDCWD, path_fifo, 0700);
     misc_sleep(1);
@@ -382,7 +382,7 @@ int check_interfaces_file_new_mkpipe(FILE* csv_file, FILE* output_file, FILE* er
     pipe(pipefd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* pipe0_stat = get_fd_timestamps(pipefd[0]);
     struct stat_macb* pipe1_stat = get_fd_timestamps(pipefd[1]);
 

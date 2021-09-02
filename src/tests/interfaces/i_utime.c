@@ -4,7 +4,8 @@
 #include "i_utime.h"
 
 int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, 2 * s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -25,6 +26,7 @@ int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* er
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = 0;
@@ -56,7 +58,8 @@ int check_interfaces_ts_utime_now_ma(FILE* csv_file, FILE* output_file, FILE* er
 }
 
 int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, 2 * s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -77,6 +80,7 @@ int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* err
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
 //     int resultM = result_MAC_granularity(GRANULARITY_MANDATORY, GRANULARITY_NOCHECK, GRANULARITY_NOCHECK, output_file, error_file, __func__, GRANULARITY_US, ts_before, ts_after, file_stat);
@@ -107,7 +111,8 @@ int check_interfaces_ts_utime_now_s(FILE* csv_file, FILE* output_file, FILE* err
 }
 
 int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, 2 * s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -130,6 +135,7 @@ int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, F
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;
@@ -162,7 +168,8 @@ int check_interfaces_ts_utime_set_future_ma(FILE* csv_file, FILE* output_file, F
 }
 
 int check_interfaces_ts_utime_set_past_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.utime", 2 * s_1s, ns_0ns, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, 2 * s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -185,6 +192,7 @@ int check_interfaces_ts_utime_set_past_ma(FILE* csv_file, FILE* output_file, FIL
     }
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat_after = get_path_timestamps(path);
     
     int result = 0;

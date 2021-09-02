@@ -34,6 +34,7 @@ int check_interfaces_exec_execvp(FILE* csv_file, FILE* output_file, FILE* error_
     
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path_ls);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -52,13 +53,7 @@ int check_interfaces_exec_execvp_local(FILE* csv_file, FILE* output_file, FILE* 
     char* path_ls_local = misc_concat(dir_path, "ls_local");
     misc_cp_rwx_no_overwrite(path_ls, path_ls_local);
     
-    // cp makes M=A=C, if exec is too fast, A is updated to ~current_time that is the same as M=A=C and no difference is visible
-    // introducing delay to make update visible
-    struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
-    ts_ns->tv_sec = 0;
-    ts_ns->tv_nsec = 20000000; // 20ms
-    nanosleep(ts_ns, NULL);
-    
+    misc_nanosleep(ns_DELAY); // Delay  
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     pid_t child_pid = fork();
@@ -91,7 +86,6 @@ int check_interfaces_exec_execvp_local(FILE* csv_file, FILE* output_file, FILE* 
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
-    free(ts_ns);
     free(path_ls_local);
     free(ts_before);
     free(ts_after);
@@ -102,8 +96,9 @@ int check_interfaces_exec_execvp_local(FILE* csv_file, FILE* output_file, FILE* 
 
 
 int check_interfaces_attr_chmod(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = misc_concat_ensure_file_exists(dir_path, __func__, 0, 0, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY); // Delay
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char mode[] = "0777";
@@ -112,6 +107,7 @@ int check_interfaces_attr_chmod(FILE* csv_file, FILE* output_file, FILE* error_f
     chmod(path,i) ;
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -126,8 +122,9 @@ int check_interfaces_attr_chmod(FILE* csv_file, FILE* output_file, FILE* error_f
 }
 
 int check_interfaces_attr_chown_grp(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = misc_concat_ensure_file_exists(dir_path, __func__, 0, 0, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY); // Delay
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     uid_t uid = -1;
@@ -135,6 +132,7 @@ int check_interfaces_attr_chown_grp(FILE* csv_file, FILE* output_file, FILE* err
     chown(path, uid, gid);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -149,8 +147,9 @@ int check_interfaces_attr_chown_grp(FILE* csv_file, FILE* output_file, FILE* err
 }
 
 int check_interfaces_attr_chown_usr(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = misc_concat_ensure_file_exists(dir_path, __func__, 0, 0, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY); // Delay
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     uid_t uid = getuid();
@@ -158,6 +157,7 @@ int check_interfaces_attr_chown_usr(FILE* csv_file, FILE* output_file, FILE* err
     chown(path, uid, gid);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -172,8 +172,9 @@ int check_interfaces_attr_chown_usr(FILE* csv_file, FILE* output_file, FILE* err
 }
 
 int check_interfaces_attr_chown_grp_usr(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = misc_concat_ensure_file_exists(dir_path, __func__, 0, 0, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY); // Delay
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     uid_t uid = getuid();
@@ -181,6 +182,7 @@ int check_interfaces_attr_chown_grp_usr(FILE* csv_file, FILE* output_file, FILE*
     chown(path, uid, gid);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -195,8 +197,9 @@ int check_interfaces_attr_chown_grp_usr(FILE* csv_file, FILE* output_file, FILE*
 }
 
 int check_interfaces_attr_chown_nochange(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat(dir_path, "general.new_file");
+    char* path = misc_concat_ensure_file_exists(dir_path, __func__, 0, 0, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY); // Delay
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     uid_t uid = -1;
@@ -204,6 +207,7 @@ int check_interfaces_attr_chown_nochange(FILE* csv_file, FILE* output_file, FILE
     chown(path, uid, gid);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); // Delay
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

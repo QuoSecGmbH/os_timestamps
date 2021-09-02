@@ -4,14 +4,14 @@
 #include "i_file_r.h"
 
 int check_interfaces_file_r_read_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+	char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, s_0s, ns_0ns, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -19,6 +19,7 @@ int check_interfaces_file_r_read_imm(FILE* csv_file, FILE* output_file, FILE* er
     read(fd, buf, 2);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -36,14 +37,14 @@ int check_interfaces_file_r_read_imm(FILE* csv_file, FILE* output_file, FILE* er
 }
 
 int check_interfaces_file_r_read(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+	char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, s_0s, ns_0ns, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -51,7 +52,7 @@ int check_interfaces_file_r_read(FILE* csv_file, FILE* output_file, FILE* error_
     read(fd, buf, 2);
         
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -69,14 +70,14 @@ int check_interfaces_file_r_read(FILE* csv_file, FILE* output_file, FILE* error_
 }
 
 int check_interfaces_file_r_read_zero(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.read.zero", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+	char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, s_0s, ns_0ns, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -84,6 +85,7 @@ int check_interfaces_file_r_read_zero(FILE* csv_file, FILE* output_file, FILE* e
     read(fd, buf, 0);
         
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -101,14 +103,14 @@ int check_interfaces_file_r_read_zero(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_r_pread(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.r.pread", 10, s_0s, ns_100ms, output_file, error_file, __func__);
+	char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, __func__, 10, s_0s, ns_0ns, output_file, error_file, __func__);
     
     int fd = open(path, O_RDONLY);
     if (fd == 0) {
         log_warning(output_file, error_file, "%s - %s", __func__, "error opening/creating file");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -116,7 +118,7 @@ int check_interfaces_file_r_pread(FILE* csv_file, FILE* output_file, FILE* error
     pread(fd, buf, 2, 1);
         
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);

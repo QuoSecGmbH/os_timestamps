@@ -4,7 +4,8 @@
 #include "i_file.h"
 
 int check_interfaces_file_fflush_write_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fflush.write.IMM", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -19,6 +20,7 @@ int check_interfaces_file_fflush_write_imm(FILE* csv_file, FILE* output_file, FI
     fflush(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -36,7 +38,8 @@ int check_interfaces_file_fflush_write_imm(FILE* csv_file, FILE* output_file, FI
 
 
 int check_interfaces_file_fflush_write(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fflush.write", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -51,7 +54,6 @@ int check_interfaces_file_fflush_write(FILE* csv_file, FILE* output_file, FILE* 
     fflush(fd);
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -68,7 +70,8 @@ int check_interfaces_file_fflush_write(FILE* csv_file, FILE* output_file, FILE* 
 }
 
 int check_interfaces_file_fflush_nowrite(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -82,6 +85,7 @@ int check_interfaces_file_fflush_nowrite(FILE* csv_file, FILE* output_file, FILE
     fflush(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -98,7 +102,8 @@ int check_interfaces_file_fflush_nowrite(FILE* csv_file, FILE* output_file, FILE
 }
 
 int check_interfaces_file_fseek_write_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fseek.write.IMM", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -113,6 +118,7 @@ int check_interfaces_file_fseek_write_imm(FILE* csv_file, FILE* output_file, FIL
     fseek(fd, 2, SEEK_SET);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+     misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -129,7 +135,8 @@ int check_interfaces_file_fseek_write_imm(FILE* csv_file, FILE* output_file, FIL
 }
 
 int check_interfaces_file_fseek_write(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fseek.write", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -144,7 +151,6 @@ int check_interfaces_file_fseek_write(FILE* csv_file, FILE* output_file, FILE* e
     fseek(fd, 2, SEEK_SET);
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -161,7 +167,8 @@ int check_interfaces_file_fseek_write(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_fseek_nowrite(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     FILE* fd = fopen(path, "wb");
     if (fd == NULL) {
@@ -175,6 +182,7 @@ int check_interfaces_file_fseek_nowrite(FILE* csv_file, FILE* output_file, FILE*
     fseek(fd, 2, SEEK_SET);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -191,7 +199,8 @@ int check_interfaces_file_fseek_nowrite(FILE* csv_file, FILE* output_file, FILE*
 }
 
 int check_interfaces_file_fsync_write_imm(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fsync.write.IMM", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     int fd = open(path, O_WRONLY|O_RDONLY);
     if (fd == 0) {
@@ -206,6 +215,7 @@ int check_interfaces_file_fsync_write_imm(FILE* csv_file, FILE* output_file, FIL
     fsync(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -222,7 +232,8 @@ int check_interfaces_file_fsync_write_imm(FILE* csv_file, FILE* output_file, FIL
 }
 
 int check_interfaces_file_fsync_write(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fsync.write", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     int fd = open(path, O_WRONLY|O_RDONLY);
     if (fd == 0) {
@@ -237,7 +248,6 @@ int check_interfaces_file_fsync_write(FILE* csv_file, FILE* output_file, FILE* e
     fsync(fd);
     
     struct stat_macb* file_stat = get_path_timestamps(path);
-    
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -254,7 +264,8 @@ int check_interfaces_file_fsync_write(FILE* csv_file, FILE* output_file, FILE* e
 }
 
 int check_interfaces_file_fsync_nowrite(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
-    char* path = (char*) misc_concat_ensure_file_exists(dir_path, "interfaces.file.fsync.nowrite", s_0s, ns_100ms, output_file, error_file, __func__);
+    char* path = (char*) misc_concat_ensure_file_exists(dir_path, __func__, s_0s, ns_0ns, output_file, error_file, __func__);
+    misc_nanosleep(ns_DELAY); 
     
     int fd = open(path, O_WRONLY|O_RDONLY);
     if (fd == 0) {
@@ -268,6 +279,7 @@ int check_interfaces_file_fsync_nowrite(FILE* csv_file, FILE* output_file, FILE*
     fsync(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(ns_DELAY); 
     struct stat_macb* file_stat = get_path_timestamps(path);
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

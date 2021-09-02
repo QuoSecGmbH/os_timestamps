@@ -28,7 +28,7 @@ int check_interfaces_file_r_getchar(FILE* csv_file, FILE* output_file, FILE* err
     }
     
     struct stat_macb* file_stat = get_file_timestamps(f);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -66,7 +66,7 @@ int check_interfaces_file_r_getchar_ungetc(FILE* csv_file, FILE* output_file, FI
     }
     
     struct stat_macb* file_stat = get_file_timestamps(f);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -113,7 +113,7 @@ int check_interfaces_file_r_getchar_ungetc_both(FILE* csv_file, FILE* output_fil
     }
     
     struct stat_macb* file_stat = get_file_timestamps(f);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_MANDATORY, UPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);

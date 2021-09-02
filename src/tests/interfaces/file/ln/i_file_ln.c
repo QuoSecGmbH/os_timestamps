@@ -6,6 +6,7 @@
 int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path = (char*) misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.link.orig", 5, s_0s, ns_after_open, output_file, error_file, __func__);
         
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     char* path_link = misc_concat(dir_path, (char*) "interfaces.file.ln.link.link");
@@ -19,7 +20,7 @@ int check_interfaces_file_ln_link(FILE* csv_file, FILE* output_file, FILE* error
 
     struct stat_macb* file_stat = get_path_timestamps(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(dir_path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -61,7 +62,7 @@ int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* err
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error opening newdir at %s", errno, newdir_path);
         return 1;  
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -73,7 +74,7 @@ int check_interfaces_file_ln_linkat(FILE* csv_file, FILE* output_file, FILE* err
     
     struct stat_macb* file_stat = get_path_timestamps(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -98,6 +99,7 @@ int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* er
     char* path = misc_concat_ensure_file_exists_filled(dir_path, "interfaces.file.ln.symlink.orig", 5, s_0s, ns_after_open, output_file, error_file, __func__);
     char* path_link = misc_concat(dir_path, (char*) "interfaces.file.ln.symlink.link");
 
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
     int r = symlink("interfaces.file.ln.symlink.orig", path_link);
@@ -108,7 +110,7 @@ int check_interfaces_file_ln_symlink(FILE* csv_file, FILE* output_file, FILE* er
     
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(dir_path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -150,7 +152,7 @@ int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* 
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error opening newdir at %s", errno, newdir_path);
         return 1;  
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
 
@@ -162,7 +164,7 @@ int check_interfaces_file_ln_symlinkat(FILE* csv_file, FILE* output_file, FILE* 
 
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
     struct stat_macb* dir_stat = get_path_timestamps(newdir_path);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result_link = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -193,7 +195,7 @@ int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* e
         log_warning(output_file, error_file, "%s - %s", __func__, "error creating link");
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -210,7 +212,7 @@ int check_interfaces_file_ln_readlink(FILE* csv_file, FILE* output_file, FILE* e
     }
     
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
-
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -253,7 +255,7 @@ int check_interfaces_file_ln_readlinkat(FILE* csv_file, FILE* output_file, FILE*
         log_warning(output_file, error_file, "%s - %s: %d", __func__, "error creating link", errno);
         return 1;
     }
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
 
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -270,7 +272,7 @@ int check_interfaces_file_ln_readlinkat(FILE* csv_file, FILE* output_file, FILE*
     }
     
     struct stat_macb* file_stat = get_path_timestamps_lstat(path_link);
-    
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);

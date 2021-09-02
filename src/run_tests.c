@@ -235,54 +235,54 @@ int main (int argc, char **argv){
     
     // pre-creating some of the test files
 //     misc_concat_ensure_file_exists_free(dir_path, "/tmp/tmp_posixtest_timemarker", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.utime", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.write", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.write", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.write", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-    
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-    
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_fflush", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_ffclose", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utime", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.write", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.write", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.write", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
+//     
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
+//     
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_fflush", s_0s, ns_0ns, output_file, error_file, __func__);
+//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_ffclose", s_0s, ns_0ns, output_file, error_file, __func__);
     
     
         
@@ -445,13 +445,13 @@ void group_check_interfaces_ts_utime(testenv_struct* env){
 void group_check_interfaces_file(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
-    runtest(env, "INTERFACES.FILE.FFLUSH.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_write_imm, "check_interfaces_file_fflush_write_imm", "No", "", MANDATORY, "fflush with unwritten data update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.FFLUSH.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_write_imm, "check_interfaces_file_fflush_write_imm", "No", "", MANDATORY, "fflush with unwritten data shall update MC");
     runtest(env, "INTERFACES.FILE.FFLUSH.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_write, "check_interfaces_file_fflush_write", "Yes", POSIX_c181, MANDATORY, "fflush with unwritten data shall mark MC for update");
     runtest(env, "INTERFACES.FILE.FFLUSH.NOWRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fflush_nowrite, "check_interfaces_file_fflush_nowrite", "No", "", MANDATORY, "fflush with no unwritten data shall not update MAC");
-    runtest(env, "INTERFACES.FILE.FSEEK.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fseek_write_imm, "check_interfaces_file_fseek_write_imm", "No", "", MANDATORY, "fseek with unwritten data shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.FSEEK.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fseek_write_imm, "check_interfaces_file_fseek_write_imm", "No", "", MANDATORY, "fseek with unwritten data shall update MC");
     runtest(env, "INTERFACES.FILE.FSEEK.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fseek_write, "check_interfaces_file_fseek_write", "Yes", POSIX_c181, MANDATORY, "fseek with unwritten data shall mark MC for update");
     runtest(env, "INTERFACES.FILE.FSEEK.NOWRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fseek_nowrite, "check_interfaces_file_fseek_nowrite", "No", "", MANDATORY, "fseek with no unwritten data shall not update MAC");
-    runtest(env, "INTERFACES.FILE.FSYNC.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fsync_write_imm, "check_interfaces_file_fsync_write_imm", "Yes", POSIX_c181, MANDATORY, "fsync with unwritten data shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.FSYNC.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fsync_write_imm, "check_interfaces_file_fsync_write_imm", "Yes", POSIX_c181, MANDATORY, "fsync with unwritten data shall update MC");
     runtest(env, "INTERFACES.FILE.FSYNC.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fsync_write, "check_interfaces_file_fsync_write", "Yes", "", MANDATORY, "fsync with unwritten data shall mark MC for update");
     runtest(env, "INTERFACES.FILE.FSYNC.NOWRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fsync_nowrite, "check_interfaces_file_fsync_nowrite", "No", "", MANDATORY, "fsync with no unwritten data shall not update MAC");
 }
@@ -470,17 +470,17 @@ void group_check_interfaces_file_fopen(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.FOPEN.NEW.AB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_new_ABP, "check_interfaces_file_fopen_new_ABP", "Yes", POSIX_c181, MANDATORY, "fopen(ab+) on non existing file shall create file, update file MAC and parent directory MC");
     runtest(env, "INTERFACES.FILE.FOPEN.NEW.A+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_new_APB, "check_interfaces_file_fopen_new_APB", "Yes", POSIX_c181, MANDATORY, "fopen(a+b) on non existing file shall create file, update file MAC and parent directory MC");
     
-    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_W, "check_interfaces_file_fopen_existing_dir_W", "Yes", POSIX_c181, MANDATORY, "fopen(w) on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.WB", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WB, "check_interfaces_file_fopen_existing_dir_WB", "Yes", POSIX_c181, MANDATORY, "fopen(wb) on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WP, "check_interfaces_file_fopen_existing_dir_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+) on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WBP, "check_interfaces_file_fopen_existing_dir_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+) on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WPB, "check_interfaces_file_fopen_existing_dir_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b) on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_W, "check_interfaces_file_fopen_existing_W", "Yes", POSIX_c181, MANDATORY, "fopen(w) on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.WB", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WB, "check_interfaces_file_fopen_existing_WB", "Yes", POSIX_c181, MANDATORY, "fopen(wb) on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WP, "check_interfaces_file_fopen_existing_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+) on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WBP, "check_interfaces_file_fopen_existing_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+) on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_existing_WPB, "check_interfaces_file_fopen_existing_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b) on existing file shall update file MC");
     
-    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_W, "check_interfaces_file_fopen_fwrite_existing_dir_W", "Yes", POSIX_c181, MANDATORY, "fopen(w)+fwrite on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.WB", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WB, "check_interfaces_file_fopen_fwrite_existing_dir_WB", "Yes", POSIX_c181, MANDATORY, "fopen(wb)+fwrite on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WP, "check_interfaces_file_fopen_fwrite_existing_dir_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+)+fwrite on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WBP, "check_interfaces_file_fopen_fwrite_existing_dir_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+)+fwrite on existing file shall update file MC");
-    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WPB, "check_interfaces_file_fopen_fwrite_existing_dir_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b)+fwrite on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_W, "check_interfaces_file_fopen_fwrite_existing_W", "Yes", POSIX_c181, MANDATORY, "fopen(w)+fwrite on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.WB", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WB, "check_interfaces_file_fopen_fwrite_existing_WB", "Yes", POSIX_c181, MANDATORY, "fopen(wb)+fwrite on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WP, "check_interfaces_file_fopen_fwrite_existing_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+)+fwrite on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WBP, "check_interfaces_file_fopen_fwrite_existing_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+)+fwrite on existing file shall update file MC");
+    runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_WPB, "check_interfaces_file_fopen_fwrite_existing_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b)+fwrite on existing file shall update file MC");
     runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.R+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_RP, "check_interfaces_file_fopen_fwrite_existing_RP", "Yes", "", MANDATORY, "fopen(r+)+fwrite on existing file shall update file MC");
     runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.RB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_RBP, "check_interfaces_file_fopen_fwrite_existing_RBP", "Yes", "", MANDATORY, "fopen(rb+)+fwrite on existing file shall update file MC");
     runtest(env, "INTERFACES.FILE.FOPEN_FWRITE.EXISTING.R+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fwrite_existing_RPB, "check_interfaces_file_fopen_fwrite_existing_RPB", "Yes", "", MANDATORY, "fopen(r+b)+fwrite on existing file shall update file MC");
@@ -505,73 +505,74 @@ void group_check_interfaces_file_fopen(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.R+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_RP, "check_interfaces_file_fopen_fread_existing_RP", "Yes", POSIX_c181, MANDATORY, "fopen(r+)+fread on existing file shall update A");
     runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.RB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_RBP, "check_interfaces_file_fopen_fread_existing_RBP", "Yes", POSIX_c181, MANDATORY, "fopen(rb+)+fread on existing file shall update A");
     runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.R+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_RPB, "check_interfaces_file_fopen_fread_existing_RPB", "Yes", POSIX_c181, MANDATORY, "fopen(r+b)+fread on existing file shall update A");
-    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WP, "check_interfaces_file_fopen_fread_existing_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+)+fread on existing file shall update A");
-    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WBP, "check_interfaces_file_fopen_fread_existing_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+)+fread on existing file shall update A");
-    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WPB, "check_interfaces_file_fopen_fread_existing_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b)+fread on existing file shall update A");
+    
+    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.W+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WP, "check_interfaces_file_fopen_fread_existing_WP", "Yes", POSIX_c181, MANDATORY, "fopen(w+)+fread (nmemb>0) on existing file shall update A");
+    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.WB+", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WBP, "check_interfaces_file_fopen_fread_existing_WBP", "Yes", POSIX_c181, MANDATORY, "fopen(wb+)+fread (nmemb>0) on existing file shall update A");
+    runtest(env, "INTERFACES.FILE.FOPEN_FREAD.EXISTING.W+B", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_fopen_fread_existing_WPB, "check_interfaces_file_fopen_fread_existing_WPB", "Yes", POSIX_c181, MANDATORY, "fopen(w+b)+fread (nmemb>0) on existing file shall update A");
 }
 
 void group_check_interfaces_file_w(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
-    runtest(env, "INTERFACES.FILE.W.FPRINTF_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fflush_imm, "check_interfaces_file_w_fprintf_fflush_imm", "No", "", MANDATORY, "fprintf + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FPRINTF_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fflush_imm, "check_interfaces_file_w_fprintf_fflush_imm", "No", "", MANDATORY, "fprintf + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fflush, "check_interfaces_file_w_fprintf_fflush", "Yes", POSIX_c181, MANDATORY, "fprintf + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_fclose, "check_interfaces_file_w_fprintf_fclose", "Yes", POSIX_c181, MANDATORY, "fprintf + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_exit, "check_interfaces_file_w_fprintf_exit", "Yes", POSIX_c181, MANDATORY, "fprintf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fprintf_abort, "check_interfaces_file_w_fprintf_abort", "Yes", POSIX_c181, MANDATORY, "fprintf + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.PRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_fflush, "check_interfaces_file_w_printf_fflush", "Yes", POSIX_c181, MANDATORY, "printf + fflush shall mark MC for update");
-//     runtest(env, "INTERFACES.FILE.W.PRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_exit, "check_interfaces_file_w_printf_exit", "Yes", POSIX_c181, MANDATORY, "printf + exit shall update MC");
-    runtest(env, "INTERFACES.FILE.W.PRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_abort, "check_interfaces_file_w_printf_abort", "Yes", POSIX_c181, MANDATORY, "printf + abort shall mark MC for update");
+    runtest(env, "INTERFACES.FILE.W.PRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_fflush, "check_interfaces_file_w_printf_fflush", "Yes", POSIX_c181, MANDATORY, "printf + fflush (stdout) shall mark MC for update");
+//     runtest(env, "INTERFACES.FILE.W.PRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_exit, "check_interfaces_file_w_printf_exit", "Yes", POSIX_c181, MANDATORY, "printf + exit (stdout) shall update MC");
+    runtest(env, "INTERFACES.FILE.W.PRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_printf_abort, "check_interfaces_file_w_printf_abort", "Yes", POSIX_c181, MANDATORY, "printf + abort (stdout) shall mark MC for update");
     
     runtest(env, "INTERFACES.FILE.W.DPRINTF", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_dprintf, "check_interfaces_file_w_dprintf", "Yes", POSIX_c181, MANDATORY, "dprintf shall mark MC for update");
     
-    runtest(env, "INTERFACES.FILE.W.FPUTC_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fflush_imm, "check_interfaces_file_w_fputc_fflush_imm", "No", "", MANDATORY, "fputc + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FPUTC_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fflush_imm, "check_interfaces_file_w_fputc_fflush_imm", "No", "", MANDATORY, "fputc + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTC_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fflush, "check_interfaces_file_w_fputc_fflush", "Yes", POSIX_c181, MANDATORY, "fputc + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FPUTC_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_fclose, "check_interfaces_file_w_fputc_fclose", "Yes", POSIX_c181, MANDATORY, "fputc + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPUTC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_exit, "check_interfaces_file_w_fputc_exit", "Yes", POSIX_c181, MANDATORY, "fputc + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTC_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputc_abort, "check_interfaces_file_w_fputc_abort", "Yes", POSIX_c181, MANDATORY, "fputc + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.FPUTS_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fflush_imm, "check_interfaces_file_w_fputs_fflush_imm", "No", "", MANDATORY, "fputs + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FPUTS_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fflush_imm, "check_interfaces_file_w_fputs_fflush_imm", "No", "", MANDATORY, "fputs + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fflush, "check_interfaces_file_w_fputs_fflush", "Yes", POSIX_c181, MANDATORY, "fputs + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FPUTS_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_fclose, "check_interfaces_file_w_fputs_fclose", "Yes", POSIX_c181, MANDATORY, "fputs + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_exit, "check_interfaces_file_w_fputs_exit", "Yes", POSIX_c181, MANDATORY, "fputs + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputs_abort, "check_interfaces_file_w_fputs_abort", "Yes", POSIX_c181, MANDATORY, "fputs + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.FPUTWC_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fflush_imm, "check_interfaces_file_w_fputwc_fflush_imm", "No", "", MANDATORY, "fputwc + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FPUTWC_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fflush_imm, "check_interfaces_file_w_fputwc_fflush_imm", "No", "", MANDATORY, "fputwc + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWC_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fflush, "check_interfaces_file_w_fputwc_fflush", "Yes", POSIX_c181, MANDATORY, "fputwc + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FPUTWC_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_fclose, "check_interfaces_file_w_fputwc_fclose", "Yes", POSIX_c181, MANDATORY, "fputwc + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPUTWC_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_exit, "check_interfaces_file_w_fputwc_exit", "Yes", POSIX_c181, MANDATORY, "fputwc + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWC_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputwc_abort, "check_interfaces_file_w_fputwc_abort", "Yes", POSIX_c181, MANDATORY, "fputwc + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.FPUTWS_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fflush_imm, "check_interfaces_file_w_fputws_fflush_imm", "No", "", MANDATORY, "fputws + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FPUTWS_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fflush_imm, "check_interfaces_file_w_fputws_fflush_imm", "No", "", MANDATORY, "fputws + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fflush, "check_interfaces_file_w_fputws_fflush", "Yes", POSIX_c181, MANDATORY, "fputws + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FPUTWS_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_fclose, "check_interfaces_file_w_fputws_fclose", "Yes", POSIX_c181, MANDATORY, "fputws + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FPUTWS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_exit, "check_interfaces_file_w_fputws_exit", "Yes", POSIX_c181, MANDATORY, "fputws + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FPUTWS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fputws_abort, "check_interfaces_file_w_fputws_abort", "Yes", POSIX_c181, MANDATORY, "fputws + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.FWPRINTF_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fflush_imm, "check_interfaces_file_w_fwprintf_fflush_imm", "No", "", MANDATORY, "fwprintf + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FWPRINTF_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fflush_imm, "check_interfaces_file_w_fwprintf_fflush_imm", "No", "", MANDATORY, "fwprintf + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fflush, "check_interfaces_file_w_fwprintf_fflush", "Yes", POSIX_c181, MANDATORY, "fwprintf + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_fclose, "check_interfaces_file_w_fwprintf_fclose", "Yes", POSIX_c181, MANDATORY, "fwprintf + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FWPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_exit, "check_interfaces_file_w_fwprintf_exit", "Yes", POSIX_c181, MANDATORY, "fwprintf + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwprintf_abort, "check_interfaces_file_w_fwprintf_abort", "Yes", POSIX_c181, MANDATORY, "fwprintf + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.WPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_fflush, "check_interfaces_file_w_wprintf_fflush", "Yes", POSIX_c181, MANDATORY, "wprintf + fflush shall update MC");
-//     runtest(env, "INTERFACES.FILE.W.WPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_exit, "check_interfaces_file_w_wprintf_exit", "Yes", POSIX_c181, MANDATORY, "wprintf + exit shall update MC");
-    runtest(env, "INTERFACES.FILE.W.WPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_abort, "check_interfaces_file_w_wprintf_abort", "Yes", POSIX_c181, MANDATORY, "wprintf + abort shall update MC");
+    runtest(env, "INTERFACES.FILE.W.WPRINTF_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_fflush, "check_interfaces_file_w_wprintf_fflush", "Yes", POSIX_c181, MANDATORY, "wprintf + fflush (stdout) shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.WPRINTF_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_exit, "check_interfaces_file_w_wprintf_exit", "Yes", POSIX_c181, MANDATORY, "wprintf + exit (stdout) shall update MC");
+    runtest(env, "INTERFACES.FILE.W.WPRINTF_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_wprintf_abort, "check_interfaces_file_w_wprintf_abort", "Yes", POSIX_c181, MANDATORY, "wprintf + abort (stdout) shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.FWRITE_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fflush_imm, "check_interfaces_file_w_fwrite_fflush_imm", "No", "", MANDATORY, "fwrite + fflush shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.FWRITE_FFLUSH.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fflush_imm, "check_interfaces_file_w_fwrite_fflush_imm", "No", "", MANDATORY, "fwrite + fflush shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWRITE_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fflush, "check_interfaces_file_w_fwrite_fflush", "Yes", POSIX_c181, MANDATORY, "fwrite + fflush shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.FWRITE_FCLOSE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_fclose, "check_interfaces_file_w_fwrite_fclose", "Yes", POSIX_c181, MANDATORY, "fwrite + fclose shall update MC");
 //     runtest(env, "INTERFACES.FILE.W.FWRITE_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_exit, "check_interfaces_file_w_fwrite_exit", "Yes", POSIX_c181, MANDATORY, "fwrite + exit shall update MC");
     runtest(env, "INTERFACES.FILE.W.FWRITE_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_fwrite_abort, "check_interfaces_file_w_fwrite_abort", "Yes", POSIX_c181, MANDATORY, "fwrite + abort shall update MC");
     
-    runtest(env, "INTERFACES.FILE.W.PUTS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_fflush, "check_interfaces_file_w_puts_fflush", "Yes", POSIX_c181, MANDATORY, "puts + fflush shall update MC");
-//     runtest(env, "INTERFACES.FILE.W.PUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_exit, "check_interfaces_file_w_puts_exit", "Yes", POSIX_c181, MANDATORY, "puts + exit shall update MC");
-    runtest(env, "INTERFACES.FILE.W.PUTS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_abort, "check_interfaces_file_w_puts_abort", "Yes", POSIX_c181, MANDATORY, "puts + abort shall update MC");
+    runtest(env, "INTERFACES.FILE.W.PUTS_FFLUSH", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_fflush, "check_interfaces_file_w_puts_fflush", "Yes", POSIX_c181, MANDATORY, "puts + fflush (stdout) shall update MC");
+//     runtest(env, "INTERFACES.FILE.W.PUTS_EXIT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_exit, "check_interfaces_file_w_puts_exit", "Yes", POSIX_c181, MANDATORY, "puts + exit (stdout) shall update MC");
+    runtest(env, "INTERFACES.FILE.W.PUTS_ABORT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_puts_abort, "check_interfaces_file_w_puts_abort", "Yes", POSIX_c181, MANDATORY, "puts + abort (stdout) shall update MC");
     
     runtest(env, "INTERFACES.FILE.W.FTRUNCATE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_ftruncate, "check_interfaces_file_w_ftruncate", "Yes", POSIX_c181, MANDATORY, "ftruncate on regular file shall mark MC for update");
     
-    runtest(env, "INTERFACES.FILE.W.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_write_imm, "check_interfaces_file_w_write_imm", "No", "", MANDATORY, "With nbyte greater than 0, write shall update MC (immediately)");
+    runtest(env, "INTERFACES.FILE.W.WRITE.IMM", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_write_imm, "check_interfaces_file_w_write_imm", "No", "", MANDATORY, "With nbyte greater than 0, write shall update MC");
     runtest(env, "INTERFACES.FILE.W.WRITE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_write, "check_interfaces_file_w_write", "Yes", POSIX_c181, MANDATORY, "With nbyte greater than 0, write shall mark MC for update");
     runtest(env, "INTERFACES.FILE.W.WRITE.ZERO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_w_write_zero, "check_interfaces_file_w_write_zero", "Yes", "", MANDATORY, "With nbyte 0, write shall not update MAC");
 }
@@ -591,57 +592,57 @@ void group_check_interfaces_file_r(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.R.GETC.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getc_ungetc, "check_interfaces_file_r_getc_ungetc", "Yes", "", MAY, "getc returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.GETC.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getc_ungetc_both, "check_interfaces_file_r_getc_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getc returning both data supplied and not supplied by ungetc shall mark A for update");
     
-    runtest(env, "INTERFACES.FILE.R.FGETS.IMM", 10, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_imm, "check_interfaces_file_r_fgets_imm", "No", "", MANDATORY, "fgets returning data not supplied by ungetc shall update A (immediately)");
+    runtest(env, "INTERFACES.FILE.R.FGETS.IMM", 10, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_imm, "check_interfaces_file_r_fgets_imm", "No", "", MANDATORY, "fgets returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.FGETS", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets, "check_interfaces_file_r_fgets", "Yes", POSIX_c181, MANDATORY, "fgets returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.FGETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_ungetc, "check_interfaces_file_r_fgets_ungetc", "Yes", POSIX_c181, MAY, "fgets returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.FGETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fgets_ungetc_both, "check_interfaces_file_r_fgets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fgets returning both data supplied and not supplied by ungetc shall mark A for update");
-    
+
 #ifndef __OpenBSD__
 #ifndef __FreeBSD__
     if (OPTION_TEST_INPUT == 1){
-        runtest(env, "INTERFACES.FILE.R.GETS", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets, "check_interfaces_file_r_gets", "Yes", POSIX_c181, MANDATORY, "gets returning data not supplied by ungetc shall mark A for update");
-        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc, "check_interfaces_file_r_gets_ungetc", "Yes", POSIX_c181, MAY, "gets returning data supplied by ungetc may mark A for update");
-        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc_both, "check_interfaces_file_r_gets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "gets returning both data supplied and not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETS", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets, "check_interfaces_file_r_gets", "Yes", POSIX_c181, MANDATORY, "gets (stdin) returning data not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc, "check_interfaces_file_r_gets_ungetc", "Yes", POSIX_c181, MAY, "gets (stdin) returning data supplied by ungetc may mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETS.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_gets_ungetc_both, "check_interfaces_file_r_gets_ungetc_both", "Yes", POSIX_c181, MANDATORY, "gets (stdin) returning both data supplied and not supplied by ungetc shall mark A for update");
     }
 #endif
 #endif
-    
+
     if (OPTION_TEST_INPUT == 1){
-        runtest(env, "INTERFACES.FILE.R.GETCHAR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar, "check_interfaces_file_r_getchar", "Yes", POSIX_c181, MANDATORY, "getchar returning data not supplied by ungetc shall mark A for update");
-        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc, "check_interfaces_file_r_getchar_ungetc", "Yes", POSIX_c181, MAY, "getchar returning data supplied by ungetc may mark A for update");
-        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc_both, "check_interfaces_file_r_getchar_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getchar returning both data supplied and not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETCHAR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar, "check_interfaces_file_r_getchar", "Yes", POSIX_c181, MANDATORY, "getchar (stdin) returning data not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc, "check_interfaces_file_r_getchar_ungetc", "Yes", POSIX_c181, MAY, "getchar (stdin) returning data supplied by ungetc may mark A for update");
+        runtest(env, "INTERFACES.FILE.R.GETCHAR.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getchar_ungetc_both, "check_interfaces_file_r_getchar_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getchar (stdin) returning both data supplied and not supplied by ungetc shall mark A for update");
     }
     
     runtest(env, "INTERFACES.FILE.R.GETDELIM", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim, "check_interfaces_file_r_getdelim", "Yes", POSIX_c181, MANDATORY, "getdelim returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.GETDELIM.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim_ungetc, "check_interfaces_file_r_getdelim_ungetc", "Yes", POSIX_c181, MAY, "getdelim returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.GETDELIM.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getdelim_ungetc_both, "check_interfaces_file_r_getdelim_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getdelim returning both data supplied and not supplied by ungetc shall mark A for update");
-    
+   
     runtest(env, "INTERFACES.FILE.R.GETLINE", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline, "check_interfaces_file_r_getline", "Yes", POSIX_c181, MANDATORY, "getline returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.GETLINE.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline_ungetc, "check_interfaces_file_r_getline_ungetc", "Yes", POSIX_c181, MAY, "getline returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.GETLINE.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_getline_ungetc_both, "check_interfaces_file_r_getline_ungetc_both", "Yes", POSIX_c181, MANDATORY, "getline returning both data supplied and not supplied by ungetc shall mark A for update");
-    
+
     runtest(env, "INTERFACES.FILE.R.FSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf, "check_interfaces_file_r_fscanf", "Yes", POSIX_c181, MANDATORY, "fscanf returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.FSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf_ungetc, "check_interfaces_file_r_fscanf_ungetc", "Yes", POSIX_c181, MAY, "fscanf returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.FSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fscanf_ungetc_both, "check_interfaces_file_r_fscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fscanf returning both data supplied and not supplied by ungetc shall mark A for update");
-    
+ 
     if (OPTION_TEST_INPUT == 1){
-        runtest(env, "INTERFACES.FILE.R.SCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf, "check_interfaces_file_r_scanf", "Yes", POSIX_c181, MANDATORY, "scanf returning data not supplied by ungetc shall mark A for update");
-        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc, "check_interfaces_file_r_scanf_ungetc", "Yes", POSIX_c181, MAY, "scanf returning data supplied by ungetc may mark A for update");
-        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc_both, "check_interfaces_file_r_scanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "scanf returning both data supplied and not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.SCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf, "check_interfaces_file_r_scanf", "Yes", POSIX_c181, MANDATORY, "scanf (stdin) returning data not supplied by ungetc shall mark A for update");
+        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc, "check_interfaces_file_r_scanf_ungetc", "Yes", POSIX_c181, MAY, "scanf (stdin) returning data supplied by ungetc may mark A for update");
+        runtest(env, "INTERFACES.FILE.R.SCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_scanf_ungetc_both, "check_interfaces_file_r_scanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "scanf (stdin) returning both data supplied and not supplied by ungetc shall mark A for update");
     }
-    
+ 
     runtest(env, "INTERFACES.FILE.R.FWSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf, "check_interfaces_file_r_fwscanf", "Yes", POSIX_c181, MANDATORY, "fwscanf returning data not supplied by ungetc shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc, "check_interfaces_file_r_fwscanf_ungetc", "Yes", POSIX_c181, MAY, "fwscanf returning data supplied by ungetc may mark A for update");
     runtest(env, "INTERFACES.FILE.R.FWSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_fwscanf_ungetc_both, "check_interfaces_file_r_fwscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "fwscanf returning both data supplied and not supplied by ungetc shall mark A for update");
-    
+
     if (OPTION_TEST_INPUT == 1){
         // WARNING: it messes with stdin, I could not find a solution...
         runtest(env, "INTERFACES.FILE.R.WSCANF", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf, "check_interfaces_file_r_wscanf", "Yes", POSIX_c181, MANDATORY, "wscanf returning data not supplied by ungetc shall mark A for update");
         runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc, "check_interfaces_file_r_wscanf_ungetc", "Yes", POSIX_c181, MAY, "wscanf returning data supplied by ungetc may mark A for update");
         runtest(env, "INTERFACES.FILE.R.WSCANF.UNGETC.BOTH", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_wscanf_ungetc_both, "check_interfaces_file_r_wscanf_ungetc_both", "Yes", POSIX_c181, MANDATORY, "wscanf returning both data supplied and not supplied by ungetc shall mark A for update");
     }
-    
-    runtest(env, "INTERFACES.FILE.R.READ.IMM", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_read_imm, "check_interfaces_file_r_read_imm", "No", "", MANDATORY, "With nbyte greater than 0, read shall update A (immediately)");
+
+    runtest(env, "INTERFACES.FILE.R.READ.IMM", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_read_imm, "check_interfaces_file_r_read_imm", "No", "", MANDATORY, "With nbyte greater than 0, read shall update A");
     runtest(env, "INTERFACES.FILE.R.READ", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_read, "check_interfaces_file_r_read", "Yes", POSIX_c181, MANDATORY, "With nbyte greater than 0, read shall mark A for update");
     runtest(env, "INTERFACES.FILE.R.READ.ZERO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_read_zero, "check_interfaces_file_r_read_zero", "Yes", "", MANDATORY, "With nbyte equal to 0, read shall not update MAC");
     runtest(env, "INTERFACES.FILE.R.PREAD", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_r_pread, "check_interfaces_file_r_pread", "Yes", POSIX_c181, MANDATORY, "With nbyte greater than 0, pread shall mark A for update");
@@ -650,7 +651,7 @@ void group_check_interfaces_file_r(testenv_struct* env){
 
 void group_check_interfaces_dir(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "INTERFACES.DIR.READDIR", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir, "check_interfaces_dir_readdir", "Yes", "", MANDATORY, "readdir on a directory shall update A");
     runtest(env, "INTERFACES.DIR.READDIR.FILES", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_files, "check_interfaces_dir_readdir_files", "Yes", "", MANDATORY, "readdir on a directory shall not update MAC of files in the directory");
     runtest(env, "INTERFACES.DIR.READDIR_R", 2, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_dir_readdir_r, "check_interfaces_dir_readdir_r", "Yes", "", MANDATORY, "readdir_r on a directory shall update A");
@@ -659,7 +660,7 @@ void group_check_interfaces_dir(testenv_struct* env){
 
 void group_check_interfaces_file_ln(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "INTERFACES.FILE.LN.LINK", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_link, "check_interfaces_file_ln_link", "Yes", POSIX_c181, MANDATORY, "link shall mark for update C and MC of the directory containing the new entry");
     runtest(env, "INTERFACES.FILE.LN.LINKAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_linkat, "check_interfaces_file_ln_linkat", "Yes", POSIX_c181, MANDATORY, "linkat shall mark for update C and MC of the directory containing the new entry");
     runtest(env, "INTERFACES.FILE.LN.SYMLINK", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_ln_symlink, "check_interfaces_file_ln_symlink", "Yes", POSIX_c181, MANDATORY, "symlink shall mark for update C and MC of the directory containing the new entry");
@@ -670,7 +671,7 @@ void group_check_interfaces_file_ln(testenv_struct* env){
 
 void group_check_interfaces_file_new(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_new, "check_interfaces_file_new_mkdtemp_new", "Yes", POSIX_c181, MANDATORY, "mkdtemp shall create new directory with updated MAC");
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac, "check_interfaces_file_new_mkdtemp_mac", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKDTEMP.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdtemp_mac_1s, "check_interfaces_file_new_mkdtemp_mac_1s", "Yes", "", MANDATORY, "mkdtemp shall create new directory with MAC equal after 1s");
@@ -691,7 +692,8 @@ void group_check_interfaces_file_new(testenv_struct* env){
 
 void group_check_interfaces_file_mv(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+                                   
+    // TODO
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file, "check_interfaces_file_mv_rename_file", "No", "", MANDATORY, "rename on a file shall update C");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_ma, "check_interfaces_file_mv_rename_file_ma", "No", "", MANDATORY, "rename on a file shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_dir, "check_interfaces_file_mv_rename_file_dir", "Yes", POSIX_c181, MANDATORY, "rename on a file shall update MC of parent directory");
