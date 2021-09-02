@@ -240,60 +240,6 @@ int main (int argc, char **argv){
     current_time_setup_local_timemarker(output_file, error_file);
     current_time_setup_local_timemarkerdir(output_file, error_file);
     
-    // pre-creating some of the test files
-//     misc_concat_ensure_file_exists_free(dir_path, "/tmp/tmp_posixtest_timemarker", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.futimens", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimensat", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utimes", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.utime", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.write", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fflush.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.write", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fseek.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.write", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fsync.nowrite", s_0s, ns_0ns, output_file, error_file, __func__);
-//     
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fwrite.existing.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.dir.writemode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.rb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.readmode.r+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.wb+", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.fopen_fread.existing.writemode.w+b", s_0s, ns_0ns, output_file, error_file, __func__);
-//     
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_fflush", s_0s, ns_0ns, output_file, error_file, __func__);
-//     misc_concat_ensure_file_exists_free(dir_path, "interfaces.file.w.fprintf_ffclose", s_0s, ns_0ns, output_file, error_file, __func__);
-    
-    
-        
-//     misc_concat_ensure_file_exists_free(dir_path, "run_test_pause", 2*s_1s, ns_0ns, output_file, error_file, __func__);
     
     if (OPTION_APPEND_CSV == 0) log_csv_add_line(csv_file, 6, "Passed?", "Description", "Specified?", "Spec", "Level", "Ref", "Function");
     group_check_general_clock(test_env);
