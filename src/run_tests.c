@@ -692,8 +692,7 @@ void group_check_interfaces_file_new(testenv_struct* env){
 
 void group_check_interfaces_file_mv(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-                                   
-    // TODO
+
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file, "check_interfaces_file_mv_rename_file", "No", "", MANDATORY, "rename on a file shall update C");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_ma, "check_interfaces_file_mv_rename_file_ma", "No", "", MANDATORY, "rename on a file shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_dir, "check_interfaces_file_mv_rename_file_dir", "Yes", POSIX_c181, MANDATORY, "rename on a file shall update MC of parent directory");
@@ -711,7 +710,8 @@ void group_check_interfaces_file_mv(testenv_struct* env){
 
 void group_check_interfaces_file_rm(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+                                       
+    // TODO
     runtest(env, "INTERFACES.FILE.RM.UNLINK.LAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_last_dir, "check_interfaces_file_rm_unlink_last_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast_dir, "check_interfaces_file_rm_unlink_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast, "check_interfaces_file_rm_unlink_notlast", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update C");
@@ -721,7 +721,7 @@ void group_check_interfaces_file_rm(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.RM.UNLINKAT.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlinkat_notlast, "check_interfaces_file_rm_unlinkat_notlast", "Yes", POSIX_c181, MANDATORY, "unlinkat when file’s link count is not 0 shall update C");
     
     runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.EMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_empty_parentdir, "check_interfaces_file_rm_remove_dir_empty_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on an empty dir shall update parent directory MC");
-    runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.NOTEMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_notempty_parentdir, "check_interfaces_file_rm_remove_dir_notempty_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a not empty dir shall update parent directory MC");
+    runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.NOTEMPTY.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_notempty_parentdir, "check_interfaces_file_rm_remove_dir_notempty_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a not empty dir shall not update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.REMOVE.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_dir_notempty, "check_interfaces_file_rm_remove_dir_notempty", "Yes", POSIX_c181, MANDATORY, "remove on a not empty dir shall update C");
     
     runtest(env, "INTERFACES.FILE.RM.REMOVE.FILE.LAST.PARENTDIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_remove_file_last_parentdir, "check_interfaces_file_rm_remove_file_last_parentdir", "Yes", POSIX_c181, MANDATORY, "remove on a file who’s link count is 0 shall update parent directory MC");

@@ -8,14 +8,14 @@ int check_interfaces_file_rm_unlink_last_dir(FILE* csv_file, FILE* output_file, 
     mkdir(path_dir, 0700);
     
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlink(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -37,14 +37,14 @@ int check_interfaces_file_rm_unlink_notlast_dir(FILE* csv_file, FILE* output_fil
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlink(path_link);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -67,14 +67,14 @@ int check_interfaces_file_rm_unlink_notlast(FILE* csv_file, FILE* output_file, F
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlink(path_link);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -95,14 +95,14 @@ int check_interfaces_file_rm_unlinkat_last_dir(FILE* csv_file, FILE* output_file
     mkdir(path_dir, 0700);
     
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlinkat((int) AT_FDCWD, path, 0);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -124,14 +124,14 @@ int check_interfaces_file_rm_unlinkat_notlast_dir(FILE* csv_file, FILE* output_f
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlinkat((int) AT_FDCWD, path_link, 0);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -154,14 +154,14 @@ int check_interfaces_file_rm_unlinkat_notlast(FILE* csv_file, FILE* output_file,
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlinkat((int) AT_FDCWD, path_link, 0);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -183,14 +183,14 @@ int check_interfaces_file_rm_remove_dir_empty_parentdir(FILE* csv_file, FILE* ou
     
     char* path = (char*) misc_concat(path_dir, "dir/");
     mkdir(path, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     remove(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -212,17 +212,17 @@ int check_interfaces_file_rm_remove_dir_notempty_parentdir(FILE* csv_file, FILE*
     char* path = (char*) misc_concat(path_dir, "dir/");
     mkdir(path, 0700);
     char* path_file = (char*) misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     remove(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
-    int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
+    int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_OPTIONAL, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
     
     free(path);
@@ -242,14 +242,14 @@ int check_interfaces_file_rm_remove_dir_notempty(FILE* csv_file, FILE* output_fi
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     remove(path_link);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -270,14 +270,14 @@ int check_interfaces_file_rm_remove_file_last_parentdir(FILE* csv_file, FILE* ou
     mkdir(path_dir, 0700);
     
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     remove(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -299,14 +299,14 @@ int check_interfaces_file_rm_remove_file_notlast_parentdir(FILE* csv_file, FILE*
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     remove(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -329,14 +329,14 @@ int check_interfaces_file_rm_remove_file_notlast(FILE* csv_file, FILE* output_fi
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     unlink(path_link);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
@@ -358,14 +358,14 @@ int check_interfaces_file_rm_rmdir_empty_parentdir(FILE* csv_file, FILE* output_
     
     char* path = (char*) misc_concat(path_dir, "dir/");
     mkdir(path, 0700);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     rmdir(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -387,14 +387,14 @@ int check_interfaces_file_rm_rmdir_notempty_parentdir(FILE* csv_file, FILE* outp
     char* path = (char*) misc_concat(path_dir, "dir/");
     mkdir(path, 0700);
     char* path_file = (char*) misc_concat_ensure_file_exists(path, "file", s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     rmdir(path);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* dir_stat = get_path_timestamps(path_dir);
     
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_OPTIONAL, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -417,14 +417,14 @@ int check_interfaces_file_rm_rmdir_notempty(FILE* csv_file, FILE* output_file, F
     char* path = (char*) misc_concat_ensure_file_exists(path_dir, "file", s_0s, ns_0ns, output_file, error_file, __func__);
     char* path_link = (char*) misc_concat(path_dir, "file_link");
     link(path, path_link);
-    misc_nanosleep(ns_after_open);
+    misc_nanosleep(ns_DELAY);
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     rmdir(path_link);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    
+    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path);
     
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, NOUPDATE_OPTIONAL, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
