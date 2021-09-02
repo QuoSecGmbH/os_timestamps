@@ -21,8 +21,8 @@
 #include "misc.h"
 // #include "current_time_message.h"
 
-char* path_timemarker;
-char* path_timemarkerdir;
+extern char* path_timemarker;
+extern char* path_timemarkerdir;
 
 void current_time_setup_local_timemarker(FILE* output_file, FILE* error_file);
 void current_time_setup_local_timemarkerdir(FILE* output_file, FILE* error_file);
