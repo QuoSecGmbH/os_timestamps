@@ -734,15 +734,14 @@ void group_check_interfaces_file_rm(testenv_struct* env){
 
 void group_check_utilities_attr(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-                                           
-    // TODO
+
     runtest(env, "UTILITIES.ATTR.CHMOD.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_new, "check_utilities_attr_chmod_new", "Yes", POSIX_c181, MANDATORY, "chmod with different mode shall update C");
     runtest(env, "UTILITIES.ATTR.CHMOD.SAME", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_same, "check_utilities_attr_chmod_same", "Yes", POSIX_c181, MANDATORY, "chmod with same mode shall update C");
 }
 
 void group_check_utilities_cp(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.CP.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new, "check_utilities_cp_new", "Yes", POSIX_c181, MANDATORY, "cp with destination not existing shall update MAC");
     runtest(env, "UTILITIES.CP.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_mac, "check_utilities_cp_new_mac", "No", "", MANDATORY, "cp with destination not existing shall set MAC equal");
     runtest(env, "UTILITIES.CP.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_cp_new_dir, "check_utilities_cp_new_dir", "No", "", MANDATORY, "cp with destination not existing shall update MC of dest’s parent dir and not update MAC of src’s parent dir");
@@ -755,7 +754,7 @@ void group_check_utilities_cp(testenv_struct* env){
 
 void group_check_utilities_new(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.NEW.TOUCH.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new, "check_utilities_new_touch_new", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MAC");
     runtest(env, "UTILITIES.NEW.TOUCH.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_mac, "check_utilities_new_touch_new_mac", "No", "", MANDATORY, "touch on non existing file shall set MAC equal");
     runtest(env, "UTILITIES.NEW.TOUCH.NEW.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_touch_new_dir, "check_utilities_new_touch_new_dir", "Yes", POSIX_c181, MANDATORY, "touch on non existing file shall update MC of parent directory");
@@ -775,7 +774,7 @@ void group_check_utilities_new(testenv_struct* env){
     
 void group_check_utilities_mv(testenv_struct* env){    
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
     runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", "", MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
     runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
@@ -784,7 +783,7 @@ void group_check_utilities_mv(testenv_struct* env){
 
 void group_check_utilities_rm(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.RM.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_dir_empty, "check_utilities_rm_rm_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm on an empty dir shall not update MAC of the directory nor of its parent dir");
     runtest(env, "UTILITIES.RM.R.RM.DIR.EMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_empty, "check_utilities_rm_rm_r_dir_empty", "Yes", POSIX_c181, MANDATORY, "rm -r on an empty dir shall update parent directory MC");
     runtest(env, "UTILITIES.RM.R.RM.DIR.NOTEMPTY", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_rm_rm_r_dir_notempty, "check_utilities_rm_rm_r_dir_notempty", "Yes", POSIX_c181, MANDATORY, "rm -r on a not empty dir shall update parent directory MC");
@@ -803,7 +802,7 @@ void group_check_utilities_rm(testenv_struct* env){
 
 void group_check_utilities_ln(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.LN.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_new, "check_utilities_ln_new", "Yes", POSIX_c181, MANDATORY, "ln when the target does not exist shall update C and MC of the directory containing the new entry");
     runtest(env, "UTILITIES.LN.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_existing, "check_utilities_ln_existing", "Yes", POSIX_c181, MANDATORY, "ln when the target exists shall not update MAC of the target nor of its parent directory");
     runtest(env, "UTILITIES.LN.S.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ln_s_new, "check_utilities_ln_s_new", "Yes", POSIX_c181, MANDATORY, "ln -s when the target does not exist shall update MAC of the link and MC of the directory containing the link");
@@ -812,7 +811,7 @@ void group_check_utilities_ln(testenv_struct* env){
 
 void group_check_utilities_ls(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+
     runtest(env, "UTILITIES.LS", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
     runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "No", "", MANDATORY, "ls shall not update MAC of files in target directory");
 }
@@ -821,7 +820,7 @@ void group_check_utilities_vi(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
 //     fseek(stdin, 0, SEEK_END);
-    
+
     if (OPTION_TEST_INPUT == 1){
         runtest(env, "UTILITIES.VI.NEW.I.W.Q", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q, "check_utilities_vi_new_i_w_q", "No", "", MANDATORY, "vi on new file (w then q) shall update MAC on write command and update MC of parent directory");
         runtest(env, "UTILITIES.VI.NEW.I.W.Q.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_vi_new_i_w_q_mac, "check_utilities_vi_new_i_w_q_mac", "No", "", MANDATORY, "vi on new file (w then q) shall update set MAC equal");
