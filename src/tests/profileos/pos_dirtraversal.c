@@ -28,7 +28,7 @@ struct profile_info_struct* profileos_dirtraversal_interface(testenv_struct* env
     }
     misc_nanosleep(ns_after_open); 
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -47,7 +47,7 @@ struct profile_info_struct* profileos_dirtraversal_utilities(testenv_struct* env
     system(cmd1);
     misc_nanosleep(ns_after_open); 
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -97,7 +97,7 @@ struct profile_info_struct* profileos_dirtraversal_interface_symlink(testenv_str
     }
     misc_nanosleep(ns_after_open); 
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -123,7 +123,7 @@ struct profile_info_struct* profileos_dirtraversal_utilities_symlink(testenv_str
     system(cmd1);
     misc_nanosleep(ns_after_open); 
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

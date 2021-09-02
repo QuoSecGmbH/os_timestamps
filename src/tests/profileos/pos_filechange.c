@@ -18,7 +18,7 @@ struct profile_info_struct* profileos_filechange_interface_chmod(testenv_struct*
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -39,7 +39,7 @@ struct profile_info_struct* profileos_filechange_interface_chown(testenv_struct*
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -95,7 +95,7 @@ struct profile_info_struct* profileos_filechange_interface_chmod_symlink(testenv
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -125,7 +125,7 @@ struct profile_info_struct* profileos_filechange_interface_chown_symlink(testenv
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -204,7 +204,7 @@ struct profile_info_struct* profileos_filechange_interface_chmod_symlink_nofollo
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -234,7 +234,7 @@ struct profile_info_struct* profileos_filechange_interface_chown_symlink_nofollo
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -302,7 +302,7 @@ struct profile_info_struct* profileos_filechange_interface_chmod_dir(testenv_str
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -323,7 +323,7 @@ struct profile_info_struct* profileos_filechange_interface_chown_dir(testenv_str
         return 1;
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

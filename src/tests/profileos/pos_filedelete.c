@@ -13,7 +13,7 @@ struct profile_info_struct* profileos_filedelete_last_interface_empty(testenv_st
     
     unlink(path);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -27,7 +27,7 @@ struct profile_info_struct* profileos_filedelete_last_interface_notempty(testenv
     
     unlink(path);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -51,7 +51,7 @@ struct profile_info_struct* profileos_filedelete_last_interface_symlink(testenv_
     
     unlink(path_symlink);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -117,7 +117,7 @@ struct profile_info_struct* profileos_filedelete_notlast_interface_empty(testenv
     
     unlink(path_link);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -134,7 +134,7 @@ struct profile_info_struct* profileos_filedelete_notlast_interface_notempty(test
     
     unlink(path_link);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -180,7 +180,7 @@ struct profile_info_struct* profileos_dirdelete_interface(testenv_struct* env){
     
     rmdir(path);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -204,7 +204,7 @@ struct profile_info_struct* profileos_dirdelete_interface_symlink(testenv_struct
     
     unlink(path_symlink);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

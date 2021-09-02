@@ -40,7 +40,7 @@ struct profile_info_struct* profileos_execute_system_interface(testenv_struct* e
     
     chdir("../../");
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -96,7 +96,7 @@ struct profile_info_struct* profileos_execute_local_interface(testenv_struct* en
     
     chdir("../../");
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -149,7 +149,7 @@ struct profile_info_struct* profileos_execute_local_interface_symlink(testenv_st
     
     chdir("../../");
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -201,7 +201,7 @@ struct profile_info_struct* profileos_execute_local_interface_intosymlinkdir(tes
     
     chdir("../../");
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

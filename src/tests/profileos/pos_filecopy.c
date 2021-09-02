@@ -26,7 +26,7 @@ struct profile_info_struct* profileos_filecopy_interface_new(testenv_struct* env
     fclose(srcFile);
     fclose(dstFile);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -55,7 +55,7 @@ struct profile_info_struct* profileos_volumefilecopy_interface_new(testenv_struc
     fclose(srcFile);
     fclose(dstFile);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -83,7 +83,7 @@ struct profile_info_struct* profileos_filecopy_interface_existing(testenv_struct
     fclose(srcFile);
     fclose(dstFile);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -111,7 +111,7 @@ struct profile_info_struct* profileos_volumefilecopy_interface_existing(testenv_
     fclose(srcFile);
     fclose(dstFile);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

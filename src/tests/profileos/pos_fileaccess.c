@@ -16,7 +16,7 @@ struct profile_info_struct* profileos_fileaccess_interface(testenv_struct* env){
     int n_read = fread(buf, 1, 2, fd);
     fclose(fd);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -44,7 +44,7 @@ struct profile_info_struct* profileos_fileaccess_interface_symlink(testenv_struc
     int n_read = fread(buf, 1, 2, fd);
     fclose(fd);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -113,7 +113,7 @@ struct profile_info_struct* profileos_symlink_readlink_interface(testenv_struct*
         log_warning(env->output_file, env->error_file, "%s - %s: %d", __func__, "error reading symlink", errno);
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -168,7 +168,7 @@ struct profile_info_struct* profileos_symlink_readlink_interface_dir(testenv_str
         log_warning(env->output_file, env->error_file, "%s - %s: %d", __func__, "error reading symlink", errno);
     }
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

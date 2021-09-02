@@ -257,11 +257,10 @@ struct profile_init_struct* profile_init(int watch_num, char** watch_array){
     return pis;
 }
 
-struct profile_info_struct* profile_analyze(struct profile_init_struct* pis, int watch_num, char** watch_array, time_t wait_command_s, long wait_command_ns){
+struct profile_info_struct* profile_analyze(struct profile_init_struct* pis, int watch_num, char** watch_array, long wait_command_ns){
     struct stat_macb** multi_stat_after = get_multi_path_timestamps(watch_num, watch_array);
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
-    misc_sleep(wait_command_s);
     misc_nanosleep(wait_command_ns);
     
     struct stat_macb** multi_stat_after_delay = get_multi_path_timestamps(watch_num, watch_array);

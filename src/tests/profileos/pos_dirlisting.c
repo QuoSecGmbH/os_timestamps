@@ -25,7 +25,7 @@ struct profile_info_struct* profileos_dirlisting_interface_notempty(testenv_stru
     }
     closedir(dp);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -61,7 +61,7 @@ struct profile_info_struct* profileos_dirlisting_interface_symlink(testenv_struc
     }
     closedir(dp);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 
@@ -87,7 +87,7 @@ struct profile_info_struct* profileos_dirlisting_interface_empty(testenv_struct*
     }
     closedir(dp);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     return pi;
 }
 

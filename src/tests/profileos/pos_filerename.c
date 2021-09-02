@@ -14,7 +14,7 @@ struct profile_info_struct* profileos_filerename_interface_new(testenv_struct* e
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -30,7 +30,7 @@ struct profile_info_struct* profileos_filerename_interface_existing(testenv_stru
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -47,7 +47,7 @@ struct profile_info_struct* profileos_filerename_interface_dir_new(testenv_struc
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -65,7 +65,7 @@ struct profile_info_struct* profileos_filerename_interface_dir_existing(testenv_
 //     unlink(path_new); // (equivalent with or without as per POSIX description)
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }

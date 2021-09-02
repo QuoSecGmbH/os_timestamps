@@ -16,7 +16,7 @@ struct profile_info_struct* profileos_localfilemove_interface_new(testenv_struct
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -34,7 +34,7 @@ struct profile_info_struct* profileos_localfilemove_interface_existing(testenv_s
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -53,7 +53,7 @@ struct profile_info_struct* profileos_localfilemove_interface_dir_new(testenv_st
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -72,7 +72,7 @@ struct profile_info_struct* profileos_localfilemove_interface_dir_existing(teste
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }

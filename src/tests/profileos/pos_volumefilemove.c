@@ -20,7 +20,7 @@ struct profile_info_struct* profileos_volumefilemove_interface_new(testenv_struc
     int ret = rename(path, path_new);
     printf("ret: %d - %d\n", ret, errno);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -39,7 +39,7 @@ struct profile_info_struct* profileos_volumefilemove_interface_existing(testenv_
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -59,7 +59,7 @@ struct profile_info_struct* profileos_volumefilemove_interface_dir_new(testenv_s
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
@@ -79,7 +79,7 @@ struct profile_info_struct* profileos_volumefilemove_interface_dir_existing(test
     
     rename(path, path_new);
     
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_NS);
     
     return pi;
 }
