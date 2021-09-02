@@ -51,7 +51,7 @@ struct profile_info_struct* profileos_execute_system_utilities(testenv_struct* e
     char** watch_array = misc_char_array3("/usr/bin/id", "/bin", path_pwd);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 
@@ -218,7 +218,7 @@ struct profile_info_struct* profileos_execute_local_utilities(testenv_struct* en
     char** watch_array = misc_char_array3(path_id_local, path_bindir, path_pwd);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 
@@ -244,7 +244,7 @@ struct profile_info_struct* profileos_execute_local_utilities_symlink(testenv_st
     char** watch_array = misc_char_array5(path_id_local, path_id_link, path_bindir, path_linkdir, path_pwd);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 
@@ -269,7 +269,7 @@ struct profile_info_struct* profileos_execute_local_utilities_intosymlinkdir(tes
     char** watch_array = misc_char_array4(path_id_local, path_bindir, path_bindir_link, path_pwd);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 

@@ -17,7 +17,7 @@ int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     char** watch_array = misc_char_array5(path_src, path_pwd, path_srcdir, path_targetdir, path_copy);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
     r1[1] = NOUPDATE_OPTIONAL;
@@ -66,7 +66,7 @@ int check_utilities_mv_new_eq(FILE* csv_file, FILE* output_file, FILE* error_fil
     char** watch_array = misc_char_array3(path_srcdir, path_targetdir, path_copy);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* srcdir_stat = pi->multi_stat_after[0];
     struct stat_macb* targetdir_stat = pi->multi_stat_after[1];
@@ -99,7 +99,7 @@ int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     char** watch_array = misc_char_array5(path_src, path_pwd, path_srcdir, path_targetdir, path_copy);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -149,7 +149,7 @@ int check_utilities_mv_existing_eq(FILE* csv_file, FILE* output_file, FILE* erro
     char** watch_array = misc_char_array3(path_srcdir, path_targetdir, path_copy);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* srcdir_stat = pi->multi_stat_after[0];
     struct stat_macb* targetdir_stat = pi->multi_stat_after[1];

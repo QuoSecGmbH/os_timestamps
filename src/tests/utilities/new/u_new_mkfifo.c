@@ -17,7 +17,7 @@ int check_utilities_new_mkfifo_new(FILE* csv_file, FILE* output_file, FILE* erro
     char** watch_array = misc_char_array3(path_pwd, path_targetdir, path_fifo);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -55,7 +55,7 @@ int check_utilities_new_mkfifo_new_mac(FILE* csv_file, FILE* output_file, FILE* 
     char** watch_array = misc_char_array1(path_fifo);
     int watch_num = 1;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* file_stat = pi->multi_stat_after[0];
     
@@ -83,7 +83,7 @@ int check_utilities_new_mkfifo_existing(FILE* csv_file, FILE* output_file, FILE*
     char** watch_array = misc_char_array3(path_pwd, path_targetdir, path_fifo);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;

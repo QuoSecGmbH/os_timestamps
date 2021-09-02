@@ -269,7 +269,7 @@ struct profile_info_struct* profileos_volumefilecopy_utilities_dir_new_empty(tes
 //     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
 //     int watch_num = 4;
 //     
-//     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+//     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
 //     
 //     return pi;
 // }

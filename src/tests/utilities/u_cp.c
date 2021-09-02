@@ -17,7 +17,7 @@ int check_utilities_cp_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     char** watch_array = misc_char_array5(path_file, path_pwd, path_srcdir, path_targetdir, path_copy);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -68,7 +68,7 @@ int check_utilities_cp_new_mac(FILE* csv_file, FILE* output_file, FILE* error_fi
     char** watch_array = misc_char_array1(path_copy);
     int watch_num = 1;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* file_stat = pi->multi_stat_after[0];
     
@@ -96,7 +96,7 @@ int check_utilities_cp_new_dir(FILE* csv_file, FILE* output_file, FILE* error_fi
     char** watch_array = misc_char_array3(path_pwd, path_srcdir, path_targetdir);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -136,7 +136,7 @@ int check_utilities_cp_new_dir_mc(FILE* csv_file, FILE* output_file, FILE* error
     char** watch_array = misc_char_array1(path_targetdir);
     int watch_num = 1;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* file_stat = pi->multi_stat_after[0];
     
@@ -165,7 +165,7 @@ int check_utilities_cp_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     char** watch_array = misc_char_array5(path_pwd, path_srcdir, path_targetdir, path_file, path_copy);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -216,7 +216,7 @@ int check_utilities_cp_existing_mc(FILE* csv_file, FILE* output_file, FILE* erro
     char** watch_array = misc_char_array1(path_copy);
     int watch_num = 1;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     struct stat_macb* file_stat = pi->multi_stat_after[0];
     
@@ -245,7 +245,7 @@ int check_utilities_cp_existing_dir(FILE* csv_file, FILE* output_file, FILE* err
     char** watch_array = misc_char_array3(path_pwd, path_srcdir, path_targetdir);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;

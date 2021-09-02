@@ -13,9 +13,9 @@ void print_usage(){
     fprintf(stderr, "  --dir / -d PWD_DIR\n");
     fprintf(stderr, "  --watch / -w WATCH\n");
     fprintf(stderr, "  --precommand / -p \"PRECOMMAND\"\n");
-    fprintf(stderr, "  --wait-pre-s / -s WAIT_PRE_S\n");
+//     fprintf(stderr, "  --wait-pre-s / -s WAIT_PRE_S\n");
     fprintf(stderr, "  --wait-pre-ns / -n WAIT_PRE_NS\n");
-    fprintf(stderr, "  --wait-cmd-s / -t WAIT_CMD_S\n");
+//     fprintf(stderr, "  --wait-cmd-s / -t WAIT_CMD_S\n");
     fprintf(stderr, "  --wait-cmd-ns / -m WAIT_CMD_NS\n");
 }
 
@@ -25,11 +25,11 @@ int main(int argc, char *argv[]) {
     int watch_num = 0;
     char** watch_array = (char**) malloc(sizeof(char*));
     char* precommand = NULL;
-    time_t wait_pre_s = 0;
-    long wait_pre_ns =  ns_after_open;
+//     time_t wait_pre_s = 0;
+    long wait_pre_ns =  ns_DELAY;
     
-    time_t wait_cmd_s = 0;
-    long wait_cmd_ns =  ns_after_open;
+//     time_t wait_cmd_s = 0;
+    long wait_cmd_ns =  CMD_DELAY_NS;
     
     int c;
     while (1) {
@@ -39,9 +39,9 @@ int main(int argc, char *argv[]) {
             {"dir", required_argument,       0, 'd'},
             {"watch", required_argument, 0, 'w'},
             {"precommand", required_argument, 0, 'p'},
-            {"wait-pre-s", required_argument, 0, 's'},
+//             {"wait-pre-s", required_argument, 0, 's'},
             {"wait-pre-ns", required_argument, 0, 'n'},
-            {"wait-cmd-s", required_argument, 0, 't'},
+//             {"wait-cmd-s", required_argument, 0, 't'},
             {"wait-cmd-ns", required_argument, 0, 'm'},
             {"quick", no_argument, 0, 'q'},
             {0, 0, 0, 0}
@@ -75,18 +75,18 @@ int main(int argc, char *argv[]) {
                 precommand = optarg; 
                 break;
             }
-            case 's': {
-                wait_pre_s = (time_t) atoi(optarg); 
-                break;
-            }
+//             case 's': {
+//                 wait_pre_s = (time_t) atoi(optarg); 
+//                 break;
+//             }
             case 'n': {
                 wait_pre_ns = (long) atol(optarg); 
                 break;
             }
-            case 't': {
-                wait_cmd_s = (time_t) atoi(optarg); 
-                break;
-            }
+//             case 't': {
+//                 wait_cmd_s = (time_t) atoi(optarg); 
+//                 break;
+//             }
             case 'm': {
                 wait_cmd_ns = (long) atol(optarg); 
                 break;
@@ -104,10 +104,8 @@ int main(int argc, char *argv[]) {
 
     if (quick == 1){
         if (precommand == NULL){
-            wait_pre_s = 0; 
             wait_pre_ns = 0;
         }
-        wait_cmd_s = 0;
         wait_cmd_ns = 0;
     }
     
@@ -133,7 +131,7 @@ int main(int argc, char *argv[]) {
         if (command != NULL) printf("Command: %s\n", command);
     }
     
-    struct profile_info_struct* pi = profile_command(stdout, stderr, pwd_dir, NULL, NULL, watch_num, watch_array, precommand, wait_pre_s, wait_pre_ns, command, wait_cmd_s, wait_cmd_ns);
+    struct profile_info_struct* pi = profile_command(stdout, stderr, pwd_dir, NULL, NULL, watch_num, watch_array, precommand, wait_pre_ns, command, wait_cmd_ns);
     misc_print_profile(stdout, stderr, pi);
     
     if (VERBOSE){

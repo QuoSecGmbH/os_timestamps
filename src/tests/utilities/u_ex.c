@@ -20,7 +20,7 @@ int check_utilities_ex_new_i_w_q(FILE* csv_file, FILE* output_file, FILE* error_
     log_info(output_file, error_file, "Press enter when ready.");
     misc_wait_for_input();
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -111,7 +111,7 @@ int check_utilities_ex_existing_i_w_q(FILE* csv_file, FILE* output_file, FILE* e
     log_info(output_file, error_file, "Press enter when ready.");
     misc_wait_for_input();
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -212,7 +212,7 @@ int check_utilities_ex_existing_i_wq(FILE* csv_file, FILE* output_file, FILE* er
     log_info(output_file, error_file, "Press enter when ready.");
     misc_wait_for_input();
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -314,7 +314,7 @@ int check_utilities_ex_existing_i_x(FILE* csv_file, FILE* output_file, FILE* err
     log_info(output_file, error_file, "Press enter when ready.");
     misc_wait_for_input();
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -415,7 +415,7 @@ int check_utilities_ex_existing_i_qEM(FILE* csv_file, FILE* output_file, FILE* e
     log_info(output_file, error_file, "Press enter when ready.");
     misc_wait_for_input();
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;

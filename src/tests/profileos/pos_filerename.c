@@ -127,7 +127,7 @@ struct profile_info_struct* profileos_filerename_utilities_dir_new(testenv_struc
 //     char** watch_array = misc_char_array3(path, path_new, path_dir);
 //     int watch_num = 3;
 //     
-//     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+//     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
 //     
 //     return pi;
 // }

@@ -17,7 +17,7 @@ int check_utilities_ln_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     char** watch_array = misc_char_array5(path_file, path_pwd, path_srcdir, path_targetdir, path_link);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -67,7 +67,7 @@ int check_utilities_ln_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     char** watch_array = misc_char_array5(path_file, path_pwd, path_srcdir, path_targetdir, path_link);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -117,7 +117,7 @@ int check_utilities_ln_s_new(FILE* csv_file, FILE* output_file, FILE* error_file
     char** watch_array = misc_char_array5(path_file, path_pwd, path_srcdir, path_targetdir, path_link);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -166,7 +166,7 @@ int check_utilities_ln_s_existing(FILE* csv_file, FILE* output_file, FILE* error
     char** watch_array = misc_char_array5(path_file, path_pwd, path_srcdir, path_targetdir, path_link);
     int watch_num = 5;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;

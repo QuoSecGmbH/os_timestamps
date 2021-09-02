@@ -16,7 +16,7 @@ int check_utilities_rm_unlink_last(FILE* csv_file, FILE* output_file, FILE* erro
     char** watch_array = misc_char_array2(path_pwd, path_targetdir);
     int watch_num = 2;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -55,7 +55,7 @@ int check_utilities_rm_unlink_notlast(FILE* csv_file, FILE* output_file, FILE* e
     char** watch_array = misc_char_array3(path_pwd, path_targetdir, path_file);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;
@@ -99,7 +99,7 @@ int check_utilities_rm_unlink_notlast_dir(FILE* csv_file, FILE* output_file, FIL
     char** watch_array = misc_char_array3(path_pwd, path_targetdir, path_file);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, NULL, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     int* r1 = calloc(sizeof(int), 3);
     r1[0] = NOUPDATE_OPTIONAL;

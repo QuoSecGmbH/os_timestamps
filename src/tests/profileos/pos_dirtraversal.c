@@ -61,7 +61,7 @@ struct profile_info_struct* profileos_dirtraversal_utilities_profileos(testenv_s
     char** watch_array = misc_char_array1(path);
     int watch_num = 1;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 
@@ -144,7 +144,7 @@ struct profile_info_struct* profileos_dirtraversal_utilities_profileos_symlink(t
     char** watch_array = misc_char_array2(path, path_link);
     int watch_num = 2;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_link, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_link, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     return pi;
 }
 
