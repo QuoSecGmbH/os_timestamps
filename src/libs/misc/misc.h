@@ -73,7 +73,7 @@ static const long ns_DELAY = 1100000000; //ns_1.1s
 static const time_t CMD_DELAY_S = 1;
 // static const time_t CMD_DELAY_S = 0;
 // static const long CMD_DELAY_NS = 0;
-static const long CMD_DELAY_NS = 100000000; // 0.1s
+static const long CMD_DELAY_NS = 1100000000; // 1.1s
 
 static const long ns_0ns = 0;
 static const long ns_1ns = 1;

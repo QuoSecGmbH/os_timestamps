@@ -169,7 +169,7 @@ int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, str
     return profile;
 }
 
-struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file, char* pwd_dir, char* src_dir, char* target_dir, int watch_num, char** watch_array, char* precommand, time_t wait_pre_s, long wait_pre_ns, char* command, time_t wait_command_s, long wait_command_ns){
+struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file, char* pwd_dir, char* src_dir, char* target_dir, int watch_num, char** watch_array, char* precommand, long delay, char* command, long delay_wait_after){
     if (src_dir != NULL){        
         misc_ensure_dir_exists(src_dir, 0, 0, output_file, error_file, __func__);
     }
@@ -195,9 +195,7 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
     if (precommand != NULL){
         misc_exec(precommand);
     }
-    misc_sleep(wait_pre_s);
-    misc_nanosleep(wait_pre_ns);
-    
+
     if (pwd_dir != NULL){
         int ret = chdir(saved_pwd);
         if (ret != 0){
@@ -205,6 +203,7 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
         }
     }
     struct stat_macb** multi_stat_before = get_multi_path_timestamps(watch_num, watch_array);
+    misc_nanosleep(delay);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     if (pwd_dir != NULL){
@@ -223,11 +222,11 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
         }
     }
     
-    struct stat_macb** multi_stat_after = get_multi_path_timestamps(watch_num, watch_array);
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
+    misc_nanosleep(delay);
+    struct stat_macb** multi_stat_after = get_multi_path_timestamps(watch_num, watch_array);
     
-    misc_sleep(wait_command_s);
-    misc_nanosleep(wait_command_ns);
+    misc_nanosleep(delay_wait_after);
     
     struct stat_macb** multi_stat_after_delay = get_multi_path_timestamps(watch_num, watch_array);
     struct timespec* ts_after_delay = current_time_ns_fslike_osspecific();

@@ -710,8 +710,7 @@ void group_check_interfaces_file_mv(testenv_struct* env){
 
 void group_check_interfaces_file_rm(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-                                       
-    // TODO
+
     runtest(env, "INTERFACES.FILE.RM.UNLINK.LAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_last_dir, "check_interfaces_file_rm_unlink_last_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast_dir, "check_interfaces_file_rm_unlink_notlast_dir", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update parent directory MC");
     runtest(env, "INTERFACES.FILE.RM.UNLINK.NOTLAST", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_rm_unlink_notlast, "check_interfaces_file_rm_unlink_notlast", "Yes", POSIX_c181, MANDATORY, "unlink when file’s link count is not 0 shall update C");
@@ -735,7 +734,8 @@ void group_check_interfaces_file_rm(testenv_struct* env){
 
 void group_check_utilities_attr(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
-    
+                                           
+    // TODO
     runtest(env, "UTILITIES.ATTR.CHMOD.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_new, "check_utilities_attr_chmod_new", "Yes", POSIX_c181, MANDATORY, "chmod with different mode shall update C");
     runtest(env, "UTILITIES.ATTR.CHMOD.SAME", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_attr_chmod_same, "check_utilities_attr_chmod_same", "Yes", POSIX_c181, MANDATORY, "chmod with same mode shall update C");
 }

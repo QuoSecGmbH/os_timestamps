@@ -127,7 +127,7 @@ struct profile_info_struct* profileos_filecopy_utilities_new(testenv_struct* env
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -145,7 +145,7 @@ struct profile_info_struct* profileos_volumefilecopy_utilities_new(testenv_struc
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -162,7 +162,7 @@ struct profile_info_struct* profileos_filecopy_utilities_existing(testenv_struct
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -180,7 +180,7 @@ struct profile_info_struct* profileos_volumefilecopy_utilities_existing(testenv_
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -198,7 +198,7 @@ struct profile_info_struct* profileos_filecopy_utilities_dir_new_notempty(testen
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -217,7 +217,7 @@ struct profile_info_struct* profileos_volumefilecopy_utilities_dir_new_notempty(
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -234,7 +234,7 @@ struct profile_info_struct* profileos_filecopy_utilities_dir_new_empty(testenv_s
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -252,7 +252,7 @@ struct profile_info_struct* profileos_volumefilecopy_utilities_dir_new_empty(tes
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, NULL, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }

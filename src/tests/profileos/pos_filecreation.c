@@ -141,7 +141,7 @@ struct profile_info_struct* profileos_filecreation_utilities(testenv_struct* env
     char** watch_array = misc_char_array2(path_dir, path_new);
     int watch_num = 2;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -159,7 +159,7 @@ struct profile_info_struct* profileos_filecreation_utilities_newhardlink(testenv
     char** watch_array = misc_char_array4(path_new, path_hardlink, path_filedir, path_linkdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -174,7 +174,7 @@ struct profile_info_struct* profileos_filecreation_utilities_dir(testenv_struct*
     char** watch_array = misc_char_array2(path_dir, path_new);
     int watch_num = 2;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -192,7 +192,7 @@ struct profile_info_struct* profileos_filecreation_utilities_symlink(testenv_str
     char** watch_array = misc_char_array4(path_new, path_symlink, path_filedir, path_linkdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -216,7 +216,7 @@ struct profile_info_struct* profileos_filecreation_utilities_intosymlinkdir(test
     char** watch_array = misc_char_array3(path_dir_dir, path_dir_link, path_new);
     int watch_num = 3;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
@@ -234,7 +234,7 @@ struct profile_info_struct* profileos_filecreation_utilities_symlink_dir(testenv
     char** watch_array = misc_char_array4(path_new, path_symlink, path_dirdir, path_linkdir);
     int watch_num = 4;
     
-    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, 0, ns_after_open, command, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_dir, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
     return pi;
 }
