@@ -15,7 +15,7 @@ int check_interfaces_file_w_fputwc_fflush_imm(FILE* csv_file, FILE* output_file,
         
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
-    fputwc(L"C", fd); // 0x3f = 63
+    fputwc(L'C', fd); // 0x3f = 63
     fflush(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
@@ -47,7 +47,7 @@ int check_interfaces_file_w_fputwc_fflush(FILE* csv_file, FILE* output_file, FIL
         
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
-    fputwc(L"CC", fd); // 0x3f = 63
+    fputwc(L'C', fd); // 0x3f = 63
     fflush(fd);
     
     struct stat_macb* file_stat = get_path_timestamps(path);
@@ -79,7 +79,7 @@ int check_interfaces_file_w_fputwc_fclose(FILE* csv_file, FILE* output_file, FIL
         
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
-    fputwc(L"C", fd); // 0x3f = 63
+    fputwc(L'C', fd); // 0x3f = 63
     fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
@@ -119,7 +119,7 @@ int check_interfaces_file_w_fputwc_exit(FILE* csv_file, FILE* output_file, FILE*
     pid_t child_pid = fork();
     if (child_pid == 0) {
         // Child code
-        fputwc(L"C", fd); // 0x3f = 63
+        fputwc(L'C', fd); // 0x3f = 63
         _exit(0);
     }
     
@@ -176,7 +176,7 @@ int check_interfaces_file_w_fputwc_abort(FILE* csv_file, FILE* output_file, FILE
     pid_t child_pid = fork();
     if (child_pid == 0) {
         // Child code
-        fputwc(L"C", fd); // 0x3f = 63
+        fputwc(L'C', fd); // 0x3f = 63
         abort();
     }
     
