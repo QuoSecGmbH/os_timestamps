@@ -86,8 +86,9 @@ int check_interfaces_file_fopen_new_APB(FILE* csv_file, FILE* output_file, FILE*
 int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.writemode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
-    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path_mode, mode);
@@ -96,9 +97,8 @@ int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output
         return 1;
     }
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path_mode);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -138,8 +138,9 @@ int check_interfaces_file_fopen_existing_WPB(FILE* csv_file, FILE* output_file, 
 int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fwrite.existing.writemode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
-    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path_mode, mode);
@@ -149,6 +150,7 @@ int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE*
     }
     
     fwrite("Hihallo", 7, 1, fd);
+    fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
@@ -156,7 +158,6 @@ int helper_interfaces_file_fopen_fwrite_existing_writemode(FILE* csv_file, FILE*
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);    log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
     
-    fclose(fd);
     
     free(path_generic);
     free(path_dot);
@@ -204,8 +205,9 @@ int check_interfaces_file_fopen_fwrite_existing_RPB(FILE* csv_file, FILE* output
 int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.dir.writemode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
-    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path_mode, mode);
@@ -215,6 +217,7 @@ int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, F
     }
     
     fwrite("Hihallo", 7, 1, fd);
+    fclose(fd);
     
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
     misc_nanosleep(ns_DELAY);
@@ -223,7 +226,6 @@ int helper_interfaces_file_fopen_fwrite_existing_dir_writemode(FILE* csv_file, F
     int result = result_MAC_updated(NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, NOUPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, dir_stat);
     
-    fclose(fd);
     
     free(path_generic);
     free(path_dot);
@@ -270,8 +272,9 @@ int check_interfaces_file_fopen_fwrite_existing_dir_RPB(FILE* csv_file, FILE* ou
 int helper_interfaces_file_fopen_existing_readmode(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path, char* mode){
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen.existing.readmode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
-    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_mode = (char*) misc_concat_ensure_file_exists(path_dot, mode, s_0s, ns_0ns, output_file, error_file, __func__);
     
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* fd = fopen(path_mode, mode);
@@ -324,8 +327,8 @@ int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* o
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fread.existing.readmode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
     char* path_mode = (char*) misc_concat_ensure_file_exists_filled(path_dot, mode, 4, s_0s, ns_0ns, output_file, error_file, __func__);
+    
     misc_nanosleep(ns_DELAY);
-
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* f = fopen(path_mode, mode);
@@ -342,9 +345,8 @@ int helper_interfaces_file_fopen_fread_existing_readmode(FILE* csv_file, FILE* o
         return 1;
     }
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path_mode);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
@@ -386,8 +388,8 @@ int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* 
     char* path_generic = (char*) misc_concat(dir_path, "interfaces.file.fopen_fread.existing.writemode");
     char* path_dot = (char*) misc_concat(path_generic, ".");
     char* path_mode = (char*) misc_concat_ensure_file_exists_filled(path_dot, mode, 4, s_0s, ns_0ns, output_file, error_file, __func__);
-    misc_nanosleep(ns_DELAY);
     
+    misc_nanosleep(ns_DELAY);
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
     FILE* f = fopen(path_mode, mode);
@@ -396,9 +398,8 @@ int helper_interfaces_file_fopen_fread_existing_writemode(FILE* csv_file, FILE* 
     
     // Because modes used (w+) truncate files, n_read will always be 0 at this point
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path_mode);
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(NOUPDATE_OPTIONAL, UPDATE_MANDATORY, NOUPDATE_OPTIONAL, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     log_info_ts_stat_on_error(output_file, error_file, __func__, result, ts_before, ts_after, file_stat);
