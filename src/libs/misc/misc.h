@@ -138,9 +138,9 @@ int misc_str_in_list(char* ref, int list_size, char** list);
 
 void misc_wait_for_input();
 
-void misc_nanosleep(int ns);
-void misc_microsleep(int us);
-void misc_millisleep(int ms);
+void misc_nanosleep(long ns);
+void misc_microsleep(long us);
+void misc_millisleep(long ms);
 void misc_sleep(int s);
 
 char* misc_concat(char* buf1, char* buf2);

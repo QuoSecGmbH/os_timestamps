@@ -128,7 +128,7 @@ int misc_str_in_list(char* ref, int list_size, char** list){
     return 0;
 }
 
-void misc_nanosleep(int ns){
+void misc_nanosleep(long ns){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = (time_t) ns / ns_1s;
     ts_ns->tv_nsec = ns % ns_1s;
@@ -136,7 +136,7 @@ void misc_nanosleep(int ns){
     free(ts_ns);
 }
 
-void misc_microsleep(int us){
+void misc_microsleep(long us){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = us*1000;
@@ -144,7 +144,7 @@ void misc_microsleep(int us){
     free(ts_ns);
 }
 
-void misc_millisleep(int ms){
+void misc_millisleep(long ms){
     struct timespec* ts_ns = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts_ns->tv_sec = 0;
     ts_ns->tv_nsec = ms*1000000;
