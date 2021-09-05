@@ -125,21 +125,21 @@ struct timespec* current_time_ns_fslike_generic(){
 
   if (path_timemarker == NULL){
     fprintf(stderr, "ERROR (fatal): path_timemarker not set in %s\n", __func__);
-    struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+    struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
     return ts;
   }
     
   FILE* fd = fopen(path_timemarker, "wb");
   if (fd == NULL) {
       printf("ERROR: current_time_ns_fslike_generic - can't open tmp_timemarker\n");
-      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
       return ts;
   }
   fwrite("!", 1, 1, fd);
   fclose(fd);
 
   struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
-  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   ts->tv_sec = (file_stat->st_mtim).tv_sec;
   ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
   free(file_stat);
@@ -152,14 +152,14 @@ struct timespec* current_time_ns_fslike_generic_futimens(){
     
   if (path_timemarker == NULL){
     fprintf(stderr, "ERROR (fatal): path_timemarker not set in %s\n", __func__);
-    struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+    struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
     return ts;
   }
 
   int fd = open(path_timemarker, O_RDWR);
   if (fd == -1) {
       printf("ERROR: current_time_ns_fslike_generic_futimens - can't open tmp_timemarker\n");
-      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
       return ts;
   }
   
@@ -177,14 +177,14 @@ struct timespec* current_time_ns_fslike_generic_futimens(){
   int ret = futimens(fd, times);
   if (ret != 0) {
       printf("%s - %s %d\n", __func__, "futimens failed with errno", errno);
-      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
       return ts;
   }
 
   close(fd);
   
   struct stat_macb* file_stat = get_path_timestamps(path_timemarker);
-  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   ts->tv_sec = (file_stat->st_mtim).tv_sec;
   ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
   free(file_stat);
@@ -202,7 +202,7 @@ struct timespec* current_time_ns_fslike_generic_futimens_dir(){
   int fd = open(path_timemarkerdir, O_RDONLY);
   if (fd == -1) {
       printf("ERROR: current_time_ns_fslike_generic_futimens - can't open tmp_timemarker\n");
-      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
       return ts;
   }
   
@@ -220,14 +220,14 @@ struct timespec* current_time_ns_fslike_generic_futimens_dir(){
   int ret = futimens(fd, times);
   if (ret != 0) {
       printf("%s - %s %d\n", __func__, "futimens failed with errno", errno);
-      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+      struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
       return ts;
   }
 
   close(fd);
   
   struct stat_macb* file_stat = get_path_timestamps(path_timemarkerdir);
-  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec*), 1);
+  struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
   ts->tv_sec = (file_stat->st_mtim).tv_sec;
   ts->tv_nsec = (file_stat->st_mtim).tv_nsec;
   free(file_stat);

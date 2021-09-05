@@ -6,11 +6,10 @@
 struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int follow){
     struct stat_macb* attr_macb = (struct stat_macb*) calloc(sizeof(struct stat_macb), 1);
     
-    attr_macb->st_mtim = attr->st_mtim;
-    attr_macb->st_atim = attr->st_atim;
-    attr_macb->st_ctim = attr->st_ctim;
-    
-    
+    memcpy((struct timespec*) &(attr_macb->st_mtim), &(attr->st_mtim), sizeof(struct timespec));
+    memcpy((struct timespec*) &(attr_macb->st_atim), &(attr->st_atim), sizeof(struct timespec));
+    memcpy((struct timespec*) &(attr_macb->st_ctim), &(attr->st_ctim), sizeof(struct timespec));
+      
     int btim_set = 0;
 #ifdef __linux__
     struct statx* attr_statx = get_path_timestamps_statx(path, follow);
@@ -18,14 +17,14 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
         struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
         ts->tv_nsec = attr_statx->stx_btime.tv_nsec;
         ts->tv_sec = attr_statx->stx_btime.tv_sec;
-        attr_macb->st_btim = *ts;
+        memcpy((struct timespec*) &(attr_macb->st_btim), ts, sizeof(struct timespec));
         btim_set = 1;
     }
 #elif __FreeBSD__
-    attr_macb->st_btim = attr->st_birthtim;
+    memcpy((struct timespec*) &(attr_macb->st_btim), &(attr->st_birthtim), sizeof(struct timespec));
     btim_set = 1;
 #elif __OpenBSD__
-    attr_macb->st_btim = attr->__st_birthtim;
+    memcpy((struct timespec*) &(attr_macb->st_btim), &(attr->__st_birthtim), sizeof(struct timespec));
     btim_set = 1;
 #endif
 
@@ -33,7 +32,7 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
         struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
         ts->tv_nsec = 0;
         ts->tv_sec = 0;
-        attr_macb->st_btim = *ts;
+    	memcpy((struct timespec*) &(attr_macb->st_btim), ts, sizeof(struct timespec));
     }
     
     return attr_macb;
@@ -42,15 +41,15 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
 struct stat_macb* stat_macb_from_stat_no_b(struct stat* attr){
     struct stat_macb* attr_macb = (struct stat_macb*) calloc(sizeof(struct stat_macb), 1);
     
-    attr_macb->st_mtim = attr->st_mtim;
-    attr_macb->st_atim = attr->st_atim;
-    attr_macb->st_ctim = attr->st_ctim;
-    
+    memcpy((struct timespec*) &(attr_macb->st_mtim), &(attr->st_mtim), sizeof(struct timespec));
+    memcpy((struct timespec*) &(attr_macb->st_atim), &(attr->st_atim), sizeof(struct timespec));
+    memcpy((struct timespec*) &(attr_macb->st_ctim), &(attr->st_ctim), sizeof(struct timespec));
+
     struct timespec* ts = (struct timespec*) calloc(sizeof(struct timespec), 1);
     ts->tv_nsec = 0;
     ts->tv_sec = 0;
-    attr_macb->st_btim = *ts;
-    
+    memcpy((struct timespec*) &(attr_macb->st_btim), ts, sizeof(struct timespec));
+
     return attr_macb;
 }
 
@@ -234,7 +233,12 @@ struct stat_macb* get_path_timestamps(char *path) {
         return NULL;
     }
     
-    return stat_macb_from_stat_add_b(attr, path, 1);
+    printf("attr M: %ld %ld\n", attr->st_mtim.tv_sec, attr->st_mtim.tv_nsec);
+    stat_macb* stat_macb = stat_macb_from_stat_add_b(attr, path, 1);
+    printf("attr2 M: %ld %ld\n", stat_macb->st_mtim.tv_sec, stat_macb->st_mtim.tv_nsec);
+
+    free(attr);
+    return stat_macb;
 }
 
 struct stat_macb* get_fd_timestamps(int fd) {
@@ -244,7 +248,10 @@ struct stat_macb* get_fd_timestamps(int fd) {
         return NULL;
     }
     
-    return stat_macb_from_stat_no_b(attr);
+    stat_macb* stat_macb = stat_macb_from_stat_no_b(attr);
+    free(attr);
+
+    return stat_macb;
 }
 
 struct stat_macb* get_file_timestamps(FILE *f) {
@@ -254,7 +261,10 @@ struct stat_macb* get_file_timestamps(FILE *f) {
         return NULL;
     }
     
-    return stat_macb_from_stat_no_b(attr);
+    stat_macb* stat_macb = stat_macb_from_stat_no_b(attr);
+    free(attr);
+
+    return stat_macb;
 }
 
 struct stat_macb* get_path_timestamps_lstat(char *path) {
@@ -264,7 +274,10 @@ struct stat_macb* get_path_timestamps_lstat(char *path) {
         return NULL;
     }
     
-    return stat_macb_from_stat_add_b(attr, path, 0);
+    stat_macb* stat_macb = stat_macb_from_stat_add_b(attr, path, 0);
+    free(attr);
+
+    return stat_macb;
 }
 
 #ifdef __linux__
