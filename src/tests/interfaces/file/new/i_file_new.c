@@ -296,6 +296,7 @@ int check_interfaces_file_new_mkfifo_mac_1s(FILE* csv_file, FILE* output_file, F
     return result;
 }
 
+#ifndef __APPLE__
 int check_interfaces_file_new_mkfifoat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.files.new.mkfifoat/");
     char* path_fifo = misc_concat(path_dir, (char*) "mkfifo");
@@ -373,6 +374,7 @@ int check_interfaces_file_new_mkfifoat_mac_1s(FILE* csv_file, FILE* output_file,
     
     return result;
 }
+#endif
 
 int check_interfaces_file_new_mkpipe(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     int pipefd[2];

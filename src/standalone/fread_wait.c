@@ -37,8 +37,8 @@ void print_attr(struct stat* attr){
 //     buf[strlen(buf)-1] = 0;
 //     printf("M: %s - ns: %9ld\n", buf, ns);
     
-    time_t s = attr->st_atim.tv_sec;
-    long ns = attr->st_atim.tv_nsec;
+    time_t s = attr->st_atimespec.tv_sec;
+    long ns = attr->st_atimespec.tv_nsec;
     char* buf = ctime(&s);
     buf[strlen(buf)-1] = 0;
     printf("A: %s - ns: %9ld\n", buf, ns);

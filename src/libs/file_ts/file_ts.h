@@ -15,6 +15,12 @@
 #include <linux/stat.h>
 #endif
 
+#if defined(__APPLE__) 
+#define st_atim st_atimespec
+#define st_ctim st_ctimespec
+#define st_mtim st_mtimespec
+#endif
+
 typedef struct stat_macb{
     struct timespec st_atim;  /* Time of last access */
     struct timespec st_mtim;  /* Time of last modification */

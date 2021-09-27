@@ -26,6 +26,8 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
 #elif __OpenBSD__
     memcpy((struct timespec*) &(attr_macb->st_btim), &(attr->__st_birthtim), sizeof(struct timespec));
     btim_set = 1;
+#elif __APPLE__
+    memcpy((struct timespec*) &(attr_macb->st_btim), &(attr->st_birthtimespec), sizeof(struct timespec));
 #endif
 
     if (btim_set == 0){
@@ -233,7 +235,7 @@ struct stat_macb* get_path_timestamps(char *path) {
         return NULL;
     }
     
-    printf("attr M: %ld %ld\n", attr->st_mtim.tv_sec, attr->st_mtim.tv_nsec);
+    printf("attr M: %ld %ld\n", attr->st_atim.tv_sec, attr->st_mtim.tv_nsec);
     stat_macb* stat_macb = stat_macb_from_stat_add_b(attr, path, 1);
     printf("attr2 M: %ld %ld\n", stat_macb->st_mtim.tv_sec, stat_macb->st_mtim.tv_nsec);
 

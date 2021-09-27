@@ -637,9 +637,13 @@ void group_check_interfaces_file_new(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.NEW.MKFIFO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo, "check_interfaces_file_new_mkfifo", "Yes", POSIX_c181, MANDATORY, "mkfifo shall update MAC of the directory and MC of the parent of the new directory");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac, "check_interfaces_file_new_mkfifo_mac", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac_1s, "check_interfaces_file_new_mkfifo_mac_1s", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal 1s after creation");
+
+#ifndef __APPLE__
     runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat, "check_interfaces_file_new_mkfifoat", "Yes", POSIX_c181, MANDATORY, "mkfifoat shall update MAC of the directory and MC of the parent of the new directory");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat_mac, "check_interfaces_file_new_mkfifoat_mac", "Yes", "", MANDATORY, "mkfifoat shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFOAT.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifoat_mac_1s, "check_interfaces_file_new_mkfifoat_mac_1s", "Yes", "", MANDATORY, "mkfifoat shall create new directory with MAC equal 1s after creation");
+#endif
+
     runtest(env, "INTERFACES.FILE.NEW.MKPIPE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkpipe, "check_interfaces_file_new_mkpipe", "Yes", POSIX_c181, MANDATORY, "pipe shall update MAC of the pipe");
 }
 

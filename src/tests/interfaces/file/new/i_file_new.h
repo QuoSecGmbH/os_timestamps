@@ -17,9 +17,13 @@ int check_interfaces_file_new_mkdirat_mac_1s(FILE* csv_file, FILE* output_file, 
 int check_interfaces_file_new_mkfifo(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_new_mkfifo_mac(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_new_mkfifo_mac_1s(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+
+#ifndef __APPLE__
 int check_interfaces_file_new_mkfifoat(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_new_mkfifoat_mac(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_interfaces_file_new_mkfifoat_mac_1s(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+#endif
+
 int check_interfaces_file_new_mkpipe(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 // check_interfaces_file_r_pread(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 // check_interfaces_file_r_pread_zero(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
