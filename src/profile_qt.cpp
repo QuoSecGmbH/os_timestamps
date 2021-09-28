@@ -132,10 +132,10 @@ int run_profile_qt(){
     group_profile_qt_move_file(test_env);
     group_profile_qt_move_directory(test_env);
 
-    /*
-    group_profile_qt_volume_fileMove(test_env);
-    group_profile_qt_volume_directoryMove(test_env);
-    */
+//     Provoke segfault:
+//     group_profile_qt_volume_fileMove(test_env);
+//     group_profile_qt_volume_directoryMove(test_env);
+    
 
     group_profile_qt_copy_file_new(test_env);
 
@@ -151,26 +151,21 @@ int run_profile_qt(){
     group_profile_qt_modify_file(test_env);
     group_profile_qt_modify_symlink(test_env);
 
-    /*
-     * Need superuser rights --> sudo ./profile_gio -g 1002
+
+//      Need superuser rights --> sudo ./profile_gio -g 1002
      group_profile_qt_change_file(test_env);
-
-     group_profile_qt_change_symlink_follow(test_env);
-     group_profile_qt_change_symlink_notFollow(test_env);
-
      group_profile_qt_change_dir(test_env);
+     group_profile_qt_change_symlink_follow(test_env);
+     
+//      group_profile_qt_change_symlink_notFollow(test_env); // Does not exist (?)
 
-     */
+
 
     group_profile_qt_delete_last_File(test_env);
     group_profile_qt_delete_notLast_file(test_env);
     group_profile_qt_delete_symlink_file(test_env);
     group_profile_qt_delete_directory(test_env);
     group_profile_qt_delete_symlink_directory(test_env);
-
-    group_profile_qt_change_file(test_env);
-    group_profile_qt_change_symlink_follow(test_env);
-    group_profile_qt_change_dir(test_env);
 
     log_close_csv(csv_file_brief);
     log_close_csv(csv_file_flags);

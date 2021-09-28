@@ -132,12 +132,13 @@ int run_profile_gio(){
     group_profile_gio_move_file(test_env);
     group_profile_gio_move_directory(test_env);
 
-    /*
-    group_profile_gio_volume_fileMove(test_env);
-    group_profile_gio_volume_directoryMove(test_env);
-    */
 
-    /*
+// Both (?) provoke segfault:
+//     group_profile_gio_volume_fileMove(test_env);
+//     group_profile_gio_volume_directoryMove(test_env);
+
+
+
     group_profile_gio_copy_file_new(test_env);
     group_profile_gio_copy_file_existing(test_env);
 
@@ -149,28 +150,28 @@ int run_profile_gio(){
 
     group_profile_gio_access_file(test_env);
     group_profile_gio_access_symlink(test_env);
-     */
 
-    //group_profile_gio_modify_file(test_env);
-    //group_profile_gio_modify_symlink(test_env);
 
-    /*
-     * Need superuser rights --> sudo ./profile_gio -g 1002
-     group_profile_gio_change_file(test_env);
+    group_profile_gio_modify_file(test_env);
+    group_profile_gio_modify_symlink(test_env);
 
-     group_profile_gio_change_symlink_follow(test_env);
-     group_profile_gio_change_symlink_notFollow(test_env);
+    
+     // Need superuser rights --> sudo ./profile_gio -g 1002
+//      group_profile_gio_change_file(test_env);
 
-     group_profile_gio_change_dir(test_env);
-     */
+//      group_profile_gio_change_symlink_follow(test_env);
+//      group_profile_gio_change_symlink_notFollow(test_env);
 
-    /*
+//      group_profile_gio_change_dir(test_env);
+     
+
+    
     group_profile_gio_delete_last_File(test_env);
     group_profile_gio_delete_notLast_file(test_env);
     group_profile_gio_delete_symlink_file(test_env);
-     */
-    //group_profile_gio_delete_directory(test_env);
-    //group_profile_gio_delete_symlink_directory(test_env);
+
+    group_profile_gio_delete_directory(test_env);
+    group_profile_gio_delete_symlink_directory(test_env);
 
 
     log_close_csv(csv_file_brief);
@@ -287,12 +288,13 @@ void group_profile_gio_access_symlink(testenv_struct* env) {
 }
 
 void group_profile_gio_modify_file(testenv_struct* env) {
-    //struct profile_info_struct* pi1 = profile_gio_modify_file_open(env);
+    struct profile_info_struct* pi1 = profile_gio_modify_file_open(env);
     struct profile_info_struct* pi2 = profile_gio_modify_file_replace(env);
-    //struct profile_info_struct* pi3 = profile_gio_modify_file_append(env);
+    struct profile_info_struct* pi3 = profile_gio_modify_file_append(env);
 
     char** mask = misc_char_array2("dir/", "file");
-    process_profiles1(mask, "File Modify", "PROFILE.GIO.WRITE.FILE", __func__, env, pi2);
+//     process_profiles1(mask, "File Modify", "PROFILE.GIO.WRITE.FILE", __func__, env, pi2);
+    process_profiles3(mask, "File Modify", "PROFILE.GIO.WRITE.FILE", __func__, env, pi1, pi2, pi3);
 }
 
 void group_profile_gio_modify_symlink(testenv_struct* env) {

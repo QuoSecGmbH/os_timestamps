@@ -15,7 +15,9 @@ struct profile_info_struct* profile_gio_modify_file_replace(testenv_struct* env)
     profile_init_struct* pis = profile_init(watch_num, watch_array);
 
     GFile *file = g_file_new_for_path(path);
-    GFileOutputStream *write_stream = g_file_replace(file, NULL, TRUE, G_FILE_CREATE_PRIVATE, NULL, NULL);
+//     TRUE: gboolean make_backup, but it does not seem to make a difference
+//     GFileOutputStream *write_stream = g_file_replace(file, NULL, TRUE, G_FILE_CREATE_PRIVATE, NULL, NULL);
+    GFileOutputStream *write_stream = g_file_replace(file, NULL, NULL, G_FILE_CREATE_PRIVATE, NULL, NULL);
     char buf[50] = "g_file_replace file test";
 
     g_output_stream_write(G_OUTPUT_STREAM(write_stream), buf, strlen(buf), NULL, NULL);
@@ -50,7 +52,9 @@ struct profile_info_struct* profile_gio_modify_symlink_replace(testenv_struct* e
     profile_init_struct* pis = profile_init(watch_num, watch_array);
 
     GFile *file = g_file_new_for_path(path_symlink);
-    GFileOutputStream *write_stream = g_file_replace(file, NULL, TRUE, G_FILE_CREATE_PRIVATE, NULL, NULL);
+//     TRUE: gboolean make_backup, but it does not seem to make a difference
+//     GFileOutputStream *write_stream = g_file_replace(file, NULL, TRUE, G_FILE_CREATE_PRIVATE, NULL, NULL);
+    GFileOutputStream *write_stream = g_file_replace(file, NULL, NULL, G_FILE_CREATE_PRIVATE, NULL, NULL);
     char buf[50] = "g_file_replace symlink test";
 
     g_output_stream_write(G_OUTPUT_STREAM(write_stream), buf, strlen(buf), NULL, NULL);

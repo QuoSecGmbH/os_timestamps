@@ -9,7 +9,7 @@ struct profile_info_struct* profile_gio_copy_file_new(testenv_struct* env) {
     char* path_src_dir = misc_concat_ensure_dir_exists(path_dir, "src_dir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_dst_dir = misc_concat_ensure_dir_exists(path_dir, "dst_dir/", 0, 0, env->output_file, env->error_file, __func__);
 
-    char* path_file_to_copy = misc_concat_ensure_file_exists_filled(path_src_dir, "src_file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_file_to_copy = misc_concat_ensure_file_exists_filled(path_src_dir, "src_file", 10000, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_dst_file = misc_concat(path_dst_dir, "dst_file");
 
     char** watch_array = misc_char_array4(path_file_to_copy, path_src_dir, path_dst_file, path_dst_dir);
@@ -37,7 +37,7 @@ struct profile_info_struct* profile_gio_copy_file_existing(testenv_struct* env) 
     char* path_src_dir = misc_concat_ensure_dir_exists(path_dir, "src_dir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_dst_dir = misc_concat_ensure_dir_exists(path_dir, "dst_dir/", 0, 0, env->output_file, env->error_file, __func__);
 
-    char* path_to_src_file = misc_concat_ensure_file_exists_filled(path_src_dir, "src_file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path_to_src_file = misc_concat_ensure_file_exists_filled(path_src_dir, "src_file", 10000, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_to_dst_file = misc_concat_ensure_file_exists_filled(path_dst_dir, "dst_file", 15, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
 
     char** watch_array = misc_char_array4(path_to_src_file, path_src_dir, path_to_dst_file, path_dst_dir);
