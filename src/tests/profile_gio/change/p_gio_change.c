@@ -19,7 +19,7 @@ struct profile_info_struct* profile_gio_change_chmod_file(testenv_struct* env) {
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -48,7 +48,7 @@ struct profile_info_struct* profile_gio_change_chown_file(testenv_struct* env) {
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -84,7 +84,7 @@ struct profile_info_struct* profile_gio_change_chmod_symlink(testenv_struct* env
     gboolean isSet = g_file_set_attributes_from_info(link, info, G_FILE_QUERY_INFO_NONE, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -125,7 +125,7 @@ struct profile_info_struct* profile_gio_change_chown_symlink(testenv_struct* env
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NONE, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -161,7 +161,7 @@ struct profile_info_struct* profile_gio_change_chmod_symlink_notFollow(testenv_s
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -201,7 +201,7 @@ struct profile_info_struct* profile_gio_change_chown_symlink_notFollow(testenv_s
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -225,7 +225,7 @@ struct profile_info_struct* profile_gio_change_chmod_dir(testenv_struct* env) {
     g_assert_true(isSet);
 
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -254,6 +254,6 @@ struct profile_info_struct* profile_gio_change_chown_dir(testenv_struct* env) {
     gboolean isSet = g_file_set_attributes_from_info(file, info, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL, NULL);
     g_assert_true(isSet);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

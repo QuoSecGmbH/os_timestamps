@@ -19,7 +19,7 @@ struct profile_info_struct* profile_qt_access_file_readOnly(testenv_struct* env)
         QByteArray line = file_to_read.readLine();
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -42,7 +42,7 @@ struct profile_info_struct* profile_qt_access_file_readWrite(testenv_struct* env
         QByteArray line = file_to_read.readLine();
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -78,7 +78,7 @@ struct profile_info_struct* profile_qt_access_symlink_readOnly(testenv_struct* e
         QByteArray line = file_to_read.readLine();
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -114,6 +114,6 @@ struct profile_info_struct* profile_qt_access_symlink_readWrite(testenv_struct* 
         QByteArray line = file_to_read.readLine();
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

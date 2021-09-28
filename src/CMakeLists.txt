@@ -24,6 +24,10 @@ set(CMAKE_C_FLAGS_VALGRIND " -O0 -g")
 
 if ("${CMAKE_SYSTEM}" MATCHES "Linux")
 message(STATUS ">>> Linux")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS "-fPIC")
+
 find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 

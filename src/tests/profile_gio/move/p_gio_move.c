@@ -24,7 +24,7 @@ struct profile_info_struct* profile_gio_move_file_new(testenv_struct* env) {
     g_object_unref(src_file);
     g_object_unref(dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -53,7 +53,7 @@ struct profile_info_struct* profile_gio_move_file_existing(testenv_struct* env) 
     g_object_unref(src_file);
     g_object_unref(dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -83,7 +83,7 @@ struct profile_info_struct* profile_gio_move_directory_new(testenv_struct* env) 
     g_object_unref(src_directory);
     g_object_unref(dst_directory);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -115,7 +115,7 @@ struct profile_info_struct* profile_gio_move_directory_existing(testenv_struct* 
     g_object_unref(src_directory);
     g_object_unref(dst_directory);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

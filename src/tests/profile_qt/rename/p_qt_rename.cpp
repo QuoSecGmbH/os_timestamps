@@ -13,7 +13,7 @@ struct profile_info_struct* profile_qt_rename_file_new(testenv_struct* env) {
 
     QFile().rename(path_file, path_new);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -31,7 +31,7 @@ struct profile_info_struct* profile_qt_rename_directory_new(testenv_struct* env)
 
     QDir().rename(path_orig, path_new);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

@@ -13,7 +13,7 @@ struct profile_info_struct* profile_gio_create_file(testenv_struct* env) {
     g_file_create(file, G_FILE_CREATE_PRIVATE, NULL, NULL);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -39,7 +39,7 @@ struct profile_info_struct* profile_gio_create_symlink_to_file(testenv_struct* e
     g_assert_true(isCreate);
     g_object_unref(symlink);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -67,7 +67,7 @@ struct profile_info_struct* profile_gio_create_file_into_symlink_dir(testenv_str
     g_file_create(file, G_FILE_CREATE_PRIVATE, NULL, NULL);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -85,7 +85,7 @@ struct profile_info_struct* profile_gio_create_directory(testenv_struct* env) {
     g_file_make_directory(file, NULL, NULL);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -111,7 +111,7 @@ struct profile_info_struct* profile_gio_create_symlink_to_dir(testenv_struct* en
     g_assert_true(isCreate);
     g_object_unref(symlink);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

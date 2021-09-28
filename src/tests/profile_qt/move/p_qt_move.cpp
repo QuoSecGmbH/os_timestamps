@@ -18,7 +18,7 @@ struct profile_info_struct* profile_qt_move_file_new(testenv_struct* env) {
 
     QFile().rename(path_file_to_move, path_dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -48,7 +48,7 @@ struct profile_info_struct* profile_qt_move_file_existing(testenv_struct* env) {
 
     QFile().rename(path_to_src_file, path_to_dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -72,7 +72,7 @@ struct profile_info_struct* profile_qt_move_directory_new(testenv_struct* env) {
 
     QDir().rename(path_to_src_directory, path_to_dst_directory);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -103,7 +103,7 @@ struct profile_info_struct* profile_qt_move_directory_existing(testenv_struct* e
 
     QDir().rename(path_to_src_directory, path_to_dst_directory);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

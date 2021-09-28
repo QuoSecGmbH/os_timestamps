@@ -24,7 +24,7 @@ struct profile_info_struct* profile_gio_modify_file_replace(testenv_struct* env)
     g_object_unref(write_stream);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -59,7 +59,7 @@ struct profile_info_struct* profile_gio_modify_symlink_replace(testenv_struct* e
     g_object_unref(write_stream);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -86,7 +86,7 @@ struct profile_info_struct* profile_gio_modify_file_append(testenv_struct* env) 
     g_object_unref(write_stream);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -121,7 +121,7 @@ struct profile_info_struct* profile_gio_modify_symlink_append(testenv_struct* en
     g_object_unref(write_stream);
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -149,7 +149,7 @@ struct profile_info_struct* profile_gio_modify_file_open(testenv_struct* env) {
 
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -184,6 +184,6 @@ struct profile_info_struct* profile_gio_modify_symlink_open(testenv_struct* env)
 
     g_object_unref(file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

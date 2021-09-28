@@ -17,7 +17,7 @@ struct profile_info_struct* profile_gio_delete_lastFile_empty(testenv_struct* en
     g_assert_true(isDelete);
     g_object_unref(file_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -39,7 +39,7 @@ struct profile_info_struct* profile_gio_delete_lastFile_notEmpty(testenv_struct*
     g_assert_true(isDelete);
     g_object_unref(file_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -72,7 +72,7 @@ struct profile_info_struct* profile_gio_delete_symlink(testenv_struct* env) {
     g_assert_true(isDelete);
     g_object_unref(symlink_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -93,7 +93,7 @@ struct profile_info_struct* profile_gio_delete_notLastFile_empty(testenv_struct*
     g_assert_true(isDelete);
     g_object_unref(symlink_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -114,7 +114,7 @@ struct profile_info_struct* profile_gio_delete_notLastFile_notEmpty(testenv_stru
     g_assert_true(isDelete);
     g_object_unref(symlink_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -136,7 +136,7 @@ struct profile_info_struct* profile_gio_delete_directory(testenv_struct* env) {
     g_assert_true(isDelete);
     g_object_unref(directory_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -168,6 +168,6 @@ struct profile_info_struct* profile_gio_delete_directory_symlink(testenv_struct*
     g_assert_true(isDelete);
     g_object_unref(symlink_to_delete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

@@ -18,7 +18,7 @@ struct profile_info_struct* profile_qt_create_file(testenv_struct* env) {
     if ( new_file.open(QIODevice::ReadWrite) ) {
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -40,7 +40,7 @@ struct profile_info_struct* profile_qt_create_symlink_to_file(testenv_struct* en
     // QFile::link("../file_dir/new_file", path_symlink)
     QFile().link("../directory_with_file/new_file", path_symlink);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -70,7 +70,7 @@ struct profile_info_struct* profile_qt_create_file_into_symlink_dir(testenv_stru
     if ( new_file.open(QIODevice::ReadWrite) ) {
     }
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -87,7 +87,7 @@ struct profile_info_struct* profile_qt_create_directory(testenv_struct* env) {
     // QDir::mkdir(path_new);
     QDir().mkdir(path_new);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -108,7 +108,7 @@ struct profile_info_struct* profile_qt_create_symlink_to_dir(testenv_struct* env
 
     QFile().link("../directory_with_dir/new_dir/", path_symlink);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

@@ -28,7 +28,7 @@ struct profile_info_struct* profile_qt_copy_file_new(testenv_struct* env) {
 
     QFile().copy(path_file_to_copy, path_dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

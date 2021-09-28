@@ -16,7 +16,7 @@ struct profile_info_struct* profile_gio_rename_file_new(testenv_struct* env) {
 
     log_info(env->output_file, env->error_file, "%s - ***INFO : Stop Looking Here", __func__);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -35,7 +35,7 @@ struct profile_info_struct* profile_gio_rename_directory_new(testenv_struct* env
     GFile *file = g_file_new_for_path(path_orig);
     g_file_set_display_name(file, "renamed", NULL, NULL);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }

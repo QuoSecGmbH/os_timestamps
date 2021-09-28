@@ -23,7 +23,7 @@ struct profile_info_struct* profile_gio_copy_file_new(testenv_struct* env) {
     g_assert_true(isCopy);
     g_object_unref(src_file);
     g_object_unref(dst_file);
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
 
     return pi;
 }
@@ -52,7 +52,7 @@ struct profile_info_struct* profile_gio_copy_file_existing(testenv_struct* env) 
     g_object_unref(src_file);
     g_object_unref(dst_file);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 

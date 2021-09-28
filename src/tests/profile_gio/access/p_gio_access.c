@@ -24,7 +24,7 @@ struct profile_info_struct* profile_gio_access_file(testenv_struct* env) {
     g_object_unref(file_to_read);
     g_object_unref(read_stream);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -65,6 +65,6 @@ struct profile_info_struct* profile_gio_access_symlink(testenv_struct* env) {
     g_object_unref(read_stream);
     g_object_unref(symlink_to_read);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

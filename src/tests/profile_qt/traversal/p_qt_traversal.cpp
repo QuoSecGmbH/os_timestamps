@@ -13,7 +13,7 @@ struct profile_info_struct* profile_qt_traversal_directory(testenv_struct* env) 
     Q_ASSERT(isTraversal);
     misc_nanosleep(ns_after_open);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -37,6 +37,6 @@ struct profile_info_struct* profile_qt_traversal_directory_symlink(testenv_struc
     Q_ASSERT(isTraversal);
     misc_nanosleep(ns_after_open);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }

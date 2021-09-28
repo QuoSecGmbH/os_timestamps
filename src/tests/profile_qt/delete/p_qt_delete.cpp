@@ -16,7 +16,7 @@ struct profile_info_struct* profile_qt_delete_lastFile_empty(testenv_struct* env
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -37,7 +37,7 @@ struct profile_info_struct* profile_qt_delete_lastFile_notEmpty(testenv_struct* 
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -70,7 +70,7 @@ struct profile_info_struct* profile_qt_delete_symlink(testenv_struct* env) {
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -92,7 +92,7 @@ struct profile_info_struct* profile_qt_delete_notLastFile_empty(testenv_struct* 
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -114,7 +114,7 @@ struct profile_info_struct* profile_qt_delete_notLastFile_notEmpty(testenv_struc
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -134,7 +134,7 @@ struct profile_info_struct* profile_qt_delete_directory(testenv_struct* env) {
     Q_ASSERT(isDelete);
     // sleep(10);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
 
@@ -166,6 +166,6 @@ struct profile_info_struct* profile_qt_delete_directory_symlink(testenv_struct* 
     bool isDelete = file.remove();
     Q_ASSERT(isDelete);
 
-    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, CMD_DELAY_S, CMD_DELAY_NS);
+    struct profile_info_struct* pi = profile_analyze(pis, watch_num, watch_array, ns_DELAY);
     return pi;
 }
