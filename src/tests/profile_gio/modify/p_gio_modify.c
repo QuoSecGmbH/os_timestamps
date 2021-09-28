@@ -9,10 +9,11 @@
 struct profile_info_struct* profile_gio_modify_file_replace(testenv_struct* env) {
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-
+  
     char** watch_array = misc_char_array2(path_dir, path);
     int watch_num = 2;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
 
     GFile *file = g_file_new_for_path(path);
 //     TRUE: gboolean make_backup, but it does not seem to make a difference
@@ -75,10 +76,11 @@ struct profile_info_struct* profile_gio_modify_symlink_replace(testenv_struct* e
 struct profile_info_struct* profile_gio_modify_file_append(testenv_struct* env) {
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path = misc_concat_ensure_file_exists_filled(path_dir, "file", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-
+    
     char** watch_array = misc_char_array2(path_dir, path);
     int watch_num = 2;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
+    
 
     GFile *file = g_file_new_for_path(path);
     GFileOutputStream *write_stream = g_file_append_to(file, G_FILE_CREATE_PRIVATE, NULL, NULL);
