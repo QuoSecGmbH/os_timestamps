@@ -22,6 +22,16 @@ endif()
 set(CMAKE_C_FLAGS_DEBUG " -O0 -g -fsanitize=address")
 set(CMAKE_C_FLAGS_VALGRIND " -O0 -g")
 
+if ("${CMAKE_SYSTEM}" MATCHES "Linux")
+message(STATUS ">>> Linux")
+find_package(PkgConfig REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
+
+pkg_check_modules(GLIB REQUIRED glib-2.0)
+pkg_check_modules(GIO REQUIRED gio-2.0)
+pkg_check_modules(GIO-UNIX REQUIRED gio-unix-2.0)
+endif()
+
 include_directories(
   ./
   libs/current_time/
@@ -43,6 +53,35 @@ include_directories(
   tests/utilities/new/
   tests/utilities/rm/
   tests/profileos/
+  tests/gio_lib
+  tests/gio_lib/directory/
+  tests/gio_lib/directory/new/
+  tests/gio_lib/file/
+  tests/gio_lib/file/new/
+  ${GLIB_INCLUDE_DIRS}
+  ${GIO_INCLUDE_DIRS}
+  ${GIO-UNIX_INCLUDE_DIRS}
+  ${Qt5Core_INCLUDE_DIRS}
+  tests/profile_gio/
+  tests/profile_gio/create/
+  tests/profile_gio/copy/
+  tests/profile_gio/move/
+  tests/profile_gio/delete/
+  tests/profile_gio/rename/
+  tests/profile_gio/change/
+  tests/profile_gio/access/
+  tests/profile_gio/modify/
+  tests/profile_gio/volume/
+  tests/profile_qt/
+  tests/profile_qt/create/
+  tests/profile_qt/rename/
+  tests/profile_qt/copy/
+  tests/profile_qt/move/
+  tests/profile_qt/delete/
+  tests/profile_qt/access/
+  tests/profile_qt/modify/
+  tests/profile_qt/change/
+  tests/profile_qt/traversal/
   tests/general/
 )
 
@@ -198,6 +237,57 @@ add_library(lib_profileos
 	tests/profileos/pos_filechange.c
 	)
 
+add_library(lib_profile_gio
+		tests/profile_gio/create/p_gio_create.h
+		tests/profile_gio/create/p_gio_create.c
+		tests/profile_gio/copy/p_gio_copy.h
+		tests/profile_gio/copy/p_gio_copy.c
+		tests/profile_gio/delete/p_gio_delete.h
+		tests/profile_gio/delete/p_gio_delete.c
+		tests/profile_gio/move/p_gio_move.h
+		tests/profile_gio/move/p_gio_move.c
+		tests/profile_gio/rename/p_gio_rename.h
+		tests/profile_gio/rename/p_gio_rename.c
+		tests/profile_gio/access/p_gio_access.h
+		tests/profile_gio/access/p_gio_access.c
+		tests/profile_gio/change/p_gio_change.h
+		tests/profile_gio/change/p_gio_change.c
+		tests/profile_gio/modify/p_gio_modify.h
+		tests/profile_gio/modify/p_gio_modify.c
+		tests/profile_gio/volume/p_gio_volume_fileMove.h
+		tests/profile_gio/volume/p_gio_volume_fileMove.c
+		)
+
+add_library(lib_profile_qt
+		tests/profile_qt/create/p_qt_create.h
+		tests/profile_qt/create/p_qt_create.cpp
+		tests/profile_qt/delete/p_qt_delete.h
+		tests/profile_qt/delete/p_qt_delete.cpp
+		tests/profile_qt/rename/p_qt_rename.cpp
+		tests/profile_qt/rename/p_qt_rename.h
+		tests/profile_qt/move/p_qt_move.cpp
+		tests/profile_qt/move/p_qt_move.h
+		tests/profile_qt/copy/p_qt_copy.cpp
+		tests/profile_qt/copy/p_qt_copy.h
+		tests/profile_qt/access/p_qt_access.cpp
+		tests/profile_qt/access/p_qt_access.h
+		tests/profile_qt/change/p_qt_change.cpp
+		tests/profile_qt/change/p_qt_change.h
+		tests/profile_qt/modify/p_qt_modify.cpp
+		tests/profile_qt/modify/p_qt_modify.h
+		tests/profile_qt/traversal/p_qt_traversal.cpp
+		tests/profile_qt/traversal/p_qt_traversal.h
+		)
+
+add_library(lib_gio
+		tests/gio_lib/gio.h
+		tests/gio_lib/gio.c
+		tests/gio_lib/directory/new/g_directory_new.h
+		tests/gio_lib/directory/new/g_directory_new.c
+		tests/gio_lib/file/new/g_file_create.h
+		tests/gio_lib/file/new/g_file_create.c
+		)
+
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
 
@@ -209,6 +299,16 @@ target_link_libraries(profile_cmd lib_general lib_file_ts lib_profile lib_misc l
 
 add_executable(profile_os profile_os.h profile_os.c)
 target_link_libraries(profile_os lib_general lib_profileos lib_file_ts lib_profile lib_misc lib_log lib_current_time)
+
+if ("${CMAKE_SYSTEM}" MATCHES "Linux")
+add_executable(profile_gio profile_gio.h profile_gio.c)
+add_definitions(${GLIB_CFLAGS_OTHER})
+target_link_libraries(profile_gio ${GLIB_LIBRARIES} ${GIO_LIBRARIES} ${GIO-UNIX_LIBRARIES} lib_general lib_file_ts lib_misc lib_log lib_current_time lib_profile_gio lib_profile)
+
+add_executable(profile_qt profile_qt.h profile_qt.cpp)
+add_definitions(${Qt5Core_DEFINITIONS})
+target_link_libraries(profile_qt ${Qt5Core_LIBRARIES} lib_general lib_file_ts lib_misc lib_log lib_current_time lib_profile_qt lib_profile)
+endif()
 
 add_executable(plot_fread_fstat plot/plot_fread_fstat.h plot/plot_fread_fstat.c)
 target_link_libraries(plot_fread_fstat lib_file_ts lib_current_time lib_log lib_misc)

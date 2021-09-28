@@ -1,0 +1,8 @@
+//
+// Created by ted on 22.06.20.
+//
+
+#ifndef POSIX_TIMESTAMPS_G_FILE_COPY_H
+#define POSIX_TIMESTAMPS_G_FILE_COPY_H
+
+#endif //POSIX_TIMESTAMPS_G_FILE_COPY_H
