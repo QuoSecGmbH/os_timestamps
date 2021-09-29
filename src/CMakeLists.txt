@@ -241,6 +241,7 @@ add_library(lib_profileos
 	tests/profileos/pos_filechange.c
 	)
 
+if ("${CMAKE_SYSTEM}" MATCHES "Linux")
 add_library(lib_profile_gio
 		tests/profile_gio/create/p_gio_create.h
 		tests/profile_gio/create/p_gio_create.c
@@ -291,6 +292,7 @@ add_library(lib_gio
 		tests/gio_lib/file/new/g_file_create.h
 		tests/gio_lib/file/new/g_file_create.c
 		)
+endif()
 
 add_executable(prototype_current_time tools/prototype_current_time.h tools/prototype_current_time.c)
 target_link_libraries(prototype_current_time lib_file_ts lib_current_time lib_log lib_misc)
