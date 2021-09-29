@@ -247,6 +247,8 @@ struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file,
 }
 
 struct profile_init_struct* profile_init(int watch_num, char** watch_array){
+    misc_nanosleep(CMD_DELAY_NS);
+    
     struct stat_macb** multi_stat_before = get_multi_path_timestamps(watch_num, watch_array);        
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
