@@ -347,7 +347,7 @@ void group_check_interfaces_ts_futimens(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma, "check_interfaces_ts_futimens_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall set MA and update C");
-    runtest(env, "INTERFACES.TS.FUTIMENS_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ns, "check_interfaces_ts_futimens_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with futimens shall give MA granularity to the nanoseconds");
+    runtest(env, "INTERFACES.TS.FUTIMENS_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ns, "check_interfaces_ts_futimens_now_ns", "No", "", MANDATORY, "Setting MA to now with futimens shall give MA granularity to the nanoseconds");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_ma_eq, "check_interfaces_ts_futimens_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with futimens shall set MA to same value");
     runtest(env, "INTERFACES.TS.FUTIMENS_NOW_MAC_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_now_mac_eq, "check_interfaces_ts_futimens_now_mac_eq", "No", "", MANDATORY, "Setting MA to now with futimens shall set MAC to same value");
     runtest(env, "INTERFACES.TS.FUTIMENS.SET.FUTURE.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_futimens_set_future_a, "check_interfaces_ts_futimens_set_future_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a future value shall set A, keep M and update C");
@@ -363,7 +363,7 @@ void group_check_interfaces_ts_utimensat(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma, "check_interfaces_ts_utimensat_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall set MA and update C");
-    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ns, "check_interfaces_ts_utimensat_now_ns", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimensat shall give MA granularity to the nanoseconds");
+    runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_NS", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ns, "check_interfaces_ts_utimensat_now_ns", "No", "", MANDATORY, "Setting MA to now with utimensat shall give MA granularity to the nanoseconds");
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MA_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_ma_eq, "check_interfaces_ts_utimensat_now_ma_eq", "No", "", MANDATORY, "Setting MA to now with utimensat shall set MA to same value");
     runtest(env, "INTERFACES.TS.UTIMENSAT_NOW_MAC_EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_now_mac_eq, "check_interfaces_ts_utimensat_now_mac_eq", "No", "", MANDATORY, "Setting MA to now with utimensat shall set MAC to same value");
     runtest(env, "INTERFACES.TS.UTIMENSAT.SET.FUTURE.A", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimensat_set_future_a, "check_interfaces_ts_utimensat_set_future_a", "Yes", POSIX_c181, MANDATORY, "Setting A to a future value shall set A, keep M and update C");
@@ -379,7 +379,7 @@ void group_check_interfaces_ts_utimes(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
     
     runtest(env, "INTERFACES.TS.UTIMES_NOW_MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_ma, "check_interfaces_ts_utimes_now_ma", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall set MA and update C");
-    runtest(env, "INTERFACES.TS.UTIMES_NOW_US", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_us, "check_interfaces_ts_utimes_now_us", "Yes", POSIX_c181, MANDATORY, "Setting MA to now with utimes shall give MA granularity to the microsecond");
+    runtest(env, "INTERFACES.TS.UTIMES_NOW_US", 10, REPEAT_BEST, s_0s, ns_10ms, check_interfaces_ts_utimes_now_us, "check_interfaces_ts_utimes_now_us", "No", "", MANDATORY, "Setting MA to now with utimes shall give MA granularity to the microsecond");
 
     runtest(env, "INTERFACES.TS.UTIMES.SET.FUTURE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_set_future_ma, "check_interfaces_ts_utimes_set_future_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to future values shall set MA and update C");
     runtest(env, "INTERFACES.TS.UTIMES.SET.PAST.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_ts_utimes_set_past_ma, "check_interfaces_ts_utimes_set_past_ma", "Yes", POSIX_c181, MANDATORY, "Setting M and A to past values shall set MA and update C");
@@ -732,6 +732,9 @@ void group_check_utilities_new(testenv_struct* env){
 void group_check_utilities_mv(testenv_struct* env){    
     if (should_group_run(env, __func__) == 0) return;
 
+    // Mandatory:  MC of src’s parent directory and MC of dest’s parent directory
+    // Mandatory NOT, but allowed as "implementation-defined" in mv: C
+    // TODO: split the tests
     runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
     runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", "", MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
     runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update C, MC of src’s parent directory and MC of dest’s parent directory");

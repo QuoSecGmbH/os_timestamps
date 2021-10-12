@@ -6,10 +6,11 @@
 int check_interfaces_file_mv_rename_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.rename.file/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -34,10 +35,11 @@ int check_interfaces_file_mv_rename_file(FILE* csv_file, FILE* output_file, FILE
 int check_interfaces_file_mv_rename_file_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.rename.file.ma/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct stat_macb* file_stat_before = get_path_timestamps(path);
     
@@ -65,10 +67,11 @@ int check_interfaces_file_mv_rename_file_ma(FILE* csv_file, FILE* output_file, F
 int check_interfaces_file_mv_rename_file_dir(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.rename.file.dir/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -184,10 +187,11 @@ int check_interfaces_file_mv_rename_dir_dir(FILE* csv_file, FILE* output_file, F
 int check_interfaces_file_mv_renameat_file(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.renameat.file/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
@@ -212,10 +216,11 @@ int check_interfaces_file_mv_renameat_file(FILE* csv_file, FILE* output_file, FI
 int check_interfaces_file_mv_renameat_file_ma(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.renameat.file.ma/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct stat_macb* file_stat_before = get_path_timestamps(path);
     
@@ -243,10 +248,11 @@ int check_interfaces_file_mv_renameat_file_ma(FILE* csv_file, FILE* output_file,
 int check_interfaces_file_mv_renameat_file_dir(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
     char* path_dir = misc_concat(dir_path, (char*) "interfaces.file.mv.renameat.file.dir/");
     mkdir(path_dir, 0700);
-    misc_nanosleep(ns_DELAY); 
     
     char* path = misc_concat_ensure_file_exists(path_dir, "orig", s_0s, ns_100ms, output_file, error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
+    
+    misc_nanosleep(ns_DELAY); 
     
     struct timespec* ts_before = current_time_ns_fslike_osspecific();
     
