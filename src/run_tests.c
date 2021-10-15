@@ -634,7 +634,7 @@ void group_check_interfaces_file_new(testenv_struct* env){
     runtest(env, "INTERFACES.FILE.NEW.MKDIRAT", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat, "check_interfaces_file_new_mkdirat", "Yes", POSIX_c181, MANDATORY, "mkdirat shall update MAC of the directory and MC of the parent of the new directory");
     runtest(env, "INTERFACES.FILE.NEW.MKDIRAT.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat_mac, "check_interfaces_file_new_mkdirat_mac", "Yes", "", MANDATORY, "mkdirat shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKDIRAT.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkdirat_mac_1s, "check_interfaces_file_new_mkdirat_mac_1s", "Yes", "", MANDATORY, "mkdirat shall create new directory with MAC equal 1s after creation");
-    runtest(env, "INTERFACES.FILE.NEW.MKFIFO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo, "check_interfaces_file_new_mkfifo", "Yes", POSIX_c181, MANDATORY, "mkfifo shall update MAC of the directory and MC of the parent of the new directory");
+    runtest(env, "INTERFACES.FILE.NEW.MKFIFO", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo, "check_interfaces_file_new_mkfifo", "Yes", POSIX_c181, MANDATORY, "mkfifo shall mark for update MAC of the file and MC of the parent of the new directory");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac, "check_interfaces_file_new_mkfifo_mac", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal");
     runtest(env, "INTERFACES.FILE.NEW.MKFIFO.MAC_1S", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_new_mkfifo_mac_1s, "check_interfaces_file_new_mkfifo_mac_1s", "Yes", "", MANDATORY, "mkfifo shall create new directory with MAC equal 1s after creation");
 
@@ -724,9 +724,10 @@ void group_check_utilities_new(testenv_struct* env){
     runtest(env, "UTILITIES.NEW.MKDIR.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkdir_new_mac, "check_utilities_new_mkdir_new_mac", "No", "", MANDATORY, "mkdir on a non existing dir shall create new directory with MAC equal");
     runtest(env, "UTILITIES.NEW.MKDIR.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkdir_existing, "check_utilities_new_mkdir_existing", "No", "", MANDATORY, "mkdir on an existing dir shall not update MAC of the directory nor MAC of the parent directory");
     
-    runtest(env, "UTILITIES.NEW.MKFIFO.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new, "check_utilities_new_mkfifo_new", "Yes", POSIX_c181, MANDATORY, "mkfifo on a non existing mkfifo shall update MAC of the directory and MC of the parent of the new directory");
-    runtest(env, "UTILITIES.NEW.MKFIFO.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new_mac, "check_utilities_new_mkfifo_new_mac", "No", "", MANDATORY, "mkfifo on a non existing mkfifo shall create new directory with MAC equal");
-    runtest(env, "UTILITIES.NEW.MKFIFO.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_existing, "check_utilities_new_mkfifo_existing", "No", "", MANDATORY, "mkfifo on an existing mkfifo shall not update MAC of the directory nor MAC of the parent directory");
+    runtest(env, "UTILITIES.MKFIFO.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new, "check_utilities_new_mkfifo_new", "Yes", POSIX_c181, MANDATORY, "mkfifo on a non existing path shall mark for update MAC of the fifo and MC of the parent of the new fifo");
+    runtest(env, "UTILITIES.MKFIFO.NEW.UPDATE", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new_update, "check_utilities_new_mkfifo_new_update", "No", "", MANDATORY, "mkfifo on a non existing path shall update MAC of the fifo and MC of the parent of the new fifo");
+    runtest(env, "UTILITIES.MKFIFO.NEW.MAC", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_new_mac, "check_utilities_new_mkfifo_new_mac", "No", "", MANDATORY, "mkfifo on a non existing path shall create new directory with MAC equal");
+    runtest(env, "UTILITIES.MKFIFO.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_new_mkfifo_existing, "check_utilities_new_mkfifo_existing", "No", "", MANDATORY, "mkfifo on an existing path shall not update MAC of the fifo nor MAC of the parent directory");
 }
     
 void group_check_utilities_mv(testenv_struct* env){    

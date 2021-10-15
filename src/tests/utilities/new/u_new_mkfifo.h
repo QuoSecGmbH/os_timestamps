@@ -12,6 +12,7 @@
 #include "profile.h"
 
 int check_utilities_new_mkfifo_new(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+int check_utilities_new_mkfifo_new_update(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_utilities_new_mkfifo_new_mac(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_utilities_new_mkfifo_existing(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 

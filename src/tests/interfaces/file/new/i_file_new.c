@@ -228,10 +228,10 @@ int check_interfaces_file_new_mkfifo(FILE* csv_file, FILE* output_file, FILE* er
     
     mkfifo(path_fifo, 0700);
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    misc_nanosleep(ns_DELAY);
     struct stat_macb* fifo_stat = get_path_timestamps(path_fifo);
     struct stat_macb* parent_dir_stat = get_path_timestamps(path_dir);
+    // Mark for update
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
     
     int fifo_result = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, fifo_stat);
     int parent_dir_result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, parent_dir_stat);
