@@ -12,8 +12,10 @@
 #include "profile.h"
 
 int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+int check_utilities_mv_new_C(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_utilities_mv_new_eq(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
+int check_utilities_mv_existing_C(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 int check_utilities_mv_existing_eq(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path);
 
 #endif

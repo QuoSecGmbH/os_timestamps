@@ -14,8 +14,8 @@ int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     
     char* command = "mv ../srcdir/file ../targetdir/moved";
     
-    char** watch_array = misc_char_array5(path_src, path_pwd, path_srcdir, path_targetdir, path_copy);
-    int watch_num = 5;
+    char** watch_array = misc_char_array4(path_src, path_pwd, path_srcdir, path_targetdir);
+    int watch_num = 4;
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     int* r1 = calloc(sizeof(int), 3);
@@ -34,10 +34,6 @@ int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     r4[0] = UPDATE_MANDATORY;
     r4[1] = NOUPDATE_OPTIONAL;
     r4[2] = UPDATE_MANDATORY;
-    int* r5 = calloc(sizeof(int), 3);
-    r5[0] = NOUPDATE_MANDATORY;
-    r5[1] = NOUPDATE_MANDATORY;
-    r5[2] = UPDATE_MANDATORY;
     
     
     int ** requirements = calloc(sizeof(int*), watch_num);
@@ -45,7 +41,35 @@ int check_utilities_mv_new(FILE* csv_file, FILE* output_file, FILE* error_file, 
     requirements[1] = r2;
     requirements[2] = r3;
     requirements[3] = r4;
-    requirements[4] = r5;
+    
+    int result = misc_check_profile_requirements(output_file, error_file, __func__, pi, requirements);
+    log_info_ts_profile_on_error_message(output_file, error_file, __func__, result, pi, "");
+    return result;
+}
+
+int check_utilities_mv_new_C(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path_dir = misc_concat_ensure_dir_exists(dir_path, "utilities.mv.new.C/", 0, 0, output_file, error_file, __func__);
+    
+    char* path_pwd = (char*) misc_concat(path_dir, "pwd/");
+    char* path_srcdir = (char*) misc_concat_ensure_dir_exists(path_dir, "srcdir/", 0, ns_after_open, output_file, error_file, __func__);
+    char* path_src = misc_concat_ensure_file_exists_filled(path_srcdir, "file", 7, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_targetdir = (char*) misc_concat_ensure_dir_exists(path_dir, "targetdir/", 0, 0, output_file, error_file, __func__);
+    char* path_copy = (char*) misc_concat(path_targetdir, "moved");
+    
+    char* command = "mv ../srcdir/file ../targetdir/moved";
+    
+    char** watch_array = misc_char_array1(path_copy);
+    int watch_num = 1;
+    
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
+    int* r1 = calloc(sizeof(int), 3);
+    r1[0] = NOUPDATE_MANDATORY;
+    r1[1] = NOUPDATE_MANDATORY;
+    r1[2] = UPDATE_MANDATORY;
+    
+    
+    int ** requirements = calloc(sizeof(int*), watch_num);
+    requirements[0] = r1;
     
     int result = misc_check_profile_requirements(output_file, error_file, __func__, pi, requirements);
     log_info_ts_profile_on_error_message(output_file, error_file, __func__, result, pi, "");
@@ -96,8 +120,8 @@ int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     
     char* command = "mv ../srcdir/file ../targetdir/moved";
     
-    char** watch_array = misc_char_array5(path_src, path_pwd, path_srcdir, path_targetdir, path_copy);
-    int watch_num = 5;
+    char** watch_array = misc_char_array4(path_src, path_pwd, path_srcdir, path_targetdir);
+    int watch_num = 4;
     
     struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
     
@@ -117,10 +141,6 @@ int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     r4[0] = UPDATE_MANDATORY;
     r4[1] = NOUPDATE_OPTIONAL;
     r4[2] = UPDATE_MANDATORY;
-    int* r5 = calloc(sizeof(int), 3);
-    r5[0] = NOUPDATE_MANDATORY;
-    r5[1] = NOUPDATE_MANDATORY;
-    r5[2] = UPDATE_MANDATORY;
     
     
     int ** requirements = calloc(sizeof(int*), watch_num);
@@ -128,7 +148,36 @@ int check_utilities_mv_existing(FILE* csv_file, FILE* output_file, FILE* error_f
     requirements[1] = r2;
     requirements[2] = r3;
     requirements[3] = r4;
-    requirements[4] = r5;
+    
+    int result = misc_check_profile_requirements(output_file, error_file, __func__, pi, requirements);
+    log_info_ts_profile_on_error_message(output_file, error_file, __func__, result, pi, "");
+    return result;
+}
+
+int check_utilities_mv_existing_C(FILE* csv_file, FILE* output_file, FILE* error_file, char* dir_path){
+    char* path_dir = misc_concat_ensure_dir_exists(dir_path, "utilities.mv.existing.C/", 0, 0, output_file, error_file, __func__);
+    
+    char* path_pwd = (char*) misc_concat(path_dir, "pwd/");
+    char* path_srcdir = (char*) misc_concat_ensure_dir_exists(path_dir, "srcdir/", 0, ns_after_open, output_file, error_file, __func__);
+    char* path_src = misc_concat_ensure_file_exists_filled(path_srcdir, "file", 7, s_0s, ns_after_open, output_file, error_file, __func__);
+    char* path_targetdir = (char*) misc_concat_ensure_dir_exists(path_dir, "targetdir/", 0, 0, output_file, error_file, __func__);
+    char* path_copy = (char*) misc_concat_ensure_file_exists_filled(path_targetdir, "moved", 3, s_0s, ns_0ns, output_file, error_file, __func__);
+    
+    char* command = "mv ../srcdir/file ../targetdir/moved";
+    
+    char** watch_array = misc_char_array1(path_copy);
+    int watch_num = 1;
+    
+    struct profile_info_struct* pi = profile_command(output_file, error_file, path_pwd, path_srcdir, path_targetdir, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);
+    
+    int* r1 = calloc(sizeof(int), 3);
+    r1[0] = NOUPDATE_MANDATORY;
+    r1[1] = NOUPDATE_MANDATORY;
+    r1[2] = UPDATE_MANDATORY;
+    
+    
+    int ** requirements = calloc(sizeof(int*), watch_num);
+    requirements[0] = r1;
     
     int result = misc_check_profile_requirements(output_file, error_file, __func__, pi, requirements);
     log_info_ts_profile_on_error_message(output_file, error_file, __func__, result, pi, "");

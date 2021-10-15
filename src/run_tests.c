@@ -736,9 +736,11 @@ void group_check_utilities_mv(testenv_struct* env){
     // Mandatory:  MC of src’s parent directory and MC of dest’s parent directory
     // Mandatory NOT, but allowed as "implementation-defined" in mv: C
     // TODO: split the tests
-    runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.NEW", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new, "check_utilities_mv_new", "Yes", POSIX_c181, MANDATORY, "mv when destination is a new file shall  MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.NEW.C", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_C, "check_utilities_mv_new_C", "No", "", MANDATORY, "mv when destination is a new file shall update C");
     runtest(env, "UTILITIES.MV.NEW.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_new_eq, "check_utilities_mv_new_eq", "Yes", "", MANDATORY, "mv when destination is a new file shall update the 5 MC with the same value");
-    runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall update C, MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.EXISTING", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing, "check_utilities_mv_existing", "Yes", POSIX_c181, MANDATORY, "mv when destination is an existing file shall MC of src’s parent directory and MC of dest’s parent directory");
+    runtest(env, "UTILITIES.MV.EXISTING.C", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing_C, "check_utilities_mv_existing", "No", "", MANDATORY, "mv when destination is an existing file shall update C");
     runtest(env, "UTILITIES.MV.EXISTING.EQ", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_mv_existing_eq, "check_utilities_mv_existing_eq", "Yes", "", MANDATORY, "mv when destination is an existing file shall update the 5 MC with the same value");
 }
 
