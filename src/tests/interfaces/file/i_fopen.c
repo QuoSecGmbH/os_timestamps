@@ -20,10 +20,10 @@ int helper_interfaces_file_fopen_new_writemode(FILE* csv_file, FILE* output_file
         return 1;
     }
     
-    struct timespec* ts_after = current_time_ns_fslike_osspecific();
-    misc_nanosleep(ns_DELAY);
     struct stat_macb* file_stat = get_path_timestamps(path_mode);
     struct stat_macb* dir_stat = get_path_timestamps(dir_path);
+    // Mark for update
+    struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result_file = result_MAC_updated(UPDATE_MANDATORY, UPDATE_MANDATORY, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
     int result_dir = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, dir_stat);
@@ -98,6 +98,7 @@ int helper_interfaces_file_fopen_existing_writemode(FILE* csv_file, FILE* output
     }
     
     struct stat_macb* file_stat = get_path_timestamps(path_mode);
+    // Mark for update
     struct timespec* ts_after = current_time_ns_fslike_osspecific();
       
     int result = result_MAC_updated(UPDATE_MANDATORY, NOUPDATE_OPTIONAL, UPDATE_MANDATORY, output_file, error_file, __func__, ts_before, ts_after, file_stat);
