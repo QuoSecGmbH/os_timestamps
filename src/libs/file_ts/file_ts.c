@@ -28,6 +28,7 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
     btim_set = 1;
 #elif __APPLE__
     memcpy((struct timespec*) &(attr_macb->st_btim), &(attr->st_birthtimespec), sizeof(struct timespec));
+    btim_set = 1;
 #endif
 
     if (btim_set == 0){
