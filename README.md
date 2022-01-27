@@ -75,7 +75,7 @@ Two CSV files are also created:
 - os_profile_results.csv - Contains a condensed view of the results, can be used for comparison
 - os_profile_flags.csv   - Contains a more detailed view of the results, explaining precisely what happens to each timestamp
 
-The provided results ([RESULTS.md](RESULTS.md)) will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
+The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood and turned into tables  ([RESULTS.md](RESULTS.md)).
 
 # Library Profiling (Qt, GIO)
 `profile_qt` and `profile_gio` provide similar capabilities to profile functions from Qt and GIO.
