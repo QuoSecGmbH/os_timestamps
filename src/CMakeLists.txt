@@ -324,3 +324,7 @@ target_link_libraries(plot_fread_fstat2 lib_file_ts lib_current_time lib_log lib
 
 add_executable(plot_fwrite_fstat2 plot/plot_fwrite_fstat2.h plot/plot_fwrite_fstat2.c)
 target_link_libraries(plot_fwrite_fstat2 lib_file_ts lib_current_time lib_log lib_misc)
+
+# Python code
+
+file(COPY tests/profile_editors/ DESTINATION .)
