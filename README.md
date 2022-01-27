@@ -105,6 +105,32 @@ Some more PDF options are in the Release section.
 - os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
 - os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
 
+# Library Profiling (Qt, GIO)
+`profile_qt` and `profile_gio` provide similar capabilities to profile functions from Qt and GIO.
+
+They are only compiled (see CMakeLists.txt) and tested on Linux.
+
+# Application Profiling (Text editors)
+
+A number of text editors can be profiled with code based on `pyautogui`, for instance with:
+
+* `python3 editor_test.py`: run all tests
+* `python3 editor_test.py`: run only tests for vim
+
+Output is given in a file named `editors_profile.txt`:
+
+```
+Small File Test
+Vim Version: 8.1
+vim --clean
+VIM ACCESS TEST:  |A| | | 
+VIM MODIFY TEST: M|A|C|B|I
+VIM SAVE WITHOUT MODIFICATION TEST: M|A|C|B|I
+VIM MODIFY BUT DONT SAVE TEST:  |A| | | 
+```
+
+Additionnally to `MACB`, `I` indicates that the inode of the watched file changed.
+
 # Command Profiling
 `profile_cmd` is an interactive tool to profile shell commands.
 
@@ -160,7 +186,6 @@ It means that:
 * Timestamp before the action were: 1590125151.5644975s
 * Timestamp after the action were: 1590125151.5684126s
 * Relevant MAC for comparison are all equal to: 1590125151.4162603s
-
 
 # Tools
 ## Get MACB Timestamps
