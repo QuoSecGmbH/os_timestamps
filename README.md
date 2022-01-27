@@ -5,7 +5,7 @@
 * Tests against POSIX compliance
 * Tested on Linux (Ubuntu, Arch), OpenBSD, FreeBSD, macOS
 
-# Refences
+# References
 
 - OS Profiling: https://quosecgmbh.github.io/blog/01_macb_timestamps_across_POSIX.html
 - Tests againsts POSIX Compliance: https://quosecgmbh.github.io/blog/02_Testing_POSIX.html
