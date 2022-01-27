@@ -2,7 +2,7 @@
 ## Explore how your Unix-like OS modifies MACB timestamps
 ### [https://github.com/QuoSecGmbH/os_timestamps](https://github.com/QuoSecGmbH/os_timestamps)
 * Profile the OS, libraries, applications and commands
-* Test against POSIX compliance
+* Tests against POSIX compliance
 * Tested on Linux (Ubuntu, Arch), OpenBSD, FreeBSD, macOS
 
 # Build
@@ -10,9 +10,12 @@
 - `cmake ../src/`
 - `make`
 
+# Refences
+
+- OS Profiling: https://quosecgmbh.github.io/blog/01_macb_timestamps_across_POSIX.html
+- Tests againsts POSIX Compliance: https://quosecgmbh.github.io/blog/02_Testing_POSIX.html
+
 # OS Profiling
-Please read the blog post for more information on the results and OS implementations:
-- https://medium.com/@quoscient/mac-b-timestamps-across-posix-implementations-linux-openbsd-freebsd-1e2d5893e4f
 
 `profile_os` profiles common file operations:
 - New file/dir
