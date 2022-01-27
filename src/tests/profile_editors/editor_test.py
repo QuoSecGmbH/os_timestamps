@@ -301,7 +301,7 @@ def jed_test(mode):
 # runs all tests
 def editorTest():
     global sleeptime
-    sys.stdout = open('output.txt', 'w')
+    sys.stdout = open('apps_profile.txt', 'w')
 
     start_time = datetime.now()
     open_terminal()
