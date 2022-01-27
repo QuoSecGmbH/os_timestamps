@@ -12,7 +12,7 @@
 
 # Results & Tables
 
-- (RESULTS.md)[RESULTS.md]
+- [RESULTS.md](RESULTS.md)
 
 # Build
 - `mkdir build; cd build/`
