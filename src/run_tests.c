@@ -652,16 +652,20 @@ void group_check_interfaces_file_mv(testenv_struct* env){
 
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file, "check_interfaces_file_mv_rename_file", "No", "", MANDATORY, "rename on a file shall update C");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_ma, "check_interfaces_file_mv_rename_file_ma", "No", "", MANDATORY, "rename on a file shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.MOVE.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_move_file_ma, "check_interfaces_file_mv_rename_move_file_ma", "No", "", MANDATORY, "rename (into a different folder) on a file shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAME.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_file_dir, "check_interfaces_file_mv_rename_file_dir", "Yes", POSIX_c181, MANDATORY, "rename on a file shall update MC of parent directory");
     runtest(env, "INTERFACES.FILE.MV.RENAME.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir, "check_interfaces_file_mv_rename_dir", "No", "", MANDATORY, "rename on a dir shall update C");
-    runtest(env, "INTERFACES.FILE.MV.RENAME.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir_ma, "check_interfaces_file_mv_rename_dir_ma", "No", "", MANDATORY, "rename on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir_ma, "check_interfaces_file_mv_rename_dir_ma", "Yes", POSIX_c181, MANDATORY, "rename on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAME.MOVE.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_move_dir_ma, "check_interfaces_file_mv_rename_move_dir_ma", "Yes", POSIX_c181, MANDATORY, "rename (into a different folder) on a dir shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAME.DIR.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_rename_dir_dir, "check_interfaces_file_mv_rename_dir_dir", "Yes", POSIX_c181, MANDATORY, "rename on a dir shall update MC of parent directory");
     
     runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file, "check_interfaces_file_mv_renameat_file", "No", "", MANDATORY, "renameat on a file shall update C");
-    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file_ma, "check_interfaces_file_mv_renameat_file_ma", "No", "", MANDATORY, "renameat on a file shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file_ma, "check_interfaces_file_mv_renameat_file_ma", "Yes", POSIX_c181, MANDATORY, "renameat on a file shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.MOVE.FILE.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_move_file_ma, "check_interfaces_file_mv_renameat_move_file_ma", "Yes", POSIX_c181, MANDATORY, "renameat (into a different folder) on a file shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAMEAT.FILE.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_file_dir, "check_interfaces_file_mv_renameat_file_dir", "Yes", POSIX_c181, MANDATORY, "renameat on a file shall update MC of parent directory");
     runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir, "check_interfaces_file_mv_renameat_dir", "No", "", MANDATORY, "renameat on a dir shall update C");
-    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir_ma, "check_interfaces_file_mv_renameat_dir_ma", "No", "", MANDATORY, "renameat on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir_ma, "check_interfaces_file_mv_renameat_dir_ma", "Yes", POSIX_c181, MANDATORY, "renameat on a dir shall keep MA");
+    runtest(env, "INTERFACES.FILE.MV.RENAMEAT.MOVE.DIR.MA", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_move_dir_ma, "check_interfaces_file_mv_renameat_move_dir_ma", "Yes", POSIX_c181, MANDATORY, "renameat (into a different folder) on a dir shall keep MA");
     runtest(env, "INTERFACES.FILE.MV.RENAMEAT.DIR.DIR", 1, REPEAT_WORST, s_0s, ns_10ms, check_interfaces_file_mv_renameat_dir_dir, "check_interfaces_file_mv_renameat_dir_dir", "Yes", POSIX_c181, MANDATORY, "renameat on a dir shall update MC of parent directory");
 }
 
@@ -775,8 +779,8 @@ void group_check_utilities_ln(testenv_struct* env){
 void group_check_utilities_ls(testenv_struct* env){
     if (should_group_run(env, __func__) == 0) return;
 
-    runtest(env, "UTILITIES.LS", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "No", "", MANDATORY, "ls shall update A of target directory");
-    runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "No", "", MANDATORY, "ls shall not update MAC of files in target directory");
+    runtest(env, "UTILITIES.LS", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls, "check_utilities_ls", "Yes", POSIX_c181, MANDATORY, "ls shall update A of target directory");
+    runtest(env, "UTILITIES.LS.FILES", 1, REPEAT_WORST, s_0s, ns_10ms, check_utilities_ls_files, "check_utilities_ls_files", "Yes", POSIX_c181, MANDATORY, "ls shall not update MAC of files in target directory");
 }
 
 void group_check_utilities_vi(testenv_struct* env){

@@ -1,6 +1,6 @@
 # os_timestamps
 ### [https://github.com/QuoSecGmbH/os_timestamps](https://github.com/QuoSecGmbH/os_timestamps)
-* Profile how your Unix-like OS (Linux, BSD...)  modifies MACB timestamps.
+* Profile how your Unix-like OS (tested on Linux, OpenBSD, FreeBSD and macOS)  modifies MACB timestamps.
 * Test POSIX compliance
 
 # Build
