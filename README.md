@@ -1,7 +1,18 @@
 # os_timestamps
+## Explore how your Unix-like OS modifies MACB timestamps
 ### [https://github.com/QuoSecGmbH/os_timestamps](https://github.com/QuoSecGmbH/os_timestamps)
-* Profile how your Unix-like OS (tested on Linux, OpenBSD, FreeBSD and macOS)  modifies MACB timestamps.
-* Test POSIX compliance
+* Profile the OS, libraries, applications and commands
+* Tests against POSIX compliance
+* Tested on Linux (Ubuntu, Arch), OpenBSD, FreeBSD, macOS
+
+# References
+
+- OS Profiling: https://quosecgmbh.github.io/blog/01_macb_timestamps_across_POSIX.html
+- Tests againsts POSIX Compliance: https://quosecgmbh.github.io/blog/02_Testing_POSIX.html
+
+# Results & Tables
+
+- [RESULTS.md](RESULTS.md)
 
 # Build
 - `mkdir build; cd build/`
@@ -9,8 +20,6 @@
 - `make`
 
 # OS Profiling
-Please read the blog post for more information on the results and OS implementations:
-- https://medium.com/@quoscient/mac-b-timestamps-across-posix-implementations-linux-openbsd-freebsd-1e2d5893e4f
 
 `profile_os` profiles common file operations:
 - New file/dir
@@ -66,44 +75,35 @@ Two CSV files are also created:
 - os_profile_results.csv - Contains a condensed view of the results, can be used for comparison
 - os_profile_flags.csv   - Contains a more detailed view of the results, explaining precisely what happens to each timestamp
 
-The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood.
+The provided results will need some interpretation and a bit of context (mount options, OS configuration...) to be fully understood and turned into tables  ([RESULTS.md](RESULTS.md)).
 
-## POSIX
-POSIX specifies MAC updates, the manually generated os_profile_results.csv is here:
-- [results/2019_11_29/profileos/posix/os_profile.csv](results/2019_11_29/profileos/posix/os_profile.csv)
+# Library Profiling (Qt, GIO)
+`profile_qt` and `profile_gio` provide similar capabilities to profile functions from Qt and GIO.
 
-`*` is an additional symbol for when POSIX leaves choice to the implementation:
-> Some implementations mark for update the last file status change timestamp of renamed files and some do not.
+They are only compiled (see CMakeLists.txt) and tested on Linux.
 
-## Results
-For easier comparison of MACB updates, a result file without B updates (os_profile_results_mac.csv) is provided.
+# Application Profiling (Text editors)
 
-The tables are interpreted from the results files and OS implementation.
-Some more PDF options are in the Release section.
+A number of text editors can be profiled with code based on `pyautogui`, for instance with:
 
-### Linux:
-![Linux MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/linux_macb.png)
+* `python3 editor_test.py`: run all tests
+* `python3 editor_test.py`: run only tests for vim
 
-- PDF: [linux_macb.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/linux_macb.pdf)
-- os_profile_results.csv: [results/2019_11_29/profileos/linux/os_profile_results.csv](results/2019_11_29/profileos/linux/os_profile_results.csv)
-- os_profile_results_mac.csv: [results/2019_11_29/profileos/linux/os_profile_results_mac.csv](results/2019_11_29/profileos/linux/os_profile_results_mac.csv)
-- os_profile_flags.csv: [results/2019_11_29/profileos/linux/os_profile_flags.csv](results/2019_11_29/profileos/linux/os_profile_flags.csv)
+Please do not touch the keyboard or mouse while the tests are running.
 
-### OpenBSD:
-![OpenBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/openbsd_mac.png)
+Output is given in a file named `editors_profile.txt`:
 
-- PDF: [openbsd_mac.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/openbsd_mac.pdf)
-- os_profile_results.csv: [results/2019_11_29/profileos/openbsd/os_profile_results.csv](results/2019_11_29/profileos/openbsd/os_profile_results.csv)
-- os_profile_results_mac.csv: [results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv](results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv)
-- os_profile_flags.csv: [results/2019_11_29/profileos/openbsd/os_profile_flags.csv](results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
+```
+Small File Test
+Vim Version: 8.1
+vim --clean
+VIM ACCESS TEST:  |A| | | 
+VIM MODIFY TEST: M|A|C|B|I
+VIM SAVE WITHOUT MODIFICATION TEST: M|A|C|B|I
+VIM MODIFY BUT DONT SAVE TEST:  |A| | | 
+```
 
-### FreeBSD:
-![FreeBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/freebsd_macb.png)
-
-- PDF: [freebsd_macb.pdf](https://github.com/quoscient/os_timestamps/releases/download/2019_12_03/freebsd_macb.pdf)
-- os_profile_results.csv: [results/2019_11_29/profileos/freebsd/os_profile_results.csv](results/2019_11_29/profileos/freebsd/os_profile_results.csv)
-- os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
-- os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
+Additionnally to `MACB`, `I` indicates that the inode of the watched file changed.
 
 # Command Profiling
 `profile_cmd` is an interactive tool to profile shell commands.
@@ -160,7 +160,6 @@ It means that:
 * Timestamp before the action were: 1590125151.5644975s
 * Timestamp after the action were: 1590125151.5684126s
 * Relevant MAC for comparison are all equal to: 1590125151.4162603s
-
 
 # Tools
 ## Get MACB Timestamps
