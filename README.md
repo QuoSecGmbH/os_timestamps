@@ -7,8 +7,8 @@
 
 # References
 
-- OS Profiling: https://quosecgmbh.github.io/blog/01_macb_timestamps_across_POSIX.html
-- Tests againsts POSIX Compliance: https://quosecgmbh.github.io/blog/02_Testing_POSIX.html
+- OS Profiling: https://yaps8.github.io/blog/01_macb_timestamps_across_POSIX.html
+- Tests againsts POSIX Compliance: https://yaps8.github.io/blog/02_Testing_POSIX.html
 
 # Results & Tables
 
