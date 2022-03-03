@@ -1,0 +1,252 @@
+\documentclass{article}
+% VS
+% \documentclass[a4paper,landscape]{article}
+
+% \documentclass[a4paper,10pt]{article}
+
+\usepackage{array}
+\usepackage{makecell}
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{arydshln}
+
+\usepackage[pdftex,active,tightpage]{preview}
+\setlength\PreviewBorder{2mm} % use to add a border around the image
+% VS
+% \usepackage{fullpage}
+% \pagenumbering{gobble}
+
+% \usepackage{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[english]{babel}
+% \usepackage{fullpage}
+
+% \usepackage{scrextend}
+
+% \usepackage[algoruled,french,onelanguage]{algorithm2e}
+% \usepackage{amsfonts}
+% \usepackage{amsmath}
+% \usepackage{placeins}
+% \usepackage{verbatim}
+% \usepackage{graphicx}
+% \usepackage{listings}
+% \usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usetikzlibrary{shapes.multipart,calc}
+\usetikzlibrary{arrows}
+
+
+% \documentclass[12pt]{article}
+% \usepackage[utf8]{inputenc}
+\usepackage{fourier} 
+\usepackage{array}
+\usepackage{makecell}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\newcommand{\cellmacb}[1]{\makecell{\Large{#1}}}
+
+%\usepackage{fontspec}
+%\setmonofont{Libertinus Mono}[
+%  Scale=MatchLowercase
+%] % or whatever font you prefer
+
+%\setmonofont{Everson Mono}
+
+\usepackage{inconsolata}
+
+% tikz
+\tikzset{
+  state/.style={
+    rectangle,
+    rounded corners=1pt,
+    draw=black, very thick,
+    minimum height=2em
+%     text centered,
+  },
+}
+
+% tikz
+\tikzset{
+  snb/.style={
+    rectangle,
+%    draw=black
+  },
+}
+
+
+\usepackage[margin=-2.8cm]{geometry} % VS
+
+\begin{document}
+% \documentclass{standalone}
+
+\begin{preview} % VS
+\begin{center}
+	\begin{Huge}
+		MACB Timestamps on Unix (POSIX, Linux, OpenBSD, FreeBSD, macOS)\\
+	\end{Huge}
+\end{center}
+% Tested against Ext4 on Ubuntu \& ArchLinux\\
+% ~\\
+% \vspace{0.3cm}
+% \hspace{-1cm}
+% 	\begin{tabular}{lp{6cm}|lp{5cm}}
+% 	&  & Mount Option & Description \\
+% 	\texttt{>} & M/A/C is the same as src file/dir & relatime (\textbf{default}) & \textbf{A is updated if earlier than M or C, or if more than 1 day old} \\
+% 	\texttt{M/A/C} & M/A/C is updated (to current time) & strictatime & A is always updated \\
+% 	\texttt{.} & M/A/C is not modified & noatime & A is never updated \\
+% 	 & & nodiratime & A is never updated for directories \\
+% \end{tabular}
+
+
+\begin{center}
+\begin{tabular}[t]{l|p{5.2cm}|p{4.6cm}|p{2.3cm}|p{2.3cm}}
+% 	\hline
+Mount option & Linux (ext4) & OpenBSD (FFS1) & FreeBSD (UFS2) & macOS (HFS+) \\
+% 	\hline
+% 	Birth timestamp (B) & \checkmark &  & \checkmark & \checkmark & OpenBSD does not use the B field (always 0) \\
+% 	Resolution (default) & 1ns& 1ns & $1\mu s$ & 1s & POSIX mandates a maximum resolution of 1s \\
+% 	
+% 	\hline
+% 	\hline
+
+% 	Mount Option & \rotatebox{90}{Linux} & \rotatebox{90}{OpenBSD} & \rotatebox{90}{FreeBSD} & \rotatebox{90}{macOS} & Description \\
+% 	Mount Option & & &  &  &  \\
+	\hline
+	\textbf{(default)} & MCB updates are all performed & MAC updates are all performed, B is always 0 & \multicolumn{2}{c}{MACB updates are all performed} \\
+	\hline
+	\framebox{\textbf{relatime}} &  \textbf{(default)} A updates are performed if A was earlier or equal to M or C, or at least 1 day old  &   \multicolumn{3}{c}{(No)} \\
+	\hline
+	strictatime &  A updates are always performed &   \multicolumn{3}{c}{(No)} \\
+	\hline
+	\framebox{nodiratime} &  A updates are never performed for directories &   \multicolumn{3}{c}{(No)}   \\
+	\hline
+	\framebox{noatime} &  A updates are never performed & A updates are performed only if M or C is also marked for update & \multicolumn{2}{c}{A updates are never performed}\\
+\end{tabular}
+\end{center}
+
+% \vspace{-0.2cm} % VS
+\begin{minipage}{\textwidth}
+\begin{center}
+\begin{tabular}{l|c|c|c:c|c|c|c|c:c:c|c:c:c:c|c:c:c|c|c}
+                                                                    & \makecell{New\\File/Dir} & \makecell{File Read\\/Execute} & \multicolumn{2}{c|}{\makecell{Symlink\\Read/Follow}}                                                                                                        & \makecell{File\\Write} & \makecell{File/Dir\\Change} & \makecell{New/Delete\\Hardlink} &\multicolumn{3}{c|}{\makecell{File/Dir Rename,\\Local File Move}}                                                                                                                                                                                                                       & \multicolumn{4}{c|}{\makecell{Local\\Dir Move}}                                                                                                                                                                                                                              & \multicolumn{3}{c|}{\makecell{Volume\\File/Dir Move}}                                                                                                                                                                                                                             & \makecell{File/Dir\\Copy (new)} & \makecell{File Copy\\(existing)} \\
+                                                                    & \texttt{touch, mkdir}       & \texttt{cat, exec()}                   & \multicolumn{2}{c|}{readlink}                                                                                                                                                 & \texttt{>, >>}            & \texttt{chmod, chown}          & \texttt{ln, rm}                               & \multicolumn{3}{c|}{\texttt{mv, rename()}}                                                                                                                                                                                                                                                          & \multicolumn{4}{c|}{\makecell{\texttt{mv, rename()}}}                                                                                                                                                                                                                   & \multicolumn{3}{c|}{\texttt{mv}}                                                                                                                                                                                                                                                                 & \texttt{cp}                               & \texttt{cp} \\
+	\hline 
+  \makecell{}  & \cellmacb{}    & \cellmacb{}                    & \makecell{\rotatebox{90}{POSIX}~~\rotatebox{90}{Linux}}   & \makecell{\rotatebox{90}{OpenBSD}~~\rotatebox{90}{FreeBSD}~~\rotatebox{90}{macOS}}       & \cellmacb{}                 & \cellmacb{}                           &  \cellmacb{}                                   &  \makecell{\rotatebox{90}{POSIX}}                          &  \makecell{\rotatebox{90}{Linux}~~\rotatebox{90}{OpenBSD}~~\rotatebox{90}{FreeeBSD}} &  \makecell{\rotatebox{90}{macOS}}             & \makecell{\rotatebox{90}{POSIX}}   & \makecell{\rotatebox{90}{Linux}}   & \makecell{\rotatebox{90}{OpenBSD}~~\rotatebox{90}{FreeBSD}}   & \makecell{\rotatebox{90}{macOS}}      & \makecell{\rotatebox{90}{POSIX}} & \makecell{\rotatebox{90}{Linux}~~\rotatebox{90}{OpenBSD}} & \makecell{\rotatebox{90}{FreeBSD}~~\rotatebox{90}{macOS}}                                & \cellmacb{}                              & \cellmacb{}           \\
+M & \cellmacb{M}                  & \cellmacb{.}                               & \cellmacb{.}      & \cellmacb{.}                                                                                                                                                                                                                 & \cellmacb{M}              & \cellmacb{.}                           &  \cellmacb{.}                                 & \cellmacb{.}    & \cellmacb{.} & \cellmacb{.}                                                                                                                                                                                                                                                        & \cellmacb{.}  & \cellmacb{.} & \cellmacb{\framebox{M}}  & \cellmacb{.}                                                                                                                                                                                          & \cellmacb{m}    & \cellmacb{m} & \cellmacb{m}                                                                                                                                                                                                                                                                                         & \cellmacb{M}                                & \cellmacb{M}\\
+	\hline 
+ A & \cellmacb{A}                 & \cellmacb{A}                                &   \cellmacb{A}     & \framebox{\cellmacb{.}}                                                                                                                                                                                        & \cellmacb{.}                 & \cellmacb{.}                          & \cellmacb{.}                                   & \cellmacb{.}     & \cellmacb{.} & \cellmacb{.}                                                                                                                                                                                                                                                    & \cellmacb{.}    & \cellmacb{.} & \cellmacb{.} & \cellmacb{.}                                                                                                                                                                                                              & \cellmacb{a}           & \cellmacb{a}  & \cellmacb{a}                                                                                                                                                                                                                                     & \cellmacb{A}                              & \cellmacb{.}\\
+	\hline
+ C & \cellmacb{C}                & \cellmacb{.}                                 & \cellmacb{.}            & \cellmacb{.}                                                                                                                                                                                                            & \cellmacb{C}               & \cellmacb{C}                         & \cellmacb{C}                                  & \cellmacb{*}    & \cellmacb{C} & \cellmacb{.}                                                                                                                                                                                                                                                  & \cellmacb{*}   & \cellmacb{C} & \cellmacb{C} & \cellmacb{.}                                                                                                                                                                                                              & \cellmacb{*}    & \cellmacb{C} & \cellmacb{C}                                                                                                                                                                                                                                            & \cellmacb{C}                                  & \cellmacb{C}\\
+	\hline
+ B$^{1}$ & \cellmacb{B}               & \cellmacb{.}                                   & \cellmacb{.}          & \cellmacb{.}                                                                                                                                                                                                             & \cellmacb{.}                 & \cellmacb{.}                          & \cellmacb{.}                                  & \cellmacb{}      & \cellmacb{.} & \cellmacb{.}                                                                                                                                                                                                                                                     & \cellmacb{}  & \cellmacb{.} & \cellmacb{.} & \cellmacb{.}                                                                                                                                                                                                                & \cellmacb{}         & \cellmacb{B}  & \cellmacb{m}                                                                                                                                                                                                                                        & \cellmacb{B}                               & \cellmacb{.}\\
+\end{tabular}
+\end{center}
+\end{minipage}
+% }
+
+~\\
+
+\begin{minipage}[t]{0.63\textwidth}
+% \scalebox{0.45}{
+\begin{minipage}{\textwidth}
+\begin{tabular}{l|c|c:c|c|c:c|c}
+   & \makecell{\textbf{Dir}\\Traversal}          & \multicolumn{2}{c|}{\makecell{\textbf{Dir}\\Listing}}                    & \makecell{\textbf{Dir}: New/Rename/Delete Child\\(File/Dir/Hardlink),\\ File Moved into (Local)}& \multicolumn{2}{c|}{\makecell{\textbf{Dir}: Dir Moved\\into (Local)}}           & \makecell{\textbf{Dir}: Child\\Read/Exec\\ /Write/Change}\\
+% 	\hline
+ & \texttt{cd}                                                   &\multicolumn{2}{c|}{\texttt{ls}}                                   & \texttt{touch, mkdir, ln, mv, cp, rm}                                                                                               & \multicolumn{2}{c|}{\texttt{mv}}                                                                  & \texttt{cat, readlink, >>} \\
+	\hline
+ &                                                                      & \makecell{\rotatebox{90}{POSIX}~~\rotatebox{90}{Linux}~~\rotatebox{90}{OpenBSD}~~\rotatebox{90}{macOS}}                                           &  \makecell{\rotatebox{90}{FreeBSD}}                                                                     &                                         & \makecell{\rotatebox{90}{POSIX}~~\rotatebox{90}{Linux}~~\rotatebox{90}{FreeBSD}~~\rotatebox{90}{macOS}} & \makecell{\rotatebox{90}{OpenBSD}}   & \\
+	M & \cellmacb{.}                                            & \cellmacb{.}      &  \cellmacb{.}                                     & \cellmacb{M}                                                                                                                                & \cellmacb{M}         & \cellmacb{M}                                                                     & \cellmacb{.} \\
+	\hline
+ A & \cellmacb{.}                                               & \cellmacb{A}    &  \framebox{\cellmacb{.}}                              & \cellmacb{.}                                                                                                                               & \cellmacb{.}        & \framebox{\cellmacb{A}}                                                    & \cellmacb{.} \\
+	\hline
+ C & \cellmacb{.}                                            & \cellmacb{.}       & \cellmacb{.}                                 & \cellmacb{C}                                                                                                                              & \cellmacb{C}        & \cellmacb{C}                                                                      & \cellmacb{.} \\
+	\hline
+ B$^{1}$ & \cellmacb{.}                               & \cellmacb{.}      & \cellmacb{.}                       & \cellmacb{.}                                                                                                                                      & \cellmacb{.}                 & \cellmacb{}                                                                   & \cellmacb{.} \\
+\end{tabular}
+\end{minipage}
+% }
+\end{minipage}
+% \hspace{7.8cm}
+\begin{minipage}[t]{0.15\textwidth}
+\vspace{-1.0cm}
+% \scalebox{0.45}{
+\begin{minipage}[t]{\textwidth}
+\begin{tabular}[t]{|ll|}
+	\hline
+% 	\large Legend & \\
+%      &  \\
+% 	\texttt{0} & Timestamp has now the null value\\
+	\texttt{M/A/C/B} & M/A/C/B is updated to current time\\
+	\texttt{m/a/c/b} & \small M/A/C/B is inherited from m/a/c/b of source file/dir\\
+% 	\texttt{>} & M/A/C/B is inherited from source file/dir\\
+	\texttt{.} & M/A/C/B is not modified \\
+	\texttt{*} & POSIX: Choice is left to the implementation \\
+% 	\hline
+%     \doublebox{\strut} & Not POSIX-Compliant \\
+    \framebox{~\strut} & Not POSIX-Compliant \\
+%      &  \\
+     & \multicolumn{1}{r|}{Legend}  \\
+% 	 & \large Legend\\
+% 	\hline
+%     \multicolumn{2}{c|}{\framebox{~} Not POSIX-Compliant} \\
+	\hline
+% 	\multicolumn{2}{l}{$^{1}$: Linux and FreeBSD only} & \\
+\end{tabular}
+~\\
+~\\
+\begin{tabular}[t]{ll}
+$^{1}$: & Linux, FreeBSD and macOS only; always 0 on OpenBSD;\\
+ &  not specified by POSIX\\
+\end{tabular}
+\end{minipage}
+% }
+\end{minipage}
+
+
+\vspace{0.35cm} % VS
+2022-03-03 - \url{https://github.com/QuoSecGmbH/os\_timestamps/}
+
+
+% \begin{center}
+% \begin{tabular}{c|c|c|c|c|c|c}
+%    & \makecell{\textbf{Dir}\\Traversal} & \makecell{\textbf{Dir}\\Listing} & \makecell{\textbf{Dir}: New Dir\\Moved into (Local)} & \makecell{\textbf{Dir}: New Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Delete Child\\(File/Dir/Hardlink)} & \makecell{\textbf{Dir}: Child\\Read/Exec/Write/Change}\\
+% % 	\hline
+%  & \texttt{cd} & \texttt{ls} & \texttt{mv} & \texttt{touch, mkdir, ln, mv, cp} & \texttt{rm, mv} & \texttt{cat, readlink, >>...} \\
+% 	\hline
+%  M & \cellmacb{.} & \cellmacb{.} & \cellmacb{M} & \cellmacb{M} & \cellmacb{M} & \cellmacb{.} \\
+% 	\hline
+%  A & \cellmacb{.} & \cellmacb{A} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+% 	\hline
+%  C & \cellmacb{.} & \cellmacb{.} & \cellmacb{C} & \cellmacb{C} & \cellmacb{C} & \cellmacb{.} \\
+% 	\hline
+%  B & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} & \cellmacb{.} \\
+% \end{tabular}
+% \end{center}
+
+% \vspace{-0.35cm} % VS
+% 2022-03-03 \hspace{18.4cm} Tested against HFS+ on macOS 10.13.6
+
+% \begin{tikzpicture}[->,scale=1,>=stealth',thick, node distance=0cm]
+% % 	\input{linux_mac_results_partial.tex}
+% % 	\node[snb, below right = -0.5cm and 5.3cm of PROFILE_OS_FILE_COPY_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+% % 	\node[snb, below right = -1.8cm and 5.3cm of PROFILE_OS_SYMLINK_FILE_NEW_FIT.south east, anchor= north west] (LAST) {QuoScient, 2019-11-05};
+% 
+% % 	\node[state, draw=red, fit={(PROFILE_OS_FILE_MV_LOCAL_FIT) (PROFILE_OS_FILE_COPY_NEW_FIT) (PROFILE_OS_FILE_COPY_EXISTING_FIT)}] (PROFILE_OS_FILE_WRITE_FIT) {};
+% 
+% 	
+% 	\end{tikzpicture}%}
+
+\end{preview} % VS
+\end{document}
+
