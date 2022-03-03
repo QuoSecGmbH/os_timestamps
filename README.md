@@ -1,5 +1,4 @@
-# os_timestamps
-## Explore how your Unix-like OS modifies MACB timestamps
+# Explore how your Unix-like OS modifies MACB timestamps
 
 * Profile the OS, libraries, applications and commands
 * Tests against POSIX compliance
