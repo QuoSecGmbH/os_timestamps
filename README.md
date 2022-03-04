@@ -4,6 +4,12 @@
 * Tests against POSIX compliance
 * Tested on Linux (Ubuntu, Arch), OpenBSD, FreeBSD, macOS
 
+# MACB timestamps
+* M: Last data **m**odification timestamp
+* A: Last data **a**ccess timestamp
+* C: Last file status **c**hange timestamp (typically updated by `chmod` or `chown`)
+* B: File creation (**b**irth)
+
 # References
 
 - OS Profiling: https://yaps8.github.io/blog/01_macb_timestamps_across_POSIX.html
