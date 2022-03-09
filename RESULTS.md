@@ -1,10 +1,6 @@
 
 
 # Results
-For easier comparison of MACB updates, a result file without B updates (os_profile_results_mac.csv) is provided.
-
-The tables are interpreted from the results files and OS implementation.
-Some more PDF options are in the Release section.
 
 ## Merged results with POSIX compliance
 ![Unix MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/unix_macb.png)
