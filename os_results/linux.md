@@ -6,7 +6,7 @@
 # Test Setup
 
 - Machine: Lenovo P1 laptop
-- Distributions tested: Archlinux 5.3.8, Ubuntu 18.04.3 LTS and 20.04.3 LTS 
+- Distributions: Archlinux 5.3.8, Ubuntu 18.04.3 LTS and 20.04.3 LTS 
 - Filesystem: ext4
 
 # Result Output
