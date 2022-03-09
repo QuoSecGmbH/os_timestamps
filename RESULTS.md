@@ -1,8 +1,6 @@
 
 
-# Results
-
-## Merged results with POSIX compliance
+# Merged results and POSIX compliance
 ![Unix MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/unix_macb.png)
 
 - PDF: [unix_macb.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/unix_macb.pdf)
