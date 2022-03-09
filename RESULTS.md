@@ -20,7 +20,7 @@ Some more PDF options are in the Release section.
 - os_profile_flags.csv [2019]: [results/2019_11_29/profileos/linux/os_profile_flags.csv](results/2019_11_29/profileos/linux/os_profile_flags.csv)
 
 ## OpenBSD
-![OpenBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/openbsd_mac.png)
+![OpenBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-09/openbsd_mac.png)
 
 - PDF: [openbsd_mac.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/openbsd_mac.pdf)
 - os_profile_results.csv [2019]: [results/2019_11_29/profileos/openbsd/os_profile_results.csv](results/2019_11_29/profileos/openbsd/os_profile_results.csv)
