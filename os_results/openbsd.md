@@ -13,7 +13,7 @@
 | Timestamp Size       | 32 bits (seconds) + 32 bits (nanosecond) | 64 bits (seconds) + 32 bits (nanosecond)     |
 | Fields for B Timestamp (file creation)            |  No  | Yes  |
 
-Though FFS2 has fields (64 bits + 32 bits) for the B timestamp, OpenBSD does not fill it, it is always 0.
+Though FFS2 has fields (64 bits + 32 bits) for the B timestamp, OpenBSD does not fill them, B is always 0.
 
 ## Test Setup
 
