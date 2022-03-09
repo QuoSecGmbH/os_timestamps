@@ -21,7 +21,7 @@ Though FFS2 has fields (64 bits + 32 bits) for the B timestamp, OpenBSD does not
 - Versions tested: 6.5, 6.8, 7.0
 - Filesystems tested: FFS1, FFS2
 
-## Result output
+## Result Output
 
 - POSIX Compliance - results.csv [2022]: [/results/2022_03_09/posix_compliance/openbsd/results.csv](/results/2022_03_09/posix_compliance/openbsd/results.csv)
 - os_profile_results.csv [2022]: [/results/2022_03_09/profileos/openbsd/os_profile_results.csv](/results/2022_03_09/profileos/openbsd/os_profile_results.csv)
