@@ -10,7 +10,7 @@
 |                      | FFS1 | FFS2 (default) |
 |----------------------|------|------|
 | Timestamp Resolution | 1 ns | 1 ns |
-| Timestamp size       | 32 bits (seconds) + 32 bits (nanosecond) | 64 bits (seconds) + 32 bits (nanosecond)     |
+| Timestamp Size       | 32 bits (seconds) + 32 bits (nanosecond) | 64 bits (seconds) + 32 bits (nanosecond)     |
 | Field for B Timestamp (file creation)            |  No  | Yes  |
 
 ## Test Setup
