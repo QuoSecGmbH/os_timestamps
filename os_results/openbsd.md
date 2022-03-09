@@ -5,7 +5,7 @@
 - PDF: [openbsd_mac.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/openbsd_mac.pdf)
 
 
-## Files Systems: FFS1 and FFS2
+## File Systems: FFS1 and FFS2
 
 |                      | FFS1 | FFS2 (default) |
 |----------------------|------|------|
