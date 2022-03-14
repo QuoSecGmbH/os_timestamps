@@ -11,6 +11,9 @@ The following figure illustrates timestamp updates across the software stack.
 
 
 # OS results (Linux, OpenBSD, FreeBSD, macOS) and POSIX compliance
+
+The following results and tables apply to the layers specified by POSIX: POSIX Utilities, standard libraries (`libc`), kernel (system calls and mount options) and file systems.
+
 ![Unix MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/unix_macb.png)
 
 - PDF: [unix_macb.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/unix_macb.pdf)
