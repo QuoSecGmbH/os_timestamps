@@ -42,3 +42,26 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 
 # Applications
 
+Applications were tested on Ubuntu (20.04.3 LTS).
+File editors were tested for file Read and File Modify.
+
+| Editor | Read | Write | 
+| ------ | ---- | ----- | 
+| Vim –clean         | .A.. | MACB | 
+| Emacs              | .A.. | MACB |
+| Code::Blocks       | .A.. | MACB |
+| gedit              | .A.. | MACB |
+| Bluefish           | .A.. | MACB |
+| Geany              | .A.. | MACB |
+| TeXstudio          | .A.. | MACB |
+| JED                | .A.. | MACB |
+| Kate               | .A.. | MAC. |
+| Atom               | .A.. | MAC. |
+| Vim nowritebackup  | .A.. | M.C. |
+| nano               | .A.. | M.C. |
+| Leafpad            | .A.. | M.C. |
+| Visual Studio Code | .A.. | M.C. |
+| Notepadqq          | .A.. | M.C. |
+| Sublime Text       | .A.. | M.C. |
+
+
