@@ -1,4 +1,4 @@
-# Understanding MACB updates: Software Stack
+# Understanding MACB updates (Software Stack)
 
 Timestamp updates are mandated by user actions on applications or utilities (`cp`), which rely on middleware, standard libraries (`libc`) and system calls in the kernel to ultimately have timestamps written down in inodes on the file system.
 
