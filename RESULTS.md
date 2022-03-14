@@ -40,6 +40,9 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 
 # Middleware
 
+Middleware were tested on Ubuntu (20.04.3 LTS).
+
+
 # Applications
 
 Applications were tested on Ubuntu (20.04.3 LTS).
