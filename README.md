@@ -17,7 +17,7 @@
 
 # Results & Tables
 
-The main result is the following comparative table for timestamp updates provoked by POSIX utilities, standard libraries (`libc`) and kernel syscalls.
+The main result is the following comparative table for timestamp updates provoked by POSIX utilities, standard libraries (`libc`) and kernel system calls.
 
 ![Unix MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/unix_macb.png)
 
