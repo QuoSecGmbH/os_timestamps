@@ -3,7 +3,7 @@
 Timestamp updates are mandated by user actions on applications or utilities (`cp`), which rely on middleware, standard libraries (`libc`) and system calls in the kernel to ultimately have timestamps written down in inodes on the file system.
 
 Therefore each of these layers (Application/POSIX Utility, Middleware, Standard Libraries, Kernel, File System) can influence the timestamps being eventually updated.
-One should pay escpecially attention to **mount options** that can for instance completely disable A updates.
+One should pay especially attention to **mount options** that can for instance completely disable A updates.
 
 The following table illustrates timestamp updates across the software stack.
 
