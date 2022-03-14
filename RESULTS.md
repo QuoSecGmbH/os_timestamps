@@ -10,11 +10,10 @@ The following table illustrates timestamp updates across the software stack.
 | Application or POSIX utility | -> Middleware (libraries) | -> Standard Libraries | -> Kernel | -> File System | -> (MACB)    |
 |----------------------|---------|--------------|----------------|-----------------------------------|------|
 | `cat file`             |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`) | .A.. |
-| `cat file`             |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `relatime`)    | .... |
+| `cat file`             |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `noatime`)     | .... |
 | geany (save file)    | GTK/GIO | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`)    | MACB |
-| `ls dir/`              |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`) | ..A. |
-| `ls dir/`              |         | OpenBSD libc | OpenBSD        | FFS2                              | ..A  |
-| `ls dir/`              |         | FreeBSD libc | FreeBSD        | UFS2                              | .... |
+| `ls dir/`              |         | OpenBSD libc | OpenBSD        | FFS2 | ..A  |
+| `ls dir/`              |         | FreeBSD libc | FreeBSD        | UFS2 | .... |
 
 
 # OS results (Linux, OpenBSD, FreeBSD, macOS) and POSIX compliance
