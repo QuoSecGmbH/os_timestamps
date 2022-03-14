@@ -5,9 +5,16 @@ Timestamp updates are mandated by user actions on applications or utilities (`cp
 Therefore each of these layers (Application/POSIX Utility, Middleware, Standard Libraries, Kernel, File System) can influence the timestamps being eventually updated.
 One should pay escpecially attention to **mount options** that can for instance completely disable A updates.
 
-The following figure illustrates timestamp updates across the software stack.
+The following table illustrates timestamp updates across the software stack.
 
-![Unix MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/software_stack.png)
+| Application or POSIX utility | -> Middleware (libraries) | -> Standard Libraries | -> Kernel | -> File System | -> (MACB)    |
+|----------------------|---------|--------------|----------------|-----------------------------------|------|
+| `cat file`             |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`) | .A.. |
+| `cat file`             |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `relatime`)    | .... |
+| geany (save file)    | GTK/GIO | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`)    | MACB |
+| `ls dir/`              |         | GLibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`) | ..A. |
+| `ls dir/`              |         | OpenBSD libc | OpenBSD        | FFS2                              | ..A  |
+| `ls dir/`              |         | FreeBSD libc | FreeBSD        | UFS2                              | .... |
 
 
 # OS results (Linux, OpenBSD, FreeBSD, macOS) and POSIX compliance
