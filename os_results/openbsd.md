@@ -5,7 +5,7 @@
 - PDF: [openbsd_mac.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/openbsd_mac.pdf)
 
 
-## File Systems: FFS1 and FFS2
+# File Systems: FFS1 and FFS2
 
 |                      | FFS1 | FFS2 (default) |
 |----------------------|------|------|
@@ -15,13 +15,13 @@
 
 Though FFS2 has fields (64 bits + 32 bits) for the B timestamp, OpenBSD does not fill them, B is always 0.
 
-## Test Setup
+# Test Setup
 
 - Machine: Virtualbox
 - Versions tested: 6.5, 6.8, 7.0
 - Filesystems tested: FFS1, FFS2
 
-## Result Output
+# Result Output
 
 - POSIX Compliance - results.csv [2022]: [/results/2022_03_09/posix_compliance/openbsd/results.csv](/results/2022_03_09/posix_compliance/openbsd/results.csv)
 - os_profile_results.csv [2022]: [/results/2022_03_09/profileos/openbsd/os_profile_results.csv](/results/2022_03_09/profileos/openbsd/os_profile_results.csv)
