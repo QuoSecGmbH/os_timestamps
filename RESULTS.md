@@ -12,7 +12,7 @@ The following table illustrates timestamp updates across the software stack.
 | `cat file`             |         | glibc        | Linux (Ubuntu) | ext4 (mounted with `strictatime`) | .A.. |
 | `cat file`             |         | glibc        | Linux (Ubuntu) | ext4 (mounted with `noatime`)     | .... |
 | geany (save file)    | GTK/GIO | glibc        | Linux (Ubuntu) | ext4 (mounted with `relatime`)    | MACB |
-| `ls dir/`              |         | OpenBSD libc | OpenBSD        | FFS2 | .A.  |
+| `ls dir/`              |         | OpenBSD libc | OpenBSD        | FFS2 | .A.0 |
 | `ls dir/`              |         | FreeBSD libc | FreeBSD        | UFS2 | .... |
 
 
