@@ -5,6 +5,24 @@
 - PDF: [freebsd_macb.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/freebsd_macb.pdf)
 
 
+# File Systems: UFS1 and UFS2
+
+|                      | UFS1 | UFS2 (default) |
+|----------------------|------|------|
+| Timestamp Resolution | 1 ns | 1 ns |
+| Timestamp Size       | 32 bits (seconds) + 32 bits (nanosecond) | 64 bits (seconds) + 32 bits (nanosecond)     |
+| Fields for B Timestamp (file creation)            |  No  | Yes  |
+
+Beside support of nanoseconds from the file system, the timestamps resolution actually used by the kernel can be configured:
+- 1 second
+- **1 microsecond (default)**
+- 1 nanosecond
+
+The setting can be read with `sysctl vfs.timestamp_precision` and set for instance with `sysctl vfs.timestamp_precision = 3`.
+
+Source and possible values:
+- https://github.com/freebsd/freebsd-src/blob/de1aa3dab23c06fec962a14da3e7b4755c5880cf/sys/kern/vfs_subr.c#L984
+
 # Test Setup
 
 - Machine: Virtualbox
