@@ -4,6 +4,8 @@
 
 % \documentclass[a4paper,10pt]{article}
 
+
+\usepackage[colorlinks=true, urlcolor=black]{hyperref}
 \usepackage{array}
 \usepackage{makecell}
 \renewcommand\theadalign{bc}
@@ -112,7 +114,7 @@
 \begin{center}
 \begin{tabular}[t]{l|p{5.2cm}|p{4.6cm}|p{2.3cm}|p{2.3cm}}
 % 	\hline
-Mount option & Linux (ext4) & OpenBSD (FFS1) & FreeBSD (UFS2) & macOS (HFS+) \\
+Mount option & Linux (ext4) & OpenBSD (FFS1, FFS2) & FreeBSD (UFS2) & macOS (HFS+) \\
 % 	\hline
 % 	Birth timestamp (B) & \checkmark &  & \checkmark & \checkmark & OpenBSD does not use the B field (always 0) \\
 % 	Resolution (default) & 1ns& 1ns & $1\mu s$ & 1s & POSIX mandates a maximum resolution of 1s \\
@@ -215,7 +217,9 @@ $^{1}$: & Linux, FreeBSD and macOS only; always 0 on OpenBSD;\\
 
 
 \vspace{0.35cm} % VS
-2022-03-03 - \url{https://github.com/QuoSecGmbH/os\_timestamps/}
+% 2022-03-03 - \url{https://github.com/QuoSecGmbH/os_timestamps/}
+2022-03-03
+\\\url{https://github.com/QuoSecGmbH/os_timestamps/}
 
 
 % \begin{center}
