@@ -1,6 +1,6 @@
 # FreeBSD
 
-![FreeBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/freebsd_macb.png)
+![FreeBSD MACB](https://yaps8.github.io/os_timestamps/2022-03-03/freebsd_macb.png)
 
 - PDF: [freebsd_macb.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/freebsd_macb.pdf)
 
