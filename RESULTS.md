@@ -36,7 +36,7 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 - [Linux](/os_results/linux.md)
 - [OpenBSD](/os_results/openbsd.md)
 - [FreeBSD](/os_results/freebsd.md)
-- [macOS](/os_results/openbsd.md)
+- [macOS](/os_results/macos.md)
 
 # Middleware
 
