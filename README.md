@@ -14,7 +14,7 @@
 
 - A systematic approach to understanding MACB timestamps on Unix-like systems (DFRWS-EU 2022) -  [[paper]](https://www.sciencedirect.com/science/article/pii/S2666281722000075)
 - OS Profiling: https://yaps8.github.io/blog/01_macb_timestamps_across_POSIX.html
-- Tests againsts POSIX Compliance: https://yaps8.github.io/blog/02_Testing_POSIX.html
+- Tests against POSIX Compliance: https://yaps8.github.io/blog/02_Testing_POSIX.html
 
 # Results & Tables
 
