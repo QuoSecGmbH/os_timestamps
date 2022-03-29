@@ -38,10 +38,6 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 - [FreeBSD](/os_results/freebsd.md)
 - [macOS](/os_results/macos.md)
 
-# Middleware
-
-Middleware were tested on Ubuntu (20.04.3 LTS).
-
 
 # Applications
 
