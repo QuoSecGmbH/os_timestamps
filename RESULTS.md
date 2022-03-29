@@ -42,7 +42,7 @@ POSIX specifies MAC updates, the manually generated os_profile_results.csv is he
 # Applications
 
 Applications were tested on Ubuntu (20.04.3 LTS).
-File editors were tested for file Read and File Modify.
+File editors were tested for File Read and File Modify.
 
 | Editor | Read | Write | 
 | ------ | ---- | ----- | 
