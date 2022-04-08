@@ -14,9 +14,9 @@ https://github.com/QuoSecGmbH/os_timestamps/
 
 # References
 
-- A systematic approach to understanding MACB timestamps on Unix-like systems (DFRWS-EU 2022) -  [[paper]](https://www.sciencedirect.com/science/article/pii/S2666281722000075) [[pdf]](https://yaps8.github.io/os_timestamps/DFRWSEU2022/DFRWSEU2022_MACB_Unix_paper.pdf) [[slides]](https://yaps8.github.io/os_timestamps/DFRWSEU2022/DFRWSEU2022_MACB_Unix_slides.pdf)
-- OS Profiling: https://yaps8.github.io/blog/01_macb_timestamps_across_POSIX.html
-- Tests against POSIX Compliance: https://yaps8.github.io/blog/02_Testing_POSIX.html
+- 2022 - A systematic approach to understanding MACB timestamps on Unix-like systems (DFRWS-EU 2022) -  [[paper]](https://www.sciencedirect.com/science/article/pii/S2666281722000075) [[pdf]](https://yaps8.github.io/os_timestamps/DFRWSEU2022/DFRWSEU2022_MACB_Unix_paper.pdf) [[slides]](https://yaps8.github.io/os_timestamps/DFRWSEU2022/DFRWSEU2022_MACB_Unix_slides.pdf)
+- 2020 - OS Profiling: https://yaps8.github.io/blog/01_macb_timestamps_across_POSIX.html
+- 2019 - Tests against POSIX Compliance: https://yaps8.github.io/blog/02_Testing_POSIX.html
 
 # Results & Tables
 
