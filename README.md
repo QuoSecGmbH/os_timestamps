@@ -1,4 +1,6 @@
-# Explore how your Unix-like OS modifies MACB timestamps
+# Explore how Unix-like OS modify MACB timestamps
+
+https://github.com/QuoSecGmbH/os_timestamps/
 
 * Profile the OS, libraries, applications and commands
 * Tests against POSIX compliance
