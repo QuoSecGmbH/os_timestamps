@@ -2,8 +2,8 @@
 
 https://github.com/QuoSecGmbH/os_timestamps/
 
-* Profile the OS, libraries, applications and commands
-* Tests against POSIX compliance
+* Profile the Operating System, standard libraries (libc), middleware, applications and commands line utilities
+* Test against POSIX compliance
 * Tested on Linux (Ubuntu, Arch), OpenBSD, FreeBSD, macOS
 
 # MACB timestamps
