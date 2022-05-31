@@ -1,6 +1,6 @@
 # OpenBSD
 
-![OpenBSD MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-09/openbsd_mac.png)
+![OpenBSD MACB](https://yaps8.github.io/os_timestamps/2022-03-09/openbsd_mac.png)
 
 - PDF: [openbsd_mac.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/openbsd_mac.pdf)
 

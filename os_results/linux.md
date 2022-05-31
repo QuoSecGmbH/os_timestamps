@@ -1,5 +1,5 @@
 # Linux
-![Linux MACB](https://raw.githubusercontent.com/yaps8/yaps8.github.io/master/os_timestamps/2022-03-03/linux_macb.png)
+![Linux MACB](https://yaps8.github.io/os_timestamps/2022-03-03/linux_macb.png)
 
 - PDF: [linux_macb.pdf](https://github.com/QuoSecGmbH/os_timestamps/releases/download/2022-03-03/linux_macb.pdf)
 
