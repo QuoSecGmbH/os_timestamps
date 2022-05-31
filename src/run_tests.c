@@ -14,6 +14,7 @@ char* MAY = "MAY";
 
 int OPTION_TEST_INPUT = 0;
 int OPTION_DRYRUN = 0;
+int OPTION_CSV = 0;
 
 int REPEAT_WORST = 0;
 int REPEAT_BEST = 1;
@@ -122,7 +123,7 @@ int main (int argc, char **argv){
     int n_group = 0;
     char** groupnot_list = NULL;
     int n_groupnot = 0;
-    char* wanted_csv = "results.csv";
+    char* wanted_csv = misc_concat(dir_path, "run_tests_results.csv");
     
     int c;
     while (1) {
@@ -199,6 +200,7 @@ int main (int argc, char **argv){
             }
             case 'o': {
                 wanted_csv = (char*) optarg;
+                OPTION_CSV = 1;
                 break;
             }
             default:
@@ -278,16 +280,26 @@ int main (int argc, char **argv){
     free(dir_path);
     
     log_close_csv(csv_file);
+    
+    if (OPTION_CSV == 0){
+        misc_file_copy(wanted_csv, "run_tests_results.txt");
+    }
 }
 
 int should_group_run(testenv_struct* env, char* group){
     if (env->n_group != 0 && misc_str_in_list(group, env->n_group, env->group_list) == 0){
         // Case: using a group whitelist and group is not listed
+        if (VERBOSE){
+            printf("Skipping group: %s\n", group);
+        }
         return 0;
     }
     
     if (env->n_groupnot != 0 && misc_str_in_list(group, env->n_groupnot, env->groupnot_list) == 1){
         // Case: group is blacklisted
+        if (VERBOSE){
+            printf("Skipping group: %s\n", group);
+        }
         return 0;
     }
     

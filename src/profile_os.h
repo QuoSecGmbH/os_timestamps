@@ -36,7 +36,8 @@
 
 void print_usage();
 int main (int argc, char **argv);
-int run_profileos();
+int should_group_run(testenv_struct* env, char* group);
+int run_profileos(testenv_struct* env);
 
 void group_profileos_filerename(testenv_struct* env);
 void group_profileos_dirrename(testenv_struct* env);

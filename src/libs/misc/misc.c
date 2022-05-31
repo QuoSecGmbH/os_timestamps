@@ -21,6 +21,8 @@ testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* error_fil
   env->n_group = 0;
   env->groupnot_list = NULL;
   env->n_groupnot = 0;
+  env->csv_path = NULL;
+  env->csv_path_flags = NULL;
   return env;
 }
 
@@ -40,6 +42,8 @@ testenv_struct* testenv_alloc_csv(FILE* csv_file, FILE* output_file, FILE* error
   env->n_group = 0;
   env->groupnot_list = NULL;
   env->n_groupnot = 0;
+  env->csv_path = NULL;
+  env->csv_path_flags = NULL;
   return env; 
 }
 
@@ -930,6 +934,20 @@ int misc_max3(int a, int b, int c){
 
 int misc_max4(int a, int b, int c, int d){
     return misc_max3(misc_max2(a, b), c, d);
+}
+
+void misc_file_copy(char* src, char* dst){
+    FILE* srcFile = fopen(src, "rb");
+    FILE* dstFile = fopen(dst,   "wb");
+
+    char ch = fgetc(srcFile);
+    while (ch != EOF) {
+        fputc(ch, dstFile);
+        ch = fgetc(srcFile);
+    }
+    
+    fclose(srcFile);
+    fclose(dstFile);
 }
 
 #endif

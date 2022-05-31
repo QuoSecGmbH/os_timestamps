@@ -8,7 +8,7 @@ struct profile_info_struct* profileos_execute_system_interface(testenv_struct* e
     misc_nanosleep(ns_after_open); 
     char* path_id = (char*) "/usr/bin/id";
     
-    char** watch_array = misc_char_array3(path_id, "/bin", path_pwd);
+    char** watch_array = misc_char_array3(path_id, "/usr/bin", path_pwd);
     int watch_num = 3;
     profile_init_struct* pis = profile_init(watch_num, watch_array);
     
@@ -48,7 +48,7 @@ struct profile_info_struct* profileos_execute_system_utilities(testenv_struct* e
     char* path_pwd = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "_pwd/"), 0, 0, env->output_file, env->error_file, __func__);
     char* command = "/usr/bin/id";
     
-    char** watch_array = misc_char_array3("/usr/bin/id", "/bin", path_pwd);
+    char** watch_array = misc_char_array3("/usr/bin/id", "/usr/bin", path_pwd);
     int watch_num = 3;
     
     struct profile_info_struct* pi = profile_command(env->output_file, env->error_file, path_pwd, NULL, NULL, watch_num, watch_array, NULL, ns_DELAY, command, CMD_DELAY_NS);

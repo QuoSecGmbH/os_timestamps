@@ -1,6 +1,8 @@
 #ifndef PROFILE_OS_C
 #define PROFILE_OS_C
 
+// struct testenv_struct;
+
 #include "profile_os.h"
 
 int PROFILE_TREAT_DELAY_AS_COMMAND = 0;
@@ -15,6 +17,8 @@ void print_usage(){
     fprintf(stderr, "  -q, --quick            Skip some operations (on symlink, on hardlink...)\n");
     fprintf(stderr, "  -v, --verbose         \n");
     fprintf(stderr, "  -g, --guid-chown GID   GID to be used in chown tests (you should be able to do a chown :GID file) \n");
+    fprintf(stderr, "  -p, --group            Whitelist group reference (will be run)\n");
+    fprintf(stderr, "  -h, --group-not        Blacklist group reference (will not be run)\n");
 //     fprintf(stderr, "  --timewait / -t TIMEWAIT\n");
     fprintf(stderr, "  -m, --mounted MNT/     Path of the mounted filesystem for tests on Volume Copy\n");
     fprintf(stderr, "  -d, --nodelay          Treat delays as command updates\n");
@@ -28,6 +32,10 @@ int main(int argc, char *argv[]) {
     char** watch_array;
     char* precommand = NULL;
     time_t wait_pre_s = 0;
+    char** group_list = NULL;
+    int n_group = 0;
+    char** groupnot_list = NULL;
+    int n_groupnot = 0;
     
     time_t wait_cmd_s = 0;
     
@@ -39,6 +47,8 @@ int main(int argc, char *argv[]) {
             {"nodelay", no_argument,       0, 'd'},
 //             {"timewait", required_argument, 0, 't'},
             {"mounted", required_argument, 0, 'm'},
+            {"group", required_argument, 0, 'p'},
+            {"group-not", required_argument, 0, 'h'},
             {"guid-chown", required_argument, 0, 'g'},
             {"quick", required_argument, 0, 'q'},
             {0, 0, 0, 0}
@@ -46,7 +56,7 @@ int main(int argc, char *argv[]) {
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "vdm:g:q",
+        c = getopt_long (argc, argv, "vdm:g:p:h::q",
                         long_options, &option_index);
 
         if (c == -1)
@@ -71,10 +81,21 @@ int main(int argc, char *argv[]) {
                 mounted = optarg;
                 break;
         }
+            case 'p': {
+                if (VERBOSE) printf("Whitelisting group: %s\n", optarg);
+                misc_add_to_list(optarg, &(n_group), &(group_list));
+                break;
+            }
             case 'g': {
                 CHOWN_GROUP_GID = (gid_t) atoi(optarg);
                 break;
         }
+            case 'h': {
+                if (VERBOSE) printf("Blacklisting group: %s\n", optarg);
+//                 misc_add_to_list(optarg, &(test_env->n_groupnot), &(test_env->groupnot_list));
+                misc_add_to_list(optarg, &(n_groupnot), &(groupnot_list));
+                break;
+            }
             default:
                 fprintf(stderr, "Unknown argument.\n");
                 print_usage();
@@ -82,12 +103,42 @@ int main(int argc, char *argv[]) {
             }
         }
         
-    run_profileos();
+    FILE* output_file = fopen("output.txt", "wb");
+    FILE* error_file = fopen("error.txt", "wb");
+    testenv_struct* test_env = testenv_alloc(NULL, NULL, NULL, NULL);
+    test_env->n_test = 0;
+    test_env->test_list = NULL;
+    test_env->n_testnot = 0;
+    test_env->testnot_list = NULL;
+    test_env->n_group = n_group;
+    test_env->group_list = group_list;
+    test_env->n_groupnot = n_groupnot;
+    test_env->groupnot_list = groupnot_list;
+        
+    run_profileos(test_env);
 }
 
-int run_profileos(){
-    FILE* csv_file_brief = log_open_csv("os_profile_results.csv");
-    FILE* csv_file_flags = log_open_csv("os_profile_flags.csv");
+int should_group_run(testenv_struct* env, char* group){
+    if (env->n_group != 0 && misc_str_in_list(group, env->n_group, env->group_list) == 0){
+        // Case: using a group whitelist and group is not listed
+        if (VERBOSE){
+            printf("Skipping group: %s\n", group);
+        }
+        return 0;
+    }
+    
+    if (env->n_groupnot != 0 && misc_str_in_list(group, env->n_groupnot, env->groupnot_list) == 1){
+        // Case: group is blacklisted
+        if (VERBOSE){
+            printf("Skipping group: %s\n", group);
+        }
+        return 0;
+    }
+    
+    return 1;
+}
+
+int run_profileos(testenv_struct* test_env){
     FILE* output_file = stdout;
     FILE* error_file = stderr;
   
@@ -120,10 +171,18 @@ int run_profileos(){
         free(attr);
     }
     
+    
     if (dir_path == NULL){
         log_error(output_file, error_file, "%s", "Impossible to find suitable directory for tests, exiting.");
         return 1;
     }
+    
+    test_env->csv_path = misc_concat(dir_path, "profile_os_results.csv");
+    test_env->csv_path_flags = misc_concat(dir_path, "profile_os_flags.csv");
+    
+    FILE* csv_file_brief = log_open_csv(test_env->csv_path);
+    FILE* csv_file_flags = log_open_csv(test_env->csv_path_flags);
+    
     log_info(output_file, error_file, "Directory for tests is: %s", dir_path);
     if (OPTION_VOLUME_FILE_MOVE){
         log_info(output_file, error_file, "Volume path is: %s", dir_path_volume);
@@ -140,7 +199,14 @@ int run_profileos(){
 #endif
 #endif
     
-    testenv_struct* test_env = testenv_alloc_csv(csv_file_brief, output_file, error_file, dir_path, dir_path_volume, csv_file_flags);
+//     testenv_struct* test_env = testenv_alloc_csv(csv_file_brief, output_file, error_file, dir_path, dir_path_volume, csv_file_flags);
+    
+    test_env->csv_file = csv_file_brief;
+    test_env->output_file = output_file;
+    test_env->error_file = error_file;
+    test_env->dir_path = dir_path;
+    test_env->dir_path_volume = dir_path_volume;
+    test_env->csv_file_flags = csv_file_flags;
     
     log_csv_add_line(csv_file_brief, 2, "Reference", "MACB");
     log_csv_add_line(csv_file_flags, 4, "Description", "File", "M/A/C/B", "Flag");
@@ -234,9 +300,14 @@ int run_profileos(){
     
     log_close_csv(csv_file_brief);
     log_close_csv(csv_file_flags);
+    
+    misc_file_copy(test_env->csv_path, "profile_os_results.csv");
+    misc_file_copy(test_env->csv_path_flags, "profile_os_flags.csv");
 }
 
 void group_profileos_filerename(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filerename_interface_new(env);
     struct profile_info_struct* pi2 = profileos_filerename_interface_existing(env);
     struct profile_info_struct* pi3 = profileos_filerename_utilities_new(env);
@@ -247,6 +318,8 @@ void group_profileos_filerename(testenv_struct* env){
 }
 
 void group_profileos_dirrename(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filerename_interface_dir_new(env);
     struct profile_info_struct* pi2 = profileos_filerename_interface_dir_existing(env);
     struct profile_info_struct* pi3 = profileos_filerename_utilities_dir_new(env);
@@ -256,6 +329,8 @@ void group_profileos_dirrename(testenv_struct* env){
 }
 
 void group_profileos_localfilemove(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_localfilemove_interface_new(env);
     struct profile_info_struct* pi2 = profileos_localfilemove_interface_existing(env);
     struct profile_info_struct* pi3 = profileos_localfilemove_utilities_new(env);
@@ -266,6 +341,8 @@ void group_profileos_localfilemove(testenv_struct* env){
 }
 
 void group_profileos_localdirmove(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_localfilemove_interface_dir_new(env);
     struct profile_info_struct* pi2 = profileos_localfilemove_interface_dir_existing(env);
     struct profile_info_struct* pi3 = profileos_localfilemove_utilities_dir_new(env);
@@ -275,6 +352,8 @@ void group_profileos_localdirmove(testenv_struct* env){
 }
 
 void group_profileos_volumefilemove(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     char** mask = misc_char_array4("src", "srcdir/", "dst", "dstdir/");
     
     // Linux, OpenBSD, FreeBSD: Interface "rename" does not work across file systemes (errno 18 - EXDEV 18 Invalid cross-device link), see: man 2 rename
@@ -284,6 +363,8 @@ void group_profileos_volumefilemove(testenv_struct* env){
 }
 
 void group_profileos_volumedirmove(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
     
     // Linux, OpenBSD, FreeBSD: Interface "rename" does not work across file systemes (errno 18 - EXDEV 18 Invalid cross-device link), see: man 2 rename
@@ -292,6 +373,8 @@ void group_profileos_volumedirmove(testenv_struct* env){
 }
 
 void group_profileos_filecopy_new(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecopy_interface_new(env);
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_new(env);
     
@@ -300,6 +383,8 @@ void group_profileos_filecopy_new(testenv_struct* env){
 }
 
 void group_profileos_volumefilecopy_new(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_volumefilecopy_interface_new(env);
     struct profile_info_struct* pi2 = profileos_volumefilecopy_utilities_new(env);
     
@@ -308,6 +393,8 @@ void group_profileos_volumefilecopy_new(testenv_struct* env){
 }
 
 void group_profileos_filecopy_existing(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecopy_interface_existing(env);
     struct profile_info_struct* pi2 = profileos_filecopy_utilities_existing(env);
     
@@ -316,6 +403,8 @@ void group_profileos_filecopy_existing(testenv_struct* env){
 }
 
 void group_profileos_volumefilecopy_existing(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_volumefilecopy_interface_existing(env);
     struct profile_info_struct* pi2 = profileos_volumefilecopy_utilities_existing(env);
     
@@ -324,6 +413,8 @@ void group_profileos_volumefilecopy_existing(testenv_struct* env){
 }
 
 void group_profileos_dircopy_notempty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_notempty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
@@ -331,6 +422,8 @@ void group_profileos_dircopy_notempty(testenv_struct* env){
 }
 
 void group_profileos_volumedircopy_notempty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_volumefilecopy_utilities_dir_new_notempty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
@@ -338,6 +431,8 @@ void group_profileos_volumedircopy_notempty(testenv_struct* env){
 }
 
 void group_profileos_dircopy_empty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecopy_utilities_dir_new_empty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
@@ -345,6 +440,8 @@ void group_profileos_dircopy_empty(testenv_struct* env){
 }
 
 void group_profileos_volumedircopy_empty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_volumefilecopy_utilities_dir_new_empty(env);
     
     char** mask = misc_char_array4("src/", "srcdir/", "dst/", "dstdir/");
@@ -352,6 +449,8 @@ void group_profileos_volumedircopy_empty(testenv_struct* env){
 }
 
 void group_profileos_filecreation(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities(env);
     
@@ -360,6 +459,8 @@ void group_profileos_filecreation(testenv_struct* env){
 }
 
 void group_profileos_filecreation_newhardlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface_newhardlink(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_newhardlink(env);
     
@@ -368,6 +469,8 @@ void group_profileos_filecreation_newhardlink(testenv_struct* env){
 }
 
 void group_profileos_filesymlink_creation(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_symlink(env);
     
@@ -376,6 +479,8 @@ void group_profileos_filesymlink_creation(testenv_struct* env){
 }
 
 void group_profileos_filecreation_intosymlinkdir(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface_intosymlinkdir(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_intosymlinkdir(env);
     
@@ -384,6 +489,8 @@ void group_profileos_filecreation_intosymlinkdir(testenv_struct* env){
 }
 
 void group_profileos_dircreation(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface_dir(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_dir(env);
     
@@ -392,6 +499,8 @@ void group_profileos_dircreation(testenv_struct* env){
 }
 
 void group_profileos_dirsymlink_creation(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;    
+    
     struct profile_info_struct* pi1 = profileos_filecreation_interface_symlink_dir(env);
     struct profile_info_struct* pi2 = profileos_filecreation_utilities_symlink_dir(env);
     
@@ -401,6 +510,8 @@ void group_profileos_dirsymlink_creation(testenv_struct* env){
 
 
 void group_profileos_fileaccess(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_fileaccess_interface(env);
     struct profile_info_struct* pi2 = profileos_fileaccess_utilities(env);
     
@@ -409,6 +520,8 @@ void group_profileos_fileaccess(testenv_struct* env){
 }
 
 void group_profileos_symlink_readlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_symlink_readlink_interface(env);
     struct profile_info_struct* pi2 = profileos_symlink_readlink_utilities(env);
     struct profile_info_struct* pi3 = profileos_symlink_readlink_interface_dir(env);
@@ -419,6 +532,8 @@ void group_profileos_symlink_readlink(testenv_struct* env){
 }
 
 void group_profileos_fileaccess_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_fileaccess_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_fileaccess_utilities_symlink(env);
     
@@ -427,6 +542,8 @@ void group_profileos_fileaccess_symlink(testenv_struct* env){
 }
 
 void group_profileos_filemodify(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filemodify_interface_wb(env);
     struct profile_info_struct* pi2 = profileos_filemodify_interface_rp(env);
     struct profile_info_struct* pi3 = profileos_filemodify_interface_a(env);
@@ -438,6 +555,8 @@ void group_profileos_filemodify(testenv_struct* env){
 }
 
 void group_profileos_filemodify_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filemodify_interface_wb_symlink(env);
     struct profile_info_struct* pi2 = profileos_filemodify_interface_rp_symlink(env);
     struct profile_info_struct* pi3 = profileos_filemodify_interface_a_symlink(env);
@@ -449,6 +568,8 @@ void group_profileos_filemodify_symlink(testenv_struct* env){
 }
 
 void group_profileos_filechange(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filechange_interface_chmod(env);
     struct profile_info_struct* pi2 = profileos_filechange_interface_chown(env);
     struct profile_info_struct* pi3 = profileos_filechange_utilities_chmod(env);
@@ -459,6 +580,8 @@ void group_profileos_filechange(testenv_struct* env){
 }
 
 void group_profileos_symlinkchange(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filechange_interface_chmod_symlink(env);
     struct profile_info_struct* pi2 = profileos_filechange_interface_chown_symlink(env);
     struct profile_info_struct* pi3 = profileos_filechange_utilities_chmod_symlink(env);
@@ -469,6 +592,8 @@ void group_profileos_symlinkchange(testenv_struct* env){
 }
 
 void group_profileos_symlinkchange_nofollow(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filechange_utilities_chown_symlink_nofollow(env);
     struct profile_info_struct* pi2 = profileos_filechange_interface_chown_symlink_nofollow(env);
     
@@ -484,6 +609,8 @@ void group_profileos_symlinkchange_nofollow(testenv_struct* env){
 }
 
 void group_profileos_dirchange(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filechange_interface_chmod_dir(env);
     struct profile_info_struct* pi2 = profileos_filechange_interface_chown_dir(env);
     struct profile_info_struct* pi3 = profileos_filechange_utilities_chmod_dir(env);
@@ -494,6 +621,8 @@ void group_profileos_dirchange(testenv_struct* env){
 }
 
 void group_profileos_filedelete_last(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filedelete_last_interface_empty(env);
     struct profile_info_struct* pi2 = profileos_filedelete_last_interface_notempty(env);
     struct profile_info_struct* pi3 = profileos_filedelete_last_utilities_empty(env);
@@ -504,6 +633,8 @@ void group_profileos_filedelete_last(testenv_struct* env){
 }
 
 void group_profileos_filedelete_notlast(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filedelete_notlast_interface_empty(env);
     struct profile_info_struct* pi2 = profileos_filedelete_notlast_interface_notempty(env);
     struct profile_info_struct* pi3 = profileos_filedelete_notlast_utilities_empty(env);
@@ -514,6 +645,8 @@ void group_profileos_filedelete_notlast(testenv_struct* env){
 }
 
 void group_profileos_filedelete_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_filedelete_last_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_filedelete_last_utilities_symlink(env);
     
@@ -522,6 +655,8 @@ void group_profileos_filedelete_symlink(testenv_struct* env){
 }
 
 void group_profileos_dirdelete(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     // Hard link to a directory:
     // POSIX: "If path1 names a directory, link( ) shall fail unless the process has appropriate privileges and the implementation supports using link( ) on directories."
     // Linux: You can't do a hard link to a dir: https://askubuntu.com/questions/210741/why-are-hard-links-not-allowed-for-directories
@@ -536,6 +671,8 @@ void group_profileos_dirdelete(testenv_struct* env){
 }
 
 void group_profileos_dirdelete_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirdelete_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_dirdelete_utilities_symlink(env);
     
@@ -544,6 +681,8 @@ void group_profileos_dirdelete_symlink(testenv_struct* env){
 }
 
 void group_profileos_dirlisting_notempty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirlisting_interface_notempty(env);
     struct profile_info_struct* pi2 = profileos_dirlisting_utilities_notempty(env);
     
@@ -552,6 +691,8 @@ void group_profileos_dirlisting_notempty(testenv_struct* env){
 }
 
 void group_profileos_dirlisting_empty(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirlisting_interface_empty(env);
     struct profile_info_struct* pi2 = profileos_dirlisting_utilities_empty(env);
     
@@ -560,6 +701,8 @@ void group_profileos_dirlisting_empty(testenv_struct* env){
 }
 
 void group_profileos_dirlisting_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirlisting_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_dirlisting_utilities_symlink(env);
     
@@ -568,6 +711,8 @@ void group_profileos_dirlisting_symlink(testenv_struct* env){
 }
 
 void group_profileos_dirtraversal(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirtraversal_interface(env);
     struct profile_info_struct* pi2 = profileos_dirtraversal_utilities(env);
     struct profile_info_struct* pi3 = profileos_dirtraversal_utilities_profileos(env);
@@ -577,6 +722,8 @@ void group_profileos_dirtraversal(testenv_struct* env){
 }
 
 void group_profileos_dirtraversal_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_dirtraversal_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_dirtraversal_utilities_symlink(env);
     struct profile_info_struct* pi3 = profileos_dirtraversal_utilities_profileos_symlink(env);
@@ -586,6 +733,8 @@ void group_profileos_dirtraversal_symlink(testenv_struct* env){
 }
 
 void group_profileos_execute(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_execute_system_interface(env);
     struct profile_info_struct* pi2 = profileos_execute_system_utilities(env);
     struct profile_info_struct* pi3 = profileos_execute_local_interface(env);
@@ -597,6 +746,8 @@ void group_profileos_execute(testenv_struct* env){
 
 
 void group_profileos_execute_symlink(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_execute_local_interface_symlink(env);
     struct profile_info_struct* pi2 = profileos_execute_local_utilities_symlink(env);
     
@@ -606,6 +757,8 @@ void group_profileos_execute_symlink(testenv_struct* env){
 
 
 void group_profileos_execute_intosymlinkdir(testenv_struct* env){
+    if (should_group_run(env, __func__) == 0) return;
+    
     struct profile_info_struct* pi1 = profileos_execute_local_interface_intosymlinkdir(env);
     struct profile_info_struct* pi2 = profileos_execute_local_utilities_intosymlinkdir(env);
     

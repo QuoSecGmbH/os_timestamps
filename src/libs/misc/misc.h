@@ -28,6 +28,8 @@ typedef struct testenv_struct{
     int n_group;
     char** groupnot_list;
     int n_groupnot;
+    char* csv_path;
+    char* csv_path_flags;
 } testenv_struct;
 
 testenv_struct* testenv_alloc(FILE* csv_file, FILE* output_file, FILE* err_file, char* dir_path);
@@ -181,5 +183,7 @@ int misc_min3(int a, int b, int c);
 int misc_max2(int a, int b);
 int misc_max3(int a, int b, int c);
 int misc_max4(int a, int b, int c, int d);
+
+void misc_file_copy(char* src, char* dst);
 
 #endif
