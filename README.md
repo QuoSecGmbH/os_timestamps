@@ -52,7 +52,7 @@ To have complete results you will need:
     - On OpenBSD & FreeBSD, GID 0 (wheel) can be used
 
 ```
-$ ./profile_os -m mnt/ -g 1002
+$ ./profile_os -m mnt/ -G 1000
 INFO: Directory for tests is: tmp_os_profile_10/
 INFO: Volume path is: mnt/tmp_os_profile_10/
 File Creation (PROFILE.OS.FILE.NEW):
