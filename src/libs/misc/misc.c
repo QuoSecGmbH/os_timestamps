@@ -867,7 +867,7 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
             if (macb_result[macb] & PROFILE_SAMEAS_W0_BEFORE || macb_results_inherit_macb != 0){
                 // If macb is inherited from PROFILE_SAMEAS_W0_BEFORE and at least one of macb, or multiple or macb
                 if (c == 0){
-                    c = 'i';
+                    c = 's';
                 }
             }
             
