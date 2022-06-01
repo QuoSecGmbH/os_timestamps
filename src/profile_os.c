@@ -16,9 +16,9 @@ void print_usage(){
     fprintf(stderr, "Options:\n");
     fprintf(stderr, "  -q, --quick            Skip some operations (on symlink, on hardlink...)\n");
     fprintf(stderr, "  -v, --verbose         \n");
-    fprintf(stderr, "  -g, --guid-chown GID   GID to be used in chown tests (you should be able to do a chown :GID file) \n");
-    fprintf(stderr, "  -p, --group            Whitelist group reference (will be run)\n");
-    fprintf(stderr, "  -h, --group-not        Blacklist group reference (will not be run)\n");
+    fprintf(stderr, "  -G, --guid-chown GID   GID to be used in chown tests (you should be able to do a chown :GID file) \n");
+    fprintf(stderr, "  -g, --group            Whitelist group reference (will be run), list groups with: -v -g list\n");
+    fprintf(stderr, "  -f, --group-not        Blacklist group reference (will not be run)\n");
 //     fprintf(stderr, "  --timewait / -t TIMEWAIT\n");
     fprintf(stderr, "  -m, --mounted MNT/     Path of the mounted filesystem for tests on Volume Copy\n");
     fprintf(stderr, "  -d, --nodelay          Treat delays as command updates\n");
@@ -47,16 +47,17 @@ int main(int argc, char *argv[]) {
             {"nodelay", no_argument,       0, 'd'},
 //             {"timewait", required_argument, 0, 't'},
             {"mounted", required_argument, 0, 'm'},
-            {"group", required_argument, 0, 'p'},
-            {"group-not", required_argument, 0, 'h'},
-            {"guid-chown", required_argument, 0, 'g'},
+            {"group", required_argument, 0, 'g'},
+            {"group-not", required_argument, 0, 'f'},
+            {"guid-chown", required_argument, 0, 'G'},
             {"quick", required_argument, 0, 'q'},
+            {"help", no_argument, 0, 'h'},
             {0, 0, 0, 0}
             };
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "vdm:g:p:h::q",
+        c = getopt_long (argc, argv, "hvdm:G:g:f:q",
                         long_options, &option_index);
 
         if (c == -1)
@@ -81,20 +82,24 @@ int main(int argc, char *argv[]) {
                 mounted = optarg;
                 break;
         }
-            case 'p': {
+            case 'g': {
                 if (VERBOSE) printf("Whitelisting group: %s\n", optarg);
                 misc_add_to_list(optarg, &(n_group), &(group_list));
                 break;
             }
-            case 'g': {
+            case 'G': {
                 CHOWN_GROUP_GID = (gid_t) atoi(optarg);
                 break;
         }
-            case 'h': {
+            case 'f': {
                 if (VERBOSE) printf("Blacklisting group: %s\n", optarg);
 //                 misc_add_to_list(optarg, &(test_env->n_groupnot), &(test_env->groupnot_list));
                 misc_add_to_list(optarg, &(n_groupnot), &(groupnot_list));
                 break;
+            }
+            case 'h':{
+                print_usage();
+                exit(EXIT_FAILURE);
             }
             default:
                 fprintf(stderr, "Unknown argument.\n");
@@ -189,7 +194,7 @@ int run_profileos(testenv_struct* test_env){
     }
     
     if (CHOWN_GROUP_GID == -1){
-        log_warning(output_file, error_file, "Group GID to use for chown tests is unset (default: -1), tests using chown (PROFILE.OS.*.CHANGE.*) will probably fail. Set GID with -g option.");
+        log_warning(output_file, error_file, "Group GID to use for chown tests is unset (default: -1), tests using chown (PROFILE.OS.*.CHANGE.*) will probably fail. Set GID with -G option.");
     }
     
 #ifndef __linux__

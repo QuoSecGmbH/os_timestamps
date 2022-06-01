@@ -220,7 +220,7 @@ char* misc_concat_ensure_dir_exists(char* buf1, char* buf2, time_t sleep_s, long
   return misc_ensure_dir_exists(buf_path, sleep_s, sleep_ns, output_file, error_file, func_name);
 }
 
-char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, char macb, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
   char* buf_path = misc_concat(buf1, buf2);
   if (misc_file_exists(buf_path) != 0){
     if (VERBOSE >= 1){
@@ -249,6 +249,35 @@ char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written
     ts_ns->tv_nsec = 0; 
     nanosleep(ts_ns, CLOCK_REALTIME);
     misc_nanosleep(sleep_ns);
+    
+    if (macb == 1){
+        // MACB was set
+        // Set M:
+        FILE* f = fopen(buf_path, "a");
+        char buf2[1] = "M";
+        fwrite(buf2, 1, 1, f);
+        fclose(f);
+        
+        nanosleep(ts_ns, CLOCK_REALTIME);
+        misc_nanosleep(sleep_ns);
+        
+        // Set A:
+        FILE* fd = fopen(buf_path, "rb");
+        char* buf3 = (char*) calloc(2, sizeof(char));
+        int n_read = fread(buf3, 1, 1, fd);
+        fclose(fd);
+        
+        nanosleep(ts_ns, CLOCK_REALTIME);
+        misc_nanosleep(sleep_ns);
+        
+        // Set C:
+        
+        chmod(buf_path, 0700);
+        
+        nanosleep(ts_ns, CLOCK_REALTIME);
+        misc_nanosleep(sleep_ns);
+    }
+    
     free(ts_ns);
   }
   
@@ -256,16 +285,20 @@ char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written
 }
 
 char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
-  return misc_concat_ensure_file_exists_generic(buf1, buf2, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+  return misc_concat_ensure_file_exists_generic(buf1, buf2, 0, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
 }
 
 void misc_concat_ensure_file_exists_free(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
-  char* buf = misc_concat_ensure_file_exists_generic(buf1, buf2, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+  char* buf = misc_concat_ensure_file_exists_generic(buf1, buf2, 0, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
   free(buf);
 }
 
 char* misc_concat_ensure_file_exists_filled(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
-  return misc_concat_ensure_file_exists_generic(buf1, buf2, written_size, sleep_s, sleep_ns, output_file, error_file, func_name);
+  return misc_concat_ensure_file_exists_generic(buf1, buf2, written_size, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+}
+
+char* misc_concat_ensure_file_exists_filled_macb(char* buf1, char* buf2, int written_size, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  return misc_concat_ensure_file_exists_generic(buf1, buf2, written_size, 1, sleep_s, sleep_ns, output_file, error_file, func_name);
 }
 
 void misc_cp_rwx_no_overwrite(char* path1, char* path2){
@@ -719,10 +752,13 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
 //                 printf("%c", mac_string[mac]);
             }
-            if (macb_result[macb] & PROFILE_SAMEAS_W0_BEFORE){
-//                 fprintf(output_file, ">"); 
-//                 printf(">");                 
-                if (c == 0){
+            
+            int inherit_flags_macb = PROFILE_SAMEAS_W0_M_BEFORE | PROFILE_SAMEAS_W0_A_BEFORE | PROFILE_SAMEAS_W0_C_BEFORE | PROFILE_SAMEAS_W0_B_BEFORE;
+            int macb_results_inherit_macb = macb_result[macb] & inherit_flags_macb;
+            
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_BEFORE){            
+                if (macb_results_inherit_macb == 0 && c == 0){
+                    // This should never happen, if PROFILE_SAMEAS_W0_BEFORE is set then at least one another (MACB) is also set
                     c = '>';
                 }
                 flag = "PROFILE_SAMEAS_W0_BEFORE";
@@ -748,8 +784,15 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
             }
             if (macb_result[macb] & PROFILE_SAMEAS_W0_M_BEFORE){             
-                if (c == 0){
-                    c = 'm';
+                if (macb_results_inherit_macb == PROFILE_SAMEAS_W0_M_BEFORE && c == 0){
+                    // If only one from MACB is the same
+                    if (macb == 0) {
+                        // If this is the same as before (directly inherited)
+                        c = '>';
+                    }
+                    else {
+                        c = 'm';
+                    }
                 }
                 flag = "PROFILE_SAMEAS_W0_M_BEFORE";
                 if (desc != NULL && csv_file_flags != NULL){
@@ -761,8 +804,15 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
             }
             if (macb_result[macb] & PROFILE_SAMEAS_W0_A_BEFORE){             
-                if (c == 0){
-                    c = 'a';
+                if (macb_results_inherit_macb == PROFILE_SAMEAS_W0_A_BEFORE && c == 0){
+                    // If only one from MACB is the same
+                    if (macb == 1) {
+                        // If this is the same as before (directly inherited)
+                        c = '>';
+                    }
+                    else {
+                        c = 'a';
+                    }
                 }
                 flag = "PROFILE_SAMEAS_W0_A_BEFORE";
                 if (desc != NULL && csv_file_flags != NULL){
@@ -774,8 +824,15 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
             }
             if (macb_result[macb] & PROFILE_SAMEAS_W0_C_BEFORE){             
-                if (c == 0){
-                    c = 'c';
+                if (macb_results_inherit_macb == PROFILE_SAMEAS_W0_C_BEFORE && c == 0){
+                    // If only one from MACB is the same
+                    if (macb == 2) {
+                        // If this is the same as before (directly inherited)
+                        c = '>';
+                    }
+                    else {
+                        c = 'c';
+                    }
                 }
                 flag = "PROFILE_SAMEAS_W0_C_BEFORE";
                 if (desc != NULL && csv_file_flags != NULL){
@@ -787,8 +844,15 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                 }
             }
             if (macb_result[macb] & PROFILE_SAMEAS_W0_B_BEFORE){             
-                if (c == 0){
-                    c = 'b';
+                if (macb_results_inherit_macb == PROFILE_SAMEAS_W0_B_BEFORE && c == 0){
+                    // If only one from MACB is the same
+                    if (macb == 3) {
+                        // If this is the same as before (directly inherited)
+                        c = '>';
+                    }
+                    else {
+                        c = 'b';
+                    }
                 }
                 flag = "PROFILE_SAMEAS_W0_B_BEFORE";
                 if (desc != NULL && csv_file_flags != NULL){
@@ -799,6 +863,14 @@ void misc_print_profile_masked(FILE* output_file, FILE* error_file, struct profi
                     printed_verbose = 1;
                 }
             }
+            
+            if (macb_result[macb] & PROFILE_SAMEAS_W0_BEFORE || macb_results_inherit_macb != 0){
+                // If macb is inherited from PROFILE_SAMEAS_W0_BEFORE and at least one of macb, or multiple or macb
+                if (c == 0){
+                    c = 'i';
+                }
+            }
+            
             if (macb_result[macb] & PROFILE_EARLIER){
 //                 fprintf(output_file, "-", mac_string[mac]);
 //                 printf("%c", mac_string[mac]);                

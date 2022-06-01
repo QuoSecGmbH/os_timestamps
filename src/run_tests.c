@@ -89,8 +89,8 @@ void print_usage(){
     fprintf(stderr, "  -a, --append           Append results to existing CSV file\n");
     fprintf(stderr, "  -t, --test             Whitelist test reference (will be run)\n");
     fprintf(stderr, "  -u, --test-not         Blacklist test reference (will not be run)\n");
-    fprintf(stderr, "  -g, --group            Whitelist group reference (will be run)\n");
-    fprintf(stderr, "  -h, --group-not        Blacklist group reference (will not be run)\n");
+    fprintf(stderr, "  -g, --group            Whitelist group reference (will be run), list groups with: -v -g list\n");
+    fprintf(stderr, "  -f, --group-not        Blacklist group reference (will not be run)\n");
     fprintf(stderr, "  -0, --dry-run          Dry run (no test is actually run but it outputs the list of tests)\n");
 }
 
@@ -138,14 +138,15 @@ int main (int argc, char **argv){
             {"test", required_argument, 0, 't'},
             {"test-not", required_argument, 0, 'u'},
             {"group", required_argument, 0, 'g'},
-            {"group-not", required_argument, 0, 'h'},
+            {"group-not", required_argument, 0, 'f'},
             {"output", required_argument, 0, 'o'},
+            {"help", no_argument, 0, 'h'},
             {0, 0, 0, 0}
             };
         /* getopt_long stores the option index here. */
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "vdia0t:u:g:h:o:",
+        c = getopt_long (argc, argv, "hvdia0t:u:g:f:o:",
                         long_options, &option_index);
         
             
@@ -192,7 +193,7 @@ int main (int argc, char **argv){
                 misc_add_to_list(optarg, &(n_group), &(group_list));
                 break;
             }
-            case 'h': {
+            case 'f': {
                 if (VERBOSE) printf("Blacklisting group: %s\n", optarg);
 //                 misc_add_to_list(optarg, &(test_env->n_groupnot), &(test_env->groupnot_list));
                 misc_add_to_list(optarg, &(n_groupnot), &(groupnot_list));
@@ -202,6 +203,10 @@ int main (int argc, char **argv){
                 wanted_csv = (char*) optarg;
                 OPTION_CSV = 1;
                 break;
+            }
+            case 'h':{
+                print_usage();
+                exit(EXIT_FAILURE);
             }
             default:
                 fprintf(stderr, "Unknown argument.\n");
