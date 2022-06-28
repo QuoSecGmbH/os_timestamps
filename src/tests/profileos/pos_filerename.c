@@ -37,8 +37,8 @@ struct profile_info_struct* profileos_filerename_interface_existing(testenv_stru
 
 struct profile_info_struct* profileos_filerename_interface_dir_new(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
     
     char** watch_array = misc_char_array3(path, path_new, path_dir);
@@ -54,8 +54,8 @@ struct profile_info_struct* profileos_filerename_interface_dir_new(testenv_struc
 
 struct profile_info_struct* profileos_filerename_interface_dir_existing(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat_ensure_dir_exists(path_dir, "renamed/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);;
     
     char** watch_array = misc_char_array3(path, path_new, path_dir);
@@ -102,8 +102,8 @@ struct profile_info_struct* profileos_filerename_utilities_existing(testenv_stru
 
 struct profile_info_struct* profileos_filerename_utilities_dir_new(testenv_struct* env){
     char* path_dir = misc_concat_ensure_dir_exists(env->dir_path, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_dir, "orig/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dir, "renamed");
     
     char* command = "mv orig renamed";

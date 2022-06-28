@@ -171,16 +171,16 @@ int** compute_profile(struct timespec* ts_before, struct timespec* ts_after, str
 
 struct profile_info_struct* profile_command(FILE* output_file, FILE* error_file, char* pwd_dir, char* src_dir, char* target_dir, int watch_num, char** watch_array, char* precommand, long delay, char* command, long delay_wait_after){
     if (src_dir != NULL){        
-        misc_ensure_dir_exists(src_dir, 0, 0, output_file, error_file, __func__);
+        misc_ensure_dir_exists(src_dir, 0, 0, 0, output_file, error_file, __func__);
     }
     
     if (target_dir != NULL){
-        misc_ensure_dir_exists(target_dir, 0, 0, output_file, error_file, __func__);
+        misc_ensure_dir_exists(target_dir, 0, 0, 0, output_file, error_file, __func__);
     }
     
     char saved_pwd[256];
     if (pwd_dir != NULL) {
-        misc_ensure_dir_exists(pwd_dir, 0, 0, output_file, error_file, __func__);
+        misc_ensure_dir_exists(pwd_dir, 0, 0, 0, output_file, error_file, __func__);
     
         char* retc = getcwd(saved_pwd, 256);
         if (retc == NULL){

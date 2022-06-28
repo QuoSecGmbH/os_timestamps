@@ -775,7 +775,7 @@ void print_profile(struct profile_info_struct* pi, char** mask, testenv_struct* 
     misc_print_profile_masked(env->output_file, env->error_file, pi, mask, desc, func_name, env->csv_file, env->csv_file_flags);
     if (VERBOSE){
         log_info_ts_profile_on_error_message_short(env->output_file, env->error_file, "", 0, pi, "");
-    }   
+    }
 }
 
 void process_profiles(char** mask, char* desc, char* ref, char* func_name, testenv_struct* env, struct profile_info_struct** pi_list, int pi_num){
@@ -794,9 +794,10 @@ void process_profiles(char** mask, char* desc, char* ref, char* func_name, teste
     
     fprintf(env->output_file, "%s (%s):\n", desc, ref);
     if (all_eq){
-        print_profile(pi_list[0], mask, env, ref, func_name);
-        
-        if (VERBOSE){
+        if (!VERBOSE){
+            print_profile(pi_list[0], mask, env, ref, func_name);
+        }
+        else {
             for (i = 0; i < pi_num; i++){
                 print_profile(pi_list[i], NULL, env, ref, func_name);
                 fprintf(env->output_file, "\n");

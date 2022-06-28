@@ -149,8 +149,9 @@ char* misc_concat(char* buf1, char* buf2);
 int misc_file_exists(char* buf);
 int misc_dir_exists(char* buf);
 
-char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
+char* misc_ensure_dir_exists(char* buf_path, char macb, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
 char* misc_concat_ensure_dir_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
+char* misc_concat_ensure_dir_exists_macb(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
 char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, char macb, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
 char* misc_concat_ensure_file_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);
 void misc_concat_ensure_file_exists_free(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name);

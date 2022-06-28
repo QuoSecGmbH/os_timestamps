@@ -195,7 +195,7 @@ int misc_dir_exists(char* buf){
 }
 
 
-char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+char* misc_ensure_dir_exists(char* buf_path, char macb, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
   if (misc_dir_exists(buf_path) != 0){
     if (VERBOSE >= 1){
         log_info(output_file, error_file, "misc_ensure_dir_exists in %s - Creating dir %s", func_name, buf_path);
@@ -210,6 +210,29 @@ char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE
     ts_ns->tv_sec = sleep_s;
     ts_ns->tv_nsec = sleep_ns; 
     nanosleep(ts_ns, CLOCK_REALTIME);
+    
+    if (macb){
+        // MACB was set
+        // Set M (+C):
+        misc_concat_ensure_file_exists(buf_path, "tmp_mc", 0, 0, output_file, error_file, func_name);
+        nanosleep(ts_ns, CLOCK_REALTIME);
+        
+        // Set A:
+        DIR *dp = opendir(buf_path);
+        struct dirent *de;   
+        int first = 0;
+
+        while (de != NULL || first == 0){
+            de = readdir(dp);
+            first = 1;
+        }
+        closedir(dp);
+        nanosleep(ts_ns, CLOCK_REALTIME);
+        
+        // Set C:
+        chmod(buf_path, 0700);
+        nanosleep(ts_ns, CLOCK_REALTIME);
+    }
   }
   
   return buf_path;
@@ -217,7 +240,12 @@ char* misc_ensure_dir_exists(char* buf_path, time_t sleep_s, long sleep_ns, FILE
 
 char* misc_concat_ensure_dir_exists(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
   char* buf_path = misc_concat(buf1, buf2);
-  return misc_ensure_dir_exists(buf_path, sleep_s, sleep_ns, output_file, error_file, func_name);
+  return misc_ensure_dir_exists(buf_path, 0, sleep_s, sleep_ns, output_file, error_file, func_name);
+}
+
+char* misc_concat_ensure_dir_exists_macb(char* buf1, char* buf2, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
+  char* buf_path = misc_concat(buf1, buf2);
+  return misc_ensure_dir_exists(buf_path, 1, sleep_s, sleep_ns, output_file, error_file, func_name);
 }
 
 char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written_size, char macb, time_t sleep_s, long sleep_ns, FILE* output_file, FILE* error_file, const char* func_name){
@@ -252,7 +280,7 @@ char* misc_concat_ensure_file_exists_generic(char* buf1, char* buf2, int written
     
     if (macb == 1){
         // MACB was set
-        // Set M:
+        // Set M (+C):
         FILE* f = fopen(buf_path, "a");
         char buf2[1] = "M";
         fwrite(buf2, 1, 1, f);

@@ -33,7 +33,7 @@ void current_time_setup_local_timemarkerdir(FILE* output_file, FILE* error_file)
     }
     
     log_info(output_file, error_file, "path_timemarkerdir: %s", path_timemarkerdir);
-    misc_ensure_dir_exists(path_timemarkerdir, 0, ns_after_open, output_file, error_file, __func__);
+    misc_ensure_dir_exists(path_timemarkerdir, 0, 0, ns_after_open, output_file, error_file, __func__);
 }
 
 void print_current_time_s(){

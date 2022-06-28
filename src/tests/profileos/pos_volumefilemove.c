@@ -49,8 +49,8 @@ struct profile_info_struct* profileos_volumefilemove_interface_dir_new(testenv_s
     char* path_dir_volume = misc_concat_ensure_dir_exists(env->dir_path_volume, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_srcdir = misc_concat_ensure_dir_exists(path_dir, "srcdir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_dstdir = misc_concat_ensure_dir_exists(path_dir_volume, "dstdir/", 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dstdir, "dst");
     
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
@@ -69,8 +69,8 @@ struct profile_info_struct* profileos_volumefilemove_interface_dir_existing(test
     char* path_dir_volume = misc_concat_ensure_dir_exists(env->dir_path_volume, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_srcdir = misc_concat_ensure_dir_exists(path_dir, "srcdir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_dstdir = misc_concat_ensure_dir_exists(path_dir_volume, "dstdir/", 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat_ensure_dir_exists(path_dstdir, "dst/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     
     char** watch_array = misc_char_array4(path, path_srcdir, path_new, path_dstdir);
@@ -125,8 +125,8 @@ struct profile_info_struct* profileos_volumefilemove_utilities_dir_new(testenv_s
     char* path_dir_volume = misc_concat_ensure_dir_exists(env->dir_path_volume, misc_concat(__func__, "/"), 0, 0, env->output_file, env->error_file, __func__);
     char* path_srcdir = misc_concat_ensure_dir_exists(path_dir, "srcdir/", 0, 0, env->output_file, env->error_file, __func__);
     char* path_dstdir = misc_concat_ensure_dir_exists(path_dir_volume, "dstdir/", 0, 0, env->output_file, env->error_file, __func__);
-    char* path = misc_concat_ensure_dir_exists(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
-    misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+    char* path = misc_concat_ensure_dir_exists_macb(path_srcdir, "src/", s_0s, ns_after_open, env->output_file, env->error_file, __func__);
+//     misc_concat_ensure_file_exists_filled(path, "dirfile", 10, s_0s, ns_after_open, env->output_file, env->error_file, __func__);
     char* path_new = misc_concat(path_dstdir, "dst");
     
     char* command = misc_concat(misc_concat(misc_concat("mv ", path), " "), path_new);
