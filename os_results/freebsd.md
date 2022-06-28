@@ -33,10 +33,10 @@ Source and possible values:
 
 2022:
 - profile_os_results.csv: [../results/2022_06_28/profileos/freebsd/profile_os_results.csv](../results/2022_06_28/profileos/freebsd/profile_os_results.csv)
-- profile_os_flags.csv: [results/2022_06_28/profileos/freebsd/profile_os_flags.csv](results/2022_06_28/profileos/freebsd/profile_os_flags.csv)
-- run_tests_results.csv: [results/2022_06_28/posix_compliance/freebsd/run_tests_results.csv](results/2022_06_28/profileos/freebsd/run_tests_results.csv)
+- profile_os_flags.csv: [../results/2022_06_28/profileos/freebsd/profile_os_flags.csv](../results/2022_06_28/profileos/freebsd/profile_os_flags.csv)
+- run_tests_results.csv: [../results/2022_06_28/posix_compliance/freebsd/run_tests_results.csv](../results/2022_06_28/profileos/freebsd/run_tests_results.csv)
 
 2019:
-- os_profile_results.csv: [results/2019_11_29/profileos/freebsd/os_profile_results.csv](results/2019_11_29/profileos/freebsd/os_profile_results.csv)
-- os_profile_results_mac.csv: [results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
-- os_profile_flags.csv: [results/2019_11_29/profileos/freebsd/os_profile_flags.csv](results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
+- os_profile_results.csv: [../results/2019_11_29/profileos/freebsd/os_profile_results.csv](../results/2019_11_29/profileos/freebsd/os_profile_results.csv)
+- os_profile_results_mac.csv: [../results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv](../results/2019_11_29/profileos/freebsd/os_profile_results_mac.csv)
+- os_profile_flags.csv: [../results/2019_11_29/profileos/freebsd/os_profile_flags.csv](../results/2019_11_29/profileos/freebsd/os_profile_flags.csv)
