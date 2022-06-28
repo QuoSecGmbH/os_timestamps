@@ -32,7 +32,7 @@ Source and possible values:
 # Result Output
 
 2022:
-- profile_os_results.csv: [results/2022_06_28/profileos/freebsd/profile_os_results.csv](results/2022_06_28/profileos/freebsd/profile_os_results.csv)
+- profile_os_results.csv: [../results/2022_06_28/profileos/freebsd/profile_os_results.csv](../results/2022_06_28/profileos/freebsd/profile_os_results.csv)
 - profile_os_flags.csv: [results/2022_06_28/profileos/freebsd/profile_os_flags.csv](results/2022_06_28/profileos/freebsd/profile_os_flags.csv)
 - run_tests_results.csv: [results/2022_06_28/posix_compliance/freebsd/run_tests_results.csv](results/2022_06_28/profileos/freebsd/run_tests_results.csv)
 
