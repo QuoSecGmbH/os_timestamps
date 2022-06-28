@@ -23,12 +23,19 @@ Although FFS2 has fields (64 bits + 32 bits) for the B timestamp, OpenBSD does n
 
 # Result Output
 
-- POSIX Compliance - results.csv [2022]: [/results/2022_03_09/posix_compliance/openbsd/results.csv](/results/2022_03_09/posix_compliance/openbsd/results.csv)
-- os_profile_results.csv [2022]: [/results/2022_03_09/profileos/openbsd/os_profile_results.csv](/results/2022_03_09/profileos/openbsd/os_profile_results.csv)
-- os_profile_flags.csv [2022]: [/results/2022_03_09/profileos/openbsd/os_profile_flags.csv](/results/2022_03_09/profileos/openbsd/os_profile_flags.csv)
+July 2022:
+- profile_os_results.csv: [../results/2022_06_28/profileos/openbsd/profile_os_results.csv](../results/2022_06_28/profileos/openbsd/profile_os_results.csv)
+- profile_os_flags.csv: [../results/2022_06_28/profileos/openbsd/profile_os_flags.csv](../results/2022_06_28/profileos/openbsd/profile_os_flags.csv)
+- run_tests_results.csv: [../results/2022_06_28/posix_compliance/openbsd/run_tests_results.csv](../results/2022_06_28/posix_compliance/openbsd/run_tests_results.csv)
 
-Older results:
 
-- os_profile_results.csv [2019]: [/results/2019_11_29/profileos/openbsd/os_profile_results.csv](/results/2019_11_29/profileos/openbsd/os_profile_results.csv)
-- os_profile_results_mac.csv [2019]: [/results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv](/results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv)
-- os_profile_flags.csv [2019]: [/results/2019_11_29/profileos/openbsd/os_profile_flags.csv](/results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
+March 2022:
+- POSIX Compliance - results.csv: [/results/2022_03_09/posix_compliance/openbsd/results.csv](/results/2022_03_09/posix_compliance/openbsd/results.csv)
+- os_profile_results.csv: [/results/2022_03_09/profileos/openbsd/os_profile_results.csv](/results/2022_03_09/profileos/openbsd/os_profile_results.csv)
+- os_profile_flags.csv: [/results/2022_03_09/profileos/openbsd/os_profile_flags.csv](/results/2022_03_09/profileos/openbsd/os_profile_flags.csv)
+
+2019:
+
+- os_profile_results.csv: [/results/2019_11_29/profileos/openbsd/os_profile_results.csv](/results/2019_11_29/profileos/openbsd/os_profile_results.csv)
+- os_profile_results_mac.csv: [/results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv](/results/2019_11_29/profileos/openbsd/os_profile_results_mac.csv)
+- os_profile_flags.csv: [/results/2019_11_29/profileos/openbsd/os_profile_flags.csv](/results/2019_11_29/profileos/openbsd/os_profile_flags.csv)
