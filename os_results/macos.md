@@ -9,3 +9,11 @@
 - Machine: mac mini
 - Version: 10.13.6
 - Filesystem: HFS+ (also called Mac OS Extended)
+
+# Result Output
+
+2021:
+
+- os_profile_results.csv: [/results/2021_10_12/profileos/macos/os_profile_results.csv](/results/2021_10_12/profileos/macos/os_profile_results.csv)
+- os_profile_flags.csv: [/results/2021_10_12/profileos/macos/os_profile_flags.csv](/results/2021_10_12/profileos/macos/os_profile_flags.csv)
+- POSIX Compliance - results.csv: [/results/2021_10_12/posix_compliance/macos/results.csv](/results/2021_10_12/posix_compliance/macos/results.csv)
