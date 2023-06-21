@@ -105,7 +105,7 @@ They are only compiled (see CMakeLists.txt) and tested on Linux.
 A number of text editors can be profiled with code based on `pyautogui`, for instance with:
 
 * `python3 editor_test.py`: run all tests
-* `python3 editor_test.py`: run only tests for vim
+* `python3 editor_test.py --vim`: run only tests for vim
 
 Please do not touch the keyboard or mouse while the tests are running.
 
