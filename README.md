@@ -107,7 +107,7 @@ A number of text editors can be profiled with code based on `pyautogui`, for ins
 * `python3 editor_test.py`: run all tests
 * `python3 editor_test.py --vim`: run only tests for vim
 
-Please do not touch the keyboard or mouse while the tests are running.
+**Please do not touch the keyboard or mouse while the tests are running.**
 
 Output is given in a file named `editors_profile.txt`:
 
