@@ -27,9 +27,14 @@ The main result is the following comparative table for timestamp updates provoke
 - [RESULTS.md](RESULTS.md)
 
 # Build
+
 - `mkdir build; cd build/`
 - `cmake ../src/`
 - `make`
+
+You may need to install the following (tested on Ubuntu 22.04):
+- pip packages: pyautogui
+- Other packages: python3-dev python3-tk qtbase5-dev
 
 # OS Profiling
 
@@ -100,9 +105,9 @@ They are only compiled (see CMakeLists.txt) and tested on Linux.
 A number of text editors can be profiled with code based on `pyautogui`, for instance with:
 
 * `python3 editor_test.py`: run all tests
-* `python3 editor_test.py`: run only tests for vim
+* `python3 editor_test.py --vim`: run only tests for vim
 
-Please do not touch the keyboard or mouse while the tests are running.
+**Please do not touch the keyboard or mouse while the tests are running.**
 
 Output is given in a file named `editors_profile.txt`:
 
