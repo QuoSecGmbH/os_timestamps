@@ -27,9 +27,14 @@ The main result is the following comparative table for timestamp updates provoke
 - [RESULTS.md](RESULTS.md)
 
 # Build
+
 - `mkdir build; cd build/`
 - `cmake ../src/`
 - `make`
+
+You may need to install the following (tested on Ubuntu 22.04):
+- pip packages: pyautogui
+- Other packages: python3-dev python3-tk qtbase5-dev
 
 # OS Profiling
 
