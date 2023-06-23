@@ -182,13 +182,14 @@ It means that:
 # Tools
 ## Get MACB Timestamps
 
-`prototype_file_ts TARGET [MODE]` will output the target's MACB timestamps.
+`prototype_file_ts TARGET [MODE] [-i/--print-inode]` will output the target's MACB timestamps.
 
 As it uses the **stat()** (and **statx()** on Linux) system calls, it shall not update any timestamp of the target.
 
 Mode can be:
 - 0 (default): uses **stat** to get MAC and gets B by OS-specific method that follows symlinks
 - 1: Same as 0 but outputs as csv
+- 11: Same as 1 but omits the file name (prints only timestamps and, when requested, inode number)
 - 2: same as 0 but with **lstat** and OS-specific method that does not follow symlinks
 - 3: Linux only: gets MACB with **statx**, with the AT_SYMLINK_NOFOLLOW flag (do not follow symlinks)
 - 4: Linux only: same as 3 but outputs with the format second.nanosecond for easier parsing
