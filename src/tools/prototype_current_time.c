@@ -19,7 +19,7 @@ int main (int argc, char **argv){
     print_current_time_custom(type);
   }
   else {
-    print_current_time_ns();
+    print_current_time_ns_fslike_osspecific_decimal();
   }
   
 }

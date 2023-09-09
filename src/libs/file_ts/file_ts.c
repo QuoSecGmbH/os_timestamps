@@ -38,6 +38,8 @@ struct stat_macb* stat_macb_from_stat_add_b(struct stat* attr, char* path, int f
     	memcpy((struct timespec*) &(attr_macb->st_btim), ts, sizeof(struct timespec));
     }
     
+    attr_macb->st_ino = attr->st_ino;
+
     return attr_macb;
 }
 
@@ -52,6 +54,8 @@ struct stat_macb* stat_macb_from_stat_no_b(struct stat* attr){
     ts->tv_nsec = 0;
     ts->tv_sec = 0;
     memcpy((struct timespec*) &(attr_macb->st_btim), ts, sizeof(struct timespec));
+
+    attr_macb->st_ino = attr->st_ino;
 
     return attr_macb;
 }
@@ -69,7 +73,7 @@ int stat_succeeds(char *path) {
     return 0;
 }
 
-void print_path_timestamps_s(char *path) {
+void print_path_timestamps_s(char *path, char inode) {
     struct stat_macb* attr = get_path_timestamps(path);
     
     if (attr == NULL){
@@ -83,7 +87,7 @@ void print_path_timestamps_s(char *path) {
     printf("B: %s", ctime(&(attr->st_btim)));
 }
 
-void print_file_timestamps_s(FILE *f) {
+void print_file_timestamps_s(FILE *f, char inode) {
     struct stat_macb* attr = get_file_timestamps(f);
     
     if (attr == NULL){
@@ -97,7 +101,7 @@ void print_file_timestamps_s(FILE *f) {
     printf("B: %s", ctime(&(attr->st_btim)));
 }
 
-void print_path_timestamps_ns(char *path) {
+void print_path_timestamps_ns(char *path, char inode) {
     struct stat_macb* attr = get_path_timestamps(path);
     
     if (attr == NULL){
@@ -128,9 +132,11 @@ void print_path_timestamps_ns(char *path) {
     buf = ctime(&s);
     buf[strlen(buf)-1] = 0;
     printf("B: %s - ns: %9ld\n", buf, ns);
+
+    if (inode == 1) printf("I: %lu\n", attr->st_ino);
 }
 
-void print_path_timestamps_csv_ns(char *path) {
+void print_path_timestamps_csv_ns(char *path, char print_inode, char print_path) {
     struct stat_macb* attr = get_path_timestamps(path);
     
     if (attr == NULL){
@@ -149,10 +155,20 @@ void print_path_timestamps_csv_ns(char *path) {
     
     time_t s_B = attr->st_btim.tv_sec;
     long ns_B = attr->st_btim.tv_nsec;
-    printf("%s,%d.%ld,%d.%ld,%d.%ld,%d.%ld\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
+
+    if (print_path == 1){
+        if (print_inode == 0) printf("%s,%d.%09ld,%d.%09ld,%d.%09ld,%d.%09ld\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
+        else printf("%s,%d.%09ld,%d.%09ld,%d.%09ld,%d.%09ld,%lu\n", path, s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B, attr->st_ino);
+
+    }
+    else {
+        if (print_inode == 0) printf("%d.%09ld,%d.%09ld,%d.%09ld,%d.%09ld\n",s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B);
+        else printf("%d.%09ld,%d.%09ld,%d.%09ld,%d.%09ld,%lu\n", s_M, ns_M, s_A, ns_A, s_C, ns_c, s_B, ns_B, attr->st_ino);
+    }
+
 }
 
-void print_path_timestamps_lstat_ns(char *path) {
+void print_path_timestamps_lstat_ns(char *path, char inode) {
     struct stat_macb* attr = get_path_timestamps_lstat(path);
     
     if (attr == NULL){
@@ -183,9 +199,11 @@ void print_path_timestamps_lstat_ns(char *path) {
     buf = ctime(&s);
     buf[strlen(buf)-1] = 0;
     printf("B: %s - ns: %9ld\n", buf, ns);
+
+    if (inode == 1) printf("I: %lu\n", attr->st_ino);
 }
 
-void print_file_timestamps_ns(FILE *f) {
+void print_file_timestamps_ns(FILE *f, char inode) {
     struct stat_macb* attr = get_file_timestamps(f);
     
     if (attr == NULL){
@@ -303,7 +321,7 @@ struct statx* get_path_timestamps_statx(char *path, int follow) {
     return attr_statx;
 }
 
-void print_path_timestamps_statx_ns(char *path, int follow) {
+void print_path_timestamps_statx_ns(char *path, int follow, char inode) {
     struct statx* attr_statx = get_path_timestamps_statx(path, follow);
     
     if (attr_statx == NULL){
@@ -334,9 +352,11 @@ void print_path_timestamps_statx_ns(char *path, int follow) {
     buf = ctime(&s);
     buf[strlen(buf)-1] = 0;
     printf("B: %s - ns: %9ld\n", buf, ns);
+
+    if (inode == 1) printf("I: %llu\n", attr_statx->stx_ino);
 }
 
-void print_path_timestamps_statx_int_ns(char *path, int follow) {
+void print_path_timestamps_statx_int_ns(char *path, int follow, char inode) {
     struct statx* attr_statx = get_path_timestamps_statx(path, follow);
     
     if (attr_statx == NULL){
@@ -359,6 +379,8 @@ void print_path_timestamps_statx_int_ns(char *path, int follow) {
     s = attr_statx->stx_btime.tv_sec;
     ns = attr_statx->stx_btime.tv_nsec;
     printf("B: %d.%09ld\n", s, ns);
+
+    if (inode == 1) printf("I: %llu\n", attr_statx->stx_ino);
 }
 
 #endif

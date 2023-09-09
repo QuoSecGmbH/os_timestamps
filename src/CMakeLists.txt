@@ -327,4 +327,14 @@ target_link_libraries(plot_fwrite_fstat2 lib_file_ts lib_current_time lib_log li
 
 # Python code
 
-file(COPY tests/profile_editors/ DESTINATION .)
+# file(COPY tests/profile_editors/ DESTINATION .)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/profile_gui.py ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/config_vim ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/tests_editors.py ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/shortcuts.py ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/utility.py ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/config_vim ${CMAKE_BINARY_DIR}/ COPYONLY)
+
+
+
+

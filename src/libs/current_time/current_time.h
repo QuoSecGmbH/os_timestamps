@@ -30,6 +30,7 @@ void current_time_setup_local_timemarkerdir(FILE* output_file, FILE* error_file)
 // int main();
 void print_current_time_s();
 void print_current_time_ns_fslike_osspecific();
+void print_current_time_ns_fslike_osspecific_decimal();
 void print_current_time_custom(int type);
 void print_current_time_ns();
 time_t* current_time_s();

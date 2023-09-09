@@ -66,6 +66,12 @@ void print_current_time_ns_fslike_osspecific(){
   free(ts);
 }
 
+void print_current_time_ns_fslike_osspecific_decimal(){
+  struct timespec* ts = current_time_ns_fslike_osspecific();
+  printf("%ld.%09ld\n", ts->tv_sec, ts->tv_nsec);
+  free(ts);
+}
+
 void print_current_time_custom(int type){
   struct timespec* ts = current_time_custom(type);
   struct tm * timeinfo;

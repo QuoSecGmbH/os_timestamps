@@ -5,24 +5,24 @@
 
 int main (int argc, char **argv){
   if (argc == 5){
-    print_file_timestamps_ns(stdout);
+    print_file_timestamps_ns(stdout, 0);
     printf("stdout\n---\n");
-    print_file_timestamps_ns(stderr);
+    print_file_timestamps_ns(stderr, 0);
     printf("stderr\n");
     printf("---\n");
-    print_file_timestamps_ns(stdin);
+    print_file_timestamps_ns(stdin, 0);
     printf("stdin\n");
   }
   else if (argc == 4){
-    print_file_timestamps_ns(stdin);
+    print_file_timestamps_ns(stdin, 0);
     printf("stdin\n");
   }
   else if (argc == 3){
-    print_file_timestamps_ns(stderr);
+    print_file_timestamps_ns(stderr, 0);
     printf("stderr\n");
   }
   else if (argc == 2){
-    print_file_timestamps_ns(stdout);
+    print_file_timestamps_ns(stdout, 0);
     printf("stdout\n");
   }
   else {
