@@ -517,17 +517,18 @@ def doesProgramExist(program):
     try:
         output = str(subprocess.check_output([str(program), '--version']))
     except FileNotFoundError:
-        return -1
+        return False
+    return True
 
 
 # Function to open a terminal
 def open_terminal():
-    if (doesProgramExist("gnome-terminal") != -1):
-        os.spawnlp(os.P_NOWAIT, 'gnome-terminal', 'gnome-terminal')
-    elif (doesProgramExist("konsole") != -1):
-        os.spawnlp(os.P_NOWAIT, 'konsole', 'konsole')
-    elif (doesProgramExist("terminator") != -1):
+    if doesProgramExist("terminator"):
         os.spawnlp(os.P_NOWAIT, 'terminator', 'terminator')
+    elif doesProgramExist("gnome-terminal"):
+        os.spawnlp(os.P_NOWAIT, 'gnome-terminal', 'gnome-terminal')
+    elif doesProgramExist("konsole"):
+        os.spawnlp(os.P_NOWAIT, 'konsole', 'konsole')
     else:
         print("ERROR: No usable terminal found")
         quit()

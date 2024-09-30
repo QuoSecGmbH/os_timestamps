@@ -72,10 +72,10 @@ def vim_choose_test(env, sleeptime, target_code):
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim with choosen config file: " + str(env.args.vim_conf), file=env.file_output)
-    vim_Access_choose_conf(sleeptime, env.args.verbose, mode, env.args.vim_conf)
-    vim_Modify_choose_conf(sleeptime, env.args.verbose, mode, env.args.vim_conf)
-    vim_safe_no_mod_choose_conf(sleeptime, env.args.verbose, mode, env.args.vim_conf)
-    vim_mod_no_save_choose_conf(sleeptime, env.args.verbose, mode, env.args.vim_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_choose_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_choose_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_choose_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_choose_conf)
     print("", file=env.file_output)
 
 
@@ -274,7 +274,7 @@ def profile_gui(env, targets):
 
     start_time = datetime.now()
     utility.open_terminal()
-    time.sleep(env.args.sleeptime)
+    time.sleep(max(1, env.args.sleeptime))
 
     run_test(env, targets, env.args.sleeptime)
 
@@ -347,13 +347,13 @@ def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", action='store_true', default=False, help="prints timestamp before and after test as well as inode number")
     parser.add_argument("-d", "--debug", action='store_true', default=False, help="debug mode")
-    parser.add_argument("-st", "--sleeptime", type=float, default=6., help="sleep timer")
+    parser.add_argument("-st", "--sleeptime", type=float, default=6., help="sleep timer (seconds)")
     parser.add_argument("-o", "--output", dest="path_output", default="profile_gui.txt", help="Path to output")
     parser.add_argument("-ro", "--output-results-csv-file", dest="path_csv_output", default="profile_gui_results.csv", help="Path to csv output results")
     parser.add_argument("-fo", "--output-flags-csv-file", dest="path_flags_csv_output", default="profile_gui_flags.csv", help="Path to csv output detailed results (flags)")
    
     parser.add_argument("--test", "-t", dest='test', action='append', help="Include the target (can be used multiple times), list to get a list")
-    parser.add_argument("--operations", "-op", dest='operation', action='append', help="(Only for file managers) Include the operation (can be used multiple times), list to list possible operaitons")
+    parser.add_argument("--operations", "-op", dest='operation', action='append', help="(Only for file managers) Include the operation (can be used multiple times), list to list possible operations")
     parser.add_argument("--vim-conf", "-vc", dest='vim_conf', default=None, help="Specific conf file to use for vim (.vimrc)")
 
     parser.add_argument("--empty", dest="empty", action='store_true', default=False, help="runs the tests with empty files (0 byte)")
@@ -367,8 +367,8 @@ def parse():
         for t in args.test:
             if t == "list":
                 print("Possible targets:")
-                for t in targets:
-                    print("  " + t)
+                for t_name, t_code, t_func, t_desc in targets_info:
+                    print("  " + t_name, "-", t_desc)
                 sys.exit(1)
 
             if t in targets:
@@ -444,10 +444,10 @@ def find_tmp_dir():
 
 
 targets_info = []
-targets_info.append(("EDITOR.vim_clean", "vim_clean", vim_test, ""))
-targets_info.append(("EDITOR.vim_conf", "vim_conf", vim_conf_test, ""))
-targets_info.append(("EDITOR.vim_own_conf", "vim_own_conf", vim_own_test, ""))
-targets_info.append(("EDITOR.vim_choose_conf", "vim_choose_conf", vim_choose_test, ""))
+targets_info.append(("EDITOR.vim_clean", "vim_clean", vim_test, "vim with empty config (--clean option)"))
+targets_info.append(("EDITOR.vim_conf", "vim_conf", vim_conf_test, "vim with a config limited to: set nowritebackup"))
+targets_info.append(("EDITOR.vim_own_conf", "vim_own_conf", vim_own_test, "vim with existing config"))
+targets_info.append(("EDITOR.vim_choose_conf", "vim_choose_conf", vim_choose_test, "vim with a user-chosen conf (--vim-conf PATH)"))
 targets_info.append(("EDITOR.nano", "nano", nano_test, ""))
 targets_info.append(("EDITOR.gedit", "gedit", gedit_test, ""))
 targets_info.append(("EDITOR.kate", "kate", kate_test, ""))

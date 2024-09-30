@@ -1022,12 +1022,12 @@ def vim_mod_no_save_own_conf(env, sleeptime):
     # utility.remove_file()
 
 
-def vim_Access_choose_conf(env, sleeptime, file):
+def vim_Access_choose_conf(env, sleeptime):
     # utility.create_file(mode)
 
     # timestamp1 = utility.statextract(env,"testfile.c")
 
-    pyautogui.write("vim -u " + file + " testfile.c")
+    pyautogui.write("vim -u " + env.args.vim_conf + " testfile.c")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     pyautogui.press(':')
@@ -1044,11 +1044,11 @@ def vim_Access_choose_conf(env, sleeptime, file):
     # utility.remove_file()
 
 
-def vim_Modify_choose_conf(env, sleeptime, file):
+def vim_Modify_choose_conf(env, sleeptime):
     # utility.create_file(mode)
 
     # timestamp1 = utility.statextract(env,"testfile.c")
-    pyautogui.write("vim -u " + file + " testfile.c")
+    pyautogui.write("vim -u " + env.args.vim_conf + " testfile.c")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     pyautogui.press("i")
@@ -1071,11 +1071,11 @@ def vim_Modify_choose_conf(env, sleeptime, file):
     # utility.remove_file()
 
 
-def vim_safe_no_mod_choose_conf(env, sleeptime, file):
+def vim_safe_no_mod_choose_conf(env, sleeptime):
     # utility.create_file(mode)
 
     # timestamp1 = utility.statextract(env,"testfile.c")
-    pyautogui.write("vim -u " + file + " testfile.c")
+    pyautogui.write("vim -u " + env.args.vim_conf + " testfile.c")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     pyautogui.write(":")
@@ -1093,11 +1093,11 @@ def vim_safe_no_mod_choose_conf(env, sleeptime, file):
     # utility.remove_file()
 
 
-def vim_mod_no_save_choose_conf(env, sleeptime, file):
+def vim_mod_no_save_choose_conf(env, sleeptime):
     # utility.create_file(mode)
 
     # timestamp1 = utility.statextract(env,"testfile.c")
-    pyautogui.write("vim -u " + file + " testfile.c")
+    pyautogui.write("vim -u " + env.args.vim_conf + " testfile.c")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     pyautogui.press("i")
