@@ -112,7 +112,8 @@ pip3 install pyautogui
 A number of text editors can be profiled with code based on pyautogui, for instance with:
 
 * `python3 profile_gui.py`: run all tests
-* `python3 profile_gui.py -t vim`: run only tests for vim
+* `python3 profile_gui.py -t list`: list tests
+* `python3 profile_gui.py -t EDITOR.nano`: run only tests for nano
 
 **Please do not touch the keyboard or mouse while the tests are running.**
 
