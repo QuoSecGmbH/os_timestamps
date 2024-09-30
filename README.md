@@ -102,7 +102,14 @@ They are only compiled (see CMakeLists.txt) and tested on Linux.
 
 # Application Profiling (Text editors)
 
-A number of text editors can be profiled with code based on `pyautogui`, for instance with:
+The python package `pyautogui` is needed, it can be installed in a virtual env as follows:
+```
+python3 -m venv venv_pyautogui
+source venv_pyautogui/bin/activate
+pip3 install pyautogui
+```
+
+A number of text editors can be profiled with code based on pyautogui, for instance with:
 
 * `python3 profile_gui.py`: run all tests
 * `python3 profile_gui.py -t vim`: run only tests for vim
