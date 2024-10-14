@@ -27,10 +27,12 @@ def vim_test(env, sleeptime, target_code, target_prompt):
     print("vim --clean", file=env.file_output)
     # runs the tests
     # if "EDITOR.access" in env.operations: vim_Access(env, sleeptime, mode)
+
     test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save, target_prompt)
+
     print("", file=env.file_output)
 
 
@@ -42,10 +44,12 @@ def vim_conf_test(env, sleeptime, target_code, target_prompt):
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim set nowritebackup", file=env.file_output)
+
     test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_conf, target_prompt)
+
     print("", file=env.file_output)
 
 
@@ -57,11 +61,13 @@ def vim_own_test(env, sleeptime, target_code, target_prompt):
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim with system used vimrc", file=env.file_output)
+
     # Runs the different vim tests
     test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_own_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_own_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_own_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_own_conf, target_prompt)
+
     print("", file=env.file_output)
 
 
@@ -72,77 +78,93 @@ def vim_choose_test(env, sleeptime, target_code, target_prompt):
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim with choosen config file: " + str(env.args.vim_conf), file=env.file_output)
+
     test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_choose_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_choose_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_choose_conf, target_prompt)
     test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_choose_conf, target_prompt)
+
     print("", file=env.file_output)
 
 
 # runs all of nano tests
-def nano_test(env, sleeptime, mode, target_code, target_prompt):
+def nano_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("nano") == -1):
         print("WARNING: nano not found", file=sys.stderr)
         return
     x = versions.nanoVersion()
     print("Nano Version: " + x, file=env.file_output)
-    nano_Access(env, sleeptime, mode)
-    nano_Modify(env, sleeptime, mode)
-    nano_save_no_mod(env, sleeptime, mode)
-    nano_mod_no_save(env, sleeptime, mode)
+
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, nano_Access, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, nano_Modify, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, nano_save_no_mod, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, nano_mod_no_save, target_prompt)
+
     print("", file=env.file_output)
 
 
 # runs all of gedit tests
-def gedit_test(env, sleeptime, mode, target_code, target_prompt):
+def gedit_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("gedit") == -1):
         print("WARNING: gedit not found", file=sys.stderr)
         return
     x = versions.geditVersion()
     print("Gedit Version: " + x, file=env.file_output)
-    test("gedit", mode, env)
-    modify_dont_save_gedit("gedit", sleeptime, env.args.verbose, mode)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_gedit, target_prompt)
+
     print("", file=env.file_output)
 
 
 # runs all of kate tests
-def kate_test(env, sleeptime, mode, target_code, target_prompt):
+def kate_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("kate") == -1):
         print("WARNING: kate not found", file=sys.stderr)
         return
     x = versions.kateVersion()
     print("Kate Version: " + x, file=env.file_output)
-    # test("kate")
-    access("kate", sleeptime, env.args.verbose, mode)
-    modify("kate", sleeptime, env.args.verbose, mode)
-    save_no_modify("kate", sleeptime, env.args.verbose, mode)
-    modify_dont_save_kate("kate", sleeptime, env.args.verbose, mode)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_kate, target_prompt)
+
     print("", file=env.file_output)
 
 
 # runs all of atom tests
-def atom_test(env, sleeptime, mode, target_code, target_prompt):
+def atom_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("atom") == -1):
         print("WARNING: atom not found", file=sys.stderr)
         return
     x = versions.atomVersion()
     print("Atom Version: " + x, file=env.file_output)
-    test("atom", mode, env)
-    modify_dont_save_atom("atom", sleeptime, env.args.verbose, mode)
+    # test("atom", mode, env)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_atom, target_prompt)
+
+    # modify_dont_save_atom("atom", sleeptime, env.args.verbose, mode)
     print("", file=env.file_output)
 
 
 # runs all of emacs tests
-def emacs_test(env, sleeptime, mode, target_code, target_prompt):
+def emacs_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("emacs") == -1):
         print("WARNING: emacs not found", file=sys.stderr)
         return
     x = versions.emacsVersion()
     print("Emacs Version: " + x, file=env.file_output)
-    emacs_Access(env, sleeptime, mode)
-    emacs_Modify(env, sleeptime, mode)
-    emacs_save_no_mod(env, sleeptime, mode)
-    emacs_mod_no_save(env, sleeptime, mode)
+
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, emacs_Access, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, emacs_Modify, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, emacs_save_no_mod, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, emacs_mod_no_save, target_prompt)
+
+
+    # emacs_Access(env, sleeptime, mode)
+    # emacs_Modify(env, sleeptime, mode)
+    # emacs_save_no_mod(env, sleeptime, mode)
+    # emacs_mod_no_save(env, sleeptime, mode)
     print("", file=env.file_output)
 
 
@@ -289,10 +311,14 @@ def profile_gui(env, targets):
     # sys.stdout.close()
 
 
-def test(name, mode, env):
-    access(name, env.args.sleeptime, env.args.verbose, mode)
-    modify(name, env.args.sleeptime, env.args.verbose, mode)
-    save_no_modify(name, env.args.sleeptime, env.args.verbose, mode)
+def test(env, sleeptime, target_code, target_prompt):
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, access, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, modify, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, save_no_modify, target_prompt)
+
+    # access(name, env.args.sleeptime, env.args.verbose, mode)
+    # modify(name, env.args.sleeptime, env.args.verbose, mode)
+    # save_no_modify(name, env.args.sleeptime, env.args.verbose, mode)
 
 
 # Executes all testcases of a given mode for all editors if the are set to be run

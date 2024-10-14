@@ -82,7 +82,7 @@ def test_template_editor(env, sleeptime, target_code, target_type, test_code, te
 def access(env, sleeptime, prompt):
     # utility.create_file(mode)
 
-    timestamp1 = utility.statextract(env,"testfile.c")
+    # timestamp1 = utility.statextract(env,"testfile.c")
 
     pyautogui.write(prompt + " testfile.c &> errors")
     pyautogui.press('enter')
@@ -90,13 +90,13 @@ def access(env, sleeptime, prompt):
     shortcuts.close()
     timestamp2 = utility.statextract(env,"testfile.c")
 
-    utility.compareTimestamps(env, str(prompt).upper() + " ACCESS TEST: ", timestamp1, timestamp2)
+    # utility.compareTimestamps(env, str(prompt).upper() + " ACCESS TEST: ", timestamp1, timestamp2)
 
-    if (env.args.verbose):
-        utility.print_timestamps(env, timestamp1, timestamp2)
-        print("", file=env.file_output)
+    # if (env.args.verbose):
+        # utility.print_timestamps(env, timestamp1, timestamp2)
+        # print("", file=env.file_output)
 
-    utility.remove_file()
+    # utility.remove_file()
 
 
 def modify(env, sleeptime, prompt):

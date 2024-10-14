@@ -103,6 +103,7 @@ class ProfileInfo:
     profile: typing.List[Compared_TS]
     profile_str: typing.List[str]
     target_code: str
+    filesize: int
     test_code: str
     test_description: str
 
@@ -202,7 +203,7 @@ class ProfileInfo:
         for i in range(len(self.watch_array)):
             print_list = [self.target_code, self.test_code]
             if print_filesize:
-                print_list.append(str(print_filesize))
+                print_list.append(str(self.filesize))
             print_list. append(self.watch_array[i][0])
             if print_path:
                 print_list. append(self.watch_array[i][1])
