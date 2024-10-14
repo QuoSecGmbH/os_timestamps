@@ -114,7 +114,7 @@ A number of text editors can be profiled with code based on pyautogui, for insta
 * `python3 profile_gui.py`: run all tests
 * `python3 profile_gui.py -t list`: list tests
 * `python3 profile_gui.py -t EDITOR.nano`: run only tests for nano
-* `python3 profile_gui.py -t EDITOR.nano --sleeptime 0.2`: change sleeptime
+* `python3 profile_gui.py -t EDITOR.nano --sleeptime 0.1 --empty --small`: quick test (short sleeptime, test only with empty and small files)
 
 **Please do not touch the keyboard or mouse while the tests are running.**
 
