@@ -333,6 +333,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/config_vim ${CMAKE_
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/tests_editors.py ${CMAKE_BINARY_DIR}/ COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/shortcuts.py ${CMAKE_BINARY_DIR}/ COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/utility.py ${CMAKE_BINARY_DIR}/ COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/versions.py ${CMAKE_BINARY_DIR}/ COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/profile_gui/config_vim ${CMAKE_BINARY_DIR}/ COPYONLY)
 
 

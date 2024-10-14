@@ -16,7 +16,7 @@ import versions
 
 
 # runs all of vim tests
-def vim_test(env, sleeptime, target_code):
+def vim_test(env, sleeptime, target_code, target_prompt):
     # Checks if the program is installed
     if (utility.doesProgramExist("vim") == -1):
         print("WARNING: vim not found", file=sys.stderr)
@@ -27,14 +27,14 @@ def vim_test(env, sleeptime, target_code):
     print("vim --clean", file=env.file_output)
     # runs the tests
     # if "EDITOR.access" in env.operations: vim_Access(env, sleeptime, mode)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save, target_prompt)
     print("", file=env.file_output)
 
 
-def vim_conf_test(env, sleeptime, target_code):
+def vim_conf_test(env, sleeptime, target_code, target_prompt):
     # Checks if the program is installed
     if (utility.doesProgramExist("vim") == -1):
         print("WARNING: vim not found", file=sys.stderr)
@@ -42,14 +42,14 @@ def vim_conf_test(env, sleeptime, target_code):
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim set nowritebackup", file=env.file_output)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_conf, target_prompt)
     print("", file=env.file_output)
 
 
-def vim_own_test(env, sleeptime, target_code):
+def vim_own_test(env, sleeptime, target_code, target_prompt):
     # Checks if the program is installed
     if (utility.doesProgramExist("vim") == -1):
         print("WARNING: vim not found", file=sys.stderr)
@@ -58,29 +58,29 @@ def vim_own_test(env, sleeptime, target_code):
     print("Vim Version: " + x, file=env.file_output)
     print("vim with system used vimrc", file=env.file_output)
     # Runs the different vim tests
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_own_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_own_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_own_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_own_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_own_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_own_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_own_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_own_conf, target_prompt)
     print("", file=env.file_output)
 
 
-def vim_choose_test(env, sleeptime, target_code):
+def vim_choose_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("vim") == -1):
         print("WARNING: vim not found", file=sys.stderr)
         return
     x = versions.vimVersion()
     print("Vim Version: " + x, file=env.file_output)
     print("vim with choosen config file: " + str(env.args.vim_conf), file=env.file_output)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_choose_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_choose_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_choose_conf)
-    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_choose_conf)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "access", None, vim_Access_choose_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify", None, vim_Modify_choose_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "save_no_modify", None, vim_safe_no_mod_choose_conf, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, vim_mod_no_save_choose_conf, target_prompt)
     print("", file=env.file_output)
 
 
 # runs all of nano tests
-def nano_test(env, sleeptime, mode, target_code):
+def nano_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("nano") == -1):
         print("WARNING: nano not found", file=sys.stderr)
         return
@@ -94,7 +94,7 @@ def nano_test(env, sleeptime, mode, target_code):
 
 
 # runs all of gedit tests
-def gedit_test(env, sleeptime, mode, target_code):
+def gedit_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("gedit") == -1):
         print("WARNING: gedit not found", file=sys.stderr)
         return
@@ -106,7 +106,7 @@ def gedit_test(env, sleeptime, mode, target_code):
 
 
 # runs all of kate tests
-def kate_test(env, sleeptime, mode, target_code):
+def kate_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("kate") == -1):
         print("WARNING: kate not found", file=sys.stderr)
         return
@@ -121,7 +121,7 @@ def kate_test(env, sleeptime, mode, target_code):
 
 
 # runs all of atom tests
-def atom_test(env, sleeptime, mode, target_code):
+def atom_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("atom") == -1):
         print("WARNING: atom not found", file=sys.stderr)
         return
@@ -133,7 +133,7 @@ def atom_test(env, sleeptime, mode, target_code):
 
 
 # runs all of emacs tests
-def emacs_test(env, sleeptime, mode, target_code):
+def emacs_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("emacs") == -1):
         print("WARNING: emacs not found", file=sys.stderr)
         return
@@ -147,7 +147,7 @@ def emacs_test(env, sleeptime, mode, target_code):
 
 
 # runs all of geany tests
-def geany_test(env, sleeptime, mode, target_code):
+def geany_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("geany") == -1):
         print("WARNING: geany not found", file=sys.stderr)
         return
@@ -157,7 +157,7 @@ def geany_test(env, sleeptime, mode, target_code):
     modify_dont_save_geany("geany", sleeptime, env.args.verbose, mode)
     print("", file=env.file_output)
 
-def sublime_text_test(env, sleeptime, mode, target_code):
+def sublime_text_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("subl") == -1):
         print("WARNING: subl/sublime not found", file=sys.stderr)
         return
@@ -168,7 +168,7 @@ def sublime_text_test(env, sleeptime, mode, target_code):
     print("", file=env.file_output)
 
 
-def codeblocks_test(env, sleeptime, mode, target_code):
+def codeblocks_test(env, sleeptime, mode, target_code, target_prompt):
     x = versions.codeblocksVersion()
     if (x.find("not found") != -1):
         print("WARNING: codeblocks not found", file=sys.stderr)
@@ -180,7 +180,7 @@ def codeblocks_test(env, sleeptime, mode, target_code):
     modify_dont_save_codeblocks("codeblocks", sleeptime * 2, env.args.verbose, mode)
     print("", file=env.file_output)
 
-def bluefish_test(env, sleeptime, mode, target_code):
+def bluefish_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("bluefish") == -1):
         print("WARNING: bluefish not found", file=sys.stderr)
         return
@@ -196,7 +196,7 @@ def bluefish_test(env, sleeptime, mode, target_code):
     print("", file=env.file_output)
 
 
-def texstudio_test(env, sleeptime, mode, target_code):
+def texstudio_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("texstudio") == -1):
         print("WARNING: texstudio not found", file=sys.stderr)
         return
@@ -212,7 +212,7 @@ def texstudio_test(env, sleeptime, mode, target_code):
     print("", file=env.file_output)
 
 
-def visualstudiocode_test(env, sleeptime, mode, target_code):
+def visualstudiocode_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("code") == -1):
         print("WARNING: visualstudiocode not found", file=sys.stderr)
         return
@@ -238,7 +238,7 @@ def leafpad_test(env, sleeptime, mode, target_code):
     print("", file=env.file_output)
 
 
-def notepadqq_test(env, sleeptime, mode, target_code):
+def notepadqq_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("notepadqq") == -1):
         print("WARNING: notepadqq not found", file=sys.stderr)
         return
@@ -254,7 +254,7 @@ def notepadqq_test(env, sleeptime, mode, target_code):
     print("", file=env.file_output)
 
 
-def jed_test(env, sleeptime, mode, target_code):
+def jed_test(env, sleeptime, mode, target_code, target_prompt):
     if (utility.doesProgramExist("jed") == -1):
         print("WARNING: jed not found", file=sys.stderr)
         return
@@ -319,8 +319,8 @@ def run_test(env, targets, sleeptime):
     # EDITOR_tests["EDITOR.notepadqq"] = (notepadqq_test, "notepadqq")
     # EDITOR_tests["EDITOR.jed"] = (jed_test, "jed")
 
-    for t_name, t_code, t_func, t_desc in targets_info:
-        EDITOR_tests[t_name] = (t_func, t_code)
+    for t_name, t_code, t_prompt, t_func, t_desc in targets_info:
+        EDITOR_tests[t_name] = (t_func, t_code, t_prompt)
 
     for test in EDITOR_tests:
         if targets[test]:
@@ -328,8 +328,8 @@ def run_test(env, targets, sleeptime):
             if env.args.verbose: print("BEGIN test: ", test)
             utility.dir_navigate(tmp_dir, new=True)
 
-            (target_fun, target_code) = EDITOR_tests[test]
-            target_fun(env, sleeptime, target_code)
+            (target_fun, target_code, target_prompt) = EDITOR_tests[test]
+            target_fun(env, sleeptime, target_code, target_prompt)
 
             utility.dir_navigate("..")
             if env.args.verbose: print("DONE test:  ", test)
@@ -341,7 +341,7 @@ def run_test(env, targets, sleeptime):
 def parse():
     # What targets should be run?
     targets = dict()
-    for t_name, t_code, t_func, t_desc in targets_info:
+    for t_name, t_code, t_prompt, t_func, t_desc in targets_info:
         targets[t_name] = False
 
     parser = argparse.ArgumentParser()
@@ -367,7 +367,7 @@ def parse():
         for t in args.test:
             if t == "list":
                 print("Possible targets:")
-                for t_name, t_code, t_func, t_desc in targets_info:
+                for t_name, t_code, t_prompt, t_func, t_desc in targets_info:
                     print("  " + t_name, "-", t_desc)
                 sys.exit(1)
 
@@ -444,24 +444,24 @@ def find_tmp_dir():
 
 
 targets_info = []
-targets_info.append(("EDITOR.vim_clean", "vim_clean", vim_test, "vim with empty config (--clean option)"))
-targets_info.append(("EDITOR.vim_conf", "vim_conf", vim_conf_test, "vim with a config limited to: set nowritebackup"))
-targets_info.append(("EDITOR.vim_own_conf", "vim_own_conf", vim_own_test, "vim with existing config"))
-targets_info.append(("EDITOR.vim_choose_conf", "vim_choose_conf", vim_choose_test, "vim with a user-chosen conf (--vim-conf PATH)"))
-targets_info.append(("EDITOR.nano", "nano", nano_test, ""))
-targets_info.append(("EDITOR.gedit", "gedit", gedit_test, ""))
-targets_info.append(("EDITOR.kate", "kate", kate_test, ""))
-targets_info.append(("EDITOR.emacs", "emacs", emacs_test, ""))
-targets_info.append(("EDITOR.atom", "atom", atom_test, ""))
-targets_info.append(("EDITOR.geany", "geany", geany_test, ""))
-targets_info.append(("EDITOR.sublime", "sublime_text", sublime_text_test, ""))
-targets_info.append(("EDITOR.codeblocks", "codeblocks", codeblocks_test, ""))
-targets_info.append(("EDITOR.bluefish", "bluefish", bluefish_test, ""))
-targets_info.append(("EDITOR.texstudio", "texstudio", texstudio_test, ""))
-targets_info.append(("EDITOR.code", "visualstudiocode", visualstudiocode_test, ""))
-targets_info.append(("EDITOR.leafpad", "leafpad", leafpad_test, ""))
-targets_info.append(("EDITOR.notepadqq", "notepadqq", notepadqq_test, ""))
-targets_info.append(("EDITOR.jed", "jed", jed_test, ""))
+targets_info.append(("EDITOR.vim_clean", "vim_clean", "vim", vim_test, "vim with empty config (--clean option)"))
+targets_info.append(("EDITOR.vim_conf", "vim_conf", "vim", vim_conf_test, "vim with a config limited to: set nowritebackup"))
+targets_info.append(("EDITOR.vim_own_conf", "vim_own_conf", "vim", vim_own_test, "vim with existing config"))
+targets_info.append(("EDITOR.vim_choose_conf", "vim_choose_conf", "vim", vim_choose_test, "vim with a user-chosen conf (--vim-conf PATH)"))
+targets_info.append(("EDITOR.nano", "nano", "nano", nano_test, ""))
+targets_info.append(("EDITOR.gedit", "gedit", "gedit", gedit_test, ""))
+targets_info.append(("EDITOR.kate", "kate", "kate", kate_test, ""))
+targets_info.append(("EDITOR.emacs", "emacs", "emacs", emacs_test, ""))
+targets_info.append(("EDITOR.atom", "atom", "atom", atom_test, ""))
+targets_info.append(("EDITOR.geany", "geany", "geany", geany_test, ""))
+targets_info.append(("EDITOR.sublime", "sublime_text", "sublime", sublime_text_test, ""))
+targets_info.append(("EDITOR.codeblocks", "codeblocks", "codeblocks", codeblocks_test, ""))
+targets_info.append(("EDITOR.bluefish", "bluefish", "bluefish", bluefish_test, ""))
+targets_info.append(("EDITOR.texstudio", "texstudio", "texstudio", texstudio_test, ""))
+targets_info.append(("EDITOR.code", "visualstudiocode", "visualstudiocode", visualstudiocode_test, ""))
+targets_info.append(("EDITOR.leafpad", "leafpad", "leafpad", leafpad_test, ""))
+targets_info.append(("EDITOR.notepadqq", "notepadqq", "notepadqq", notepadqq_test, ""))
+targets_info.append(("EDITOR.jed", "jed", "jed", jed_test, ""))
 
 def main():
     # Create test directory
