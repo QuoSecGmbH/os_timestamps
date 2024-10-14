@@ -169,52 +169,53 @@ def emacs_test(env, sleeptime, target_code, target_prompt):
 
 
 # runs all of geany tests
-def geany_test(env, sleeptime, mode, target_code, target_prompt):
+def geany_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("geany") == -1):
         print("WARNING: geany not found", file=sys.stderr)
         return
     x = versions.geanyVersion()
     print("Geany Version: " + x, file=env.file_output)
-    test("geany", mode, env)
-    modify_dont_save_geany("geany", sleeptime, env.args.verbose, mode)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_geany, target_prompt)
+
     print("", file=env.file_output)
 
-def sublime_text_test(env, sleeptime, mode, target_code, target_prompt):
+def sublime_text_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("subl") == -1):
         print("WARNING: subl/sublime not found", file=sys.stderr)
         return
     x = versions.sublimeVersion()
     print("Sublime Text Version: " + x, file=env.file_output)
-    test("subl", mode, env.args)
-    modify_dont_save_sublime("subl", sleeptime, env.args.verbose, mode)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_sublime, target_prompt)
+
     print("", file=env.file_output)
 
 
-def codeblocks_test(env, sleeptime, mode, target_code, target_prompt):
+def codeblocks_test(env, sleeptime, target_code, target_prompt):
     x = versions.codeblocksVersion()
     if (x.find("not found") != -1):
         print("WARNING: codeblocks not found", file=sys.stderr)
         return
     print("Codeblocks Version: " + x, file=env.file_output)
-    access("codeblocks", sleeptime * 2, env.args.verbose, mode)
-    modify("codeblocks", sleeptime * 2, env.args.verbose, mode)
-    save_no_modify("codeblocks", sleeptime * 2, env.args.verbose, mode)
-    modify_dont_save_codeblocks("codeblocks", sleeptime * 2, env.args.verbose, mode)
+
+    test(env, sleeptime * 2, target_code, target_prompt)
+    test_template_editor(env, sleeptime * 2, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_codeblocks, target_prompt)
+
     print("", file=env.file_output)
 
-def bluefish_test(env, sleeptime, mode, target_code, target_prompt):
+def bluefish_test(env, sleeptime, target_code, target_prompt):
     if (utility.doesProgramExist("bluefish") == -1):
         print("WARNING: bluefish not found", file=sys.stderr)
         return
     x = versions.bluefishVersion()
     print("Bluefish Text Version: " + x, file=env.file_output)
-    if (mode != 2):
-        access("bluefish", sleeptime, env.args.verbose, mode)
-        modify("bluefish", sleeptime, env.args.verbose, mode)
-        save_no_modify("bluefish", sleeptime, env.args.verbose, mode)
-        modify_dont_save_codeblocks("bluefish", sleeptime, env.args.verbose, mode)
-    else:
-        print("Not really working with this filesize", file=env.file_output)
+
+    test(env, sleeptime, target_code, target_prompt)
+    test_template_editor(env, sleeptime, target_code, "EDITOR", "modify_no_save", None, modify_dont_save_codeblocks, target_prompt)
+
     print("", file=env.file_output)
 
 
@@ -480,9 +481,9 @@ targets_info.append(("EDITOR.kate", "kate", "kate", kate_test, ""))
 targets_info.append(("EDITOR.emacs", "emacs", "emacs", emacs_test, ""))
 targets_info.append(("EDITOR.atom", "atom", "atom", atom_test, ""))
 targets_info.append(("EDITOR.geany", "geany", "geany", geany_test, ""))
-targets_info.append(("EDITOR.sublime", "sublime_text", "sublime", sublime_text_test, ""))
-targets_info.append(("EDITOR.codeblocks", "codeblocks", "codeblocks", codeblocks_test, ""))
-targets_info.append(("EDITOR.bluefish", "bluefish", "bluefish", bluefish_test, ""))
+targets_info.append(("EDITOR.sublime", "sublime_text", "subl", sublime_text_test, ""))
+targets_info.append(("EDITOR.codeblocks", "codeblocks", "codeblocks", codeblocks_test, "(does not work)"))
+targets_info.append(("EDITOR.bluefish", "bluefish", "bluefish", bluefish_test, "(does not work with large files)"))
 targets_info.append(("EDITOR.texstudio", "texstudio", "texstudio", texstudio_test, ""))
 targets_info.append(("EDITOR.code", "visualstudiocode", "visualstudiocode", visualstudiocode_test, ""))
 targets_info.append(("EDITOR.leafpad", "leafpad", "leafpad", leafpad_test, ""))

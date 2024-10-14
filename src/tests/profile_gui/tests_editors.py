@@ -619,7 +619,7 @@ def modify_dont_save_sublime(env, sleeptime, prompt):
 
     # timestamp1 = utility.statextract(env,"testfile.c")
 
-    pyautogui.write("sublime testfile.c &> errors")
+    pyautogui.write("subl testfile.c &> errors")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     shortcuts.write("Hello World")
@@ -671,7 +671,7 @@ def modify_dont_save_codeblocks(env, sleeptime, prompt):
 
     # timestamp1 = utility.statextract(env,"testfile.c")
 
-    pyautogui.write("codeblocks testfile.c &> errors")
+    pyautogui.write(prompt + " testfile.c &> errors")
     pyautogui.press('enter')
     time.sleep(sleeptime)
     shortcuts.write("Hello World")
